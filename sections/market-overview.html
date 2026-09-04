@@ -1,0 +1,116 @@
+<!-- =========================================================
+     MARKET OVERVIEW — SECTION 02
+     Loaded after the locked hero. Do not modify hero markup.
+     ========================================================= -->
+<section class="fx-market-section" id="markets" aria-labelledby="marketSectionTitle">
+  <div class="fx-market-shell">
+
+    <div class="fx-market-heading">
+      <div>
+        <p class="fx-market-eyebrow">LIVE MARKET OVERVIEW</p>
+        <h2 id="marketSectionTitle">Real-Time Market Prices</h2>
+        <p class="fx-market-subtitle">Track global markets with live market data and an interactive trading chart.</p>
+      </div>
+
+      <a class="fx-market-all" href="#markets">
+        <span>View All Markets</span>
+        <b aria-hidden="true">→</b>
+      </a>
+    </div>
+
+    <div class="fx-market-grid">
+
+      <div class="fx-market-board">
+        <div class="fx-market-tabs" role="tablist" aria-label="Market categories">
+          <button class="fx-market-tab is-active" type="button" role="tab" aria-selected="true" data-market-tab="forex">Forex</button>
+          <button class="fx-market-tab" type="button" role="tab" aria-selected="false" data-market-tab="commodities">Commodities</button>
+          <button class="fx-market-tab" type="button" role="tab" aria-selected="false" data-market-tab="indices">Indices</button>
+          <button class="fx-market-tab" type="button" role="tab" aria-selected="false" data-market-tab="shares">Shares</button>
+          <button class="fx-market-tab" type="button" role="tab" aria-selected="false" data-market-tab="crypto">Cryptocurrency</button>
+        </div>
+
+        <div class="fx-market-table-wrap">
+          <table class="fx-market-table">
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Bid</th>
+                <th>Ask</th>
+                <th>Change</th>
+                <th>24H</th>
+                <th>Trend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-market-category="forex" data-tv-symbol="FX:EURUSD">
+                <td><strong>EURUSD</strong><small>Euro / US Dollar</small></td>
+                <td>1.16384</td><td>1.16386</td><td class="fx-positive">+0.24%</td><td>+0.31%</td>
+                <td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,23 14,20 24,22 35,15 45,17 57,11 67,14 79,7 90,9 98,4"/></svg></td>
+              </tr>
+              <tr data-market-category="forex" data-tv-symbol="FX:GBPUSD">
+                <td><strong>GBPUSD</strong><small>British Pound / US Dollar</small></td>
+                <td>1.27942</td><td>1.27946</td><td class="fx-negative">-0.12%</td><td>-0.18%</td>
+                <td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,7 14,10 24,8 35,15 45,13 57,18 67,16 79,23 90,21 98,26"/></svg></td>
+              </tr>
+              <tr data-market-category="forex" data-tv-symbol="FX:USDJPY">
+                <td><strong>USDJPY</strong><small>US Dollar / Japanese Yen</small></td>
+                <td>149.321</td><td>149.324</td><td class="fx-positive">+0.31%</td><td>+0.44%</td>
+                <td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,20 13,19 24,15 34,17 45,11 56,13 66,8 77,11 89,6 98,9"/></svg></td>
+              </tr>
+              <tr data-market-category="commodities" data-tv-symbol="OANDA:XAUUSD">
+                <td><strong>XAUUSD</strong><small>Gold / US Dollar</small></td>
+                <td>2,447.32</td><td>2,447.68</td><td class="fx-positive">+0.18%</td><td>+0.22%</td>
+                <td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,24 14,19 25,21 36,15 48,16 58,10 69,12 80,6 90,8 98,3"/></svg></td>
+              </tr>
+              <tr data-market-category="indices" data-tv-symbol="TVC:DJI">
+                <td><strong>US30</strong><small>Dow Jones Index</small></td>
+                <td>40,823.6</td><td>40,831.4</td><td class="fx-positive">+0.36%</td><td>+0.51%</td>
+                <td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,22 14,18 25,20 36,13 47,15 58,9 68,11 80,5 90,7 98,2"/></svg></td>
+              </tr>
+              <tr data-market-category="shares" data-tv-symbol="NASDAQ:AAPL">
+                <td><strong>AAPL</strong><small>Apple Inc.</small></td>
+                <td>—</td><td>—</td><td class="fx-positive">+0.74%</td><td>+1.12%</td>
+                <td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,23 14,20 24,21 35,17 46,19 57,12 68,14 79,9 90,11 98,5"/></svg></td>
+              </tr>
+              <tr data-market-category="crypto" data-tv-symbol="COINBASE:BTCUSD">
+                <td><strong>BTCUSD</strong><small>Bitcoin / US Dollar</small></td>
+                <td>112,840</td><td>112,920</td><td class="fx-positive">+1.12%</td><td>+1.86%</td>
+                <td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,25 14,22 25,23 36,16 47,18 58,12 69,14 80,8 90,10 98,3"/></svg></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="fx-market-note">
+          <span class="fx-live-dot"></span>
+          <span>Indicative market snapshot</span>
+          <span class="fx-market-note-sep">•</span>
+          <span>Quotes and chart data provided by TradingView</span>
+        </div>
+      </div>
+
+      <div class="fx-chart-card">
+        <div class="fx-chart-head">
+          <div class="fx-chart-symbol">
+            <span class="fx-chart-icon">⌁</span>
+            <div><strong id="fxChartSymbol">EURUSD</strong><small>Euro / US Dollar</small></div>
+          </div>
+          <div class="fx-chart-status"><span></span> LIVE MARKET</div>
+        </div>
+
+        <div class="fx-chart-container">
+          <div id="fxMarketChart" class="fx-tradingview-host" aria-label="EURUSD interactive market chart">
+            <div class="fx-chart-loading"><span></span><b>Loading market chart…</b></div>
+          </div>
+        </div>
+
+        <div class="fx-chart-footer">
+          <div><small>Selected market</small><strong id="fxChartPair">EURUSD</strong></div>
+          <div><small>Market view</small><strong>15 min</strong></div>
+          <div><small>Data source</small><strong>TradingView</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
