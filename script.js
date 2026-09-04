@@ -438,8 +438,6 @@ function initFxMarketOverview() {
   requestAnimationFrame(setFallbackSpeed);
   window.addEventListener("resize", setFallbackSpeed, { passive: true });
 
-  // Try the live TradingView ticker feed. If it cannot load,
-  // the animated local fallback remains visible and functional.
   import("https://www.tradingview-widget.com/w/en/tv-ticker-tape.js")
     .then(() => {
       const ticker = document.createElement("tv-ticker-tape");
@@ -460,4 +458,83 @@ function initFxMarketOverview() {
     .catch(error => {
       console.warn("Hero TradingView ticker unavailable; using animated fallback.", error);
     });
+})();
+
+
+/* =========================================================
+   FXCENTRUM24 — FINAL MARKET VISUAL PATCH
+   Additive only. Keeps the completed hero and existing market
+   structure intact while fixing ticker motion and table actions.
+   ========================================================= */
+
+(() => {
+  const installFinalMarketPatch = () => {
+    const section = document.querySelector(".fx-market-section");
+    const heroTicker = document.querySelector(".hero-ticker");
+    const track = heroTicker?.querySelector(".hero-ticker-track");
+
+    if (!section) return false;
+
+    /* Prevent the old parent animation from fighting the child ticker animation. */
+    if (track) track.style.animation = "none";
+
+    /* Add real Trade buttons on top of the existing visual trend area. */
+    section.querySelectorAll(".fx-market-table tbody tr").forEach(row => {
+      const trendCell = row.children[5];
+      if (!trendCell || trendCell.querySelector(".fx-trade-action")) return;
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "fx-trade-action";
+      button.textContent = "Trade";
+      button.setAttribute("aria-label", `Trade ${row.querySelector("td strong")?.textContent || "market"}`);
+      button.addEventListener("click", () => {
+        const accountLink = document.querySelector('a[href="#open-account"].btn-primary');
+        if (accountLink) accountLink.click();
+      });
+      trendCell.appendChild(button);
+    });
+
+    if (!document.getElementById("fx-final-market-patch-style")) {
+      const style = document.createElement("style");
+      style.id = "fx-final-market-patch-style";
+      style.textContent = `
+        html body .fx-market-table td:nth-child(6)::after { display:none !important; }
+        html body .fx-market-table td:nth-child(6) { padding-right:76px !important; }
+        html body .fx-trade-action {
+          position:absolute;
+          top:50%;
+          right:9px;
+          transform:translateY(-50%);
+          min-width:55px;
+          height:25px;
+          display:inline-flex;
+          align-items:center;
+          justify-content:center;
+          border:1px solid rgba(12,169,247,.62);
+          border-radius:5px;
+          color:#dff5ff;
+          background:rgba(3,28,47,.76);
+          box-shadow:inset 0 0 12px rgba(11,174,255,.05);
+          font:700 8px/1 Inter,Arial,sans-serif;
+          cursor:pointer;
+        }
+        html body .fx-trade-action:hover {
+          border-color:#16a9ff;
+          background:rgba(8,53,79,.9);
+          color:#fff;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    return true;
+  };
+
+  if (!installFinalMarketPatch()) {
+    const observer = new MutationObserver(() => {
+      if (installFinalMarketPatch()) observer.disconnect();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 })();
