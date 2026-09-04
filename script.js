@@ -438,6 +438,8 @@ function initFxMarketOverview() {
   requestAnimationFrame(setFallbackSpeed);
   window.addEventListener("resize", setFallbackSpeed, { passive: true });
 
+  // Try the live TradingView ticker feed. If it cannot load,
+  // the animated local fallback remains visible and functional.
   import("https://www.tradingview-widget.com/w/en/tv-ticker-tape.js")
     .then(() => {
       const ticker = document.createElement("tv-ticker-tape");
