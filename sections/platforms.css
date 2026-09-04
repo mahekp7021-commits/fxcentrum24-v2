@@ -298,6 +298,16 @@
   to { opacity: 1; transform: none; }
 }
 
+/* The current hero-lock stylesheet gives every direct lower section
+   a generic dark background/min-height. Section 04 must own those
+   values so it renders as designed. */
+main > section.platforms-section {
+  min-height: 0;
+  background:
+    radial-gradient(circle at 52% 48%, rgba(17,151,236,.18), transparent 34%),
+    linear-gradient(135deg, #061a2c 0%, #082b47 48%, #061524 100%);
+}
+
 @media (max-width: 1040px) {
   .platforms-inner {
     grid-template-columns: minmax(270px, .9fr) minmax(330px, 1.1fr);
