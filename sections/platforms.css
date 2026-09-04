@@ -29,6 +29,14 @@
 .platform-open-account{height:38px;min-width:150px;margin-top:1px;padding:0 15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:5px;background:#ff344d;color:#fff;font-size:10px;font-weight:800;box-shadow:0 8px 22px rgba(255,52,77,.2)}.platform-open-account b{font-size:15px;line-height:0}
 .platforms-section .platforms-copy>* ,.platforms-section .platforms-visual,.platforms-section .platforms-steps{animation:platformContentIn .55s ease both}.platforms-section .platforms-title{animation-delay:.06s}.platforms-section .platforms-description{animation-delay:.11s}.platforms-section .platform-tabs{animation-delay:.16s}.platforms-section .platform-features{animation-delay:.21s}.platforms-section .platform-actions{animation-delay:.26s}.platforms-section .platforms-visual{animation-delay:.12s}.platforms-section .platforms-steps{animation-delay:.18s}
 @keyframes platformContentIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+
+/* FINAL PRODUCT FIXES */
+/* Never render two copies of the platforms block if an old cached include remains. */
+.platforms-section + .platforms-section{display:none!important}
+/* The third feature must explicitly name the supported platforms. */
+.platform-features li:nth-child(3){font-size:0}
+.platform-features li:nth-child(3)::after{content:"Available on Desktop, Android mobile and web";font-size:9.5px}
+
 @media(max-width:1100px){.platforms-inner{width:calc(100% - 64px);grid-template-columns:330px minmax(0,1fr) 230px;column-gap:14px}.platforms-title{font-size:27px}.platforms-device-image{width:570px}.platforms-steps{padding-left:11px}.platform-step{gap:8px}}
 @media(max-width:820px){.platforms-inner{width:90%;height:auto;padding:38px 0;display:flex;flex-direction:column;gap:26px;align-items:stretch}.platforms-title{font-size:32px;white-space:normal}.platforms-visual{height:285px;order:2}.platforms-device-image{width:min(700px,110%);max-height:255px}.platform-downloads{bottom:8px}.platforms-steps{order:3;height:auto;padding:25px 0 0;border-left:0;border-top:1px solid rgba(73,142,182,.35)}.platforms-steps-title{white-space:normal}.platform-step{min-height:52px}}
 @media(prefers-reduced-motion:reduce){.platforms-section *{animation:none!important;transition:none!important}}
