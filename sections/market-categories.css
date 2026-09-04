@@ -211,6 +211,7 @@
   background: #f7fafc !important;
   border-top: 1px solid rgba(11, 42, 66, .12) !important;
   border-bottom: 1px solid rgba(11, 42, 66, .12) !important;
+  min-height: 0 !important;
 }
 
 .market-categories-inner {
@@ -265,15 +266,9 @@
   margin-top: 11px !important;
 }
 
-/* Prevent any second copy, even when separated by another DOM node. */
 .market-categories ~ .market-categories {
   display: none !important;
 }
-
-/* =========================================================
-   FINAL CARD ART — APPROVED WEBP ASSETS
-   Upload to: assets/market-categories/
-========================================================= */
 
 .market-category-art {
   background-position: center;
@@ -305,7 +300,6 @@
   background-image: url("../assets/market-categories/cryptocurrency.webp");
 }
 
-/* Text animation: always visible, with a premium staggered entrance. */
 .market-category-content h3,
 .market-category-content p,
 .market-category-content > span {
@@ -342,4 +336,23 @@
     padding: 18px 0 20px !important;
   }
   .market-category-card { height: 142px !important; }
+}
+
+/* =========================================================
+   FINAL DEMO FIX — REMOVE THE GLOBAL LOWER-SECTION GAP
+   The global stylesheet gives every lower section a 360px
+   minimum height. Market Categories is a compact card strip,
+   so that rule was creating the large white void before the
+   Platforms section.
+========================================================= */
+main > section.market-categories,
+.market-categories {
+  min-height: 0 !important;
+  height: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.market-categories-inner {
+  padding-bottom: 14px !important;
 }
