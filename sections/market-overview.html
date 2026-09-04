@@ -2,6 +2,55 @@
      MARKET OVERVIEW — SECTION 02
      Loaded after the locked hero. Do not modify hero markup.
      ========================================================= -->
+
+<style>
+/* =========================================================
+   SECTION 02 TICKER CORRECTION — ADDITIVE ONLY
+   Keep the completed hero content intact while visually placing
+   its existing ticker at the top edge of Section 02.
+   ========================================================= */
+.hero {
+  overflow: visible;
+  z-index: 5;
+}
+
+.fx-market-section {
+  position: relative;
+  z-index: 1;
+  padding-top: 92px;
+}
+
+.hero-ticker {
+  position: absolute;
+  right: 0;
+  bottom: -46px;
+  left: 0;
+  z-index: 30;
+}
+
+/* Remove the duplicate ticker that was previously injected into the section. */
+.fx-live-ticker-wrap {
+  display: none !important;
+}
+
+/* Give the existing market strip a subtle continuous motion. */
+.hero-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: fxTickerRun 24s linear infinite;
+  will-change: transform;
+}
+
+@keyframes fxTickerRun {
+  from { transform: translateX(0); }
+  to { transform: translateX(-28%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ticker-track { animation: none; }
+}
+</style>
+
 <section class="fx-market-section" id="markets" aria-labelledby="marketSectionTitle">
   <div class="fx-market-shell">
 
