@@ -540,3 +540,56 @@ function initFxMarketOverview() {
     observer.observe(document.body, { childList: true, subtree: true });
   }
 })();
+
+
+/* =========================================================
+   FXCENTRUM24 — SECTION 03: TRADE OUR GLOBAL MARKETS
+   Additive loader only. The existing Hero and Section 02 are
+   not rewritten or structurally altered.
+   ========================================================= */
+
+(() => {
+  const loadMarketCategories = async () => {
+    if (document.querySelector(".market-categories")) return true;
+
+    const marketSection = document.querySelector(".fx-market-section");
+    if (!marketSection) return false;
+
+    try {
+      const cssId = "fx-market-categories-css";
+      if (!document.getElementById(cssId)) {
+        const link = document.createElement("link");
+        link.id = cssId;
+        link.rel = "stylesheet";
+        link.href = "./sections/market-categories.css";
+        document.head.appendChild(link);
+      }
+
+      const response = await fetch("./sections/market-categories.html", { cache: "no-cache" });
+      if (!response.ok) throw new Error(`Market categories HTTP ${response.status}`);
+
+      const markup = await response.text();
+      marketSection.insertAdjacentHTML("afterend", markup);
+      return true;
+    } catch (error) {
+      console.error("FXCentrum24 market categories failed to load:", error);
+      return false;
+    }
+  };
+
+  const start = () => {
+    if (loadMarketCategories()) return;
+
+    const observer = new MutationObserver(async () => {
+      if (await loadMarketCategories()) observer.disconnect();
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start, { once: true });
+  } else {
+    start();
+  }
+})();
