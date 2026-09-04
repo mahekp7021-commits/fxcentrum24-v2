@@ -319,3 +319,73 @@ function initFxMarketOverview() {
       if (loading) loading.textContent = "Market chart unavailable";
     });
 }
+
+
+/* =========================================================
+   FXCENTRUM24 — SECTION 02 LIVE TICKER POLISH
+   Additive patch only. Does not replace hero or market markup.
+   TradingView's current Web Component ticker provides the
+   running market feed; the custom section remains intact.
+   ========================================================= */
+
+(() => {
+  const mountLiveTicker = async () => {
+    const section = document.querySelector(".fx-market-section");
+    if (!section || section.dataset.liveTickerMounted === "true") return;
+    section.dataset.liveTickerMounted = "true";
+
+    const wrap = document.createElement("div");
+    wrap.className = "fx-live-ticker-wrap";
+    wrap.setAttribute("aria-label", "Live market ticker");
+    wrap.innerHTML = `
+      <div class="fx-live-ticker-fallback">
+        <strong>LIVE MARKETS</strong>
+        <span>Loading current market prices…</span>
+      </div>
+    `;
+
+    const shell = section.querySelector(".fx-market-shell");
+    if (!shell) return;
+    shell.insertBefore(wrap, shell.firstElementChild);
+
+    try {
+      await import("https://www.tradingview-widget.com/w/en/tv-ticker-tape.js");
+
+      const ticker = document.createElement("tv-ticker-tape");
+      ticker.setAttribute(
+        "symbols",
+        "FX:EURUSD,FX:GBPUSD,FX:USDJPY,OANDA:XAUUSD,TVC:DJI,BITSTAMP:BTCUSD"
+      );
+      ticker.setAttribute("theme", "dark");
+      ticker.setAttribute("transparent", "");
+      ticker.setAttribute("locale", "en");
+      ticker.setAttribute("item-size", "compact");
+      ticker.setAttribute("show-hover", "false");
+
+      wrap.replaceChildren(ticker);
+    } catch (error) {
+      console.error("FXCentrum24 live ticker failed to load:", error);
+    }
+  };
+
+  const observeForMarketSection = () => {
+    mountLiveTicker();
+
+    if (document.querySelector(".fx-market-section")) return;
+
+    const observer = new MutationObserver(() => {
+      if (document.querySelector(".fx-market-section")) {
+        observer.disconnect();
+        mountLiveTicker();
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", observeForMarketSection, { once: true });
+  } else {
+    observeForMarketSection();
+  }
+})();
