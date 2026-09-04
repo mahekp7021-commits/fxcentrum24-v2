@@ -204,10 +204,7 @@
 
 /* =========================================================
    FINAL VISUAL LOCK
-   Additive override only.
-   The reference has ONE compact light section immediately
-   after the completed market overview — no second copy.
-========================================================= */
+   ========================================================= */
 
 .market-categories {
   background: #f7fafc !important;
@@ -267,19 +264,97 @@
   margin-top: 11px !important;
 }
 
-/* If the loader and static markup both exist, keep only the final
-   adjacent instance so the section can never appear twice. */
-.market-categories + .market-categories {
+/* Never allow a second rendered copy of this section. */
+.market-categories ~ .market-categories {
   display: none !important;
 }
 
+/* =========================================================
+   FINAL CARD ART — USE THE APPROVED WEBP ASSETS
+   Upload these files to: assets/market-categories/
+========================================================= */
+
+.market-category-art {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.market-category-art svg {
+  display: none !important;
+}
+
+.market-category-forex .market-category-art {
+  background-image: url("../assets/market-categories/forex.webp");
+}
+
+.market-category-commodities .market-category-art {
+  background-image: url("../assets/market-categories/commodities.webp");
+}
+
+.market-category-indices .market-category-art {
+  background-image: url("../assets/market-categories/indices.webp");
+}
+
+.market-category-shares .market-category-art {
+  background-image: url("../assets/market-categories/shares-cfds.webp");
+}
+
+.market-category-crypto .market-category-art {
+  background-image: url("../assets/market-categories/cryptocurrency.webp");
+}
+
+/* Premium text motion: content enters independently from the artwork. */
+.market-category-content {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition: opacity .55s ease, transform .55s cubic-bezier(.2,.7,.2,1);
+}
+
+.market-category-card:hover .market-category-content,
+.market-category-card:focus-visible .market-category-content {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.market-category-card.is-visible .market-category-content,
+.market-category-card:hover .market-category-content,
+.market-category-card:focus-visible .market-category-content {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.market-category-content h3,
+.market-category-content p,
+.market-category-content > span {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.market-category-card.is-visible .market-category-content h3,
+.market-category-card.is-visible .market-category-content p,
+.market-category-card.is-visible .market-category-content > span,
+.market-category-card:hover .market-category-content h3,
+.market-category-card:hover .market-category-content p,
+.market-category-card:hover .market-category-content > span,
+.market-category-card:focus-visible .market-category-content h3,
+.market-category-card:focus-visible .market-category-content p,
+.market-category-card:focus-visible .market-category-content > span {
+  animation: marketCategoryTextIn .48s cubic-bezier(.2,.7,.2,1) forwards;
+}
+
+.market-category-card.is-visible .market-category-content p,
+.market-category-card:hover .market-category-content p { animation-delay: .07s; }
+.market-category-card.is-visible .market-category-content > span,
+.market-category-card:hover .market-category-content > span { animation-delay: .14s; }
+
+@keyframes marketCategoryTextIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 1080px) {
-  .market-categories-inner {
-    width: 94% !important;
-  }
-  .market-category-card {
-    height: 136px !important;
-  }
+  .market-categories-inner { width: 94% !important; }
+  .market-category-card { height: 136px !important; }
 }
 
 @media (max-width: 700px) {
@@ -287,7 +362,16 @@
     width: 92% !important;
     padding: 18px 0 20px !important;
   }
-  .market-category-card {
-    height: 142px !important;
+  .market-category-card { height: 142px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .market-category-content,
+  .market-category-content h3,
+  .market-category-content p,
+  .market-category-content > span {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
 }
