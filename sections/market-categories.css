@@ -201,3 +201,93 @@
   .market-category-content > span,
   .market-categories-link { animation: none; transition: none; }
 }
+
+/* =========================================================
+   FINAL VISUAL LOCK
+   Additive override only.
+   The reference has ONE compact light section immediately
+   after the completed market overview — no second copy.
+========================================================= */
+
+.market-categories {
+  background: #f7fafc !important;
+  border-top: 1px solid rgba(11, 42, 66, .12) !important;
+  border-bottom: 1px solid rgba(11, 42, 66, .12) !important;
+}
+
+.market-categories-inner {
+  width: min(1280px, calc(100% - 92px)) !important;
+  padding: 18px 0 20px !important;
+}
+
+.market-categories-heading {
+  margin-bottom: 12px !important;
+  align-items: center !important;
+}
+
+.market-categories-eyebrow {
+  margin-bottom: 4px !important;
+  font-size: 10px !important;
+}
+
+.market-categories-heading h2 {
+  font-size: clamp(26px, 2.15vw, 31px) !important;
+  letter-spacing: -1px !important;
+}
+
+.market-categories-link {
+  font-size: 11px !important;
+  padding-bottom: 5px !important;
+}
+
+.market-category-grid {
+  gap: 12px !important;
+}
+
+.market-category-card {
+  height: 124px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 6px 18px rgba(4, 22, 39, .11) !important;
+}
+
+.market-category-content {
+  inset: auto 15px 12px !important;
+}
+
+.market-category-content h3 {
+  font-size: 16px !important;
+}
+
+.market-category-content p,
+.market-category-content > span {
+  font-size: 9px !important;
+}
+
+.market-category-content > span {
+  margin-top: 11px !important;
+}
+
+/* If the loader and static markup both exist, keep only the final
+   adjacent instance so the section can never appear twice. */
+.market-categories + .market-categories {
+  display: none !important;
+}
+
+@media (max-width: 1080px) {
+  .market-categories-inner {
+    width: 94% !important;
+  }
+  .market-category-card {
+    height: 136px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .market-categories-inner {
+    width: 92% !important;
+    padding: 18px 0 20px !important;
+  }
+  .market-category-card {
+    height: 142px !important;
+  }
+}
