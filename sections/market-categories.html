@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="./sections/platforms.css">
+
 <!-- TRADE OUR GLOBAL MARKETS -->
 <section class="market-categories" id="market-categories" aria-labelledby="marketCategoriesTitle">
   <div class="market-categories-inner">
@@ -18,25 +20,32 @@
   </div>
 </section>
 
-<!-- SECTION 04: POWERFUL TRADING PLATFORMS -->
-<style>@import url("./sections/platforms.css");</style>
+<!-- =========================================================
+     SECTION 04 — POWERFUL TRADING PLATFORMS
+     Single source of truth: this block is attached directly
+     after the market categories section so it cannot disappear
+     because of a missing asynchronous loader.
+========================================================= -->
 <section class="platforms-section" id="platforms" aria-labelledby="platformsTitle">
   <div class="platforms-inner">
     <div class="platforms-copy">
       <p class="platforms-eyebrow">POWERFUL TRADING PLATFORMS</p>
       <h2 class="platforms-title" id="platformsTitle">Trade Anytime. Anywhere.</h2>
       <p class="platforms-description">Experience cutting-edge platforms designed for traders of all levels.</p>
+
       <div class="platform-tabs" role="tablist" aria-label="Trading platforms">
         <button class="platform-tab is-active" type="button" role="tab" aria-selected="true">MetaTrader 4</button>
         <button class="platform-tab" type="button" role="tab" aria-selected="false">MetaTrader 5</button>
         <button class="platform-tab" type="button" role="tab" aria-selected="false">WebTrader</button>
       </div>
+
       <ul class="platform-features">
         <li>Advanced charting tools</li>
         <li>Wide range of indicators</li>
         <li>Available on Desktop, Android mobile and web</li>
         <li>Trusted by millions of traders</li>
       </ul>
+
       <div class="platform-actions">
         <a class="platform-action" href="#platforms">Compare Platforms <b aria-hidden="true">→</b></a>
       </div>
