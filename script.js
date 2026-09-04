@@ -323,7 +323,7 @@ function initFxMarketOverview() {
 
 /* =========================================================
    FXCENTRUM24 — SECTION 02 LIVE TICKER POLISH
-   Additive patch only. Does not replace hero or market markup.
+   Additive only. Does not replace hero or market markup.
    TradingView's current Web Component ticker provides the
    running market feed; the custom section remains intact.
    ========================================================= */
@@ -388,4 +388,76 @@ function initFxMarketOverview() {
   } else {
     observeForMarketSection();
   }
+})();
+
+
+/* =========================================================
+   FXCENTRUM24 — HERO LIVE MARKET TAPE
+   Additive patch: only enhances the existing hero ticker.
+   ========================================================= */
+
+(() => {
+  const heroTicker = document.querySelector(".hero-ticker");
+  const track = heroTicker?.querySelector(".hero-ticker-track");
+  if (!heroTicker || !track) return;
+
+  const markets = [
+    { flag: "🇪🇺", symbol: "EURUSD", value: "1.0987", change: "+0.24%", tone: "positive" },
+    { flag: "🇬🇧", symbol: "GBPUSD", value: "1.2794", change: "-0.12%", tone: "negative" },
+    { flag: "🇺🇸", symbol: "USDJPY", value: "149.32", change: "+0.31%", tone: "positive" },
+    { flag: "🟡", symbol: "XAUUSD", value: "2,447.32", change: "+0.18%", tone: "positive" },
+    { flag: "🇺🇸", symbol: "US30", value: "40,823.6", change: "+0.36%", tone: "positive" },
+    { flag: "₿", symbol: "BTCUSD", value: "112,840", change: "+1.12%", tone: "positive" }
+  ];
+
+  const createItems = () => markets.map(market => {
+    const item = document.createElement("span");
+    item.className = "hero-ticker-item";
+    item.innerHTML = `
+      <span class="hero-ticker-icon" aria-hidden="true">${market.flag}</span>
+      <strong>${market.symbol}</strong>
+      <b>${market.value}</b>
+      <i class="${market.tone}">${market.change}</i>
+    `;
+    return item;
+  });
+
+  const fallback = document.createElement("div");
+  fallback.className = "hero-ticker-fallback-track";
+  fallback.append(...createItems(), ...createItems());
+
+  track.replaceChildren(fallback);
+
+  const setFallbackSpeed = () => {
+    const firstSet = [...fallback.children].slice(0, markets.length);
+    const gap = parseFloat(getComputedStyle(fallback).gap) || 0;
+    const width = firstSet.reduce((total, item) => total + item.getBoundingClientRect().width, 0) + gap * (markets.length - 1);
+    fallback.style.setProperty("--hero-ticker-distance", `${width}px`);
+  };
+
+  requestAnimationFrame(setFallbackSpeed);
+  window.addEventListener("resize", setFallbackSpeed, { passive: true });
+
+  // Try the live TradingView ticker feed. If it cannot load,
+  // the animated local fallback remains visible and functional.
+  import("https://www.tradingview-widget.com/w/en/tv-ticker-tape.js")
+    .then(() => {
+      const ticker = document.createElement("tv-ticker-tape");
+      ticker.setAttribute(
+        "symbols",
+        "FX:EURUSD,FX:GBPUSD,FX:USDJPY,OANDA:XAUUSD,TVC:DJI,BITSTAMP:BTCUSD"
+      );
+      ticker.setAttribute("theme", "dark");
+      ticker.setAttribute("transparent", "");
+      ticker.setAttribute("locale", "en");
+      ticker.setAttribute("item-size", "compact");
+      ticker.setAttribute("show-hover", "false");
+
+      ticker.className = "hero-tradingview-ticker";
+      track.replaceChildren(ticker);
+      heroTicker.classList.add("is-live");
+    })
+    .catch(error => {
+      console.warn("Hero TradingView ticker unavailable; using animated fallback.", error);
+    });
 })();
