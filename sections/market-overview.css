@@ -300,7 +300,6 @@
   .fx-market-tabs { min-height: 48px; }
   .fx-market-tab { min-width: 92px; padding: 0 12px; font-size: 10px; }
   .fx-chart-container { height: 350px; min-height: 350px; }
-  .fx-chart-footer > div { padding: 11px 10px; }
 }
 
 @media (max-width: 480px) {
@@ -316,4 +315,154 @@
 @media (prefers-reduced-motion: reduce) {
   .fx-chart-loading span { animation: none; }
   .fx-market-all { transition: none; }
+}
+
+/* =========================================================
+   SECTION 02 POLISH — ADDITIVE ONLY
+   This block is appended intentionally. Existing rules above
+   remain untouched so the completed hero/section structure stays safe.
+   ========================================================= */
+
+.fx-market-section {
+  min-height: 0;
+  padding: 64px 0 72px;
+  background:
+    radial-gradient(circle at 78% 8%, rgba(9,145,226,.075), transparent 26%),
+    linear-gradient(180deg, #03101d 0%, #020b14 100%);
+}
+
+.fx-market-shell {
+  width: min(1260px, calc(100% - 80px));
+}
+
+.fx-market-heading {
+  align-items: flex-end;
+  margin-bottom: 26px;
+}
+
+.fx-market-heading h2 {
+  font-size: clamp(34px, 3.05vw, 44px);
+  letter-spacing: -1.9px;
+}
+
+.fx-market-subtitle {
+  max-width: 620px;
+  font-size: 13px;
+}
+
+.fx-market-grid {
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr);
+  gap: 20px;
+}
+
+.fx-market-board,
+.fx-chart-card {
+  border-radius: 10px;
+  box-shadow: 0 18px 48px rgba(0,0,0,.22);
+}
+
+.fx-market-board {
+  align-self: start;
+}
+
+.fx-market-tabs {
+  min-height: 50px;
+}
+
+.fx-market-tab {
+  min-width: 0;
+  padding: 0 14px;
+}
+
+.fx-market-table {
+  min-width: 620px;
+}
+
+.fx-market-table th {
+  height: 40px;
+  padding: 0 12px;
+}
+
+.fx-market-table td {
+  height: 56px;
+  padding: 6px 12px;
+}
+
+.fx-market-note {
+  min-height: 36px;
+}
+
+.fx-chart-container {
+  height: 368px;
+  min-height: 368px;
+}
+
+.fx-chart-head {
+  min-height: 60px;
+}
+
+.fx-chart-footer > div {
+  padding: 11px 14px;
+}
+
+/* Real TradingView ticker strip is injected by the additive JS patch. */
+.fx-live-ticker-wrap {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  margin: 0 0 30px;
+  min-height: 46px;
+  overflow: hidden;
+  border-top: 1px solid rgba(57,111,143,.24);
+  border-bottom: 1px solid rgba(57,111,143,.24);
+  background: rgba(2,12,21,.52);
+}
+
+.fx-live-ticker-wrap tv-ticker-tape {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  --tv-widget-background-color: transparent;
+  --tv-widget-font-family: Inter, system-ui, sans-serif;
+}
+
+.fx-live-ticker-fallback {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 18px;
+  color: #718ba0;
+  font-size: 9px;
+  letter-spacing: .4px;
+}
+
+.fx-live-ticker-fallback strong {
+  margin-right: 12px;
+  color: #0baeff;
+  font-size: 8px;
+  letter-spacing: 1.1px;
+}
+
+@media (max-width: 1080px) {
+  .fx-market-grid { grid-template-columns: 1fr; }
+  .fx-market-board { width: 100%; }
+  .fx-chart-container { height: 390px; min-height: 390px; }
+}
+
+@media (max-width: 720px) {
+  .fx-market-section { padding: 52px 0 62px; }
+  .fx-market-shell { width: calc(100% - 32px); }
+  .fx-market-heading { margin-bottom: 20px; }
+  .fx-market-heading h2 { font-size: 31px; }
+  .fx-market-grid { gap: 15px; }
+  .fx-market-tab { min-width: 112px; }
+  .fx-chart-container { height: 340px; min-height: 340px; }
+  .fx-live-ticker-wrap { margin-bottom: 24px; }
+}
+
+@media (max-width: 480px) {
+  .fx-market-shell { width: calc(100% - 24px); }
+  .fx-market-heading h2 { font-size: 29px; }
+  .fx-market-subtitle { font-size: 12px; }
+  .fx-chart-container { height: 300px; min-height: 300px; }
 }
