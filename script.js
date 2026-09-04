@@ -577,8 +577,8 @@ function initFxMarketOverview() {
     }
   };
 
-  const start = () => {
-    if (loadMarketCategories()) return;
+  const start = async () => {
+    if (await loadMarketCategories()) return;
 
     const observer = new MutationObserver(async () => {
       if (await loadMarketCategories()) observer.disconnect();
