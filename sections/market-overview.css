@@ -466,3 +466,279 @@
   .fx-market-subtitle { font-size: 12px; }
   .fx-chart-container { height: 300px; min-height: 300px; }
 }
+
+/* =========================================================
+   FINAL VISUAL ALIGNMENT — ADDITIVE ONLY
+   Reference target: compact two-panel market block with matched
+   card heights, 45/55 visual balance, and hero ticker locked to
+   the hero bottom edge. No earlier rules are rewritten.
+   ========================================================= */
+
+/* Keep the running tape inside the completed hero, directly at its bottom. */
+html body .hero {
+  overflow: visible !important;
+  z-index: 5 !important;
+}
+
+html body .hero-ticker {
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 120 !important;
+  height: 58px !important;
+  background: #04182a !important;
+  border-top-color: rgba(38,128,173,.55) !important;
+  border-bottom-color: rgba(16,90,126,.48) !important;
+}
+
+html body .hero-ticker-label {
+  flex-basis: 142px !important;
+  padding: 0 22px !important;
+  background: #061d31 !important;
+  font-size: 11px !important;
+}
+
+html body .hero-ticker-item {
+  min-width: 190px !important;
+  height: 58px !important;
+  padding: 0 18px !important;
+}
+
+/* The duplicate section ticker stays suppressed; only the hero tape is used. */
+html body .fx-live-ticker-wrap {
+  display: none !important;
+}
+
+/* Reference-like section proportions. */
+html body .fx-market-section {
+  padding-top: 46px !important;
+  padding-bottom: 58px !important;
+}
+
+html body .fx-market-shell {
+  width: min(1260px, 91%) !important;
+}
+
+html body .fx-market-heading {
+  margin-bottom: 22px !important;
+}
+
+html body .fx-market-heading h2 {
+  font-size: clamp(34px, 3vw, 41px) !important;
+  letter-spacing: -1.75px !important;
+}
+
+html body .fx-market-subtitle {
+  margin-top: 8px !important;
+  font-size: 12px !important;
+}
+
+html body .fx-market-grid {
+  grid-template-columns: minmax(0, .45fr) minmax(0, .55fr) !important;
+  gap: 26px !important;
+  align-items: stretch !important;
+}
+
+html body .fx-market-board,
+html body .fx-chart-card {
+  height: 286px !important;
+  min-height: 286px !important;
+  border-radius: 9px !important;
+}
+
+/* Compact five-row reference table. XAUUSD and US30 are included in the
+   initial visual market snapshot while the category tabs remain functional. */
+html body .fx-market-tabs {
+  min-height: 40px !important;
+}
+
+html body .fx-market-tab {
+  min-width: 0 !important;
+  padding: 0 10px !important;
+  font-size: 10px !important;
+}
+
+html body .fx-market-table {
+  min-width: 0 !important;
+}
+
+html body .fx-market-table th {
+  height: 32px !important;
+  padding: 0 10px !important;
+  font-size: 8px !important;
+}
+
+html body .fx-market-table td {
+  height: 35px !important;
+  padding: 4px 10px !important;
+  font-size: 9px !important;
+}
+
+html body .fx-market-table td:first-child strong {
+  font-size: 9px !important;
+}
+
+html body .fx-market-table td:first-child small {
+  margin-top: 1px !important;
+  font-size: 7px !important;
+}
+
+html body .fx-market-table td svg {
+  width: 70px !important;
+  height: 21px !important;
+}
+
+/* Match the reference by using five compact columns: Symbol, Bid, Ask,
+   Change and Trend. The existing 24H data remains in the DOM but is hidden. */
+html body .fx-market-table th:nth-child(5),
+html body .fx-market-table td:nth-child(5) {
+  display: none !important;
+}
+
+html body .fx-market-table th:nth-child(1) { width: 27% !important; }
+html body .fx-market-table th:nth-child(2),
+html body .fx-market-table th:nth-child(3) { width: 15% !important; }
+html body .fx-market-table th:nth-child(4) { width: 15% !important; }
+html body .fx-market-table th:nth-child(6) { width: 28% !important; }
+
+html body .fx-market-note {
+  min-height: 27px !important;
+  padding: 0 10px !important;
+  gap: 6px !important;
+  font-size: 7px !important;
+}
+
+html body .fx-live-dot {
+  width: 5px !important;
+  height: 5px !important;
+  flex-basis: 5px !important;
+}
+
+/* Initial Forex view: show the same five visual instruments as the reference. */
+html body .fx-market-section:has(.fx-market-tab[data-market-tab="forex"].is-active) .fx-market-table tr[data-market-category="commodities"],
+html body .fx-market-section:has(.fx-market-tab[data-market-tab="forex"].is-active) .fx-market-table tr[data-market-category="indices"] {
+  display: table-row !important;
+}
+
+html body .fx-market-section:has(.fx-market-tab[data-market-tab="forex"].is-active) .fx-market-table tr[data-market-category="shares"],
+html body .fx-market-section:has(.fx-market-tab[data-market-tab="forex"].is-active) .fx-market-table tr[data-market-category="crypto"] {
+  display: none !important;
+}
+
+/* The reference has a compact Trade action at the right edge of each row.
+   It is visual-only for this section stage; the existing table data stays intact. */
+html body .fx-market-table td:nth-child(6) {
+  position: relative !important;
+  padding-right: 76px !important;
+}
+
+html body .fx-market-table td:nth-child(6)::after {
+  content: "Trade";
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  transform: translateY(-50%);
+  min-width: 55px;
+  height: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(12,169,247,.62);
+  border-radius: 5px;
+  color: #dff5ff;
+  background: rgba(3,28,47,.76);
+  box-shadow: inset 0 0 12px rgba(11,174,255,.05);
+  font-size: 8px;
+  font-weight: 700;
+}
+
+/* Matched chart height: header + compact chart + footer = same 286px card. */
+html body .fx-chart-head {
+  min-height: 48px !important;
+  height: 48px !important;
+  padding: 0 13px !important;
+}
+
+html body .fx-chart-icon {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 7px !important;
+}
+
+html body .fx-chart-symbol strong { font-size: 11px !important; }
+html body .fx-chart-symbol small { font-size: 7px !important; }
+html body .fx-chart-status { font-size: 7px !important; }
+
+html body .fx-chart-container {
+  height: 181px !important;
+  min-height: 181px !important;
+}
+
+html body .fx-chart-footer {
+  min-height: 57px !important;
+}
+
+html body .fx-chart-footer > div {
+  padding: 9px 11px !important;
+}
+
+html body .fx-chart-footer small { font-size: 7px !important; }
+html body .fx-chart-footer strong { margin-top: 3px !important; font-size: 9px !important; }
+
+@media (max-width: 1080px) {
+  html body .fx-market-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  html body .fx-market-board,
+  html body .fx-chart-card {
+    height: auto !important;
+    min-height: 286px !important;
+  }
+
+  html body .fx-chart-container {
+    height: 190px !important;
+    min-height: 190px !important;
+  }
+}
+
+@media (max-width: 720px) {
+  html body .fx-market-section {
+    padding-top: 38px !important;
+  }
+
+  html body .fx-market-shell {
+    width: calc(100% - 28px) !important;
+  }
+
+  html body .fx-market-heading h2 {
+    font-size: 31px !important;
+  }
+
+  html body .fx-market-grid {
+    gap: 15px !important;
+  }
+
+  html body .fx-market-board,
+  html body .fx-chart-card {
+    min-height: 0 !important;
+  }
+
+  html body .fx-market-table {
+    min-width: 600px !important;
+  }
+
+  html body .fx-chart-container {
+    height: 310px !important;
+    min-height: 310px !important;
+  }
+
+  html body .hero-ticker-label {
+    flex-basis: 105px !important;
+    padding: 0 13px !important;
+  }
+
+  html body .hero-ticker-item {
+    min-width: 175px !important;
+  }
+}
