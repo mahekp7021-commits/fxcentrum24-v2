@@ -233,6 +233,21 @@ button{font:inherit}
   .provider-cover:before{width:8px;height:8px;margin-right:7px}
 }
 
+
+/* Finlogix category tabs: force high-contrast text inside the provider widget */
+.widget-frame.symbol-list .finlogix-container,
+.widget-frame.symbol-list .finlogix-container *{
+  color:#111827 !important;
+}
+.widget-frame.symbol-list .finlogix-container a,
+.widget-frame.symbol-list .finlogix-container button{
+  color:#111827 !important;
+}
+.widget-frame.symbol-list .finlogix-container [class*="active"],
+.widget-frame.symbol-list .finlogix-container [aria-selected="true"]{
+  color:#111827 !important;
+}
+
 </style>
 </head>
 <body>
@@ -421,6 +436,36 @@ Widget.init({
       items.forEach(x=>x.classList.remove("is-open"));
     }
   });
+})();
+</script>
+
+
+<script>
+(() => {
+  const widget = document.getElementById("finlogixWidget");
+  if (!widget) return;
+
+  const forceWidgetTabContrast = () => {
+    // The category bar is the first navigation-like row in the SymbolList.
+    // Keep this deliberately scoped so quote colors remain provider-controlled.
+    const candidates = widget.querySelectorAll('a,button,[role="button"],[role="tab"]');
+    candidates.forEach(el => {
+      const label = (el.textContent || "").trim();
+      const known = /^(Forex|Commodities|CryptoCurrency|Cryptocurrency|Indices|Stocks|ETFs|Futures)$/i.test(label);
+      if (known) {
+        el.style.setProperty("color", "#111827", "important");
+        el.style.setProperty("font-weight", "700", "important");
+        el.style.textDecoration = "none";
+      }
+    });
+  };
+
+  const observer = new MutationObserver(forceWidgetTabContrast);
+  observer.observe(widget, {childList:true, subtree:true, attributes:true, attributeFilter:["class","style","aria-selected"]});
+
+  setTimeout(forceWidgetTabContrast, 600);
+  setTimeout(forceWidgetTabContrast, 1500);
+  setTimeout(forceWidgetTabContrast, 3000);
 })();
 </script>
 
