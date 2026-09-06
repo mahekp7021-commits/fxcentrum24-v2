@@ -2,24 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Explore the FXCentrum24 partnership program, referral structure, reporting and partner account benefits.">
+<meta name="description" content="FXCentrum24 Partner Account Registration">
 <meta name="theme-color" content="#06111f">
-<title>Partnership | FXCentrum24</title>
+<title>Open Partner Account | FXCentrum24</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#06111f;--bg2:#081827;--panel:#0a1b2d;--panel2:#0c2237;
+  --bg:#06111f;--bg2:#081827;--panel:#0a1b2d;--panel2:#0d2439;
   --text:#f7fbff;--muted:#96aabd;--muted2:#71879c;--blue:#00a8ff;
-  --red:#ff3154;--red2:#ff4766;--green:#00d49a;--border:rgba(120,180,220,.14);
-  --container:1320px
+  --green:#00d49a;--red:#ff3154;--red2:#ff4766;--border:rgba(120,180,220,.14);
+  --container:1260px
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
-a{text-decoration:none;color:inherit}button{font:inherit}
+a{text-decoration:none;color:inherit}button,input,select,textarea{font:inherit}
 .container{width:min(calc(100% - 64px),var(--container));margin-inline:auto}
+
 .site-header{position:sticky;top:0;z-index:1000;background:rgba(5,16,29,.96);border-bottom:1px solid rgba(110,170,215,.12);backdrop-filter:blur(14px)}
 .header-inner{min-height:80px;display:flex;align-items:center;gap:24px}
 .brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
@@ -36,271 +36,270 @@ a{text-decoration:none;color:inherit}button{font:inherit}
 .dropdown a{display:flex;flex-direction:column;gap:3px;padding:12px 13px;border-radius:7px}.dropdown a:hover{background:rgba(0,168,255,.08)}
 .dropdown span{font-size:13px;font-weight:650}.dropdown small{font-size:10px;color:#71879d}
 .header-actions{display:flex;gap:9px;margin-left:auto}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;border-radius:8px;font-size:13px;font-weight:750;transition:.25s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;border-radius:8px;border:0;font-size:13px;font-weight:750;cursor:pointer;transition:.25s}
 .btn:hover{transform:translateY(-2px)}.btn-primary{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;box-shadow:0 12px 28px rgba(255,49,84,.16)}
 .btn-outline{border:1px solid rgba(120,180,220,.4);background:rgba(4,15,27,.24);color:#fff}.btn-outline:hover{border-color:var(--blue);background:rgba(0,168,255,.06)}
-.menu-toggle{display:none;margin-left:auto;width:48px;height:48px;border:1px solid rgba(120,180,220,.35);border-radius:8px;background:#071523}.menu-toggle span{display:block;width:20px;height:2px;margin:4px auto;background:#fff;border-radius:3px}
+.menu-toggle{display:none;margin-left:auto;width:48px;height:48px;border:1px solid rgba(120,180,220,.35);border-radius:8px;background:#071523}
+.menu-toggle span{display:block;width:20px;height:2px;margin:4px auto;background:#fff;border-radius:3px}
 
-.hero{position:relative;overflow:hidden;padding:86px 0 66px;background:radial-gradient(circle at 85% 20%,rgba(0,168,255,.13),transparent 34%),radial-gradient(circle at 12% 75%,rgba(255,49,84,.06),transparent 30%),linear-gradient(180deg,#071726,#06111f);border-bottom:1px solid rgba(120,180,220,.08)}
-.hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(0,168,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,168,255,.025) 1px,transparent 1px);background-size:62px 62px;pointer-events:none}
-.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.08fr .92fr;gap:44px;align-items:center}
-.eyebrow{margin:0 0 12px;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
-.hero h1{margin:0;font-size:clamp(47px,5.3vw,76px);line-height:.99;letter-spacing:-3px}.hero h1 span{color:var(--blue)}
-.hero-copy{max-width:760px;margin:18px 0 0;color:#a3b7ca;font-size:16px;line-height:1.8}
-.hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:27px}
-.hero-panel{padding:26px;border:1px solid rgba(0,168,255,.17);border-radius:21px;background:linear-gradient(145deg,#0b2338,#071725);box-shadow:0 24px 65px rgba(0,0,0,.24)}
-.hero-panel h3{margin:0 0 14px;font-size:18px}
-.metric{display:flex;justify-content:space-between;gap:18px;padding:15px 0;border-bottom:1px solid rgba(120,180,220,.08)}.metric:last-child{border-bottom:0}
-.metric span{color:#758ba0;font-size:11px}.metric strong{font-size:14px;color:#fff}.metric strong.accent{color:#00d49a}.metric strong.blue{color:#84d7ff}.metric strong.confidence{color:#00d49a}
+.hero{position:relative;overflow:hidden;padding:78px 0 55px;background:radial-gradient(circle at 78% 18%,rgba(0,168,255,.12),transparent 32%),linear-gradient(180deg,#071726,#06111f);border-bottom:1px solid rgba(120,180,220,.08)}
+.hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(0,168,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,168,255,.022) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.03fr .97fr;gap:46px;align-items:center}
+.eyebrow{margin:0 0 12px;color:var(--blue);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+.hero h1{margin:0;font-size:clamp(44px,5vw,70px);line-height:.99;letter-spacing:-2.8px}.hero h1 span{color:var(--blue)}
+.hero-copy{margin:18px 0 0;max-width:760px;color:#a3b7ca;font-size:15px;line-height:1.8}
+.hero-actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:25px}
+.hero-art{position:relative;overflow:hidden;border:1px solid rgba(0,168,255,.18);border-radius:22px;background:#081725;box-shadow:0 30px 80px rgba(0,0,0,.32)}
+.hero-art img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.hero-art:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,168,255,.04),transparent 42%,rgba(0,0,0,.18));pointer-events:none}
+.art-badge{position:absolute;left:16px;top:16px;z-index:2;padding:8px 11px;border-radius:999px;border:1px solid rgba(0,168,255,.24);background:rgba(4,17,28,.82);color:#a7e4ff;font-size:9px;font-weight:850;letter-spacing:.8px}
+.trust-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+.trust-item{padding:15px;border:1px solid rgba(120,180,220,.10);border-radius:14px;background:#081a2a}
+.trust-item strong{display:block;color:#f1f7fb;font-size:13px}.trust-item span{display:block;margin-top:5px;color:#6f8598;font-size:10px;line-height:1.55}
 
-.section{padding:74px 0}.section.alt{background:linear-gradient(180deg,rgba(10,26,42,.29),rgba(7,20,33,.56))}
-.intro{max-width:860px}.intro h2{margin:0;font-size:clamp(35px,4vw,55px);line-height:1.04;letter-spacing:-2px}.intro h2 span{color:var(--blue)}.intro p{margin:15px 0 0;color:#8fa5ba;font-size:14px;line-height:1.8}
+.form-section{padding:58px 0 72px}
+.form-layout{display:grid;grid-template-columns:280px 1fr;gap:22px;align-items:start}
+.steps-card{position:sticky;top:104px;padding:22px;border:1px solid var(--border);border-radius:18px;background:#081827}
+.steps-card h3{margin:0 0 16px;font-size:14px}
+.step-mini{display:flex;gap:11px;padding:11px 0;color:#74899c;font-size:11px;border-bottom:1px solid rgba(120,180,220,.07)}
+.step-mini:last-child{border-bottom:0}.step-mini .n{flex:0 0 auto;width:27px;height:27px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(120,180,220,.18);background:#071522;font-size:10px;font-weight:800}.step-mini.active{color:#dff5ff}.step-mini.active .n{border-color:rgba(0,168,255,.5);background:rgba(0,168,255,.08);color:#8fdcff}
+.step-mini.complete .n{border-color:rgba(0,212,154,.45);color:#00d49a;background:rgba(0,212,154,.07)}
+.partner-note{margin-top:16px;padding:13px 14px;border:1px solid rgba(0,212,154,.12);border-left:3px solid var(--green);border-radius:0 10px 10px 0;background:rgba(0,212,154,.035);color:#78908f;font-size:10px;line-height:1.65}
 
-.benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
-.benefit-card{position:relative;padding:26px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,#0b2034,#071725);overflow:hidden;transition:.3s}
-.benefit-card:after{content:"";position:absolute;right:-40px;bottom:-70px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(0,168,255,.11),transparent 68%);pointer-events:none}
-.benefit-card:hover{transform:translateY(-7px);border-color:rgba(0,168,255,.32);box-shadow:0 22px 52px rgba(0,0,0,.22)}
-.icon{width:48px;height:48px;display:grid;place-items:center;border:1px solid rgba(0,168,255,.18);border-radius:12px;background:rgba(0,168,255,.08);color:#9fe0ff;font-size:11px;font-weight:800;margin-bottom:17px}
-.benefit-card h3{margin:0 0 9px;font-size:19px}.benefit-card p{margin:0;color:#8298ad;font-size:12.5px;line-height:1.75}
+.form-card{border:1px solid rgba(120,180,220,.14);border-radius:20px;background:linear-gradient(145deg,#0b2034,#071725);box-shadow:0 22px 60px rgba(0,0,0,.22);overflow:hidden}
+.form-top{padding:28px 30px 20px;border-bottom:1px solid rgba(120,180,220,.08)}
+.form-top h2{margin:0;font-size:26px;letter-spacing:-.7px}.form-top p{margin:8px 0 0;color:#788fa3;font-size:11px;line-height:1.65}
+.progress{height:5px;margin-top:18px;border-radius:999px;background:#06111f;overflow:hidden}.progress-bar{height:100%;width:16.66%;border-radius:inherit;background:linear-gradient(90deg,var(--blue),#47d8ff);transition:.35s}
+.form-body{padding:28px 30px 30px}.step{display:none}.step.active{display:block}.step-title{margin:0 0 5px;font-size:18px}.step-help{margin:0 0 20px;color:#71879b;font-size:11px;line-height:1.6}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{color:#b5c4d0;font-size:11px;font-weight:650}.field input,.field select,.field textarea{width:100%;border:1px solid rgba(120,180,220,.16);border-radius:9px;background:#06131f;color:#fff;padding:12px 13px;outline:none;font-size:12px;transition:.2s}.field textarea{min-height:125px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(0,168,255,.55);box-shadow:0 0 0 3px rgba(0,168,255,.055)}.field input::placeholder,.field textarea::placeholder{color:#53697c}
+.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice label{display:block;padding:17px;border:1px solid rgba(120,180,220,.13);border-radius:14px;background:#091a2a;cursor:pointer;transition:.25s}.choice label strong{display:block;font-size:13px}.choice label span{display:block;margin-top:5px;color:#70879b;font-size:10px;line-height:1.5}.choice input:checked+label{border-color:rgba(0,168,255,.55);background:rgba(0,168,255,.065);box-shadow:0 0 0 2px rgba(0,168,255,.06) inset}
+.password-meter{margin-top:9px;height:4px;border-radius:999px;background:#06111f;overflow:hidden}.password-meter span{display:block;height:100%;width:0;background:var(--green);transition:.25s}
+.form-nav{display:flex;justify-content:space-between;gap:12px;margin-top:25px;padding-top:19px;border-top:1px solid rgba(120,180,220,.08)}.form-nav .right{margin-left:auto;display:flex;gap:10px}
+.error{min-height:15px;margin-top:5px;color:#ff9aaa;font-size:10px}.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.review-box{padding:15px;border:1px solid rgba(120,180,220,.09);border-radius:13px;background:#081a2a}.review-box strong{display:block;color:#edf6fb;font-size:11px}.review-box span{display:block;margin-top:6px;color:#7a90a4;font-size:11px;line-height:1.5}
 
-.stat-band{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:35px}
-.stat-card{padding:21px;border:1px solid rgba(120,180,220,.12);border-radius:16px;background:#091b2c;text-align:center}
-.stat-card strong{display:block;font-size:26px;letter-spacing:-1px}.stat-card span{display:block;margin-top:6px;color:#71869a;font-size:10px;text-transform:uppercase;letter-spacing:.7px}.stat-card:nth-child(1) strong,.stat-card:nth-child(2) strong{color:#00d49a}.stat-card:nth-child(3) strong,.stat-card:nth-child(4) strong{color:#92ddff}
+.success{display:none;padding:36px;text-align:center}.success.show{display:block}.success-icon{width:64px;height:64px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;background:rgba(0,212,154,.08);border:1px solid rgba(0,212,154,.30);color:var(--green);font-size:24px}.success h2{margin:0;font-size:28px}.success p{max-width:600px;margin:12px auto 0;color:#8197aa;font-size:13px;line-height:1.8}
 
-.referral{display:grid;grid-template-columns:.85fr 1.15fr;gap:24px;align-items:stretch;margin-top:36px}
-.referral-highlight{padding:30px;border:1px solid rgba(0,212,154,.20);border-radius:20px;background:radial-gradient(circle at 85% 20%,rgba(0,212,154,.12),transparent 38%),linear-gradient(145deg,#231521,#0a1724)}
-.referral-highlight .tag{display:inline-flex;padding:7px 10px;border-radius:999px;border:1px solid rgba(0,212,154,.24);color:#ff8da0;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase}.referral-highlight h3{margin:17px 0 8px;font-size:30px}.referral-highlight p{margin:0;color:#9aabb9;font-size:13px;line-height:1.8}.referral-highlight strong{display:block;margin-top:22px;color:#00d49a;font-size:42px;letter-spacing:-2px}
-.referral-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.referral-card{padding:22px;border:1px solid var(--border);border-radius:16px;background:#091b2c}.referral-card h3{margin:0 0 8px;font-size:16px}.referral-card p{margin:0;color:#758ba0;font-size:11px;line-height:1.75}
-
-.process{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}.process-card{padding:22px;border:1px solid rgba(120,180,220,.11);border-radius:16px;background:#0a1b2d}.process-no{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(0,168,255,.20);color:var(--blue);background:rgba(0,168,255,.07);font-weight:800;margin-bottom:14px}.process-card h3{margin:0 0 8px;font-size:15px}.process-card p{margin:0;color:#71869a;font-size:11px;line-height:1.7}
-
-.quote{margin-top:36px;padding:30px;border-left:3px solid var(--blue);border-radius:0 16px 16px 0;background:linear-gradient(90deg,rgba(0,168,255,.07),transparent)}.quote p{margin:0;color:#b0c1cf;font-size:16px;line-height:1.8}.quote strong{display:block;margin-top:11px;color:#6d8499;font-size:10px;letter-spacing:1px}
-
-.cta{padding:0 0 68px}.cta-box{padding:42px;border:1px solid rgba(0,168,255,.17);border-radius:22px;background:radial-gradient(circle at 90% 20%,rgba(0,168,255,.12),transparent 38%),linear-gradient(135deg,#0b2339,#071725)}.cta-box h2{margin:0;font-size:clamp(35px,4vw,53px);letter-spacing:-2px}.cta-box p{max-width:760px;margin:14px 0 0;color:#9db0c2;font-size:14px;line-height:1.8}.cta-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
 .risk{padding:28px 0;background:#040e18;border-top:1px solid rgba(120,180,220,.08)}.risk p{margin:0;color:#697d91;font-size:10px;line-height:1.7}.risk strong{color:#a8bacb}
-.site-footer{background:#050d17;border-top:1px solid rgba(120,180,220,.10)}.footer-main{padding:44px 0 32px}.footer-grid{display:grid;grid-template-columns:1.35fr repeat(5,minmax(0,1fr));gap:24px}.footer-brand p{margin:14px 0 0;max-width:280px;color:#718499;font-size:11px;line-height:1.7}.footer-col h4{margin:0 0 13px;font-size:13px}.footer-col a{display:block;margin-bottom:9px;color:#71869d;font-size:11px}.footer-col a:hover{color:var(--blue)}
-.social-row{display:flex;gap:8px;flex-wrap:wrap}.social-link{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(120,180,220,.25);border-radius:9px;background:#0a1724;color:#d6e5f0}.social-link:hover{color:#fff;border-color:var(--blue);transform:translateY(-2px)}.social-link svg{width:17px;height:17px;fill:currentColor}
-.footer-bottom{border-top:1px solid rgba(120,180,220,.07);background:#040b13}.footer-bottom-inner{min-height:50px;display:flex;align-items:center;justify-content:space-between;gap:20px}.footer-bottom p{margin:0;color:#5f7285;font-size:10px}
+.site-footer{background:#050d17;border-top:1px solid rgba(120,180,220,.10)}.footer-main{padding:44px 0 30px}.footer-grid{display:grid;grid-template-columns:1.4fr repeat(4,minmax(0,1fr)) 1fr;gap:24px}.footer-brand p{margin:14px 0 0;max-width:280px;color:#718499;font-size:11px;line-height:1.7}.footer-col h4{margin:0 0 13px;color:#f3f8fc;font-size:12px;text-transform:uppercase;letter-spacing:.5px}.footer-col a{display:block;margin-bottom:9px;color:#71869d;font-size:11px}.footer-col a:hover{color:var(--blue)}
+.social-row{display:flex;gap:8px;flex-wrap:wrap}.social-link{width:36px;height:36px;display:grid;place-items:center;border:1px solid rgba(120,180,220,.20);border-radius:9px;background:#0a1724;color:#c3d6e4}.social-link svg{width:16px;height:16px;fill:currentColor}.footer-bottom{border-top:1px solid rgba(120,180,220,.07);background:#040b13}.footer-bottom-inner{min-height:50px;display:flex;align-items:center;justify-content:space-between;gap:20px}.footer-bottom p{margin:0;color:#5f7285;font-size:9.5px}
 
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}.reveal.show{opacity:1;transform:none}
-@media(max-width:1050px){.container,.header-inner{width:min(calc(100% - 40px),1040px)}.nav-trigger,.nav-link{padding-inline:8px}.footer-grid{grid-template-columns:repeat(3,1fr)}.footer-brand{grid-column:1/-1}.benefit-grid{grid-template-columns:repeat(2,1fr)}.stat-band{grid-template-columns:repeat(2,1fr)}.process{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:850px){.header-inner{min-height:74px}.menu-toggle{display:block}.header-actions{display:none}.main-nav{position:fixed;inset:74px 0 0;display:block;padding:18px 16px 30px;background:rgba(4,13,23,.98);overflow-y:auto;transform:translateX(100%);transition:.3s}.main-nav.is-open{transform:none}.nav-item{border-bottom:1px solid rgba(120,180,220,.08)}.nav-trigger,.nav-link{width:100%;height:56px;justify-content:space-between;padding:0 4px;font-size:15px}.nav-link{justify-content:flex-start}.dropdown{position:static;width:100%;display:none;opacity:1;visibility:visible;transform:none;padding:0 0 10px;border:0;background:transparent;box-shadow:none}.nav-item.is-open>.dropdown{display:block}.hero{padding:68px 0 52px}.hero-grid{grid-template-columns:1fr}.referral{grid-template-columns:1fr}.benefit-grid{grid-template-columns:1fr}.process{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.container,.header-inner{width:calc(100% - 28px)}.hero h1{font-size:43px}.hero-copy{font-size:14px}.hero-actions,.cta-actions{display:grid;grid-template-columns:1fr}.hero-actions .btn,.cta-actions .btn{width:100%}.stat-band{grid-template-columns:1fr}.referral-grid{grid-template-columns:1fr}.process{grid-template-columns:1fr}.section{padding:58px 0}.cta{padding-bottom:58px}.cta-box{padding:28px 20px}.footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}.footer-bottom-inner{min-height:auto;padding:13px 0;flex-direction:column;align-items:flex-start;gap:5px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.benefit-card,.btn,.social-link{transition:none!important}}
-
-/* ===== PARTNERSHIP CALM / CONFIDENCE PALETTE ===== */
-.benefit-card,
-.referral-card,
-.stat-card,
-.process-card,
-.hero-panel{
-  /* subtle green confidence glow without turning the page fully green */
-}
-.benefit-card:hover{
-  border-color:rgba(0,212,154,.30);
-  box-shadow:0 22px 52px rgba(0,0,0,.22),0 0 24px rgba(0,212,154,.035);
-}
-.benefit-card:after{
-  background:radial-gradient(circle,rgba(0,212,154,.10),transparent 68%);
-}
-.stat-card:nth-child(1) strong,
-.stat-card:nth-child(2) strong{
-  color:#00d49a;
-}
-.stat-card:nth-child(3) strong,
-.stat-card:nth-child(4) strong{
-  color:#8fe2ff;
-}
-.referral-highlight{
-  border-color:rgba(0,212,154,.20);
-  background:
-    radial-gradient(circle at 85% 20%,rgba(0,212,154,.12),transparent 38%),
-    linear-gradient(145deg,#102821,#0a1724);
-}
-.referral-highlight .tag{
-  border-color:rgba(0,212,154,.25);
-  color:#73e6c2;
-  background:rgba(0,212,154,.045);
-}
-.referral-highlight strong{
-  color:#00d49a;
-}
-.referral-card:hover{
-  border-color:rgba(0,212,154,.24);
-}
-.process-card:hover{
-  border-color:rgba(0,212,154,.24);
-}
-.process-no{
-  border-color:rgba(0,212,154,.22);
-  color:#00d49a;
-  background:rgba(0,212,154,.055);
-}
-.quote{
-  border-left-color:#00d49a;
-  background:linear-gradient(90deg,rgba(0,212,154,.055),transparent);
-}
-.quote strong{
-  color:#6f8798;
-}
-
+@media(max-width:1000px){.container,.header-inner{width:min(calc(100% - 40px),980px)}.form-layout{grid-template-columns:1fr}.steps-card{position:relative;top:auto}.step-mini{display:inline-flex;width:32%;vertical-align:top;border-bottom:0}.steps-card{padding:16px}.steps-card h3{margin-bottom:10px}.trust-strip{grid-template-columns:1fr}.choice-grid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:repeat(3,1fr)}.footer-brand{grid-column:1/-1}}
+@media(max-width:850px){.header-inner{min-height:74px}.menu-toggle{display:block}.header-actions{display:none}.main-nav{position:fixed;inset:74px 0 0;display:block;padding:18px 16px 30px;background:rgba(4,13,23,.98);overflow-y:auto;transform:translateX(100%);transition:.3s}.main-nav.is-open{transform:none}.nav-item{border-bottom:1px solid rgba(120,180,220,.08)}.nav-trigger,.nav-link{width:100%;height:56px;justify-content:space-between;padding:0 4px;font-size:15px}.nav-link{justify-content:flex-start}.dropdown{position:static;width:100%;display:none;opacity:1;visibility:visible;transform:none;padding:0 0 10px;border:0;background:transparent;box-shadow:none}.nav-item.is-open>.dropdown{display:block}.hero{padding:64px 0 48px}.hero-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.container,.header-inner{width:calc(100% - 28px)}.hero h1{font-size:42px}.hero-copy{font-size:14px}.hero-actions{display:grid;grid-template-columns:1fr}.hero-actions .btn{width:100%}.form-section{padding:48px 0 58px}.form-top,.form-body{padding-left:19px;padding-right:19px}.field-grid,.review-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.choice-grid{grid-template-columns:1fr}.step-mini{width:100%;padding:8px 0}.steps-card h3{margin-bottom:6px}.form-nav{flex-direction:column}.form-nav .right{margin-left:0}.form-nav .btn{width:100%}.footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}.footer-bottom-inner{min-height:auto;padding:13px 0;flex-direction:column;align-items:flex-start;gap:5px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.btn,.social-link,.choice label,.progress-bar{transition:none!important}}
 </style>
 </head>
 <body>
 
 <header class="site-header"><div class="header-inner container">
-<a class="brand" href="../index.html" aria-label="FXCentrum24 Home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span><span class="brand-name"><strong>FX</strong>CENTRUM24</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span></a>
+<a class="brand" href="../index.html"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span><span class="brand-name"><strong>FX</strong>CENTRUM24</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span></a>
 <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
 <nav class="main-nav" id="mainNavigation">
-<div class="nav-item"><button class="nav-trigger" type="button"><span>Markets</span><em>⌄</em></button><div class="dropdown">
-<a href="../markets/forex.html"><span>Forex</span><small>Major &amp; minor currency pairs</small></a><a href="../markets/commodities.html"><span>Commodities</span><small>Gold, oil, silver &amp; more</small></a><a href="../markets/indices.html"><span>Indices</span><small>Global stock indices</small></a><a href="../markets/shares-cfds.html"><span>Shares CFDs</span><small>Global company shares</small></a><a href="../markets/cryptocurrency.html"><span>Cryptocurrency</span><small>Popular digital assets</small></a>
-</div></div>
-<div class="nav-item"><button class="nav-trigger" type="button"><span>Trading</span><em>⌄</em></button><div class="dropdown">
-<a href="../trading/account-types.html"><span>Account Types</span><small>Choose your trading account</small></a><a href="../trading/trading-conditions.html"><span>Trading Conditions</span><small>Spreads, execution &amp; more</small></a><a href="../trading/how-to-start.html"><span>How to Start</span><small>Start trading in 3 steps</small></a>
-</div></div>
-<div class="nav-item"><button class="nav-trigger" type="button"><span>Platforms</span><em>⌄</em></button><div class="dropdown">
-<a href="../platforms/metatrader-4.html"><span>MetaTrader 4</span><small>Classic professional trading</small></a><a href="../platforms/metatrader-5.html"><span>MetaTrader 5</span><small>Advanced multi-asset platform</small></a><a href="../platforms/webtrader.html"><span>WebTrader</span><small>Trade directly from your browser</small></a>
-</div></div>
-<div class="nav-item"><button class="nav-trigger" type="button"><span>Accounts</span><em>⌄</em></button><div class="dropdown">
-<a href="../accounts/standard.html"><span>Standard</span><small>Beginner &amp; Regular accounts</small></a><a href="../accounts/premium.html"><span>Premium</span><small>ACE &amp; Supreme accounts</small></a><a href="../accounts/professional.html"><span>Professional</span><small>Premium &amp; Premium Plus</small></a>
-</div></div>
-<div class="nav-item"><button class="nav-trigger" type="button"><span>Tools</span><em>⌄</em></button><div class="dropdown">
-<a href="../tools/live-markets.html"><span>Live Markets</span><small>Live market overview</small></a><a href="../tools/economic-calendar.html"><span>Economic Calendar</span><small>Track important market events</small></a>
-</div></div>
-<div class="nav-item"><button class="nav-trigger" type="button"><span>Company</span><em>⌄</em></button><div class="dropdown">
-<a href="../company/about.html"><span>About Us</span><small>Discover FXCentrum24</small></a><a href="../company/contact.html"><span>Contact Us</span><small>We're here to help</small></a><a href="../company/benefits.html"><span>Benefits</span><small>Why trade with us</small></a>
-</div></div>
-<a class="nav-link" href="./index.html">Partnership</a>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Markets</span><em>⌄</em></button><div class="dropdown"><a href="../markets/forex.html"><span>Forex</span><small>Major &amp; minor currency pairs</small></a><a href="../markets/commodities.html"><span>Commodities</span><small>Gold, oil, silver &amp; more</small></a><a href="../markets/indices.html"><span>Indices</span><small>Global stock indices</small></a><a href="../markets/shares-cfds.html"><span>Shares CFDs</span><small>Global company shares</small></a><a href="../markets/cryptocurrency.html"><span>Cryptocurrency</span><small>Popular digital assets</small></a></div></div>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Trading</span><em>⌄</em></button><div class="dropdown"><a href="../trading/account-types.html"><span>Account Types</span><small>Choose your trading account</small></a><a href="../trading/trading-conditions.html"><span>Trading Conditions</span><small>Spreads, execution &amp; more</small></a><a href="../trading/how-to-start.html"><span>How to Start</span><small>Start trading in 3 steps</small></a></div></div>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Platforms</span><em>⌄</em></button><div class="dropdown"><a href="../platforms/metatrader-4.html"><span>MetaTrader 4</span><small>Classic professional trading</small></a><a href="../platforms/metatrader-5.html"><span>MetaTrader 5</span><small>Advanced multi-asset platform</small></a><a href="../platforms/webtrader.html"><span>WebTrader</span><small>Trade directly from your browser</small></a></div></div>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Accounts</span><em>⌄</em></button><div class="dropdown"><a href="../accounts/standard.html"><span>Standard</span><small>Beginner &amp; Regular accounts</small></a><a href="../accounts/premium.html"><span>Premium</span><small>ACE &amp; Supreme accounts</small></a><a href="../accounts/professional.html"><span>Professional</span><small>Premium &amp; Premium Plus</small></a></div></div>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Tools</span><em>⌄</em></button><div class="dropdown"><a href="../tools/live-markets.html"><span>Live Markets</span><small>Live market overview</small></a><a href="../tools/economic-calendar.html"><span>Economic Calendar</span><small>Track important market events</small></a></div></div>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Company</span><em>⌄</em></button><div class="dropdown"><a href="../company/about.html"><span>About Us</span><small>Discover FXCentrum24</small></a><a href="../company/contact.html"><span>Contact Us</span><small>We're here to help</small></a><a href="../company/benefits.html"><span>Benefits</span><small>Why trade with us</small></a></div></div>
+<a href="./index.html" class="nav-link">Partnership</a>
 </nav>
-<div class="header-actions"><a class="btn btn-outline" href="../trading/login.html">Login</a><a class="btn btn-primary" href="../trading/account-opening.html">Open Account</a></div>
+<div class="header-actions"><a href="../trading/login.html" class="btn btn-outline">Login</a><a href="../trading/account-opening.html" class="btn btn-primary">Open Account</a></div>
 </div></header>
 
 <main>
-<section class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div>
-        <p class="eyebrow reveal">Partnership Program</p>
-        <h1 class="reveal">Build your network with <span>FXCentrum24.</span></h1>
-        <p class="hero-copy reveal">A partner-focused environment built around referral rewards, transparent reporting, recurring commission opportunities and dedicated support.</p>
-        <div class="hero-actions reveal">
-          <a class="btn btn-primary" href="../trading/account-opening.html?type=partner">Open Partner Account →</a>
-          <a class="btn btn-outline" href="#benefits">Explore Benefits</a>
-        </div>
-      </div>
-      <div class="hero-panel reveal">
-        <h3>Partner Account Highlights</h3>
-        <div class="metric"><span>Reward per lot</span><strong class="accent">$25</strong></div>
-        <div class="metric"><span>2nd-tier referrals</span><strong class="accent">10%</strong></div>
-        <div class="metric"><span>Commission limits</span><strong class="confidence">NO LIMITS</strong></div>
-        <div class="metric"><span>Languages supported</span><strong class="blue">25</strong></div>
-      </div>
-    </div>
-  </div>
-</section>
+<section class="hero"><div class="container"><div class="hero-grid">
+<div>
+<p class="eyebrow reveal">Partner Registration</p>
+<h1 class="reveal">Open your <span>Partner Account.</span></h1>
+<p class="hero-copy reveal">A dedicated partnership application flow for affiliates, introducers, media partners and businesses that want to build a structured relationship with FXCentrum24.</p>
+<div class="hero-actions reveal"><a href="#partner-form" class="btn btn-primary">Start Registration →</a><a href="./index.html" class="btn btn-outline">Back to Partnership</a></div>
+<div class="trust-strip">
+<div class="trust-item"><strong>2-minute target</strong><span>Complete the application through a guided six-step flow.</span></div>
+<div class="trust-item"><strong>Structured review</strong><span>Business and partner information is collected in clear stages.</span></div>
+<div class="trust-item"><strong>Secure credentials</strong><span>Create a dedicated password for your partner application.</span></div>
+</div>
+</div>
+<div class="hero-art reveal"><span class="art-badge">FXCENTRUM24 · PARTNERS</span><img src="../assets/partnership/fxcentrum24-partnership-hero.webp" alt="FXCentrum24 trader partnership collaboration"></div>
+</div></div></section>
 
-<section class="section" id="benefits">
-  <div class="container">
-    <div class="intro reveal"><p class="eyebrow">Partner Benefits</p><h2>More than a referral link — a <span>structured partner experience.</span></h2><p>The supplied partner-account reference highlights support, recurring payments, reporting, statistics, language coverage and uncapped commission opportunities. We have restructured those points into a cleaner FXCentrum24 presentation.</p></div>
-    <div class="benefit-grid">
-      <article class="benefit-card reveal"><div class="icon">01</div><h3>Personal Account Managers</h3><p>Dedicated partner support helps keep communication direct as your referral activity grows.</p></article>
-      <article class="benefit-card reveal"><div class="icon">02</div><h3>Weekly Payments</h3><p>The reference program highlights weekly partner payments, giving the reward cycle a clear rhythm.</p></article>
-      <article class="benefit-card reveal"><div class="icon">03</div><h3>No Commission Limits</h3><p>The partner reference states no limits on commissions per client and no limits on total commissions.</p></article>
-      <article class="benefit-card reveal"><div class="icon">04</div><h3>On-Time Payments</h3><p>Keep your partner workflow predictable with a clear payment-focused program structure.</p></article>
-      <article class="benefit-card reveal"><div class="icon">05</div><h3>Real-Time Reporting</h3><p>Review referral activity through reporting designed to make your partner performance easier to follow.</p></article>
-      <article class="benefit-card reveal"><div class="icon">06</div><h3>Detailed Statistics</h3><p>Use account-level statistics to understand activity and monitor the performance of your partner network.</p></article>
-    </div>
-  </div>
-</section>
+<section class="form-section" id="partner-form"><div class="container"><div class="form-layout">
+<aside class="steps-card"><h3>Registration Steps</h3><div class="step-mini active" data-step="0"><span class="n">1</span><span><strong>Personal Details</strong><br>Tell us who you are and how we should address you.</span></div><div class="step-mini" data-step="1"><span class="n">2</span><span><strong>Address Details</strong><br>Provide your primary residential or business address.</span></div><div class="step-mini" data-step="2"><span class="n">3</span><span><strong>Contact Details</strong><br>Give us the best way to reach you.</span></div><div class="step-mini" data-step="3"><span class="n">4</span><span><strong>Business Information</strong><br>Tell us about your business, audience and partnership goals.</span></div><div class="step-mini" data-step="4"><span class="n">5</span><span><strong>Partner Account</strong><br>Choose the partner profile that best describes your activity.</span></div><div class="step-mini" data-step="5"><span class="n">6</span><span><strong>Account Password</strong><br>Create secure access credentials for your partner application.</span></div>
+<div class="partner-note">Please complete the application using English alphabet characters only and provide accurate information.</div></aside>
 
-<section class="section alt">
-  <div class="container">
-    <div class="intro reveal"><p class="eyebrow">Partner Account</p><h2>The headline numbers, <span>clearly presented.</span></h2><p>These figures are taken directly from the partner-account reference you supplied.</p></div>
-    <div class="stat-band">
-      <div class="stat-card reveal"><strong>$25</strong><span>Up to $25 per lot</span></div>
-      <div class="stat-card reveal"><strong>10%</strong><span>On 2nd-tier referrals</span></div>
-      <div class="stat-card reveal"><strong>NO</strong><span>Limits on commissions</span></div>
-      <div class="stat-card reveal"><strong>25</strong><span>Languages supported</span></div>
-    </div>
-    <div class="referral">
-      <div class="referral-highlight reveal">
-        <span class="tag">Partner Confidence</span>
-        <h3>Scale your referral network.</h3>
-        <p>The partner reference is built around commission opportunities from referred clients, plus a second-tier referral component.</p>
-        <strong>$25 / lot</strong>
-      </div>
-      <div class="referral-grid">
-        <article class="referral-card reveal"><h3>Primary referrals</h3><p>Partner rewards are presented on a per-lot basis, subject to the applicable partner-account terms.</p></article>
-        <article class="referral-card reveal"><h3>Second-tier referrals</h3><p>The supplied reference states a 10% reward on second-tier referrals.</p></article>
-        <article class="referral-card reveal"><h3>Commission structure</h3><p>The reference states no limits on commissions per client and no limits on total commissions.</p></article>
-        <article class="referral-card reveal"><h3>Language reach</h3><p>The reference states support for 25 languages, designed for a broader partner audience.</p></article>
-      </div>
-    </div>
-  </div>
-</section>
+<section class="form-card" aria-label="Partner account registration">
+<div class="form-top"><p class="eyebrow">Partner Account Registration</p><h2 id="formHeading">Personal Details</h2><p id="formHelp">Tell us who you are and how we should address you.</p><div class="progress"><div class="progress-bar" id="progressBar"></div></div></div>
 
-<section class="section">
-  <div class="container">
-    <div class="intro reveal"><p class="eyebrow">How It Works</p><h2>Four steps from application to <span>partner growth.</span></h2><p>A simple journey keeps the program easy to understand for prospective partners.</p></div>
-    <div class="process">
-      <article class="process-card reveal"><div class="process-no">01</div><h3>Apply for a Partner Account</h3><p>Start through the dedicated partner-account application route.</p></article>
-      <article class="process-card reveal"><div class="process-no">02</div><h3>Connect Your Network</h3><p>Introduce your audience and referral network through the approved partner process.</p></article>
-      <article class="process-card reveal"><div class="process-no">03</div><h3>Track Activity</h3><p>Use reporting and statistics to understand the activity generated through your network.</p></article>
-      <article class="process-card reveal"><div class="process-no">04</div><h3>Receive Partner Rewards</h3><p>Partner payments follow the applicable program terms and payment schedule.</p></article>
-    </div>
-    <div class="quote reveal"><p>“A strong partnership program should make the commercial relationship easy to understand, easy to track and easy to grow.”</p><strong>FXCENTRUM24 · PARTNERSHIP PRINCIPLE</strong></div>
-  </div>
-</section>
+<form id="partnerForm" novalidate>
+<div class="form-body">
 
-<section class="section alt">
-  <div class="container">
-    <div class="intro reveal"><p class="eyebrow">Partner Support</p><h2>Designed for <span>long-term collaboration.</span></h2><p>The supplied reference also highlights partner account managers, payments, reporting and multilingual support. Those elements now sit inside a consistent corporate experience rather than a copied legacy layout.</p></div>
-    <div class="benefit-grid">
-      <article class="benefit-card reveal"><div class="icon">A</div><h3>Relationship Support</h3><p>Keep partner communication connected through a dedicated account-management structure.</p></article>
-      <article class="benefit-card reveal"><div class="icon">B</div><h3>Performance Visibility</h3><p>Use reporting and detailed statistics to follow the activity generated by your partner network.</p></article>
-      <article class="benefit-card reveal"><div class="icon">C</div><h3>Global Reach</h3><p>Support for 25 languages, as stated in the supplied reference, gives the program a broader audience profile.</p></article>
-    </div>
-  </div>
-</section>
+<div class="step active">
+<h3 class="step-title">Personal Details</h3><p class="step-help">Use the same personal information you expect to use during the applicable verification process.</p>
+<div class="field-grid">
+<div class="field"><label for="firstName">First Name *</label><input id="firstName" name="firstName" type="text" placeholder="First name" required></div>
+<div class="field"><label for="lastName">Last Name *</label><input id="lastName" name="lastName" type="text" placeholder="Last name" required></div>
+<div class="field"><label for="dob">Date of Birth *</label><input id="dob" name="dob" type="date" required></div>
+<div class="field"><label for="nationality">Nationality *</label><input id="nationality" name="nationality" type="text" placeholder="Nationality" required></div>
+</div></div>
 
-<section class="cta">
-  <div class="container">
-    <div class="cta-box reveal">
-      <p class="eyebrow">Become a Partner</p><h2>Ready to build with FXCentrum24?</h2>
-      <p>Open the partner-account route and continue through the applicable onboarding and program terms.</p>
-      <div class="cta-actions"><a class="btn btn-primary" href="../trading/account-opening.html?type=partner">Open Partner Account →</a><a class="btn btn-outline" href="../company/contact.html">Contact Us</a></div>
-    </div>
-  </div>
-</section>
+<div class="step">
+<h3 class="step-title">Address Details</h3><p class="step-help">Provide your current address details. Use your primary address for the application.</p>
+<div class="field-grid">
+<div class="field full"><label for="address">Address *</label><input id="address" name="address" type="text" placeholder="Street address" required></div>
+<div class="field"><label for="city">City *</label><input id="city" name="city" type="text" placeholder="City" required></div>
+<div class="field"><label for="state">State / Region *</label><input id="state" name="state" type="text" placeholder="State or region" required></div>
+<div class="field"><label for="postal">Postal Code *</label><input id="postal" name="postal" type="text" placeholder="Postal code" required></div>
+<div class="field"><label for="country">Country *</label><select id="country" name="country" required><option value="">Select country</option><option>India</option><option>United Kingdom</option><option>United Arab Emirates</option><option>Singapore</option><option>Other</option></select></div>
+</div></div>
 
-<section class="risk"><div class="container"><p><strong>Risk Warning:</strong> Trading Forex and CFDs involves a high level of risk and may not be suitable for all investors. You may lose some or all of your invested capital. Please review the applicable risk disclosure carefully before trading.</p></div></section>
+<div class="step">
+<h3 class="step-title">Contact Details</h3><p class="step-help">Choose the contact channels you want the partnership team to use.</p>
+<div class="field-grid">
+<div class="field"><label for="email">Email Address *</label><input id="email" name="email" type="email" placeholder="you@example.com" required></div>
+<div class="field"><label for="phone">Phone Number *</label><input id="phone" name="phone" type="tel" placeholder="+00 000 000 000" required></div>
+<div class="field"><label for="preferred">Preferred Contact Method *</label><select id="preferred" name="preferred" required><option value="">Select method</option><option>Email</option><option>Phone</option><option>WhatsApp</option></select></div>
+<div class="field"><label for="timezone">Time Zone</label><input id="timezone" name="timezone" type="text" placeholder="e.g. GMT+5:30"></div>
+</div></div>
+
+<div class="step">
+<h3 class="step-title">Business Information</h3><p class="step-help">Help the partnership team understand your business model and audience.</p>
+<div class="field-grid">
+<div class="field"><label for="businessName">Business / Brand Name *</label><input id="businessName" name="businessName" type="text" placeholder="Business or brand name" required></div>
+<div class="field"><label for="website">Website / Social Profile</label><input id="website" name="website" type="url" placeholder="https://example.com"></div>
+<div class="field"><label for="businessType">Business Type *</label><select id="businessType" name="businessType" required><option value="">Select type</option><option>Affiliate / Introducing Partner</option><option>Media / Publisher</option><option>Trading Community</option><option>Educator / Content Creator</option><option>Other</option></select></div>
+<div class="field"><label for="audience">Primary Audience *</label><select id="audience" name="audience" required><option value="">Select audience</option><option>Retail Traders</option><option>Professional Traders</option><option>Investors</option><option>Businesses</option><option>Mixed Audience</option></select></div>
+<div class="field full"><label for="businessNotes">Tell us about your business *</label><textarea id="businessNotes" name="businessNotes" placeholder="Describe your audience, channels and partnership goals." required></textarea></div>
+</div></div>
+
+<div class="step">
+<h3 class="step-title">Partner Account</h3><p class="step-help">Choose the partner profile that best matches your intended activity.</p>
+<div class="choice-grid">
+<div class="choice"><input id="profileAffiliate" type="radio" name="partnerProfile" value="Affiliate / Introducing Partner" required><label for="profileAffiliate"><strong>Affiliate Partner</strong><span>Referral-focused partnership activity.</span></label></div>
+<div class="choice"><input id="profileMedia" type="radio" name="partnerProfile" value="Media / Publisher"><label for="profileMedia"><strong>Media / Publisher</strong><span>Content, media or publishing audience.</span></label></div>
+<div class="choice"><input id="profileBusiness" type="radio" name="partnerProfile" value="Business Partner"><label for="profileBusiness"><strong>Business Partner</strong><span>Commercial or strategic business relationship.</span></label></div>
+</div>
+<div class="field-grid" style="margin-top:16px">
+<div class="field"><label for="expectedVolume">Expected Referral Activity</label><select id="expectedVolume" name="expectedVolume"><option value="">Select range</option><option>1–10 clients / month</option><option>11–50 clients / month</option><option>51–100 clients / month</option><option>100+ clients / month</option></select></div>
+<div class="field"><label for="languages">Primary Audience Language</label><input id="languages" name="languages" type="text" placeholder="e.g. English, Hindi"></div>
+</div></div>
+
+<div class="step">
+<h3 class="step-title">Account Password</h3><p class="step-help">Create a password for the partner application. Use a strong password you do not reuse elsewhere.</p>
+<div class="field-grid">
+<div class="field"><label for="password">Password *</label><input id="password" name="password" type="password" minlength="8" placeholder="At least 8 characters" required><div class="password-meter"><span id="passwordMeter"></span></div></div>
+<div class="field"><label for="confirmPassword">Confirm Password *</label><input id="confirmPassword" name="confirmPassword" type="password" minlength="8" placeholder="Repeat password" required><div class="error" id="passwordError"></div></div>
+<div class="field full"><label style="display:flex;gap:10px;align-items:flex-start"><input id="consent" name="consent" type="checkbox" required style="width:auto;margin-top:2px"> <span>I confirm that the information provided is accurate and I agree to the applicable partnership terms and privacy notice.</span></label></div>
+</div></div>
+
+<div class="step">
+<h3 class="step-title">Review Application</h3><p class="step-help">Review the key details before submitting the partner application.</p>
+<div class="review-grid" id="reviewGrid"></div>
+</div>
+
+<div class="form-nav"><button class="btn btn-outline" type="button" id="prevBtn" disabled>← Back</button><div class="right"><button class="btn btn-primary" type="button" id="nextBtn">Continue →</button></div></div>
+</div>
+</form>
+
+<div class="success" id="successState"><div class="success-icon">✓</div><h2>Application ready for submission.</h2><p>The guided partner application has been completed. Connect the client's approved secure submission endpoint, CRM or email workflow before accepting live applications.</p><div style="margin-top:22px"><a class="btn btn-primary" href="./index.html">Back to Partnership</a></div></div>
+</section></div></div></section>
+
+<section class="risk"><div class="container"><p><strong>Risk Warning:</strong> Trading Forex and CFDs involves a high level of risk and may not be suitable for all investors. Partnership remuneration, eligibility and account conditions are subject to the applicable partner programme terms.</p></div></section>
 </main>
-
 
 <footer class="site-footer"><div class="footer-main"><div class="container"><div class="footer-grid">
 <div class="footer-brand"><a class="brand" href="../index.html"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span><span class="brand-name"><strong>FX</strong>CENTRUM24</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span></a><p>Access global markets through a structured trading environment and professional platforms.</p></div>
 <div class="footer-col"><h4>Markets</h4><a href="../markets/forex.html">Forex</a><a href="../markets/commodities.html">Commodities</a><a href="../markets/indices.html">Indices</a><a href="../markets/shares-cfds.html">Shares CFDs</a><a href="../markets/cryptocurrency.html">Cryptocurrency</a></div>
 <div class="footer-col"><h4>Trading</h4><a href="../trading/account-types.html">Account Types</a><a href="../trading/trading-conditions.html">Trading Conditions</a><a href="../trading/how-to-start.html">How to Start</a></div>
 <div class="footer-col"><h4>Company</h4><a href="../company/about.html">About Us</a><a href="../company/contact.html">Contact Us</a><a href="../company/benefits.html">Benefits</a><a href="./index.html">Partnership</a></div>
-<div class="footer-col"><h4>Legal</h4><a href="#">Terms and Conditions</a><a href="#">Privacy Policy</a><a href="#">Risk Disclosure</a><a href="#">AML Policy</a><a href="#">Client Agreement</a></div>
-<div class="footer-col"><h4>Stay Connected</h4><div class="social-row">
-<a class="social-link" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-3.31 0-5 1.79-5 5v3H6v4h3v8h4v-8h3.1l.9-4H13V9c0-.67.33-1 1-1Z"/></svg></a>
-<a class="social-link" href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l7.24-8.28L2.8 2h6.4l4.42 5.85L18.9 2Zm-1.1 17.94h1.73L8.28 3.94H6.43L17.8 19.94Z"/></svg></a>
-<a class="social-link" href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M5.16 3.5A2.16 2.16 0 1 1 5.16 7.82 2.16 2.16 0 0 1 5.16 3.5ZM3.3 9h3.72v11.7H3.3V9Zm5.94 0h3.57v1.6h.05c.5-.95 1.72-1.95 3.54-1.95 3.79 0 4.49 2.49 4.49 5.73v6.32h-3.72v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7H9.24V9Z"/></svg></a>
-<a class="social-link" href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.51 3.5 12 3.5 12 3.5s-7.51 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.87.56 9.38.56 9.38.56s7.51 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8ZM9.6 15.8V8.2l6.4 3.8  -6.4 3.8Z"/></svg></a>
-<a class="social-link" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.2 2h9.6A5.2 5.2 0 0 1 22 7.2v9.6a5.2 5.2 0 0 1-5.2 5.2H7.2A5.2 5.2 0 0 1 2 16.8V7.2A5.2 5.2 0 0 1 7.2 2Zm0 2A3.2 3.2 0 0 0 4 7.2v9.6A3.2 3.2 0 0 0 7.2 20h9.6a3.2 3.2 0 0 0 3.2-3.2V7.2A3.2 3.2 0 0 0 16.8 4H7.2Zm9.9 1.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0-3-3Z"/></svg></a>
-</div></div>
+<div class="footer-col"><h4>Legal</h4><a href="../legal/terms-and-conditions.html">Terms &amp; Conditions</a><a href="../legal/privacy-policy.html">Privacy Policy</a><a href="../legal/risk-disclosure.html">Risk Disclosure</a><a href="../legal/aml-policy.html">AML Policy</a><a href="../legal/client-agreement.html">Client Agreement</a></div>
+<div class="footer-col"><h4>Stay Connected</h4><div class="social-row"><a class="social-link" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-3.31 0-5 1.79-5 5v3H6v4h3v8h4v-8h3.1l.9-4H13V9c0-.67.33-1 1-1Z"/></svg></a><a class="social-link" href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l7.24-8.28L2.8 2h6.4l4.42 5.85L18.9 2Zm-1.1 17.94h1.73L8.28 3.94H6.43L17.8 19.94Z"/></svg></a><a class="social-link" href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M5.16 3.5A2.16 2.16 0 1 1 5.16 7.82 2.16 2.16 0 0 1 5.16 3.5ZM3.3 9h3.72v11.7H3.3V9Zm5.94 0h3.57v1.6h.05c.5-.95 1.72-1.95 3.54-1.95 3.79 0 4.49 2.49 4.49 5.73v6.32h-3.72v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7H9.24V9Z"/></svg></a><a class="social-link" href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.51 3.5 12 3.5 12 3.5s-7.51 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8ZM9.6 15.8V8.2l6.4 3.8-6.4 3.8Z"/></svg></a><a class="social-link" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.2 2h9.6A5.2 5.2 0 0 1 22 7.2v9.6a5.2 5.2 0 0 1-5.2 5.2H7.2A5.2 5.2 0 0 1 2 16.8V7.2A5.2 5.2 0 0 1 7.2 2Zm0 2A3.2 3.2 0 0 0 4 7.2v9.6A3.2 3.2 0 0 0 7.2 20h9.6a3.2 3.2 0 0 0 3.2-3.2V7.2A3.2 3.2 0 0 0 16.8 4H7.2Zm9.9 1.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0-6Z"/></svg></a></div></div>
 </div></div><div class="footer-bottom"><div class="container"><div class="footer-bottom-inner"><p>© 2012 – 2026 FXCentrum24. All Rights Reserved.</p><p>Global Markets · Professional Trading Environment</p></div></div></div></footer>
 
 <script>
 (() => {
-  const toggle=document.getElementById("menuToggle"), nav=document.getElementById("mainNavigation"), items=document.querySelectorAll(".nav-item");
-  if(toggle&&nav) toggle.addEventListener("click",()=>{const open=nav.classList.toggle("is-open");toggle.setAttribute("aria-expanded",String(open));document.body.style.overflow=open?"hidden":"";});
+  const form=document.getElementById("partnerForm");
+  const steps=[...document.querySelectorAll(".step")];
+  const mini=[...document.querySelectorAll(".step-mini")];
+  const heading=document.getElementById("formHeading");
+  const help=document.getElementById("formHelp");
+  const progress=document.getElementById("progressBar");
+  const prev=document.getElementById("prevBtn");
+  const next=document.getElementById("nextBtn");
+  const review=document.getElementById("reviewGrid");
+  const success=document.getElementById("successState");
+  const password=document.getElementById("password");
+  const confirm=document.getElementById("confirmPassword");
+  const passwordError=document.getElementById("passwordError");
+  let current=0;
+
+  function update(){
+    steps.forEach((s,i)=>s.classList.toggle("active",i===current));
+    mini.forEach((s,i)=>{
+      s.classList.toggle("active",i===current);
+      s.classList.toggle("complete",i<current);
+    });
+    const titles=["Personal Details","Address Details","Contact Details","Business Information","Partner Account","Account Password","Review Application"];
+    const helps=[
+      "Tell us who you are and how we should address you.",
+      "Provide your primary residential or business address.",
+      "Give us the best way to reach you.",
+      "Tell us about your business, audience and partnership goals.",
+      "Choose the partner profile that best describes your activity.",
+      "Create secure access credentials for your partner application.",
+      "Review the key details before submitting the partner application."
+    ];
+    heading.textContent=titles[current];
+    help.textContent=helps[current];
+    progress.style.width=((current+1)/7*100)+"%";
+    prev.disabled=current===0;
+    next.textContent=current===6?"Submit Application →":"Continue →";
+    document.getElementById("partner-form").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  function validCurrent(){
+    if(current===5){
+      if(password.value.length<8){passwordError.textContent="Password must be at least 8 characters.";return false;}
+      if(password.value!==confirm.value){passwordError.textContent="Passwords do not match.";return false;}
+      passwordError.textContent="";
+      if(!document.getElementById("consent").checked){alert("Please accept the confirmation statement.");return false;}
+    }
+    const fields=[...steps[current].querySelectorAll("input,select,textarea")];
+    for(const field of fields){
+      if(field.type==="radio"||field.type==="checkbox") continue;
+      if(!field.checkValidity()){field.reportValidity();return false;}
+    }
+    if(current===4 && !form.querySelector('input[name="partnerProfile"]:checked')){alert("Please select a partner profile.");return false;}
+    return true;
+  }
+
+  function esc(v){return String(v||"—").replace(/[<>&]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));}
+  function populateReview(){
+    const data=new FormData(form);
+    const get=k=>data.get(k)||"—";
+    const entries=[
+      ["Name",get("firstName")+" "+get("lastName")],["Email",get("email")],["Phone",get("phone")],
+      ["Country",get("country")],["Business",get("businessName")],["Business Type",get("businessType")],
+      ["Partner Profile",get("partnerProfile")],["Expected Activity",get("expectedVolume")]
+    ];
+    review.innerHTML=entries.map(([a,b])=>'<div class="review-box"><strong>'+esc(a)+'</strong><span>'+esc(b)+'</span></div>').join("");
+  }
+
+  next.addEventListener("click",()=>{
+    if(!validCurrent()) return;
+    if(current===5) populateReview();
+    if(current===6){form.style.display="none";success.classList.add("show");return;}
+    current++;update();
+  });
+  prev.addEventListener("click",()=>{if(current>0){current--;update();}});
+  mini.forEach(item=>item.addEventListener("click",()=>{const target=Number(item.dataset.step);if(target<=current){current=target;update();}}));
+  password.addEventListener("input",()=>{const n=password.value.length;document.getElementById("passwordMeter").style.width=Math.min(100,Math.max(0,(n/12)*100))+"%";});
+  confirm.addEventListener("input",()=>{passwordError.textContent=confirm.value&&confirm.value!==password.value?"Passwords do not match.":"";});
+
+  const toggle=document.getElementById("menuToggle"),nav=document.getElementById("mainNavigation"),items=document.querySelectorAll(".nav-item");
+  if(toggle&&nav)toggle.addEventListener("click",()=>{const open=nav.classList.toggle("is-open");toggle.setAttribute("aria-expanded",String(open));document.body.style.overflow=open?"hidden":"";});
   items.forEach(item=>{const t=item.querySelector(".nav-trigger");if(!t)return;t.addEventListener("click",e=>{e.preventDefault();const open=item.classList.contains("is-open");items.forEach(x=>x.classList.remove("is-open"));if(!open)item.classList.add("is-open");});});
   document.querySelectorAll(".main-nav a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("is-open");document.body.style.overflow="";}));
   document.addEventListener("click",e=>{if(window.innerWidth>850&&!e.target.closest(".nav-item"))items.forEach(x=>x.classList.remove("is-open"));});
-  const obs=new IntersectionObserver((entries,o)=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("show");o.unobserve(e.target)}}),{threshold:.08,rootMargin:"0px 0px -30px 0px"});
-  document.querySelectorAll(".reveal").forEach(e=>obs.observe(e));
 })();
 </script>
-</body></html>
+</body>
+</html>
