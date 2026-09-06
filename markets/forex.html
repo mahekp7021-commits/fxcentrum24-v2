@@ -624,63 +624,100 @@
     }
 
     /* =========================================================
-       MARKET STRIP
+       LIVE MARKET STRIP
     ========================================================== */
 
     .market-strip {
       position: relative;
       overflow: hidden;
-
+      min-height: 62px;
+      display: flex;
+      align-items: center;
       border-top: 1px solid rgba(120,180,220,.10);
       border-bottom: 1px solid rgba(120,180,220,.12);
-
       background: #061421;
     }
 
-    .market-track {
-      width: max-content;
-
-      display: flex;
-      align-items: stretch;
-
-      animation:
-        tickerMove 28s linear infinite;
+    .market-strip::before,
+    .market-strip::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 70px;
+      z-index: 2;
+      pointer-events: none;
     }
 
-    .market-item {
-      min-width: 220px;
+    .market-strip::before {
+      left: 0;
+      background: linear-gradient(90deg, #061421, transparent);
+    }
 
+    .market-strip::after {
+      right: 0;
+      background: linear-gradient(270deg, #061421, transparent);
+    }
+
+    .finlogix-live-strip {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      min-height: 62px;
       display: flex;
       align-items: center;
-      gap: 12px;
-
-      padding: 15px 24px;
-
-      border-right:
-        1px solid rgba(120,180,220,.08);
+      overflow: hidden;
     }
 
-    .market-symbol {
-      font-size: 12px;
-      font-weight: 800;
+    .finlogix-live-strip .finlogix-container {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
     }
 
-    .market-value {
-      color: #bbcad8;
-      font-size: 11px;
-    }
-
-    .market-change {
-      font-size: 11px;
+    .live-strip-label {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      z-index: 4;
+      transform: translateY(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border: 1px solid rgba(0,168,255,.20);
+      border-radius: 999px;
+      background: rgba(4,15,27,.88);
+      color: #9ec8e8;
+      font-size: 10px;
       font-weight: 700;
+      letter-spacing: .5px;
+      pointer-events: none;
+      backdrop-filter: blur(8px);
     }
 
-    .positive {
-      color: #00d49a;
+    .live-strip-label::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00d49a;
+      box-shadow: 0 0 10px rgba(0,212,154,.75);
     }
 
-    .negative {
-      color: #ff4a67;
+    @media (max-width: 850px) {
+      .market-strip,
+      .finlogix-live-strip,
+      .finlogix-live-strip .finlogix-container {
+        min-height: 58px;
+      }
+
+      .live-strip-label {
+        left: 10px;
+        padding: 6px 8px;
+        font-size: 9px;
+      }
     }
 
     /* =========================================================
@@ -2090,95 +2127,26 @@
 
 
     <!-- =====================================================
-         MARKET TICKER
+         LIVE MARKET TICKER
     ====================================================== -->
 
     <section
       class="market-strip"
-      aria-label="Forex market examples"
+      aria-label="Live market prices"
     >
 
-      <div class="market-track">
+      <div class="finlogix-live-strip">
 
-        <div class="market-item">
-          <span class="market-symbol">EURUSD</span>
-          <span class="market-value">1.16384</span>
-          <span class="market-change positive">+0.24%</span>
-        </div>
+        <div
+          class="finlogix-container"
+          aria-label="Finlogix live market data"
+        ></div>
 
-        <div class="market-item">
-          <span class="market-symbol">GBPUSD</span>
-          <span class="market-value">1.27942</span>
-          <span class="market-change negative">-0.12%</span>
-        </div>
-
-        <div class="market-item">
-          <span class="market-symbol">USDJPY</span>
-          <span class="market-value">149.321</span>
-          <span class="market-change positive">+0.31%</span>
-        </div>
-
-        <div class="market-item">
-          <span class="market-symbol">AUDUSD</span>
-          <span class="market-value">0.65210</span>
-          <span class="market-change positive">+0.18%</span>
-        </div>
-
-        <div class="market-item">
-          <span class="market-symbol">USDCAD</span>
-          <span class="market-value">1.36841</span>
-          <span class="market-change negative">-0.08%</span>
-        </div>
-
-        <div class="market-item">
-          <span class="market-symbol">EURGBP</span>
-          <span class="market-value">0.86214</span>
-          <span class="market-change positive">+0.06%</span>
-        </div>
-
-
-        <!-- DUPLICATE TRACK FOR SEAMLESS LOOP -->
-
-        <div class="market-item">
-          <span class="market-symbol">EURUSD</span>
-          <span class="market-value">1.16384</span>
-          <span class="market-change positive">+0.24%</span>
-        </div>
-
-        <div class="market-item">
-          <span class="market-symbol">GBPUSD</span>
-          <span class="market-value">1.27942</span>
-          <span class="market-change negative">-0.12%</span>
-        </div>
-
-        <div class="market-item">
-          <span class="market-symbol">USDJPY</span>
-          <span class="market-value">149.321</span>
-          <span class="market-change positive">+0.31%</span>
-        </div>
-
-        <div class="market-item">
-          <span class="market-symbol">AUDUSD</span>
-          <span class="market-value">0.65210</span>
-          <span class="market-change positive">+0.18%</span>
-        </div>
-
-        <div class="market-item">
-          <span class="market-symbol">USDCAD</span>
-          <span class="market-value">1.36841</span>
-          <span class="market-change negative">-0.08%</span>
-        </div>
-
-        <div class="market-item">
-          <span class="market-symbol">EURGBP</span>
-          <span class="market-value">0.86214</span>
-          <span class="market-change positive">+0.06%</span>
-        </div>
+        <div class="live-strip-label">LIVE MARKETS</div>
 
       </div>
 
     </section>
-
 
     <!-- =====================================================
          WHY FOREX
@@ -2877,6 +2845,35 @@
 
   </footer>
 
+
+  <!-- Finlogix Live Market Strip -->
+  <script
+    type="text/javascript"
+    src="https://widget.finlogix.com/Widget.js"
+  ></script>
+
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof Widget === "undefined" || typeof Widget.init !== "function") {
+        return;
+      }
+
+      Widget.init({
+        widgetId: "87c63d8a-2d03-409f-ba57-599ea3a57013",
+        type: "StripBar",
+        language: "en",
+        symbolPairs: [
+          { symbolId: "19", symbolName: "EURUSD" },
+          { symbolId: "36", symbolName: "USDJPY" },
+          { symbolId: "20", symbolName: "GBPAUD" },
+          { symbolId: "44", symbolName: "XAUUSD" },
+          { symbolId: "128", symbolName: "USWTI" },
+          { symbolId: "157", symbolName: "SP500" }
+        ],
+        isAdaptive: true
+      });
+    });
+  </script>
 
   <script>
     /* =========================================================
