@@ -423,7 +423,7 @@
       position: relative;
       overflow: hidden;
 
-      min-height: 650px;
+      min-height: 570px;
 
       display: flex;
       align-items: center;
@@ -484,7 +484,7 @@
       display: grid;
       grid-template-columns: 1.05fr .95fr;
       align-items: center;
-      gap: 40px;
+      gap: 34px;
     }
 
     .hero-copy {
@@ -494,7 +494,7 @@
     .hero-copy h1 {
       margin: 0;
 
-      font-size: clamp(52px, 6vw, 86px);
+      font-size: clamp(48px, 5.5vw, 78px);
       line-height: .98;
       letter-spacing: -3.5px;
       font-weight: 800;
@@ -505,7 +505,7 @@
     }
 
     .hero-copy > p:not(.eyebrow) {
-      margin: 26px 0 0;
+      margin: 16px 0 0;
       max-width: 650px;
 
       color: #acbed0;
@@ -517,13 +517,13 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 34px;
+      margin-top: 26px;
     }
 
     .hero-visual {
       position: relative;
 
-      min-height: 470px;
+      min-height: 410px;
 
       display: flex;
       align-items: center;
@@ -557,7 +557,7 @@
       position: relative;
       z-index: 2;
 
-      width: min(100%, 620px);
+      width: min(100%, 590px);
 
       filter:
         drop-shadow(
@@ -726,7 +726,7 @@
 
     .content-section {
       position: relative;
-      padding: 105px 0;
+      padding: 78px 0;
     }
 
     .content-section.alt {
@@ -751,7 +751,7 @@
     }
 
     .section-intro > p:last-child {
-      margin: 20px 0 0;
+      margin: 16px 0 0;
 
       color: #8fa5ba;
       font-size: 16px;
@@ -767,16 +767,16 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 20px;
 
-      margin-top: 50px;
+      margin-top: 36px;
     }
 
     .feature-card {
       position: relative;
       overflow: hidden;
 
-      padding: 30px;
+      padding: 26px;
 
-      min-height: 245px;
+      min-height: 205px;
 
       border:
         1px solid var(--border);
@@ -881,7 +881,7 @@
       grid-template-columns: 1fr;
       gap: 36px;
 
-      margin-top: 50px;
+      margin-top: 36px;
     }
 
     .table-shell {
@@ -978,7 +978,7 @@
       gap: 50px;
       align-items: start;
 
-      margin-top: 50px;
+      margin-top: 36px;
     }
 
     .conditions-copy p {
@@ -1030,11 +1030,11 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
 
-      margin-top: 50px;
+      margin-top: 36px;
     }
 
     .article-card {
-      padding: 30px;
+      padding: 26px;
 
       border:
         1px solid rgba(120,180,220,.12);
@@ -1067,7 +1067,7 @@
     ========================================================== */
 
     .cta-section {
-      padding: 100px 0;
+      padding: 70px 0;
     }
 
     .cta-box {
@@ -1180,129 +1180,115 @@
     }
 
     /* =========================================================
-   FOOTER
-========================================================== */
+       FOOTER
+    ========================================================== */
 
-.site-footer {
-  background: #050d17;
-  border-top: 1px solid rgba(120, 180, 220, 0.10);
-}
+    .site-footer {
+      background: #050d17;
+      border-top: 1px solid rgba(120,180,220,.10);
+    }
 
-.footer-main {
-  padding: 56px 0 42px;
-}
+    .footer-main {
+      padding: 48px 0 34px;
+    }
 
-.footer-grid {
-  display: grid;
-  grid-template-columns:
-    1.45fr
-    repeat(5, minmax(0, 1fr));
-  gap: 28px;
-  align-items: start;
-}
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.35fr repeat(5, minmax(0, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
 
-.footer-brand {
-  min-width: 0;
-}
+    .footer-brand {
+      min-width: 0;
+    }
 
-.footer-brand p {
-  margin: 17px 0 0;
-  max-width: 280px;
-  color: #73869a;
-  font-size: 12px;
-  line-height: 1.75;
-}
+    .footer-brand p {
+      margin: 14px 0 0;
+      max-width: 280px;
+      color: #718499;
+      font-size: 11px;
+      line-height: 1.7;
+    }
 
-.footer-col {
-  min-width: 0;
-}
+    .footer-col {
+      min-width: 0;
+    }
 
-.footer-col h4 {
-  margin: 0 0 17px;
-  color: #ffffff;
-  font-size: 13px;
-  line-height: 1.2;
-  font-weight: 800;
-}
+    .footer-col h4 {
+      margin: 0 0 14px;
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 800;
+    }
 
-.footer-col a {
-  display: block;
-  width: fit-content;
-  margin-bottom: 10px;
-  color: #71879d;
-  font-size: 11px;
-  line-height: 1.45;
-  transition:
-    color .2s ease,
-    transform .2s ease;
-}
+    .footer-col a {
+      display: block;
+      width: fit-content;
+      margin-bottom: 9px;
+      color: #71869d;
+      font-size: 11px;
+      line-height: 1.45;
+      transition: color .2s ease, transform .2s ease;
+    }
 
-.footer-col a:hover {
-  color: var(--blue);
-  transform: translateX(2px);
-}
+    .footer-col a:hover {
+      color: var(--blue);
+      transform: translateX(2px);
+    }
 
-.social-row {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  flex-wrap: wrap;
-}
+    .social-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
 
-.social-link {
-  width: 32px;
-  height: 32px;
+    .social-link {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(120,180,220,.15);
+      border-radius: 8px;
+      background: rgba(10,23,36,.82);
+      color: #91a7bb;
+      font-size: 10px;
+      font-weight: 800;
+      transition: transform .2s ease, border-color .2s ease, color .2s ease, background .2s ease;
+    }
 
-  display: grid;
-  place-items: center;
+    .social-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0,168,255,.45);
+      background: rgba(0,168,255,.06);
+      color: var(--blue);
+    }
 
-  border: 1px solid rgba(120, 180, 220, .16);
-  border-radius: 8px;
+    .footer-bottom {
+      border-top: 1px solid rgba(120,180,220,.07);
+      background: #040b13;
+    }
 
-  background: rgba(10, 23, 36, .8);
-  color: #91a7bb;
+    .footer-bottom-inner {
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
 
-  font-size: 10px;
-  font-weight: 800;
+    .footer-bottom p {
+      margin: 0;
+      color: #5f7285;
+      font-size: 10px;
+      line-height: 1.5;
+    }
 
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    color .2s ease,
-    background .2s ease;
-}
-
-.social-link:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0, 168, 255, .45);
-  background: rgba(0, 168, 255, .06);
-  color: var(--blue);
-}
-
-.footer-bottom {
-  border-top: 1px solid rgba(120, 180, 220, .07);
-  background: #040b13;
-}
-
-.footer-bottom-inner {
-  min-height: 52px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.footer-bottom p {
-  margin: 0;
-  color: #5e7285;
-  font-size: 10px;
-  line-height: 1.5;
-}
-
-.footer-bottom p:last-child {
-  text-align: right;
-}
+    .footer-bottom p:last-child {
+      text-align: right;
+    }
 
     /* =========================================================
        REVEAL ANIMATION
@@ -1416,6 +1402,11 @@
       .footer-grid {
         grid-template-columns:
           repeat(3, minmax(0,1fr));
+        gap: 26px 20px;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
       }
     }
 
@@ -1542,7 +1533,7 @@
 
       .forex-hero {
         min-height: auto;
-        padding: 85px 0 65px;
+        padding: 68px 0 50px;
       }
 
       .forex-hero-inner {
@@ -1564,7 +1555,7 @@
       }
 
       .hero-visual {
-        min-height: 350px;
+        min-height: 300px;
       }
 
       .hero-chip.one {
@@ -1577,7 +1568,7 @@
 
       .content-section,
       .cta-section {
-        padding: 75px 0;
+        padding: 58px 0;
       }
 
       .feature-grid,
@@ -1591,11 +1582,12 @@
       }
 
       .cta-box {
-        padding: 40px 28px;
+        padding: 34px 26px;
       }
 
       .footer-grid {
-        grid-template-columns: repeat(2, minmax(0,1fr));
+        grid-template-columns: repeat(3, minmax(0,1fr));
+        gap: 26px 18px;
       }
 
       .footer-brand {
@@ -1683,7 +1675,7 @@
       }
 
       .cta-box {
-        padding: 32px 22px;
+        padding: 28px 20px;
       }
 
       .cta-actions {
@@ -1695,9 +1687,13 @@
         width: 100%;
       }
 
+      .footer-main {
+        padding: 38px 0 28px;
+      }
+
       .footer-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 28px 22px;
+        gap: 24px 18px;
       }
 
       .footer-brand {
@@ -2026,14 +2022,14 @@
       <div class="header-actions">
 
         <a
-          href="#login"
+          href="../trading/login.html"
           class="btn btn-login"
         >
           Login
         </a>
 
         <a
-          href="#open-account"
+          href="../trading/account-types.html"
           class="btn btn-primary"
         >
           Open Account
@@ -2078,7 +2074,7 @@
           <div class="hero-actions reveal reveal-delay-3">
 
             <a
-              href="#open-account"
+              href="../trading/account-types.html"
               class="btn btn-primary"
             >
               Open Account
@@ -2428,7 +2424,7 @@
             </p>
 
             <a
-              href="../accounts/standard.html"
+              href="../trading/account-types.html"
               class="btn btn-outline"
             >
               Explore Account Types →
@@ -2596,7 +2592,7 @@
           <div class="cta-actions">
 
             <a
-              href="../accounts/standard.html"
+              href="../trading/account-types.html"
               class="btn btn-primary"
             >
               Choose an Account →
@@ -2658,12 +2654,10 @@
             <a
               href="../index.html"
               class="brand"
+              aria-label="FXCentrum24 Home"
             >
 
-              <span
-                class="brand-mark"
-                aria-hidden="true"
-              >
+              <span class="brand-mark" aria-hidden="true">
                 <i></i>
                 <i></i>
                 <i></i>
@@ -2671,15 +2665,12 @@
               </span>
 
               <span class="brand-text">
-
                 <span class="brand-name">
                   <strong>FX</strong>CENTRUM24
                 </span>
-
                 <span class="brand-tagline">
                   Trade Today · A Brighter Tomorrow
                 </span>
-
               </span>
 
             </a>
@@ -2691,141 +2682,49 @@
 
           </div>
 
-
           <div class="footer-col">
-
             <h4>Markets</h4>
-
             <a href="./forex.html">Forex</a>
             <a href="./commodities.html">Commodities</a>
             <a href="./indices.html">Indices</a>
             <a href="./shares-cfds.html">Shares CFDs</a>
             <a href="./cryptocurrency.html">Cryptocurrency</a>
-
           </div>
 
-
           <div class="footer-col">
-
             <h4>Trading</h4>
-
-            <a href="../accounts/standard.html">
-              Account Types
-            </a>
-
-            <a href="../trading/trading-conditions.html">
-              Trading Conditions
-            </a>
-
-            <a href="../trading/platforms.html">
-              Platforms
-            </a>
-
-            <a href="../trading/how-to-start.html">
-              How to Start
-            </a>
-
+            <a href="../trading/account-types.html">Account Types</a>
+            <a href="../trading/trading-conditions.html">Trading Conditions</a>
+            <a href="../trading/platforms.html">Platforms</a>
+            <a href="../trading/how-to-start.html">How to Start</a>
           </div>
 
-
           <div class="footer-col">
-
             <h4>Company</h4>
-
-            <a href="../company/about.html">
-              About Us
-            </a>
-
-            <a href="../company/contact.html">
-              Contact Us
-            </a>
-
-            <a href="../partnership/index.html">
-              Partnership
-            </a>
-
-            <a href="../company/benefits.html">
-              Benefits
-            </a>
-
+            <a href="../company/about.html">About Us</a>
+            <a href="../company/contact.html">Contact Us</a>
+            <a href="../partnership/index.html">Partnership</a>
+            <a href="../company/benefits.html">Benefits</a>
           </div>
 
-
           <div class="footer-col">
-
             <h4>Legal</h4>
-
-            <a href="#">
-              Terms and Conditions
-            </a>
-
-            <a href="#">
-              Privacy Policy
-            </a>
-
-            <a href="#">
-              Risk Disclosure
-            </a>
-
-            <a href="#">
-              AML Policy
-            </a>
-
-            <a href="#">
-              Client Agreement
-            </a>
-
+            <a href="../legal/terms.html">Terms and Conditions</a>
+            <a href="../legal/privacy.html">Privacy Policy</a>
+            <a href="../legal/risk-disclosure.html">Risk Disclosure</a>
+            <a href="../legal/aml-policy.html">AML Policy</a>
+            <a href="../legal/client-agreement.html">Client Agreement</a>
           </div>
 
-
           <div class="footer-col">
-
             <h4>Stay Connected</h4>
-
             <div class="social-row">
-
-              <a
-                href="#"
-                class="social-link"
-                aria-label="Facebook"
-              >
-                f
-              </a>
-
-              <a
-                href="#"
-                class="social-link"
-                aria-label="X"
-              >
-                X
-              </a>
-
-              <a
-                href="#"
-                class="social-link"
-                aria-label="LinkedIn"
-              >
-                in
-              </a>
-
-              <a
-                href="#"
-                class="social-link"
-                aria-label="YouTube"
-              >
-                ▶
-              </a>
-
-              <a
-                href="#"
-                class="social-link"
-                aria-label="Instagram"
-              >
-                ◎
-              </a>
-
+              <a href="#" class="social-link" aria-label="Facebook" title="Facebook">f</a>
+              <a href="#" class="social-link" aria-label="X" title="X">X</a>
+              <a href="#" class="social-link" aria-label="LinkedIn" title="LinkedIn">in</a>
+              <a href="#" class="social-link" aria-label="YouTube" title="YouTube">▶</a>
+              <a href="#" class="social-link" aria-label="Instagram" title="Instagram">◎</a>
             </div>
-
           </div>
 
         </div>
@@ -2834,56 +2733,40 @@
 
     </div>
 
-
     <div class="footer-bottom">
-
       <div class="page-container">
-
         <div class="footer-bottom-inner">
-
-          <p>
-            © 2012 – 2026 FXCentrum24. All Rights Reserved.
-          </p>
-
-          <p>
-            Global Markets · Professional Trading Environment
-          </p>
-
+          <p>© 2012 – 2026 FXCentrum24. All Rights Reserved.</p>
+          <p>Global Markets · Professional Trading Environment</p>
         </div>
-
       </div>
-
     </div>
 
   </footer>
 
+  <!-- =========================================================
+       FINLOGIX LIVE MARKET DATA
+  ========================================================== -->
 
-  <!-- Finlogix Live Market Strip -->
   <script
     type="text/javascript"
     src="https://widget.finlogix.com/Widget.js"
   ></script>
 
   <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", () => {
-      if (typeof Widget === "undefined" || typeof Widget.init !== "function") {
-        return;
-      }
-
-      Widget.init({
-        widgetId: "87c63d8a-2d03-409f-ba57-599ea3a57013",
-        type: "StripBar",
-        language: "en",
-        symbolPairs: [
-          { symbolId: "19", symbolName: "EURUSD" },
-          { symbolId: "36", symbolName: "USDJPY" },
-          { symbolId: "20", symbolName: "GBPAUD" },
-          { symbolId: "44", symbolName: "XAUUSD" },
-          { symbolId: "128", symbolName: "USWTI" },
-          { symbolId: "157", symbolName: "SP500" }
-        ],
-        isAdaptive: true
-      });
+    Widget.init({
+      widgetId: "87c63d8a-2d03-409f-ba57-599ea3a57013",
+      type: "StripBar",
+      language: "en",
+      symbolPairs: [
+        { symbolId: "19", symbolName: "EURUSD" },
+        { symbolId: "36", symbolName: "USDJPY" },
+        { symbolId: "20", symbolName: "GBPAUD" },
+        { symbolId: "44", symbolName: "XAUUSD" },
+        { symbolId: "128", symbolName: "USWTI" },
+        { symbolId: "157", symbolName: "SP500" }
+      ],
+      isAdaptive: true
     });
   </script>
 
