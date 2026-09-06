@@ -83,34 +83,7 @@ button{font:inherit}
 .widget-frame.symbol-list{min-height:620px}
 .widget-frame.calendar{min-height:560px}
 .finlogix-container{width:100%;min-height:inherit}
-.provider-cover{
-  position:absolute;
-  top:20px;
-  right:22px;
-  z-index:30;
-  min-width:196px;
-  height:48px;
-  padding:0 18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid rgba(0,168,255,.46);
-  border-radius:12px;
-  background:linear-gradient(135deg,#061525,#0a2941);
-  color:#e8f7ff;
-  box-shadow:0 12px 32px rgba(0,0,0,.34),0 0 28px rgba(0,168,255,.11);
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:1px;
-  pointer-events:auto;
-  user-select:none;
-}
-.provider-cover:before{
-  content:"";
-  width:9px;height:9px;margin-right:8px;border-radius:50%;
-  background:var(--blue);
-  box-shadow:0 0 14px rgba(0,168,255,.55);
-}
+
 .widget-note{margin-top:14px;padding:13px 15px;border:1px solid rgba(0,168,255,.10);border-radius:12px;background:#081a2b;color:#71879b;font-size:10px;line-height:1.65}
 .widget-note strong{color:#a6dfff}
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
@@ -147,7 +120,7 @@ button{font:inherit}
   .hero h1{font-size:44px}.hero-copy{font-size:14px}
   .hero-actions,.cta-actions{display:grid;grid-template-columns:1fr}.hero-actions .btn,.cta-actions .btn{width:100%}
   .tools-section{padding:56px 0}.widget-shell{padding:9px;border-radius:16px}.widget-frame.symbol-list{min-height:540px}.widget-frame.calendar{min-height:500px}
-  .provider-cover{top:14px;right:14px;width:150px;height:40px;font-size:9px}
+  
   .feature-grid{grid-template-columns:1fr}.cta-box{padding:28px 20px}
   .footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}
   .footer-bottom-inner{min-height:auto;padding:13px 0;flex-direction:column;align-items:flex-start;gap:5px}
@@ -185,37 +158,7 @@ button{font:inherit}
   min-height:0 !important;
   height:auto;
 }
-.provider-cover{
-  position:absolute;
-  top:27px;
-  right:27px;
-  z-index:30;
-  min-width:190px;
-  height:50px;
-  padding:0 18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid rgba(0,168,255,.46);
-  border-radius:12px;
-  background:linear-gradient(135deg,#061525,#0a2941);
-  color:#e8f7ff;
-  box-shadow:0 12px 32px rgba(0,0,0,.34),0 0 28px rgba(0,168,255,.11);
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:1px;
-  pointer-events:auto;
-  user-select:none;
-}
-.provider-cover:before{
-  content:"";
-  width:10px;
-  height:10px;
-  margin-right:9px;
-  border-radius:50%;
-  background:#00a8ff;
-  box-shadow:0 0 15px rgba(0,168,255,.55);
-}
+
 @media(max-width:560px){
   .widget-shell{padding:9px;border-radius:16px}
   .widget-frame,.widget-frame.symbol-list,.widget-frame.calendar{
@@ -223,17 +166,9 @@ button{font:inherit}
     min-height:390px;
     max-height:390px;
   }
-  .provider-cover{
-    top:18px;
-    right:18px;
-    min-width:156px;
-    height:42px;
-    padding:0 12px;
-    font-size:10px;
-  }
-  .provider-cover:before{width:8px;height:8px;margin-right:7px}
+  
+  
 }
-
 
 /* Finlogix category tabs: force high-contrast text inside the provider widget */
 .widget-frame.symbol-list .finlogix-container,
@@ -249,58 +184,7 @@ button{font:inherit}
   color:#111827 !important;
 }
 
-
 /* ===== FINLOGIX CATEGORY LABEL FIX ===== */
-.live-category-overlay{
-  position:absolute;
-  z-index:25;
-  top:0;
-  left:0;
-  right:0;
-  height:54px;
-  display:flex;
-  align-items:center;
-  gap:4px;
-  padding:7px 12px;
-  background:#ffffff;
-  pointer-events:none;
-  overflow:hidden;
-}
-.live-category-overlay .cat{
-  flex:0 0 auto;
-  min-height:32px;
-  padding:8px 12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:5px;
-  color:#172033;
-  font-size:12px;
-  font-weight:700;
-  white-space:nowrap;
-  letter-spacing:.05px;
-  background:transparent;
-}
-.live-category-overlay .cat:first-child{
-  color:#078de0;
-  background:#e5f3fc;
-}
-@media(max-width:700px){
-  .live-category-overlay{
-    height:50px;
-    gap:2px;
-    padding:6px 7px;
-    overflow-x:auto;
-    scrollbar-width:none;
-  }
-  .live-category-overlay::-webkit-scrollbar{display:none}
-  .live-category-overlay .cat{
-    min-height:30px;
-    padding:7px 9px;
-    font-size:10.5px;
-  }
-}
-
 
 
 
@@ -309,57 +193,9 @@ button{font:inherit}
    The provider's original category controls remain underneath and clickable.
    Our opaque label layer covers only that top row so text is readable without
    creating a second row. */
-.live-category-overlay{
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  z-index:25;
-  height:54px;
-  display:flex;
-  align-items:center;
-  gap:4px;
-  padding:7px 12px;
-  background:#fff;
-  border-radius:11px 11px 0 0;
-  pointer-events:none;
-  overflow:hidden;
-  box-shadow:0 1px 0 rgba(17,24,39,.08);
-}
-.live-category-overlay .cat{
-  flex:0 0 auto;
-  min-height:32px;
-  padding:8px 12px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:5px;
-  color:#172033;
-  background:transparent;
-  font-size:12px;
-  font-weight:750;
-  line-height:1;
-  white-space:nowrap;
-}
-.live-category-overlay .cat:first-child{
-  color:#078de0;
-  background:#e5f3fc;
-}
-@media(max-width:700px){
-  .live-category-overlay{
-    height:50px;
-    gap:2px;
-    padding:6px 7px;
-    overflow-x:auto;
-    scrollbar-width:none;
-  }
-  .live-category-overlay::-webkit-scrollbar{display:none}
-  .live-category-overlay .cat{
-    min-height:30px;
-    padding:7px 9px;
-    font-size:10.5px;
-  }
-}
+
+
+
 
 </style>
 </head>
@@ -414,23 +250,11 @@ button{font:inherit}
 
 <div class="widget-shell reveal">
   <div class="widget-frame symbol-list">
-  <div class="live-category-overlay" aria-hidden="true">
-    <span class="cat">Forex</span>
-    <span class="cat">Commodities</span>
-    <span class="cat">CryptoCurrency</span>
-    <span class="cat">Indices</span>
-    <span class="cat">Stocks</span>
-    <span class="cat">ETFs</span>
-    <span class="cat">Futures</span>
-  </div>
   <div class="finlogix-container" id="finlogixWidget"></div>
 </div>
-<div class="provider-cover" aria-label="FXCentrum24 branded provider overlay">FXCENTRUM24</div>
 </div>
 
-<div class="widget-note">
-<strong>Interactive widget:</strong> the market/calendar content remains touchable and interactive. The category controls remain touchable; FXCentrum24 provides the visible labels while the original provider controls remain directly underneath.
-</div>
+<div class="widget-note"><strong>Interactive widget:</strong> The financial widget is embedded directly on FXCentrum24 with its native provider controls and branding.</div>
 
 <div class="feature-grid"><article class="feature-card reveal"><div class="icon">01</div><h3>Forex</h3><p>Compare major currency pairs with bid, ask, spread, change and daily range columns.</p></article><article class="feature-card reveal"><div class="icon">02</div><h3>Commodities & Indices</h3><p>Review metals, energy products and selected global indices in the same market view.</p></article><article class="feature-card reveal"><div class="icon">03</div><h3>Stocks & Crypto</h3><p>Keep popular equities and digital assets available alongside traditional markets.</p></article></div>
 </div></section>
@@ -460,7 +284,6 @@ button{font:inherit}
 </div></div>
 <div class="footer-bottom"><div class="container"><div class="footer-bottom-inner"><p>© 2012 – 2026 FXCentrum24. All Rights Reserved.</p><p>Global Markets · Professional Trading Environment</p></div></div></div>
 </footer>
-
 
 <script type="text/javascript" src="https://widget.finlogix.com/Widget.js"></script>
 <script type="text/javascript">
@@ -508,7 +331,6 @@ Widget.init({
   isAdaptive:true
 });
 </script>
-
 
 <script>
 (() => {
@@ -560,9 +382,6 @@ Widget.init({
   });
 })();
 </script>
-
-
-
 
 </body>
 </html>
