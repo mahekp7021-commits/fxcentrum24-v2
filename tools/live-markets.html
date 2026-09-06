@@ -248,6 +248,67 @@ button{font:inherit}
   color:#111827 !important;
 }
 
+
+/* ===== FINLOGIX CATEGORY LABEL FIX ===== */
+.live-category-overlay{
+  position:absolute;
+  z-index:25;
+  top:0;
+  left:0;
+  right:0;
+  height:54px;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:7px 12px;
+  background:#ffffff;
+  pointer-events:none;
+  overflow:hidden;
+}
+.live-category-overlay .cat{
+  flex:0 0 auto;
+  min-height:32px;
+  padding:8px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:5px;
+  color:#172033;
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  letter-spacing:.05px;
+  background:transparent;
+}
+.live-category-overlay .cat:first-child{
+  color:#078de0;
+  background:#e5f3fc;
+}
+@media(max-width:700px){
+  .live-category-overlay{
+    height:50px;
+    gap:2px;
+    padding:6px 7px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .live-category-overlay::-webkit-scrollbar{display:none}
+  .live-category-overlay .cat{
+    min-height:30px;
+    padding:7px 9px;
+    font-size:10.5px;
+  }
+}
+
+
+/* Reserve the category-strip area inside the embedded widget */
+.widget-frame.symbol-list{
+  padding-top:54px;
+}
+@media(max-width:700px){
+  .widget-frame.symbol-list{padding-top:50px}
+}
+
 </style>
 </head>
 <body>
@@ -301,13 +362,22 @@ button{font:inherit}
 
 <div class="widget-shell reveal">
   <div class="widget-frame symbol-list">
-    <div class="finlogix-container" id="finlogixWidget"></div>
+    <div class="live-category-overlay" aria-hidden="true">
+  <span class="cat">Forex</span>
+  <span class="cat">Commodities</span>
+  <span class="cat">CryptoCurrency</span>
+  <span class="cat">Indices</span>
+  <span class="cat">Stocks</span>
+  <span class="cat">ETFs</span>
+  <span class="cat">Futures</span>
+</div>
+<div class="finlogix-container" id="finlogixWidget"></div>
   </div>
   <div class="provider-cover" aria-label="FXCentrum24 branded provider overlay">FXCENTRUM24</div>
 </div>
 
 <div class="widget-note">
-<strong>Interactive widget:</strong> the market/calendar content remains touchable and interactive. The larger FXCentrum24 overlay covers the provider branding/link area visible at the top-right, so that marked external destination is not exposed.
+<strong>Interactive widget:</strong> the market/calendar content remains touchable and interactive. The category controls remain touchable; the visible category labels are supplied by FXCentrum24 while the underlying provider controls stay active.
 </div>
 
 <div class="feature-grid"><article class="feature-card reveal"><div class="icon">01</div><h3>Forex</h3><p>Compare major currency pairs with bid, ask, spread, change and daily range columns.</p></article><article class="feature-card reveal"><div class="icon">02</div><h3>Commodities & Indices</h3><p>Review metals, energy products and selected global indices in the same market view.</p></article><article class="feature-card reveal"><div class="icon">03</div><h3>Stocks & Crypto</h3><p>Keep popular equities and digital assets available alongside traditional markets.</p></article></div>
@@ -440,34 +510,7 @@ Widget.init({
 </script>
 
 
-<script>
-(() => {
-  const widget = document.getElementById("finlogixWidget");
-  if (!widget) return;
 
-  const forceWidgetTabContrast = () => {
-    // The category bar is the first navigation-like row in the SymbolList.
-    // Keep this deliberately scoped so quote colors remain provider-controlled.
-    const candidates = widget.querySelectorAll('a,button,[role="button"],[role="tab"]');
-    candidates.forEach(el => {
-      const label = (el.textContent || "").trim();
-      const known = /^(Forex|Commodities|CryptoCurrency|Cryptocurrency|Indices|Stocks|ETFs|Futures)$/i.test(label);
-      if (known) {
-        el.style.setProperty("color", "#111827", "important");
-        el.style.setProperty("font-weight", "700", "important");
-        el.style.textDecoration = "none";
-      }
-    });
-  };
-
-  const observer = new MutationObserver(forceWidgetTabContrast);
-  observer.observe(widget, {childList:true, subtree:true, attributes:true, attributeFilter:["class","style","aria-selected"]});
-
-  setTimeout(forceWidgetTabContrast, 600);
-  setTimeout(forceWidgetTabContrast, 1500);
-  setTimeout(forceWidgetTabContrast, 3000);
-})();
-</script>
 
 </body>
 </html>
