@@ -71,7 +71,29 @@ a{color:inherit;text-decoration:none}button{font:inherit}
 .section-intro p{margin:14px 0 0;color:#8fa5ba;font-size:14px;line-height:1.8}
 .widget-shell{position:relative;margin-top:34px;min-height:420px;padding:16px;border:1px solid rgba(0,168,255,.18);border-radius:20px;background:linear-gradient(145deg,#0b2237,#071725);box-shadow:0 24px 65px rgba(0,0,0,.26);overflow:hidden}
 .widget-inner{min-height:386px;border-radius:13px;background:#fff;overflow:hidden}
-.widget-click-shield{position:absolute;inset:16px;z-index:20;background:transparent;cursor:default}
+.widget-logo-cover{
+  position:absolute;
+  top:21px;
+  right:23px;
+  z-index:20;
+  min-width:72px;
+  height:30px;
+  padding:0 9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(0,168,255,.34);
+  border-radius:8px;
+  background:linear-gradient(135deg,rgba(5,20,34,.97),rgba(8,31,50,.97));
+  color:#9fdfff;
+  box-shadow:0 8px 20px rgba(0,0,0,.22);
+  pointer-events:auto;
+  cursor:default;
+  font-size:8px;
+  font-weight:850;
+  letter-spacing:.65px;
+  white-space:nowrap;
+}
 .widget-note{display:flex;gap:8px;align-items:flex-start;margin-top:14px;padding:13px 15px;border:1px solid rgba(0,168,255,.10);border-radius:12px;background:#081a2b;color:#70879b;font-size:10px;line-height:1.65}
 .widget-note strong{color:#a6dfff}
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
@@ -111,7 +133,7 @@ a{color:inherit;text-decoration:none}button{font:inherit}
   .container,.header-inner{width:calc(100% - 28px)}
   .hero h1{font-size:44px}.hero-copy{font-size:14px}
   .hero-actions,.cta-actions{display:grid;grid-template-columns:1fr}.hero-actions .btn,.cta-actions .btn{width:100%}
-  .tools-section{padding:56px 0}.widget-shell{min-height:300px;padding:10px}.widget-inner{min-height:276px}.widget-click-shield{inset:10px}
+  .tools-section{padding:56px 0}.widget-shell{min-height:300px;padding:10px}.widget-inner{min-height:276px}.widget-logo-cover{top:15px;right:15px;min-width:68px;height:28px;font-size:7.5px}
   .feature-grid{grid-template-columns:1fr}
   .cta-box{padding:28px 20px}
   .footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}
@@ -194,12 +216,12 @@ a{color:inherit;text-decoration:none}button{font:inherit}
   <div class="widget-inner">
     <div class="finlogix-container" id="finlogixWidget"></div>
   </div>
-  <div class="widget-click-shield" aria-hidden="true" title="External links disabled"></div>
+  <div class="widget-logo-cover" aria-hidden="true"><span>FXCENTRUM24</span></div>
 </div>
 
 <div class="widget-note">
 <span>●</span>
-<div><strong>FXCentrum24 view-only display:</strong> external widget click-through is blocked so traders remain on FXCentrum24. The shield also prevents interaction with third-party controls inside the embedded widget.</div>
+<div><strong>Interactive market tool:</strong> traders can use the widget controls and calendar/ticker interactions. Only the provider branding/link area is covered so the Finlogix website does not open from that marked button.</div>
 </div>
 
 <div class="feature-grid">
