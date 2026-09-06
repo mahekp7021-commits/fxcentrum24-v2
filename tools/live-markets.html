@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Monitor selected market quotes through an embedded financial widget without leaving the FXCentrum24 website.">
+<meta name="theme-color" content="#06111f">
+<title>Live Markets | FXCentrum24</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06111f;--bg2:#081827;--panel:#0a1b2d;--panel2:#0c2237;
+  --text:#f7fbff;--muted:#96aabd;--muted2:#6f8498;--blue:#00a8ff;
+  --red:#ff3154;--red2:#ff4766;--green:#00d49a;--border:rgba(120,180,220,.14);
+  --container:1320px
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{font:inherit}
+.container{width:min(calc(100% - 64px),var(--container));margin-inline:auto}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:1000;background:rgba(5,16,29,.96);border-bottom:1px solid rgba(110,170,215,.12);backdrop-filter:blur(14px)}
+.header-inner{min-height:80px;display:flex;align-items:center;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.brand-mark{width:32px;height:30px;display:flex;align-items:flex-end;gap:3px}
+.brand-mark i{display:block;width:5px;background:var(--blue);border-radius:2px 2px 0 0}
+.brand-mark i:nth-child(1){height:10px}.brand-mark i:nth-child(2){height:17px}.brand-mark i:nth-child(3){height:23px}.brand-mark i:nth-child(4){height:30px}
+.brand-name{font-size:22px;line-height:1;font-weight:800;letter-spacing:-.8px}.brand-name strong{color:var(--red)}
+.brand-tagline{display:block;color:#73869a;font-size:7px;margin-top:2px}
+.main-nav{display:flex;align-items:stretch;gap:2px;margin-left:auto}
+.nav-item{position:relative}
+.nav-trigger,.nav-link{height:80px;padding:0 12px;border:0;background:transparent;color:#d9e4ef;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:650;cursor:pointer}
+.nav-trigger:hover,.nav-link:hover,.nav-item:hover>.nav-trigger{color:var(--blue)}
+.nav-trigger em{font-style:normal;font-size:10px;opacity:.65}
+.dropdown{position:absolute;left:0;top:calc(100% - 1px);width:255px;padding:9px;background:linear-gradient(180deg,#091a2b,#061421);border:1px solid rgba(75,155,210,.34);border-radius:10px;box-shadow:0 22px 50px rgba(0,0,0,.42);opacity:0;visibility:hidden;transform:translateY(7px);transition:.22s}
+.nav-item:hover>.dropdown,.nav-item.is-open>.dropdown{opacity:1;visibility:visible;transform:none}
+.dropdown a{display:flex;flex-direction:column;gap:3px;padding:12px 13px;border-radius:7px}
+.dropdown a:hover{background:rgba(0,168,255,.08)}
+.dropdown span{font-size:13px;font-weight:650}.dropdown small{font-size:10px;color:#71879d}
+.header-actions{display:flex;gap:9px;margin-left:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;border-radius:8px;font-size:13px;font-weight:750;transition:.25s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;box-shadow:0 12px 28px rgba(255,49,84,.16)}
+.btn-outline{border:1px solid rgba(120,180,220,.4);background:rgba(4,15,27,.24);color:#fff}
+.btn-outline:hover{border-color:var(--blue);background:rgba(0,168,255,.06)}
+.menu-toggle{display:none;margin-left:auto;width:48px;height:48px;border:1px solid rgba(120,180,220,.35);border-radius:8px;background:#071523}
+.menu-toggle span{display:block;width:20px;height:2px;margin:4px auto;background:#fff;border-radius:3px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding:88px 0 62px;background:radial-gradient(circle at 86% 20%,rgba(0,168,255,.12),transparent 34%),linear-gradient(180deg,#071726,#06111f);border-bottom:1px solid rgba(120,180,220,.08)}
+.hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(0,168,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,168,255,.025) 1px,transparent 1px);background-size:62px 62px;pointer-events:none}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center}
+.eyebrow{margin:0 0 12px;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+.hero h1{margin:0;font-size:clamp(46px,5.4vw,74px);line-height:.98;letter-spacing:-3px}
+.hero h1 span{color:var(--blue)}
+.hero-copy{max-width:720px;margin:18px 0 0;color:#a4b8ca;font-size:16px;line-height:1.8}
+.hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:26px}
+.tool-hero-panel{padding:27px;border:1px solid rgba(0,168,255,.16);border-radius:21px;background:linear-gradient(145deg,#0b2338,#071725);box-shadow:0 24px 65px rgba(0,0,0,.24)}
+.tool-hero-panel h3{margin:0 0 14px;font-size:18px}
+.hero-stat{display:flex;justify-content:space-between;gap:18px;padding:13px 0;border-bottom:1px solid rgba(120,180,220,.08)}
+.hero-stat:last-child{border-bottom:0}.hero-stat span{color:#758ba0;font-size:11px}.hero-stat strong{font-size:12px}
+
+/* Widget */
+.tools-section{padding:70px 0 78px}
+.section-intro{max-width:860px}
+.section-intro h2{margin:0;font-size:clamp(34px,4vw,54px);line-height:1.05;letter-spacing:-2px}
+.section-intro p{margin:14px 0 0;color:#8fa5ba;font-size:14px;line-height:1.8}
+.widget-shell{position:relative;margin-top:34px;min-height:420px;padding:16px;border:1px solid rgba(0,168,255,.18);border-radius:20px;background:linear-gradient(145deg,#0b2237,#071725);box-shadow:0 24px 65px rgba(0,0,0,.26);overflow:hidden}
+.widget-inner{min-height:386px;border-radius:13px;background:#fff;overflow:hidden}
+.widget-click-shield{position:absolute;inset:16px;z-index:20;background:transparent;cursor:default}
+.widget-note{display:flex;gap:8px;align-items:flex-start;margin-top:14px;padding:13px 15px;border:1px solid rgba(0,168,255,.10);border-radius:12px;background:#081a2b;color:#70879b;font-size:10px;line-height:1.65}
+.widget-note strong{color:#a6dfff}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.feature-card{padding:25px;border:1px solid var(--border);border-radius:17px;background:linear-gradient(145deg,#0b2034,#071725);transition:.3s}
+.feature-card:hover{transform:translateY(-6px);border-color:rgba(0,168,255,.30)}
+.icon{width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(0,168,255,.18);border-radius:12px;background:rgba(0,168,255,.08);color:#9fe0ff;font-size:11px;font-weight:800;margin-bottom:17px}
+.feature-card h3{margin:0 0 9px;font-size:18px}.feature-card p{margin:0;color:#7e95a9;font-size:12px;line-height:1.75}
+.cta{padding:0 0 70px}.cta-box{padding:40px;border:1px solid rgba(0,168,255,.16);border-radius:22px;background:radial-gradient(circle at 90% 20%,rgba(0,168,255,.12),transparent 38%),linear-gradient(135deg,#0b2339,#071725)}.cta-box h2{margin:0;font-size:clamp(34px,4vw,52px);letter-spacing:-2px}.cta-box p{max-width:760px;margin:14px 0 0;color:#9db0c2;font-size:14px;line-height:1.8}.cta-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.risk{padding:28px 0;background:#040e18;border-top:1px solid rgba(120,180,220,.08)}.risk p{margin:0;color:#697d91;font-size:10px;line-height:1.7}.risk strong{color:#a8bacb}
+
+/* Footer */
+.site-footer{background:#050d17;border-top:1px solid rgba(120,180,220,.10)}
+.footer-main{padding:44px 0 32px}.footer-grid{display:grid;grid-template-columns:1.35fr repeat(5,minmax(0,1fr));gap:24px}.footer-brand p{margin:14px 0 0;max-width:280px;color:#718499;font-size:11px;line-height:1.7}
+.footer-col h4{margin:0 0 13px;font-size:13px}.footer-col a{display:block;margin-bottom:9px;color:#71869d;font-size:11px}.footer-col a:hover{color:var(--blue)}
+.social-row{display:flex;gap:8px;flex-wrap:wrap}.social-link{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(120,180,220,.25);border-radius:9px;background:#0a1724;color:#d6e5f0}.social-link:hover{color:#fff;border-color:var(--blue);transform:translateY(-2px)}.social-link svg{width:17px;height:17px;fill:currentColor}
+.footer-bottom{border-top:1px solid rgba(120,180,220,.07);background:#040b13}.footer-bottom-inner{min-height:50px;display:flex;align-items:center;justify-content:space-between;gap:20px}.footer-bottom p{margin:0;color:#5f7285;font-size:10px}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}.reveal.show{opacity:1;transform:none}.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+
+@media(max-width:1050px){
+  .container,.header-inner{width:min(calc(100% - 40px),1040px)}
+  .nav-trigger,.nav-link{padding-inline:8px}
+  .footer-grid{grid-template-columns:repeat(3,1fr)}.footer-brand{grid-column:1/-1}
+}
+@media(max-width:850px){
+  .header-inner{min-height:74px}.menu-toggle{display:block}.header-actions{display:none}
+  .main-nav{position:fixed;inset:74px 0 0;display:block;padding:18px 16px 30px;background:rgba(4,13,23,.98);overflow-y:auto;transform:translateX(100%);transition:.3s}
+  .main-nav.is-open{transform:none}.nav-item{border-bottom:1px solid rgba(120,180,220,.08)}
+  .nav-trigger,.nav-link{width:100%;height:56px;justify-content:space-between;padding:0 4px;font-size:15px}.nav-link{justify-content:flex-start}
+  .dropdown{position:static;width:100%;display:none;opacity:1;visibility:visible;transform:none;padding:0 0 10px;border:0;background:transparent;box-shadow:none}
+  .nav-item.is-open>.dropdown{display:block}
+  .hero{padding:70px 0 52px}.hero-grid{grid-template-columns:1fr}
+  .feature-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:560px){
+  .container,.header-inner{width:calc(100% - 28px)}
+  .hero h1{font-size:44px}.hero-copy{font-size:14px}
+  .hero-actions,.cta-actions{display:grid;grid-template-columns:1fr}.hero-actions .btn,.cta-actions .btn{width:100%}
+  .tools-section{padding:56px 0}.widget-shell{min-height:300px;padding:10px}.widget-inner{min-height:276px}.widget-click-shield{inset:10px}
+  .feature-grid{grid-template-columns:1fr}
+  .cta-box{padding:28px 20px}
+  .footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}
+  .footer-bottom-inner{min-height:auto;padding:13px 0;flex-direction:column;align-items:flex-start;gap:5px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.feature-card,.btn,.social-link{transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-inner container">
+<a class="brand" href="../index.html" aria-label="FXCentrum24 Home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><span class="brand-name"><strong>FX</strong>CENTRUM24</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span></a>
+<button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav class="main-nav" id="mainNavigation">
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Markets</span><em>⌄</em></button><div class="dropdown">
+<a href="../markets/forex.html"><span>Forex</span><small>Major &amp; minor currency pairs</small></a>
+<a href="../markets/commodities.html"><span>Commodities</span><small>Gold, oil, silver &amp; more</small></a>
+<a href="../markets/indices.html"><span>Indices</span><small>Global stock indices</small></a>
+<a href="../markets/shares-cfds.html"><span>Shares CFDs</span><small>Global company shares</small></a>
+<a href="../markets/cryptocurrency.html"><span>Cryptocurrency</span><small>Popular digital assets</small></a>
+</div></div>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Trading</span><em>⌄</em></button><div class="dropdown">
+<a href="../trading/account-types.html"><span>Account Types</span><small>Choose your trading account</small></a>
+<a href="../trading/trading-conditions.html"><span>Trading Conditions</span><small>Spreads, execution &amp; more</small></a>
+<a href="../trading/how-to-start.html"><span>How to Start</span><small>Start trading in 3 steps</small></a>
+</div></div>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Platforms</span><em>⌄</em></button><div class="dropdown">
+<a href="../platforms/metatrader-4.html"><span>MetaTrader 4</span><small>Classic professional trading</small></a>
+<a href="../platforms/metatrader-5.html"><span>MetaTrader 5</span><small>Advanced multi-asset platform</small></a>
+<a href="../platforms/webtrader.html"><span>WebTrader</span><small>Trade directly from your browser</small></a>
+</div></div>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Accounts</span><em>⌄</em></button><div class="dropdown">
+<a href="../accounts/standard.html"><span>Standard</span><small>Beginner &amp; Regular accounts</small></a>
+<a href="../accounts/premium.html"><span>Premium</span><small>ACE &amp; Supreme accounts</small></a>
+<a href="../accounts/professional.html"><span>Professional</span><small>Premium &amp; Premium Plus</small></a>
+</div></div>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Tools</span><em>⌄</em></button><div class="dropdown">
+<a href="./live-markets.html"><span>Live Markets</span><small>Live market overview</small></a>
+<a href="./economic-calendar.html"><span>Economic Calendar</span><small>Track important market events</small></a>
+</div></div>
+<div class="nav-item"><button class="nav-trigger" type="button"><span>Company</span><em>⌄</em></button><div class="dropdown">
+<a href="../company/about.html"><span>About Us</span><small>Discover FXCentrum24</small></a>
+<a href="../company/contact.html"><span>Contact Us</span><small>We're here to help</small></a>
+<a href="../company/benefits.html"><span>Benefits</span><small>Why trade with us</small></a>
+</div></div>
+<a href="../partnership/index.html" class="nav-link">Partnership</a>
+</nav>
+<div class="header-actions"><a class="btn btn-outline" href="../trading/login.html">Login</a><a class="btn btn-primary" href="../trading/account-opening.html">Open Account</a></div>
+</div>
+</header>
+
+<main>
+<section class="hero">
+<div class="container"><div class="hero-grid">
+<div>
+<p class="eyebrow reveal">Real-Time Market Overview</p>
+<h1 class="reveal d1">See the market. <span>Stay ready.</span></h1>
+<p class="hero-copy reveal d2">Monitor selected market quotes through an embedded financial widget without leaving the FXCentrum24 website.</p>
+<div class="hero-actions reveal d3">
+<a class="btn btn-primary" href="../trading/account-opening.html">Open Account →</a>
+<a class="btn btn-outline" href="../index.html">Back to Home</a>
+</div>
+</div>
+<div class="tool-hero-panel reveal d2"><h3>FXCentrum24 · Tools</h3><div class="hero-stat"><span>Feed</span><strong>Live market widget</strong></div><div class="hero-stat"><span>Symbols</span><strong>EURUSD · USDJPY · XAUUSD</strong></div><div class="hero-stat"><span>Access</span><strong>FXCentrum24 view-only</strong></div></div>
+</div></div>
+</section>
+
+<section class="tools-section">
+<div class="container">
+<div class="section-intro reveal">
+<p class="eyebrow">Live Data</p>
+<h2>Live market information.</h2>
+<p>View market quotes inside FXCentrum24 using the provided financial data widget.</p>
+</div>
+
+<div class="widget-shell reveal">
+  <div class="widget-inner">
+    <div class="finlogix-container" id="finlogixWidget"></div>
+  </div>
+  <div class="widget-click-shield" aria-hidden="true" title="External links disabled"></div>
+</div>
+
+<div class="widget-note">
+<span>●</span>
+<div><strong>FXCentrum24 view-only display:</strong> external widget click-through is blocked so traders remain on FXCentrum24. The shield also prevents interaction with third-party controls inside the embedded widget.</div>
+</div>
+
+<div class="feature-grid">
+<article class="feature-card reveal"><div class="icon">01</div><h3>Selected Symbols</h3><p>Track the selected instruments in one compact market view.</p></article><article class="feature-card reveal"><div class="icon">02</div><h3>At-a-Glance Quotes</h3><p>Keep key market pricing visible while staying on FXCentrum24.</p></article><article class="feature-card reveal"><div class="icon">03</div><h3>Clean Workflow</h3><p>Use the live market page as a starting point before deeper analysis.</p></article>
+</div>
+</div>
+</section>
+
+<section class="cta">
+<div class="container"><div class="cta-box reveal">
+<p class="eyebrow">Next Step</p>
+<h2>Ready to trade?</h2>
+<p>Review the market, choose your account structure and continue through the FXCentrum24 account-opening process.</p>
+<div class="cta-actions"><a class="btn btn-primary" href="../trading/account-opening.html">Open Account →</a><a class="btn btn-outline" href="../trading/how-to-start.html">How to Start</a></div>
+</div></div>
+</section>
+
+<section class="risk"><div class="container"><p><strong>Risk Warning:</strong> Trading Forex and CFDs involves a high level of risk and may not be suitable for all investors. You may lose some or all of your invested capital. Please review the applicable risk disclosure carefully before trading.</p></div></section>
+</main>
+
+
+<footer class="site-footer">
+<div class="footer-main"><div class="container"><div class="footer-grid">
+<div class="footer-brand"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><span class="brand-name"><strong>FX</strong>CENTRUM24</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span></a><p>Access global markets through a structured trading environment and professional platforms.</p></div>
+<div class="footer-col"><h4>Markets</h4><a href="../markets/forex.html">Forex</a><a href="../markets/commodities.html">Commodities</a><a href="../markets/indices.html">Indices</a><a href="../markets/shares-cfds.html">Shares CFDs</a><a href="../markets/cryptocurrency.html">Cryptocurrency</a></div>
+<div class="footer-col"><h4>Trading</h4><a href="../trading/account-types.html">Account Types</a><a href="../trading/trading-conditions.html">Trading Conditions</a><a href="../trading/how-to-start.html">How to Start</a></div>
+<div class="footer-col"><h4>Company</h4><a href="../company/about.html">About Us</a><a href="../company/contact.html">Contact Us</a><a href="../partnership/index.html">Partnership</a><a href="../company/benefits.html">Benefits</a></div>
+<div class="footer-col"><h4>Legal</h4><a href="#">Terms and Conditions</a><a href="#">Privacy Policy</a><a href="#">Risk Disclosure</a><a href="#">AML Policy</a><a href="#">Client Agreement</a></div>
+<div class="footer-col"><h4>Stay Connected</h4><div class="social-row">
+<a class="social-link" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-3.31 0-5 1.79-5 5v3H6v4h3v8h4v-8h3.1l.9-4H13V9c0-.67.33-1 1-1Z"/></svg></a>
+<a class="social-link" href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l-4.89-6.39L6.48 22H3.37l7.24-8.28L2.8 2h6.4l4.42 5.85L18.9 2Zm-1.1 17.94h1.73L8.28 3.94H6.43L17.8 19.94Z"/></svg></a>
+<a class="social-link" href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M5.16 3.5A2.16 2.16 0 1 1 5.16 7.82 2.16 2.16 0 0 1 5.16 3.5ZM3.3 9h3.72v11.7H3.3V9Zm5.94 0h3.57v1.6h.05c.5-.95 1.72-1.95 3.54-1.95 3.79 0 4.49 2.49 4.49 5.73v6.32h-3.72v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7H9.24V9Z"/></svg></a>
+<a class="social-link" href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.51 3.5 12 3.5 12 3.5s-7.51 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.87.56 9.38.56 9.38.56s7.51 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8ZM9.6 15.8V8.2l6.4 3.8-6.4 3.8Z"/></svg></a>
+<a class="social-link" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.2 2h9.6A5.2 5.2 0 0 1 22 7.2v9.6a5.2 5.2 0 0 1-5.2 5.2H7.2A5.2 5.2 0 0 1 2 16.8V7.2A5.2 5.2 0 0 1 7.2 2Zm0 2A3.2 3.2 0 0 0 4 7.2v9.6A3.2 3.2 0 0 0 7.2 20h9.6a3.2 3.2 0 0 0 3.2-3.2V7.2A3.2 3.2 0 0 0 16.8 4H7.2Zm9.9 1.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0-3-3Z"/></svg></a>
+</div></div>
+</div></div>
+<div class="footer-bottom"><div class="container"><div class="footer-bottom-inner"><p>© 2012 – 2026 FXCentrum24. All Rights Reserved.</p><p>Global Markets · Professional Trading Environment</p></div></div></div>
+</footer>
+
+
+<script type="text/javascript" src="https://widget.finlogix.com/Widget.js"></script>
+<script type="text/javascript">
+Widget.init({
+  widgetId: "87c63d8a-2d03-409f-ba57-599ea3a57013",
+  type: "StripBar",
+  language: "en",
+  symbolPairs: [
+    { symbolId: "19", symbolName: "EURUSD" },
+    { symbolId: "36", symbolName: "USDJPY" },
+    { symbolId: "20", symbolName: "GBPAUD" },
+    { symbolId: "44", symbolName: "XAUUSD" },
+    { symbolId: "128", symbolName: "USWTI" },
+    { symbolId: "157", symbolName: "SP500" }
+  ],
+  isAdaptive: true
+});
+</script>
+
+
+<script>
+(() => {
+ const toggle=document.getElementById("menuToggle"),nav=document.getElementById("mainNavigation"),items=document.querySelectorAll(".nav-item");
+ if(toggle) toggle.addEventListener("click",()=>{const open=nav.classList.toggle("is-open");toggle.setAttribute("aria-expanded",String(open));document.body.style.overflow=open?"hidden":"";});
+ items.forEach(item=>{const t=item.querySelector(".nav-trigger");if(!t)return;t.addEventListener("click",e=>{e.preventDefault();const open=item.classList.contains("is-open");items.forEach(x=>x.classList.remove("is-open"));if(!open)item.classList.add("is-open");});});
+ document.querySelectorAll(".main-nav a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("is-open");document.body.style.overflow="";}));
+ const obs=new IntersectionObserver((entries,o)=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("show");o.unobserve(e.target)}}),{threshold:.08,rootMargin:"0px 0px -35px 0px"});
+ document.querySelectorAll(".reveal").forEach(e=>obs.observe(e));
+})();
+</script>
+</body>
+</html>
