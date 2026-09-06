@@ -152,6 +152,87 @@ button{font:inherit}
   .footer-bottom-inner{min-height:auto;padding:13px 0;flex-direction:column;align-items:flex-start;gap:5px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.feature-card,.btn,.social-link{transition:none!important}}
+
+/* ===== COMPACT THIRD-PARTY WIDGET CANVAS ===== */
+.widget-shell{
+  position:relative;
+  margin-top:34px;
+  padding:14px;
+  border:1px solid rgba(0,168,255,.20);
+  border-radius:20px;
+  background:linear-gradient(145deg,#0b2237,#071725);
+  box-shadow:0 24px 65px rgba(0,0,0,.26);
+}
+.widget-frame{
+  position:relative;
+  width:100%;
+  height:460px;
+  max-height:460px;
+  border-radius:11px;
+  overflow:auto;
+  background:#071725;
+  scrollbar-width:thin;
+  scrollbar-color:#2d526c #071725;
+}
+.widget-frame::-webkit-scrollbar{width:8px;height:8px}
+.widget-frame::-webkit-scrollbar-track{background:#071725}
+.widget-frame::-webkit-scrollbar-thumb{background:#2d526c;border-radius:99px}
+.widget-frame.symbol-list{height:460px;min-height:460px}
+.widget-frame.calendar{height:460px;min-height:460px}
+.widget-frame .finlogix-container{
+  width:100%;
+  min-height:0 !important;
+  height:auto;
+}
+.provider-cover{
+  position:absolute;
+  top:27px;
+  right:27px;
+  z-index:30;
+  min-width:190px;
+  height:50px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(0,168,255,.46);
+  border-radius:12px;
+  background:linear-gradient(135deg,#061525,#0a2941);
+  color:#e8f7ff;
+  box-shadow:0 12px 32px rgba(0,0,0,.34),0 0 28px rgba(0,168,255,.11);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:1px;
+  pointer-events:auto;
+  user-select:none;
+}
+.provider-cover:before{
+  content:"";
+  width:10px;
+  height:10px;
+  margin-right:9px;
+  border-radius:50%;
+  background:#00a8ff;
+  box-shadow:0 0 15px rgba(0,168,255,.55);
+}
+@media(max-width:560px){
+  .widget-shell{padding:9px;border-radius:16px}
+  .widget-frame,.widget-frame.symbol-list,.widget-frame.calendar{
+    height:390px;
+    min-height:390px;
+    max-height:390px;
+  }
+  .provider-cover{
+    top:18px;
+    right:18px;
+    min-width:156px;
+    height:42px;
+    padding:0 12px;
+    font-size:10px;
+  }
+  .provider-cover:before{width:8px;height:8px;margin-right:7px}
+}
+
 </style>
 </head>
 <body>
