@@ -83,33 +83,7 @@ button{font:inherit}
 .widget-frame.symbol-list{min-height:620px}
 .widget-frame.calendar{min-height:560px}
 .finlogix-container{width:100%;min-height:inherit}
-.provider-cover{
-  position:absolute;
-  top:22px;
-  right:22px;
-  z-index:30;
-  width:176px;
-  height:46px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid rgba(0,168,255,.42);
-  border-radius:11px;
-  background:linear-gradient(135deg,#061525,#0a2941);
-  color:#e8f7ff;
-  box-shadow:0 12px 32px rgba(0,0,0,.32),0 0 26px rgba(0,168,255,.10);
-  font-size:11px;
-  font-weight:850;
-  letter-spacing:.9px;
-  pointer-events:auto;
-  user-select:none;
-}
-.provider-cover:before{
-  content:"";
-  width:9px;height:9px;margin-right:8px;border-radius:50%;
-  background:var(--blue);
-  box-shadow:0 0 14px rgba(0,168,255,.55);
-}
+
 .widget-note{margin-top:14px;padding:13px 15px;border:1px solid rgba(0,168,255,.10);border-radius:12px;background:#081a2b;color:#71879b;font-size:10px;line-height:1.65}
 .widget-note strong{color:#a6dfff}
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
@@ -146,91 +120,45 @@ button{font:inherit}
   .hero h1{font-size:44px}.hero-copy{font-size:14px}
   .hero-actions,.cta-actions{display:grid;grid-template-columns:1fr}.hero-actions .btn,.cta-actions .btn{width:100%}
   .tools-section{padding:56px 0}.widget-shell{padding:9px;border-radius:16px}.widget-frame.symbol-list{min-height:540px}.widget-frame.calendar{min-height:500px}
-  .provider-cover{top:14px;right:14px;width:150px;height:40px;font-size:9px}
+  
   .feature-grid{grid-template-columns:1fr}.cta-box{padding:28px 20px}
   .footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}
   .footer-bottom-inner{min-height:auto;padding:13px 0;flex-direction:column;align-items:flex-start;gap:5px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.feature-card,.btn,.social-link{transition:none!important}}
 
-/* ===== COMPACT THIRD-PARTY WIDGET CANVAS ===== */
-.widget-shell{
-  position:relative;
-  margin-top:34px;
-  padding:14px;
-  border:1px solid rgba(0,168,255,.20);
-  border-radius:20px;
-  background:linear-gradient(145deg,#0b2237,#071725);
-  box-shadow:0 24px 65px rgba(0,0,0,.26);
-}
-.widget-frame{
+/* ===== ECONOMIC CALENDAR FULL-SIZE WIDGET ===== */
+.widget-frame.calendar{
   position:relative;
   width:100%;
-  height:460px;
-  max-height:460px;
-  border-radius:11px;
-  overflow:auto;
-  background:#071725;
-  scrollbar-width:thin;
-  scrollbar-color:#2d526c #071725;
+  height:760px !important;
+  min-height:760px !important;
+  max-height:none !important;
+  overflow:auto !important;
+  background:#fff;
 }
-.widget-frame::-webkit-scrollbar{width:8px;height:8px}
-.widget-frame::-webkit-scrollbar-track{background:#071725}
-.widget-frame::-webkit-scrollbar-thumb{background:#2d526c;border-radius:99px}
-.widget-frame.symbol-list{height:460px;min-height:460px}
-.widget-frame.calendar{height:460px;min-height:460px}
-.widget-frame .finlogix-container{
-  width:100%;
-  min-height:0 !important;
-  height:auto;
+.widget-frame.calendar .finlogix-container{
+  width:100% !important;
+  min-height:760px !important;
+  height:760px !important;
 }
-.provider-cover{
-  position:absolute;
-  top:27px;
-  right:27px;
-  z-index:30;
-  min-width:190px;
-  height:50px;
-  padding:0 18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid rgba(0,168,255,.46);
-  border-radius:12px;
-  background:linear-gradient(135deg,#061525,#0a2941);
-  color:#e8f7ff;
-  box-shadow:0 12px 32px rgba(0,0,0,.34),0 0 28px rgba(0,168,255,.11);
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:1px;
-  pointer-events:auto;
-  user-select:none;
+.widget-frame.calendar iframe{
+  display:block !important;
+  width:100% !important;
+  height:760px !important;
+  min-height:760px !important;
+  border:0 !important;
 }
-.provider-cover:before{
-  content:"";
-  width:10px;
-  height:10px;
-  margin-right:9px;
-  border-radius:50%;
-  background:#00a8ff;
-  box-shadow:0 0 15px rgba(0,168,255,.55);
-}
-@media(max-width:560px){
-  .widget-shell{padding:9px;border-radius:16px}
-  .widget-frame,.widget-frame.symbol-list,.widget-frame.calendar{
-    height:390px;
-    min-height:390px;
-    max-height:390px;
+@media(max-width:700px){
+  .widget-frame.calendar{
+    height:680px !important;
+    min-height:680px !important;
   }
-  .provider-cover{
-    top:18px;
-    right:18px;
-    min-width:156px;
-    height:42px;
-    padding:0 12px;
-    font-size:10px;
+  .widget-frame.calendar .finlogix-container,
+  .widget-frame.calendar iframe{
+    height:680px !important;
+    min-height:680px !important;
   }
-  .provider-cover:before{width:8px;height:8px;margin-right:7px}
 }
 
 </style>
@@ -288,14 +216,11 @@ button{font:inherit}
   <div class="widget-frame calendar">
     <div class="finlogix-container" id="finlogixWidget"></div>
   </div>
-  <div class="provider-cover" aria-label="FXCentrum24 branded provider overlay">FXCENTRUM24</div>
 </div>
 
-<div class="widget-note">
-<strong>Interactive widget:</strong> the market/calendar content remains touchable and interactive. The larger FXCentrum24 overlay covers the provider branding/link area visible at the top-right, so that marked external destination is not exposed.
-</div>
+<div class="widget-note"><strong>Interactive widget:</strong> The financial widget is embedded directly on FXCentrum24 with its native provider controls and branding.</div>
 
-<div class="feature-grid"><article class="feature-card reveal"><div class="icon">01</div><h3>Event Awareness</h3><p>Keep scheduled market-sensitive releases in view during your market-preparation routine.</p></article><article class="feature-card reveal"><div class="icon">02</div><h3>Planning Tool</h3><p>Use the calendar as one part of a broader analysis and risk-management workflow.</p></article><article class="feature-card reveal"><div class="icon">03</div><h3>On-Site Experience</h3><p>The provider branding area is covered while the calendar remains available for interaction.</p></article></div>
+<div class="feature-grid"><article class="feature-card reveal"><div class="icon">01</div><h3>Event Awareness</h3><p>Keep scheduled market-sensitive releases in view during your market-preparation routine.</p></article><article class="feature-card reveal"><div class="icon">02</div><h3>Planning Tool</h3><p>Use the calendar as one part of a broader analysis and risk-management workflow.</p></article><article class="feature-card reveal"><div class="icon">03</div><h3>On-Site Experience</h3><p>The calendar remains fully native and interactive inside FXCentrum24.</p></article></div>
 </div></section>
 
 <section class="cta"><div class="container"><div class="cta-box reveal">
@@ -324,7 +249,6 @@ button{font:inherit}
 <div class="footer-bottom"><div class="container"><div class="footer-bottom-inner"><p>© 2012 – 2026 FXCentrum24. All Rights Reserved.</p><p>Global Markets · Professional Trading Environment</p></div></div></div>
 </footer>
 
-
 <script type="text/javascript" src="https://widget.finlogix.com/Widget.js"></script>
 <script type="text/javascript">
 Widget.init({
@@ -334,7 +258,6 @@ Widget.init({
   isAdaptive: true
 });
 </script>
-
 
 <script>
 (() => {
@@ -384,6 +307,37 @@ Widget.init({
       items.forEach(x=>x.classList.remove("is-open"));
     }
   });
+})();
+</script>
+
+
+<script>
+(() => {
+  const root = document.getElementById("finlogixWidget");
+  if (!root) return;
+
+  const fitCalendar = () => {
+    const h = window.innerWidth <= 700 ? 680 : 760;
+    root.style.width = "100%";
+    root.style.minHeight = h + "px";
+    root.style.height = h + "px";
+
+    root.querySelectorAll("iframe").forEach(frame => {
+      frame.style.setProperty("width","100%","important");
+      frame.style.setProperty("height",h + "px","important");
+      frame.style.setProperty("min-height",h + "px","important");
+      frame.style.setProperty("border","0","important");
+      frame.setAttribute("scrolling","yes");
+    });
+  };
+
+  const observer = new MutationObserver(fitCalendar);
+  observer.observe(root,{childList:true,subtree:true});
+  fitCalendar();
+  setTimeout(fitCalendar,500);
+  setTimeout(fitCalendar,1500);
+  setTimeout(fitCalendar,3000);
+  window.addEventListener("resize",fitCalendar);
 })();
 </script>
 
