@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Trade Forex with FXCentrum24. Explore major, minor and exotic currency pairs with competitive trading conditions."
+    >
+
+    <meta
+        name="theme-color"
+        content="#06111f"
+    >
+
+    <title>Forex Trading | FXCentrum24</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+
+        .inner-page {
+            background:
+                radial-gradient(
+                    circle at 80% 10%,
+                    rgba(0, 157, 255, 0.12),
+                    transparent 35%
+                ),
+                #06111f;
+
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .page-hero {
+            position: relative;
+            overflow: hidden;
+            padding: 150px 7% 100px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(6,17,31,0.98),
+                    rgba(6,17,31,0.78),
+                    rgba(6,17,31,0.45)
+                );
+
+            pointer-events: none;
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 780px;
+        }
+
+        .page-eyebrow {
+            color: #00a8ff;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: clamp(48px, 6vw, 82px);
+            line-height: 1;
+            margin: 0 0 25px;
+            font-weight: 800;
+        }
+
+        .page-title span {
+            color: #00a8ff;
+        }
+
+        .page-description {
+            max-width: 700px;
+            color: #b8c5d4;
+            font-size: 18px;
+            line-height: 1.75;
+            margin-bottom: 35px;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .page-section {
+            padding: 90px 7%;
+        }
+
+        .section-heading {
+            max-width: 760px;
+            margin-bottom: 45px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(32px, 4vw, 52px);
+            margin: 0 0 15px;
+        }
+
+        .section-heading p {
+            color: #8fa2b8;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .forex-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 20px;
+        }
+
+        .forex-card {
+            padding: 30px;
+            background: linear-gradient(
+                145deg,
+                #0b1d31,
+                #081522
+            );
+
+            border: 1px solid rgba(0,168,255,0.15);
+            border-radius: 18px;
+
+            transition:
+                transform .25s ease,
+                border-color .25s ease;
+        }
+
+        .forex-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0,168,255,0.55);
+        }
+
+        .forex-card-icon {
+            width: 48px;
+            height: 48px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 12px;
+
+            background: rgba(0,168,255,0.12);
+            color: #00a8ff;
+
+            font-size: 22px;
+            margin-bottom: 22px;
+        }
+
+        .forex-card h3 {
+            margin: 0 0 12px;
+            font-size: 21px;
+        }
+
+        .forex-card p {
+            margin: 0;
+            color: #8fa2b8;
+            line-height: 1.7;
+        }
+
+        .pair-table-wrap {
+            overflow-x: auto;
+
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            background: #091725;
+        }
+
+        .pair-table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+        }
+
+        .pair-table th,
+        .pair-table td {
+            padding: 18px 22px;
+            text-align: left;
+            border-bottom:
+                1px solid rgba(255,255,255,0.06);
+        }
+
+        .pair-table th {
+            color: #00a8ff;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pair-table td {
+            color: #dce5ef;
+        }
+
+        .pair-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pair-symbol {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .info-banner {
+            margin-top: 50px;
+            padding: 35px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,168,255,0.14),
+                    rgba(255,255,255,0.03)
+                );
+
+            border:
+                1px solid rgba(0,168,255,0.18);
+        }
+
+        .info-banner h3 {
+            margin: 0 0 12px;
+            font-size: 25px;
+        }
+
+        .info-banner p {
+            margin: 0;
+            color: #9eb0c3;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 850px) {
+
+            .page-hero {
+                padding: 120px 24px 70px;
+            }
+
+            .page-section {
+                padding: 65px 24px;
+            }
+
+            .forex-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 48px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="site">
+
+    <!-- HEADER -->
+
+    <header class="site-header">
+
+        <div class="header-inner">
+
+            <a
+                href="../index.html"
+                class="brand"
+            >
+
+                <span
+                    class="brand-mark"
+                    aria-hidden="true"
+                >
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </span>
+
+                <span class="brand-text">
+
+                    <span class="brand-name">
+                        <strong>FX</strong>CENTRUM24
+                    </span>
+
+                    <span class="brand-tagline">
+                        Trade Today · A Brighter Tomorrow
+                    </span>
+
+                </span>
+
+            </a>
+
+
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-label="Open navigation"
+                aria-expanded="false"
+                aria-controls="mainNavigation"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+
+            <nav
+                class="main-nav"
+                id="mainNavigation"
+            >
+
+                <!-- MARKETS -->
+
+                <div class="nav-item">
+
+                    <button
+                        type="button"
+                        class="nav-trigger"
+                    >
+                        <span>Markets</span>
+                        <em>⌄</em>
+                    </button>
+
+                    <div class="dropdown">
+
+                        <a href="./forex.html">
+                            <span>Forex</span>
+                            <small>Major & minor currency pairs</small>
+                        </a>
+
+                        <a href="./commodities.html">
+                            <span>Commodities</span>
+                            <small>Gold, oil, silver & more</small>
+                        </a>
+
+                        <a href="./indices.html">
+                            <span>Indices</span>
+                            <small>Global stock indices</small>
+                        </a>
+
+                        <a href="./shares-cfds.html">
+                            <span>Shares CFDs</span>
+                            <small>Global company shares</small>
+                        </a>
+
+                        <a href="./cryptocurrency.html">
+                            <span>Cryptocurrency</span>
+                            <small>Popular digital assets</small>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="nav-item">
+
+                    <button
+                        type="button"
+                        class="nav-trigger"
+                    >
+                        <span>Trading</span>
+                        <em>⌄</em>
+                    </button>
+
+                    <div class="dropdown">
+
+                        <a href="../trading/account-types.html">
+                            <span>Account Types</span>
+                            <small>Choose your trading account</small>
+                        </a>
+
+                        <a href="../trading/trading-conditions.html">
+                            <span>Trading Conditions</span>
+                            <small>Spreads, execution & more</small>
+                        </a>
+
+                        <a href="../trading/platforms.html">
+                            <span>Platforms</span>
+                            <small>Trade across every device</small>
+                        </a>
+
+                        <a href="../trading/how-to-start.html">
+                            <span>How to Start</span>
+                            <small>Start trading in 3 steps</small>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="nav-item">
+
+                    <button
+                        type="button"
+                        class="nav-trigger"
+                    >
+                        <span>Platforms</span>
+                        <em>⌄</em>
+                    </button>
+
+                    <div class="dropdown">
+
+                        <a href="../platforms/metatrader-4.html">
+                            <span>MetaTrader 4</span>
+                            <small>Classic professional trading</small>
+                        </a>
+
+                        <a href="../platforms/metatrader-5.html">
+                            <span>MetaTrader 5</span>
+                            <small>Advanced multi-asset platform</small>
+                        </a>
+
+                        <a href="../platforms/webtrader.html">
+                            <span>WebTrader</span>
+                            <small>Trade directly from your browser</small>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="nav-item">
+
+                    <button
+                        type="button"
+                        class="nav-trigger"
+                    >
+                        <span>Accounts</span>
+                        <em>⌄</em>
+                    </button>
+
+                    <div class="dropdown">
+
+                        <a href="../accounts/standard.html">
+                            <span>Standard</span>
+                            <small>Simple & flexible trading</small>
+                        </a>
+
+                        <a href="../accounts/premium.html">
+                            <span>Premium</span>
+                            <small>Enhanced trading conditions</small>
+                        </a>
+
+                        <a href="../accounts/professional.html">
+                            <span>Professional</span>
+                            <small>Designed for active traders</small>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="nav-item">
+
+                    <button
+                        type="button"
+                        class="nav-trigger"
+                    >
+                        <span>Tools</span>
+                        <em>⌄</em>
+                    </button>
+
+                    <div class="dropdown">
+
+                        <a href="../tools/live-markets.html">
+                            <span>Live Markets</span>
+                            <small>Real-time market overview</small>
+                        </a>
+
+                        <a href="../tools/economic-calendar.html">
+                            <span>Economic Calendar</span>
+                            <small>Track important market events</small>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="nav-item">
+
+                    <button
+                        type="button"
+                        class="nav-trigger"
+                    >
+                        <span>Company</span>
+                        <em>⌄</em>
+                    </button>
+
+                    <div class="dropdown">
+
+                        <a href="../company/about.html">
+                            <span>About Us</span>
+                            <small>Discover FXCentrum24</small>
+                        </a>
+
+                        <a href="../company/contact.html">
+                            <span>Contact Us</span>
+                            <small>We're here to help</small>
+                        </a>
+
+                        <a href="../company/benefits.html">
+                            <span>Benefits</span>
+                            <small>Why trade with us</small>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="../partnership/index.html"
+                    class="nav-link"
+                >
+                    Partnership
+                </a>
+
+            </nav>
+
+
+            <div class="header-actions">
+
+                <a
+                    href="#login"
+                    class="btn btn-login"
+                >
+                    Login
+                </a>
+
+                <a
+                    href="#open-account"
+                    class="btn btn-primary"
+                >
+                    Open Account
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- PAGE -->
+
+    <main class="inner-page">
+
+        <section class="page-hero">
+
+            <div class="page-hero-content">
+
+                <p class="page-eyebrow">
+                    GLOBAL MARKETS
+                </p>
+
+                <h1 class="page-title">
+                    Trade <span>Forex.</span>
+                </h1>
+
+                <p class="page-description">
+                    Explore the world's largest financial market with
+                    access to major, minor and selected exotic currency
+                    pairs through FXCentrum24.
+                </p>
+
+                <div class="page-actions">
+
+                    <a
+                        href="#open-account"
+                        class="btn btn-primary"
+                    >
+                        Open Account →
+                    </a>
+
+                    <a
+                        href="#currency-pairs"
+                        class="btn btn-outline"
+                    >
+                        Explore Currency Pairs
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- WHY FOREX -->
+
+        <section class="page-section">
+
+            <div class="section-heading">
+
+                <p class="page-eyebrow">
+                    WHY FOREX
+                </p>
+
+                <h2>
+                    Built for the global currency market.
+                </h2>
+
+                <p>
+                    Forex allows traders to speculate on movements
+                    between currencies. With a global market operating
+                    across major financial centres, currency trading
+                    offers opportunities throughout the trading week.
+                </p>
+
+            </div>
+
+
+            <div class="forex-grid">
+
+                <article class="forex-card">
+
+                    <div class="forex-card-icon">
+                        ↔
+                    </div>
+
+                    <h3>
+                        Major Pairs
+                    </h3>
+
+                    <p>
+                        Trade widely followed currency pairs involving
+                        major global currencies such as EUR, USD, GBP
+                        and JPY.
+                    </p>
+
+                </article>
+
+
+                <article class="forex-card">
+
+                    <div class="forex-card-icon">
+                        ◈
+                    </div>
+
+                    <h3>
+                        Minor Pairs
+                    </h3>
+
+                    <p>
+                        Access cross-currency opportunities without
+                        requiring the US dollar in every pair.
+                    </p>
+
+                </article>
+
+
+                <article class="forex-card">
+
+                    <div class="forex-card-icon">
+                        %
+                    </div>
+
+                    <h3>
+                        Flexible Trading
+                    </h3>
+
+                    <p>
+                        Analyse currency movements and manage positions
+                        through professional trading platforms.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- PAIRS -->
+
+        <section
+            class="page-section"
+            id="currency-pairs"
+        >
+
+            <div class="section-heading">
+
+                <p class="page-eyebrow">
+                    CURRENCY PAIRS
+                </p>
+
+                <h2>
+                    Popular Forex instruments.
+                </h2>
+
+                <p>
+                    Below are examples of commonly followed currency
+                    pairs. Availability, spreads and trading conditions
+                    may vary by account and platform.
+                </p>
+
+            </div>
+
+
+            <div class="pair-table-wrap">
+
+                <table class="pair-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Currency Pair</th>
+                            <th>Category</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td class="pair-symbol">
+                                EURUSD
+                            </td>
+                            <td>
+                                Euro / US Dollar
+                            </td>
+                            <td>
+                                Major
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="pair-symbol">
+                                GBPUSD
+                            </td>
+                            <td>
+                                British Pound / US Dollar
+                            </td>
+                            <td>
+                                Major
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="pair-symbol">
+                                USDJPY
+                            </td>
+                            <td>
+                                US Dollar / Japanese Yen
+                            </td>
+                            <td>
+                                Major
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="pair-symbol">
+                                AUDUSD
+                            </td>
+                            <td>
+                                Australian Dollar / US Dollar
+                            </td>
+                            <td>
+                                Major
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="pair-symbol">
+                                USDCAD
+                            </td>
+                            <td>
+                                US Dollar / Canadian Dollar
+                            </td>
+                            <td>
+                                Major
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="pair-symbol">
+                                EURGBP
+                            </td>
+                            <td>
+                                Euro / British Pound
+                            </td>
+                            <td>
+                                Minor
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="pair-symbol">
+                                GBPJPY
+                            </td>
+                            <td>
+                                British Pound / Japanese Yen
+                            </td>
+                            <td>
+                                Minor
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="info-banner">
+
+                <h3>
+                    Ready to explore Forex?
+                </h3>
+
+                <p>
+                    Choose an account and trading platform that matches
+                    your trading requirements, then explore the markets
+                    available through FXCentrum24.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- CTA -->
+
+        <section
+            class="page-section"
+            id="open-account"
+        >
+
+            <div class="section-heading">
+
+                <p class="page-eyebrow">
+                    GET STARTED
+                </p>
+
+                <h2>
+                    Take your next step.
+                </h2>
+
+                <p>
+                    Open an account and explore global markets through
+                    your preferred trading platform.
+                </p>
+
+            </div>
+
+            <a
+                href="#"
+                class="btn btn-primary"
+            >
+                Open Account →
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <footer class="temporary-footer"></footer>
+
+</div>
+
+
+<script src="../script.js"></script>
+
+</body>
+
+</html>
