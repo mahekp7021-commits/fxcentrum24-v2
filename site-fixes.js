@@ -21,7 +21,7 @@
     'Terms & Conditions':'legal/terms-and-conditions.html','Terms and Conditions':'legal/terms-and-conditions.html',
     'Privacy Policy':'legal/privacy-policy.html','Risk Disclosure':'legal/risk-disclosure.html','AML Policy':'legal/aml-policy.html','Client Agreement':'legal/client-agreement.html'
   };
-  const fragments = {accounts:'trading/account-types.html',conditions:'trading/trading-conditions.html',platforms:'trading/platforms.html',steps:'trading/how-to-start.html',markets:null,calendar:'tools/economic-calendar.html',about:'company/about.html',contact:'company/contact.html',benefits:'company/benefits.html',partner:'partnership/index.html','open-account':'trading/account-opening.html'};
+  const fragments = {accounts:'trading/account-types.html',conditions:'trading/trading-conditions.html',platforms:'trading/platforms.html',steps:'trading/how-to-start.html',calendar:'tools/economic-calendar.html',about:'company/about.html',contact:'company/contact.html',benefits:'company/benefits.html',partner:'partnership/index.html','open-account':'trading/account-opening.html'};
 
   function targetFor(label, href) {
     const lower = clean(label).toLowerCase();
@@ -40,8 +40,7 @@
 
   function isUsableHtml(href) {
     if (!href || href === '#') return false;
-    if (/^(https?:|mailto:|tel:|javascript:)/i.test(href)) return true;
-    return /\.html(?:$|[?#])/i.test(href);
+    return /^(https?:|mailto:|tel:|javascript:)/i.test(href) || /\.html(?:$|[?#])/i.test(href);
   }
 
   function fixLinks(root = document) {
@@ -59,14 +58,14 @@
   function fixBenefitsPage() {
     if (!/\/company\/benefits\.html$/.test(path)) return;
     const eyebrow = document.querySelector('.hero .eyebrow');
-    if (eyebrow) eyebrow.textContent = 'FXCENTRUM24 BENEFITS';
     const title = document.querySelector('.hero h1');
+    if (eyebrow) eyebrow.textContent = 'FXCENTRUM24 BENEFITS';
     if (title) title.innerHTML = 'The benefits of a clearer <span>trading experience.</span>';
     document.title = 'FXCentrum24 Benefits | FXCentrum24';
   }
 
   function normalizeSocials() {
-    const icons = {
+    const svg = {
       Facebook:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4.5c-.5-.1-1.8-.2-3.3-.2-3.2 0-5.4 2-5.4 5.6V13H5v4h3.3v7H12v-7h3.5l.6-4H12V10.3c0-1.2.3-2.3 2-2.3z"/></svg>',
       X:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4.3l3.1 4.4L16 4h2.9l-5.1 6 5.5 7.9H15L11.7 13 8 17.9H5.1l5.3-6.1L5 4z"/></svg>',
       LinkedIn:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 8.2A1.9 1.9 0 1 0 6.2 4.4a1.9 1.9 0 0 0 0 3.8zM4.6 9.7H7.8V19H4.6V9.7zM9.4 9.7h3.1V11c.4-.8 1.5-1.6 3.2-1.6 3.4 0 4 2.2 4 5.1V19h-3.2v-4c0-1 0-2.3-1.4-2.3s-1.7 1.1-1.7 2.2V19H9.4V9.7z"/></svg>',
@@ -76,30 +75,79 @@
     document.querySelectorAll('.site-footer').forEach(footer => {
       const col = [...footer.querySelectorAll('.footer-col')].find(el => clean(el.querySelector('h4')?.textContent).toLowerCase() === 'stay connected');
       if (!col) return;
-      col.innerHTML = `<h4>Stay Connected</h4><div class="social-row">${Object.entries(icons).map(([name,svg]) => `<a class="social-link" href="#" aria-label="${name}" aria-disabled="true" tabindex="-1">${svg}</a>`).join('')}</div>`;
+      col.innerHTML = `<h4>Stay Connected</h4><div class="social-row">${Object.entries(svg).map(([name,icon])=>`<a class="social-link" href="#" aria-label="${name}" aria-disabled="true" tabindex="-1">${icon}</a>`).join('')}</div>`;
     });
-    if (!document.getElementById('fxc-social-standard-style')) {
-      const style=document.createElement('style'); style.id='fxc-social-standard-style'; style.textContent='.footer-col .social-row{display:flex;gap:8px;flex-wrap:wrap}.footer-col .social-link{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(120,180,220,.25);border-radius:50%;background:#0a1724;color:#d6e5f0}.footer-col .social-link svg{width:16px;height:16px;fill:currentColor}.footer-col .social-link[aria-disabled="true"]{cursor:default}'; document.head.appendChild(style);
-    }
+  }
+
+  function initMobileNav() {
+    const menu = document.querySelector('.main-nav');
+    const toggle = document.querySelector('.menu-toggle');
+    if (!menu || !toggle || toggle.dataset.fxcNavController === '1') return;
+    toggle.dataset.fxcNavController = '1';
+    const setMenu = open => {
+      menu.classList.toggle('is-open', open);
+      menu.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      document.body.classList.toggle('menu-open', open);
+      if (window.innerWidth <= 850) document.body.style.overflow = open ? 'hidden' : '';
+    };
+    toggle.addEventListener('click', e => { e.preventDefault(); e.stopImmediatePropagation(); setMenu(!menu.classList.contains('is-open') && !menu.classList.contains('open')); }, true);
+    menu.querySelectorAll('.nav-trigger').forEach(trigger => {
+      if (trigger.dataset.fxcNavController === '1') return;
+      trigger.dataset.fxcNavController = '1';
+      trigger.addEventListener('click', e => {
+        if (window.innerWidth > 850) return;
+        e.preventDefault(); e.stopImmediatePropagation();
+        const item = trigger.closest('.nav-item');
+        const wasOpen = item?.classList.contains('is-open');
+        menu.querySelectorAll('.nav-item.is-open').forEach(openItem => openItem.classList.remove('is-open'));
+        menu.querySelectorAll('.nav-trigger').forEach(t => t.setAttribute('aria-expanded','false'));
+        if (item && !wasOpen) { item.classList.add('is-open'); trigger.setAttribute('aria-expanded','true'); }
+      }, true);
+    });
+    menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false), true));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 850) setMenu(false); });
+  }
+
+  function initPlatformTabs() {
+    document.querySelectorAll('.platforms-section').forEach(section => {
+      if (section.dataset.fxcTabs === '1') return;
+      const tabs = [...section.querySelectorAll('.platform-tab')];
+      if (!tabs.length) return;
+      section.dataset.fxcTabs = '1';
+      const list = section.querySelector('.platform-features');
+      const actions = section.querySelector('.platform-actions');
+      const configs = {
+        'metatrader 4':{url:'platforms/metatrader-4.html',features:['Advanced charting tools','Wide range of indicators','Desktop, Android mobile and web']},
+        'metatrader 5':{url:'platforms/metatrader-5.html',features:['Multi-asset trading capabilities','Advanced analytical tools','Desktop, mobile and web access']},
+        'webtrader':{url:'platforms/webtrader.html',features:['Browser-based trading','No desktop installation required','Fast access across supported devices']}
+      };
+      const select = tab => {
+        tabs.forEach(t=>{const active=t===tab;t.classList.toggle('is-active',active);t.setAttribute('aria-selected',active?'true':'false');});
+        const cfg = configs[clean(tab.textContent).toLowerCase()] || configs['metatrader 4'];
+        if (list) list.innerHTML = cfg.features.map(x=>`<li>${x}</li>`).join('');
+        if (actions) actions.innerHTML = `<a class="platform-action" href="${prefix()+cfg.url}">Learn More — ${clean(tab.textContent)} <b aria-hidden="true">→</b></a>`;
+      };
+      tabs.forEach(tab=>tab.addEventListener('click',()=>select(tab)));
+      select(tabs.find(t=>t.classList.contains('is-active'))||tabs[0]);
+    });
   }
 
   function activateEmbeddedScripts(section) {
     if (!section || section.dataset.fxcEmbeddedScripts === '1') return;
     const scripts = [...section.querySelectorAll('script')];
-    if (!scripts.length) { section.dataset.fxcEmbeddedScripts='1'; return; }
-    section.dataset.fxcEmbeddedScripts='1';
+    if (!scripts.length) return;
+    section.dataset.fxcEmbeddedScripts = '1';
     let chain = Promise.resolve();
     scripts.forEach(original => {
       chain = chain.then(() => new Promise(resolve => {
         const replacement = document.createElement('script');
-        [...original.attributes].forEach(attr => replacement.setAttribute(attr.name, attr.value));
-        replacement.dataset.fxcExecuted = '1';
-        if (original.src || original.getAttribute('src')) {
-          const src = original.src || original.getAttribute('src');
+        [...original.attributes].forEach(attr=>replacement.setAttribute(attr.name,attr.value));
+        if (original.src) {
           replacement.async = false;
-          replacement.onload = () => { original.replaceWith(replacement); resolve(); };
-          replacement.onerror = () => { original.replaceWith(replacement); resolve(); };
-          replacement.src = src;
+          replacement.onload = replacement.onerror = () => { original.replaceWith(replacement); resolve(); };
+          replacement.src = original.src;
         } else {
           replacement.textContent = original.textContent || '';
           original.replaceWith(replacement);
@@ -107,34 +155,12 @@
         }
       }));
     });
-    chain.catch(() => {});
-  }
-
-  function initMobileNav() {
-    const menu=document.querySelector('.main-nav'), toggle=document.querySelector('.menu-toggle');
-    if(!menu||!toggle||toggle.dataset.fxcBound==='1')return;
-    toggle.dataset.fxcBound='1';
-    toggle.addEventListener('click',e=>{e.preventDefault();const open=!menu.classList.contains('is-open')&&!menu.classList.contains('open');menu.classList.toggle('is-open',open);menu.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));document.body.style.overflow=open?'hidden':'';});
-    menu.querySelectorAll('.nav-item > .nav-trigger').forEach(t=>{if(t.dataset.fxcBound==='1')return;t.dataset.fxcBound='1';t.addEventListener('click',e=>{if(innerWidth>850)return;e.preventDefault();const item=t.closest('.nav-item');const wasOpen=item.classList.contains('is-open');menu.querySelectorAll('.nav-item.is-open').forEach(x=>x.classList.remove('is-open'));t.setAttribute('aria-expanded',String(!wasOpen));if(!wasOpen)item.classList.add('is-open');});});
-  }
-
-  function initPlatformTabs() {
-    document.querySelectorAll('.platforms-section').forEach(section=>{
-      if(section.dataset.fxcTabs==='1')return;
-      const tabs=[...section.querySelectorAll('.platform-tab')]; if(!tabs.length)return;
-      section.dataset.fxcTabs='1';
-      const list=section.querySelector('.platform-features'); const actions=section.querySelector('.platform-actions');
-      const configs={'metatrader 4':{url:'platforms/metatrader-4.html',features:['Advanced charting tools','Wide range of indicators','Desktop, Android mobile and web']},'metatrader 5':{url:'platforms/metatrader-5.html',features:['Multi-asset trading capabilities','Advanced analytical tools','Desktop, mobile and web access']},'webtrader':{url:'platforms/webtrader.html',features:['Browser-based trading','No desktop installation required','Fast access across supported devices']}};
-      const select=tab=>{tabs.forEach(t=>{const active=t===tab;t.classList.toggle('is-active',active);t.setAttribute('aria-selected',active?'true':'false');});const cfg=configs[clean(tab.textContent).toLowerCase()]||configs['metatrader 4'];if(list)list.innerHTML=cfg.features.map(x=>`<li>${x}</li>`).join('');if(actions)actions.innerHTML=`<a id="platformLearnMore" class="platform-action" href="${prefix()+cfg.url}">Learn More — ${clean(tab.textContent)} <b aria-hidden="true">→</b></a>`;};
-      tabs.forEach(tab=>tab.addEventListener('click',()=>select(tab))); select(tabs.find(t=>t.classList.contains('is-active'))||tabs[0]);
-    });
   }
 
   function initFinlogixHome() {
     if (!isHome) return;
     const section = document.querySelector('.fx-market-section');
-    if (!section) return;
-    activateEmbeddedScripts(section);
+    if (section) activateEmbeddedScripts(section);
   }
 
   function init() {
@@ -146,12 +172,9 @@
     initFinlogixHome();
     fixLinks();
     new MutationObserver(() => {
-      fixLinks();
-      normalizeSocials();
-      initPlatformTabs();
-      if (isHome) initFinlogixHome();
+      fixLinks(); normalizeSocials(); initMobileNav(); initPlatformTabs(); if (isHome) initFinlogixHome();
     }).observe(document.body,{childList:true,subtree:true});
   }
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true}); else init();
 })();
