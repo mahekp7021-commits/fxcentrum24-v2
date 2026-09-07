@@ -1,0 +1,44 @@
+name: Repair mobile navigation
+on:
+  push:
+    paths:
+      - '.github/workflows/repair-mobile-nav.yml'
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repair hotfix JavaScript
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('site-fixes.js')
+          text = p.read_text(encoding='utf-8')
+          marker = '/* FXC MOBILE NAV FINAL HOTFIX */'
+          if marker in text:
+              head = text.split(marker, 1)[0].rstrip() + '\n'
+              hotfix = text.split(marker, 1)[1]
+              hotfix = hotfix.replace('\\\\n', '\n')
+              hotfix = '/* FXC MOBILE NAV FINAL HOTFIX */' + hotfix
+              text = head + hotfix
+          p.write_text(text, encoding='utf-8')
+
+          css = Path('styles.css')
+          s = css.read_text(encoding='utf-8')
+          marker2 = '/* FXC MOBILE NAV CSS FINAL */'
+          if marker2 in s:
+              base = s.split(marker2, 1)[0].rstrip() + '\n\n'
+              s = base + '''/* FXC MOBILE NAV CSS FINAL */\n@media (max-width:850px){\n  .site-header{z-index:5000 !important;position:sticky !important;top:0 !important;}\n  .main-nav{z-index:5100 !important;background:#04101d !important;opacity:1 !important;isolation:isolate;}\n  .main-nav.is-open,.main-nav.open{transform:translateX(0) !important;}\n  .main-nav .dropdown{display:none !important;}\n  .main-nav .nav-item.is-open>.dropdown,.main-nav .nav-item.open>.dropdown{display:block !important;opacity:1 !important;visibility:visible !important;transform:none !important;}\n  .menu-toggle,.nav-trigger{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}\n  body.menu-open{overflow:hidden !important;}\n}\n'''
+              css.write_text(s, encoding='utf-8')
+
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add site-fixes.js styles.css
+          git rm -f .github/workflows/repair-mobile-nav.yml
+          git commit -m 'Repair shared mobile navigation [skip ci]' || true
+          git push
