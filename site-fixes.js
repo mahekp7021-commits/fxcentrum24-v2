@@ -109,10 +109,114 @@
     document.querySelectorAll('.site-footer a').forEach(anchor => {
       const label = clean(anchor.textContent);
       const target = routeFor(label, clean(anchor.getAttribute('href')));
-      if (target) {
-        anchor.setAttribute('href', prefix + target);
-      }
+      if (target) anchor.setAttribute('href', prefix + target);
     });
+  }
+
+  function installHomepageFooter() {
+    const placeholder = document.querySelector('.temporary-footer');
+    if (!placeholder) return;
+
+    placeholder.className = 'site-footer';
+    placeholder.innerHTML = `
+      <div class="footer-main">
+        <div class="footer-container">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <a class="footer-logo" href="#top" aria-label="FXCentrum24 Home">
+                <span class="footer-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                <span><strong>FX</strong>CENTRUM24<small>Trade Today · A Brighter Tomorrow</small></span>
+              </a>
+              <p>Access global markets through competitive trading conditions, powerful platforms and dedicated support.</p>
+            </div>
+
+            <div class="footer-col">
+              <h4>Markets</h4>
+              <a href="markets/forex.html">Forex</a>
+              <a href="markets/commodities.html">Commodities</a>
+              <a href="markets/indices.html">Indices</a>
+              <a href="markets/shares-cfds.html">Shares CFDs</a>
+              <a href="markets/cryptocurrency.html">Cryptocurrency</a>
+            </div>
+
+            <div class="footer-col">
+              <h4>Trading</h4>
+              <a href="trading/account-types.html">Account Types</a>
+              <a href="trading/trading-conditions.html">Trading Conditions</a>
+              <a href="trading/platforms.html">Platforms</a>
+              <a href="trading/how-to-start.html">How to Start</a>
+              <a href="trading/account-opening.html">Open Account</a>
+            </div>
+
+            <div class="footer-col">
+              <h4>Platforms</h4>
+              <a href="platforms/metatrader-4.html">MetaTrader 4</a>
+              <a href="platforms/metatrader-5.html">MetaTrader 5</a>
+              <a href="platforms/webtrader.html">WebTrader</a>
+            </div>
+
+            <div class="footer-col">
+              <h4>Accounts</h4>
+              <a href="accounts/standard.html">Standard</a>
+              <a href="accounts/premium.html">Premium</a>
+              <a href="accounts/professional.html">Professional</a>
+              <a href="partnership/index.html">Partnership</a>
+            </div>
+
+            <div class="footer-col">
+              <h4>Company</h4>
+              <a href="company/about.html">About Us</a>
+              <a href="company/benefits.html">Benefits</a>
+              <a href="company/contact.html">Contact Us</a>
+              <a href="tools/live-markets.html">Live Markets</a>
+              <a href="tools/economic-calendar.html">Economic Calendar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-container footer-bottom-inner">
+          <p>© 2026 FXCentrum24. All rights reserved.</p>
+          <div class="footer-legal-links">
+            <a href="legal/terms-and-conditions.html">Terms &amp; Conditions</a>
+            <a href="legal/privacy-policy.html">Privacy Policy</a>
+            <a href="legal/risk-disclosure.html">Risk Disclosure</a>
+            <a href="legal/aml-policy.html">AML Policy</a>
+            <a href="legal/client-agreement.html">Client Agreement</a>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (!document.getElementById('fxc-home-footer-styles')) {
+      const style = document.createElement('style');
+      style.id = 'fxc-home-footer-styles';
+      style.textContent = `
+        .site-footer{display:block!important;background:#050d17;border-top:1px solid rgba(120,180,220,.10);}
+        .footer-container{width:min(1320px,92%);margin:0 auto;}
+        .footer-main{padding:44px 0 32px;}
+        .footer-grid{display:grid;grid-template-columns:1.35fr repeat(5,minmax(0,1fr));gap:24px;}
+        .footer-brand p{margin:14px 0 0;max-width:290px;color:#718499;font-size:11px;line-height:1.7;}
+        .footer-logo{display:inline-flex;align-items:center;gap:10px;color:#f3f8ff;font-size:18px;font-weight:800;letter-spacing:-.6px;}
+        .footer-logo strong{color:#ff344d;}
+        .footer-logo small{display:block;margin-top:4px;color:#71879b;font-size:7px;font-weight:500;letter-spacing:.5px;}
+        .footer-mark{width:26px;height:25px;display:flex;align-items:flex-end;gap:2px;}
+        .footer-mark i{width:4px;display:block;border-radius:2px 2px 0 0;background:#16a9ff;}
+        .footer-mark i:nth-child(1){height:8px;background:#ff3850}.footer-mark i:nth-child(2){height:13px}.footer-mark i:nth-child(3){height:19px}.footer-mark i:nth-child(4){height:25px;background:#22a8ff}
+        .footer-col h4{margin:0 0 13px;color:#f3f8ff;font-size:13px;}
+        .footer-col a{display:block;margin-bottom:9px;color:#71869d;font-size:11px;line-height:1.35;}
+        .footer-col a:hover,.footer-legal-links a:hover{color:#16a9ff;}
+        .footer-bottom{border-top:1px solid rgba(120,180,220,.07);background:#040b13;}
+        .footer-bottom-inner{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+        .footer-bottom p{margin:0;color:#5f7285;font-size:10px;}
+        .footer-legal-links{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+        .footer-legal-links a{color:#64798d;font-size:10px;}
+        @media(max-width:1050px){.footer-grid{grid-template-columns:repeat(3,1fr)}.footer-brand{grid-column:1/-1}.footer-bottom-inner{align-items:flex-start;flex-direction:column;padding:15px 0;}}
+        @media(max-width:560px){.footer-container{width:calc(100% - 28px)}.footer-grid{grid-template-columns:1fr 1fr;gap:28px 18px}.footer-brand{grid-column:1/-1}.footer-col h4{font-size:12px}.footer-col a{font-size:10px}.footer-legal-links{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:8px 14px}}
+      `;
+      document.head.appendChild(style);
+    }
   }
 
   function setHeaderHeight() {
@@ -156,9 +260,9 @@
     style.id = 'fxc-mobile-nav-final';
     style.textContent = `
       @media (max-width:850px){
-        .site-header{position:sticky!important;top:0!important;z-index:100000!important;}
-        .main-nav{position:fixed!important;top:var(--fxc-header-height,70px)!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:calc(100dvh - var(--fxc-header-height,70px))!important;display:none!important;flex-direction:column!important;align-items:stretch!important;padding:12px 16px 28px!important;margin:0!important;background:#04101d!important;border:0!important;box-shadow:0 20px 50px rgba(0,0,0,.55)!important;overflow-x:hidden!important;overflow-y:auto!important;z-index:100001!important;pointer-events:none!important;}
-        .main-nav.is-open,.main-nav.open{display:flex!important;pointer-events:auto!important;}
+        .site-header{position:sticky!important;top:0!important;z-index:100000!important;overflow:visible!important;}
+        .main-nav{position:fixed!important;top:var(--fxc-header-height,70px)!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:calc(100dvh - var(--fxc-header-height,70px))!important;display:none!important;flex-direction:column!important;align-items:stretch!important;padding:12px 16px 28px!important;margin:0!important;background:#04101d!important;border:0!important;box-shadow:0 20px 50px rgba(0,0,0,.55)!important;overflow-x:hidden!important;overflow-y:auto!important;z-index:100001!important;pointer-events:none!important;transform:none!important;}
+        .main-nav.is-open,.main-nav.open{display:flex!important;pointer-events:auto!important;transform:none!important;}
         .main-nav .nav-item{width:100%!important;position:static!important;border-bottom:1px solid rgba(120,180,220,.10)!important;}
         .main-nav .nav-trigger,.main-nav .nav-link{width:100%!important;min-height:56px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 4px!important;border:0!important;background:transparent!important;color:#dce8f4!important;font-size:15px!important;line-height:1.2!important;text-align:left!important;white-space:normal!important;cursor:pointer!important;touch-action:manipulation!important;-webkit-tap-highlight-color:transparent!important;}
         .main-nav .nav-link{justify-content:flex-start!important;}
@@ -167,8 +271,10 @@
         .main-nav .dropdown a{display:block!important;width:100%!important;padding:12px 10px!important;color:#b8cbdb!important;touch-action:manipulation!important;}
         .main-nav .dropdown a span{font-size:14px!important;}
         .main-nav .dropdown a small{display:block!important;margin-top:3px!important;color:#71879d!important;font-size:10px!important;line-height:1.4!important;}
-        .menu-toggle{position:relative!important;z-index:100002!important;display:flex!important;align-items:center!important;justify-content:center!important;touch-action:manipulation!important;}
+        .menu-toggle{position:relative!important;z-index:100002!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:0!important;overflow:visible!important;}
+        .menu-toggle span{display:block!important;flex:0 0 2px!important;width:24px!important;height:2px!important;margin:3px 0!important;padding:0!important;background:#fff!important;border-radius:3px!important;}
         body.menu-open{overflow:hidden!important;}
+        .site-footer{position:relative!important;z-index:1!important;}
         .site-footer a{position:relative!important;z-index:2!important;pointer-events:auto!important;touch-action:manipulation!important;}
       }
     `;
@@ -254,6 +360,7 @@
   }
 
   function init() {
+    installHomepageFooter();
     fixLinks();
     fixFooterLinks();
     installMobileNavigation();
