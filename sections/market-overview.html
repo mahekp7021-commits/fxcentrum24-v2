@@ -1,19 +1,19 @@
 <!-- MARKET OVERVIEW — SECTION 02 -->
 <style>
 .hero-ticker{display:none!important}
-.fx-market-section{position:relative;z-index:1;padding:0 0 84px;background:#06111f}
+.fx-market-section{position:relative;z-index:1;padding:0 0 84px;background:#06111f;scroll-margin-top:96px}
 .fx-market-strip{width:100%;height:52px;overflow:hidden;background:#061a2b;border-top:1px solid rgba(0,168,255,.12);border-bottom:1px solid rgba(0,168,255,.15)}
 .fx-market-strip iframe{display:block;width:100%;height:52px;border:0}
 .fx-market-shell{padding-top:54px}
 .fx-market-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:28px}
 .fx-finlogix-chart{height:370px;min-height:370px;width:100%;overflow:hidden;background:#071725;border-radius:0 0 12px 12px}
 .fx-finlogix-chart iframe{display:block;width:100%;height:370px;border:0}
-.fx-calendar-card{margin-top:26px;border:1px solid rgba(0,168,255,.15);border-radius:16px;background:#071725;overflow:hidden}
+.fx-calendar-card{margin-top:26px;border:1px solid rgba(0,168,255,.15);border-radius:16px;background:#071725;overflow:hidden;scroll-margin-top:96px}
 .fx-calendar-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid rgba(120,180,220,.10)}
 .fx-calendar-head h3{margin:0;color:#f7fbff;font-size:17px}.fx-calendar-head span{color:#00a8ff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
-.fx-calendar-body{width:100%;height:520px;overflow:hidden}.fx-calendar-body iframe{display:block;width:100%;height:520px;border:0}
+.fx-calendar-body{width:100%;height:320px;min-height:320px;overflow:hidden}.fx-calendar-body iframe{display:block;width:100%;height:320px;min-height:320px;border:0}
 .fx-market-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}.fx-market-all{color:#00a8ff}
-@media(max-width:850px){.fx-market-shell{padding-top:38px}.fx-market-grid{grid-template-columns:1fr}.fx-finlogix-chart,.fx-finlogix-chart iframe{height:320px;min-height:320px}.fx-calendar-body,.fx-calendar-body iframe{height:500px}.fx-market-heading{align-items:flex-start;flex-direction:column}}
+@media(max-width:850px){.fx-market-shell{padding-top:38px}.fx-market-grid{grid-template-columns:1fr}.fx-finlogix-chart,.fx-finlogix-chart iframe{height:320px;min-height:320px}.fx-calendar-body,.fx-calendar-body iframe{height:320px;min-height:320px}.fx-calendar-card{scroll-margin-top:84px}.fx-market-heading{align-items:flex-start;flex-direction:column}}
 </style>
 <section class="fx-market-section" id="markets" aria-labelledby="marketSectionTitle">
   <div class="fx-market-strip" aria-label="Live market prices"><iframe src="./widgets/finlogix-strip.html" title="Finlogix live market running tape" scrolling="no"></iframe></div>
