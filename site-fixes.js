@@ -17,15 +17,23 @@
     'About Us':'company/about.html','Contact Us':'company/contact.html','Benefits':'company/benefits.html','FXCentrum24 Benefits':'company/benefits.html','Why FXCentrum24':'company/benefits.html',
     'Partnership':'partnership/index.html','Open Partner Account':'partnership/account-opening.html','Open Partner Account →':'partnership/account-opening.html'
   };
+
   const legal = {
     'Terms & Conditions':'legal/terms-and-conditions.html','Terms and Conditions':'legal/terms-and-conditions.html',
     'Privacy Policy':'legal/privacy-policy.html','Risk Disclosure':'legal/risk-disclosure.html','AML Policy':'legal/aml-policy.html','Client Agreement':'legal/client-agreement.html'
   };
-  const fragments = {accounts:'trading/account-types.html',conditions:'trading/trading-conditions.html',platforms:'trading/platforms.html',steps:'trading/how-to-start.html',calendar:'tools/economic-calendar.html',about:'company/about.html',contact:'company/contact.html',benefits:'company/benefits.html',partner:'partnership/index.html','open-account':'trading/account-opening.html'};
+
+  const fragments = {
+    accounts:'trading/account-types.html',conditions:'trading/trading-conditions.html',platforms:'trading/platforms.html',steps:'trading/how-to-start.html',
+    calendar:'tools/economic-calendar.html',about:'company/about.html',contact:'company/contact.html',benefits:'company/benefits.html',partner:'partnership/index.html',
+    'open-account':'trading/account-opening.html'
+  };
 
   function targetFor(label, href) {
     const lower = clean(label).toLowerCase();
-    if (lower === 'open account' || lower === 'open account now' || lower === 'open account →') return isPartnership ? 'partnership/account-opening.html' : 'trading/account-opening.html';
+    if (lower === 'open account' || lower === 'open account now' || lower === 'open account →') {
+      return isPartnership ? 'partnership/account-opening.html' : 'trading/account-opening.html';
+    }
     if (lower === 'open partner account' || lower === 'open partner account →') return 'partnership/account-opening.html';
     const routeKey = Object.keys(routes).find(k => k.toLowerCase() === lower);
     if (routeKey) return routes[routeKey];
@@ -49,7 +57,7 @@
       }
       const target = targetFor(label, href);
       if (!target) return;
-      if (!href || href === '#' || href === '#top' || /^#/.test(href) || /(^|\/)terms\.html$/i.test(href) || /(^|\/)privacy\.html$/i.test(href)) {
+      if (!href || href === '#' || href === '#top' || href.startsWith('#') || /(^|\/)terms\.html$/i.test(href) || /(^|\/)privacy\.html$/i.test(href)) {
         anchor.setAttribute('href', prefix + target);
       }
     });
@@ -153,8 +161,7 @@
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
     document.body.classList.toggle('menu-open', open);
-    if (window.innerWidth <= 850) document.body.style.overflow = open ? 'hidden' : '';
-    else document.body.style.overflow = '';
+    document.body.style.overflow = open && window.innerWidth <= 850 ? 'hidden' : '';
   }
 
   function installMobileNavController() {
@@ -261,18 +268,4 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
   else init();
-
-  let scheduled = false;
-  const observer = new MutationObserver(() => {
-    if (scheduled) return;
-    scheduled = true;
-    queueMicrotask(() => {
-      scheduled = false;
-      fixLinks();
-      normalizeSocials();
-      initMobileNavStyles();
-      initPlatformTabs();
-    });
-  });
-  observer.observe(document.body, {childList:true, subtree:true});
 })();
