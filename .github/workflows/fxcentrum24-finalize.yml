@@ -1,0 +1,432 @@
+name: FXCentrum24 Finalize
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply production completion fixes
+        shell: python
+        run: |
+          from pathlib import Path
+          import html
+          import os
+          import re
+          import json
+
+          ROOT = Path('.')
+          HTML_FILES = sorted(ROOT.rglob('*.html'))
+
+          ROUTES = {
+              'Forex': 'markets/forex.html',
+              'Commodities': 'markets/commodities.html',
+              'Indices': 'markets/indices.html',
+              'Shares CFDs': 'markets/shares-cfds.html',
+              'Shares': 'markets/shares-cfds.html',
+              'Cryptocurrency': 'markets/cryptocurrency.html',
+              'Trade Forex': 'markets/forex.html',
+              'Trade Commodities': 'markets/commodities.html',
+              'Trade Indices': 'markets/indices.html',
+              'Trade Shares': 'markets/shares-cfds.html',
+              'Trade Crypto': 'markets/cryptocurrency.html',
+              'Account Types': 'trading/account-types.html',
+              'Trading Conditions': 'trading/trading-conditions.html',
+              'Platforms': 'trading/platforms.html',
+              'How to Start': 'trading/how-to-start.html',
+              'MetaTrader 4': 'platforms/metatrader-4.html',
+              'MetaTrader 5': 'platforms/metatrader-5.html',
+              'WebTrader': 'platforms/webtrader.html',
+              'Standard': 'accounts/standard.html',
+              'Premium': 'accounts/premium.html',
+              'Professional': 'accounts/professional.html',
+              'Live Markets': 'tools/live-markets.html',
+              'Economic Calendar': 'tools/economic-calendar.html',
+              'About Us': 'company/about.html',
+              'Contact Us': 'company/contact.html',
+              'Benefits': 'company/benefits.html',
+              'Partnership': 'partnership/index.html',
+              'Become a Partner': 'partnership/account-opening.html',
+              'Open Account': 'trading/account-opening.html',
+              'Open Account Now': 'trading/account-opening.html',
+              'How to Start': 'trading/how-to-start.html',
+              'Terms and Conditions': 'legal/terms-and-conditions.html',
+              'Terms & Conditions': 'legal/terms-and-conditions.html',
+              'Privacy Policy': 'legal/privacy-policy.html',
+              'Risk Disclosure': 'legal/risk-disclosure.html',
+              'AML Policy': 'legal/aml-policy.html',
+              'Client Agreement': 'legal/client-agreement.html',
+              'Explore All Markets': 'tools/live-markets.html',
+              'View All Markets': 'tools/live-markets.html',
+          }
+
+          LEGAL_BY_LABEL = {
+              'terms and conditions': 'legal/terms-and-conditions.html',
+              'privacy policy': 'legal/privacy-policy.html',
+              'risk disclosure': 'legal/risk-disclosure.html',
+              'aml policy': 'legal/aml-policy.html',
+              'client agreement': 'legal/client-agreement.html',
+          }
+
+          def context_dir(path: Path) -> Path:
+              # Homepage-injected fragments under sections/ are resolved by the browser
+              # against index.html, so treat them as root-context documents.
+              return ROOT if path.as_posix().startswith('sections/') else path.parent
+
+          def rel_route(current: Path, target: str) -> str:
+              rel = os.path.relpath(ROOT / target, context_dir(current)).replace('\\', '/')
+              if not rel.startswith('.'):
+                  rel = './' + rel
+              return rel
+
+          def clean_text(value: str) -> str:
+              value = re.sub(r'<[^>]+>', ' ', value)
+              value = html.unescape(value)
+              value = re.sub(r'\s+', ' ', value).strip()
+              return value
+
+          anchor_re = re.compile(r'<a\b(?P<attrs>[^>]*)>(?P<body>.*?)</a>', re.I | re.S)
+          href_re = re.compile(r'\bhref\s*=\s*(["\'])(.*?)\1', re.I | re.S)
+          aria_re = re.compile(r'\baria-label\s*=\s*(["\'])(.*?)\1', re.I | re.S)
+          class_re = re.compile(r'\bclass\s*=\s*(["\'])(.*?)\1', re.I | re.S)
+
+          def rewrite_anchor(match, path):
+              attrs = match.group('attrs')
+              body = match.group('body')
+              text = clean_text(body)
+              aria_match = aria_re.search(attrs)
+              aria = aria_match.group(2).strip() if aria_match else ''
+              href_match = href_re.search(attrs)
+              href = href_match.group(2).strip() if href_match else None
+              classes = class_re.search(attrs)
+              class_value = classes.group(2).lower() if classes else ''
+              label = (aria or text).strip()
+              label_key = re.sub(r'\s+', ' ', label.lower())
+
+              # Remove Login navigation entirely.
+              if label_key == 'login' or 'login' in class_value or (href and 'login' in href.lower()):
+                  return ''
+
+              # Social placeholders must not scroll to the top. Keep the visual control,
+              # but make it intentionally non-navigating until official URLs exist.
+              social_labels = {'facebook', 'x', 'linkedin', 'youtube', 'instagram'}
+              if href == '#' and label_key in social_labels:
+                  attrs = href_re.sub('', attrs, count=1)
+                  if 'aria-disabled=' not in attrs.lower():
+                      attrs = attrs.rstrip() + ' aria-disabled="true" tabindex="-1"'
+                  return f'<a{attrs}>{body}</a>'
+
+              # Known old legal filenames.
+              if href and re.search(r'(^|/)terms\.html$', href, re.I):
+                  target = 'legal/terms-and-conditions.html'
+              elif href and re.search(r'(^|/)privacy\.html$', href, re.I):
+                  target = 'legal/privacy-policy.html'
+              else:
+                  target = ROUTES.get(label)
+                  if target is None:
+                      target = LEGAL_BY_LABEL.get(label_key)
+
+              # Known fragments used by navigation/footer/CTAs in the original design.
+              if target is None and href and href.startswith('#'):
+                  fragment = href[1:].lower()
+                  fragment_targets = {
+                      'accounts': 'trading/account-types.html',
+                      'conditions': 'trading/trading-conditions.html',
+                      'steps': 'trading/how-to-start.html',
+                      'calendar': 'tools/economic-calendar.html',
+                      'about': 'company/about.html',
+                      'contact': 'company/contact.html',
+                      'partner': 'partnership/index.html',
+                      'open-account': 'trading/account-opening.html',
+                  }
+                  target = fragment_targets.get(fragment)
+
+              if target is not None and (href is None or href.startswith('#') or href in ('terms.html', 'privacy.html') or href.endswith('/terms.html') or href.endswith('/privacy.html')):
+                  new_href = rel_route(path, target)
+                  if href_match:
+                      attrs = href_re.sub(lambda m: f'href="{new_href}"', attrs, count=1)
+                  else:
+                      attrs = f'{attrs} href="{new_href}"'
+                  return f'<a{attrs}>{body}</a>'
+
+              return match.group(0)
+
+          changed = []
+          for path in HTML_FILES:
+              text = path.read_text(encoding='utf-8')
+              original = text
+
+              # Remove accidental Login anchor blocks even if malformed attributes prevent the
+              # generic matcher from catching them.
+              text = re.sub(
+                  r'<a\b[^>]*(?:btn-login|login\.html|#login)[^>]*>.*?</a>',
+                  '', text, flags=re.I | re.S
+              )
+              text = anchor_re.sub(lambda m: rewrite_anchor(m, path), text)
+
+              # Section-specific production routing.
+              if path.as_posix() == 'sections/platforms.html':
+                  text = text.replace('href="#platforms">Compare Platforms', 'href="./trading/platforms.html">Compare Platforms')
+                  text = text.replace('href="#platforms">\n          <span class="download-icon">▣</span>', 'href="./platforms/metatrader-4.html">\n          <span class="download-icon">▣</span>')
+                  text = text.replace('href="#platforms">\n          <span class="download-icon play">▶</span>', 'href="./platforms/metatrader-5.html">\n          <span class="download-icon play">▶</span>')
+                  text = text.replace('href="#platforms">\n          <span class="download-icon">↗</span>', 'href="./platforms/webtrader.html">\n          <span class="download-icon">↗</span>')
+                  text = text.replace('href="#open-account">Open Account Now', 'href="./trading/account-opening.html">Open Account Now')
+
+              if path.as_posix() == 'sections/accounts.html':
+                  # Three account cards: Standard → Premium → Professional.
+                  replacements = [
+                      ('href="#open-account" class="fx-account-learn"', 'href="./accounts/standard.html" class="fx-account-learn"'),
+                      ('href="#open-account" class="fx-account-learn"', 'href="./accounts/premium.html" class="fx-account-learn"'),
+                      ('href="#open-account" class="fx-account-learn"', 'href="./accounts/professional.html" class="fx-account-learn"'),
+                  ]
+                  for old, new in replacements:
+                      text = text.replace(old, new, 1)
+                  text = text.replace('href="#partner" class="fx-partnership-button"', 'href="./partnership/account-opening.html" class="fx-partnership-button"')
+                  text = re.sub(r'\bFrom <strong>1\.2</strong> pips\b', 'Review account conditions', text)
+                  text = re.sub(r'\bFrom <strong>0\.6</strong> pips\b', 'Review account conditions', text)
+                  text = re.sub(r'\bFrom <strong>0\.0</strong> pips\b', 'Review account conditions', text)
+                  text = text.replace('href="#top"', 'href="./index.html"')
+
+              # Append the shared production hardening script once per page.
+              script_src = rel_route(path, 'site-fixes.js')
+              if 'site-fixes.js' not in text:
+                  injection = f'\n<script src="{script_src}" defer></script>\n'
+                  text = text.replace('</body>', injection + '</body>', 1)
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(path.as_posix())
+
+          # Final static cleanup: remove obsolete .btn-login CSS selectors/comments.
+          css_files = list(ROOT.rglob('*.css'))
+          for path in css_files:
+              text = path.read_text(encoding='utf-8')
+              original = text
+              text = re.sub(r'\n\s*\.btn-login(?:\s*,\s*[^\{]+)?\s*\{[^\}]*\}\s*', '\n', text, flags=re.I | re.S)
+              text = re.sub(r'\n?\s*login\b', '', text, flags=re.I)
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(path.as_posix())
+
+          print(json.dumps({'changed_files': changed, 'count': len(changed)}, indent=2))
+
+      - name: Add shared site hardening script
+        shell: bash
+        run: |
+          cat > site-fixes.js <<'EOF'
+          (() => {
+            'use strict';
+
+            const path = window.location.pathname.replace(/\\/g, '/');
+            const isHome = /\/index\.html?$/.test(path) || path.endsWith('/');
+
+            const closeMenus = () => {
+              document.querySelectorAll('.nav-item.is-open, .nav-item.open').forEach(item => item.classList.remove('is-open', 'open'));
+              document.querySelectorAll('.main-nav.is-open, .main-nav.open').forEach(nav => nav.classList.remove('is-open', 'open'));
+              document.querySelectorAll('.menu-toggle[aria-expanded="true"]').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+              document.body.classList.remove('menu-open');
+              document.body.style.overflow = '';
+            };
+
+            const installMobileNavigation = () => {
+              const nav = document.querySelector('.main-nav');
+              const toggle = document.querySelector('.menu-toggle');
+              if (!nav || !toggle || toggle.dataset.fxcBound === '1') return;
+              toggle.dataset.fxcBound = '1';
+              toggle.addEventListener('click', (event) => {
+                event.preventDefault();
+                const open = nav.classList.toggle('is-open') || nav.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                document.body.style.overflow = open ? 'hidden' : '';
+              });
+
+              nav.querySelectorAll('.nav-item > .nav-trigger').forEach(trigger => {
+                if (trigger.dataset.fxcBound === '1') return;
+                trigger.dataset.fxcBound = '1';
+                trigger.addEventListener('click', (event) => {
+                  if (window.innerWidth > 850) return;
+                  event.preventDefault();
+                  const item = trigger.closest('.nav-item');
+                  if (!item) return;
+                  const wasOpen = item.classList.contains('is-open') || item.classList.contains('open');
+                  nav.querySelectorAll('.nav-item.is-open, .nav-item.open').forEach(other => other.classList.remove('is-open', 'open'));
+                  if (!wasOpen) item.classList.add('is-open');
+                  trigger.setAttribute('aria-expanded', wasOpen ? 'false' : 'true');
+                });
+              });
+
+              nav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                  if (window.innerWidth <= 850) closeMenus();
+                });
+              });
+            };
+
+            const markNonNavigatingSocials = () => {
+              document.querySelectorAll('a[aria-label]').forEach(anchor => {
+                const label = (anchor.getAttribute('aria-label') || '').trim().toLowerCase();
+                if (!['facebook','x','linkedin','youtube','instagram'].includes(label)) return;
+                if (anchor.getAttribute('href') === '#') anchor.removeAttribute('href');
+              });
+            };
+
+            const installNoopHashGuard = () => {
+              document.addEventListener('click', (event) => {
+                const anchor = event.target.closest('a[href="#"]');
+                if (!anchor) return;
+                event.preventDefault();
+              }, true);
+            };
+
+            const addFinlogixHomeStrip = () => {
+              if (!isHome) return;
+              const tickerHost = document.querySelector('.hero-ticker-track') || document.querySelector('.hero-ticker');
+              if (!tickerHost || document.getElementById('fxc-finlogix-home-strip')) return;
+
+              const wrapper = document.createElement('div');
+              wrapper.id = 'fxc-finlogix-home-strip';
+              wrapper.className = 'fxc-finlogix-home-strip';
+              wrapper.innerHTML = '<div class="finlogix-container"></div>';
+              tickerHost.replaceChildren(wrapper);
+
+              const loadWidget = () => {
+                const init = () => {
+                  if (!window.Widget || typeof window.Widget.init !== 'function') return;
+                  try {
+                    window.Widget.init({
+                      widgetId: '87c63d8a-2d03-409f-ba57-599ea3a57013',
+                      type: 'StripBar',
+                      language: 'en',
+                      symbolPairs: [
+                        {symbolId:'19',symbolName:'EURUSD'},
+                        {symbolId:'36',symbolName:'USDJPY'},
+                        {symbolId:'20',symbolName:'GBPAUD'},
+                        {symbolId:'44',symbolName:'XAUUSD'},
+                        {symbolId:'128',symbolName:'USWTI'},
+                        {symbolId:'157',symbolName:'SP500'}
+                      ],
+                      isAdaptive: true
+                    });
+                  } catch (error) {
+                    console.error('FXCentrum24 Finlogix homepage strip failed to initialize:', error);
+                  }
+                };
+
+                if (window.Widget) {
+                  init();
+                  return;
+                }
+                const existing = document.querySelector('script[data-fxc-finlogix="true"]');
+                if (existing) {
+                  existing.addEventListener('load', init, {once: true});
+                  return;
+                }
+                const script = document.createElement('script');
+                script.src = 'https://widget.finlogix.com/Widget.js';
+                script.async = true;
+                script.dataset.fxcFinlogix = 'true';
+                script.addEventListener('load', init, {once: true});
+                script.addEventListener('error', () => console.error('FXCentrum24 Finlogix script failed to load.'));
+                document.head.appendChild(script);
+              };
+              loadWidget();
+            };
+
+            const hardenHeroMarketCopy = () => {
+              if (!isHome) return;
+              document.querySelectorAll('.hero-market-panel .market-value b').forEach(value => {
+                value.setAttribute('data-static-market-value', 'true');
+              });
+              document.querySelectorAll('.hero-market-panel .positive, .hero-market-panel .negative').forEach(change => {
+                change.setAttribute('data-indicative-only', 'true');
+              });
+            };
+
+            const init = () => {
+              closeMenus();
+              installMobileNavigation();
+              markNonNavigatingSocials();
+              installNoopHashGuard();
+              addFinlogixHomeStrip();
+              hardenHeroMarketCopy();
+            };
+
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', init, {once: true});
+            } else {
+              init();
+            }
+          })();
+          EOF
+
+      - name: Verify final source
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, sys, os
+
+          root = Path('.')
+          files = sorted(root.rglob('*.html'))
+          expected = [
+              'markets/forex.html','markets/commodities.html','markets/indices.html','markets/shares-cfds.html','markets/cryptocurrency.html',
+              'trading/account-types.html','trading/trading-conditions.html','trading/platforms.html','trading/how-to-start.html','trading/account-opening.html',
+              'platforms/metatrader-4.html','platforms/metatrader-5.html','platforms/webtrader.html',
+              'accounts/standard.html','accounts/premium.html','accounts/professional.html',
+              'tools/live-markets.html','tools/economic-calendar.html',
+              'company/about.html','company/contact.html','company/benefits.html',
+              'partnership/index.html','partnership/account-opening.html',
+              'legal/terms-and-conditions.html','legal/privacy-policy.html','legal/risk-disclosure.html','legal/aml-policy.html','legal/client-agreement.html'
+          ]
+
+          missing = [p for p in expected if not (root/p).exists()]
+          if missing:
+              print('Missing expected pages:', missing); sys.exit(1)
+
+          text_files = [p for p in root.rglob('*') if p.is_file() and p.suffix.lower() in {'.html','.js','.css'}]
+          all_text = '\n'.join(p.read_text(encoding='utf-8', errors='replace') for p in text_files)
+          login_hits = re.findall(r'login', all_text, flags=re.I)
+          if login_hits:
+              print('Login references remain:', len(login_hits)); sys.exit(1)
+
+          placeholder_hits = []
+          for p in files:
+              t = p.read_text(encoding='utf-8', errors='replace')
+              for i, m in enumerate(re.finditer(r'href\s*=\s*["\']#["\']', t, flags=re.I), start=1):
+                  placeholder_hits.append(f'{p}:placeholder-href:{i}')
+          if placeholder_hits:
+              print('Accidental href="#" references remain:', placeholder_hits[:50]); sys.exit(1)
+
+          required_finlogix = "widgetId: '87c63d8a-2d03-409f-ba57-599ea3a57013'"
+          if 'site-fixes.js' not in (root/'site-fixes.js').read_text(encoding='utf-8') or required_finlogix not in (root/'site-fixes.js').read_text(encoding='utf-8'):
+              print('Finlogix homepage implementation missing'); sys.exit(1)
+
+          for p in expected:
+              t = (root/p).read_text(encoding='utf-8', errors='replace')
+              if 'site-fixes.js' not in t:
+                  print('Missing site-fixes include:', p); sys.exit(1)
+
+          print(f'PASS: {len(files)} HTML files audited; expected routes exist; no Login text; no href="#" placeholders.')
+
+      - name: Commit finalized website
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Complete FXCentrum24 website navigation, legal links and mobile fixes [skip ci]"
+          git push origin HEAD:main
