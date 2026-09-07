@@ -1,0 +1,90 @@
+name: Repair FXCentrum24 Navigation
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: ${{ !contains(github.event.head_commit.message, '[skip nav repair]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Repair navigation links
+        run: python3 tools/repair_navigation.py
+
+      - name: Remove obsolete login page
+        shell: bash
+        run: |
+          if [ -f trading/login.html ]; then
+            git rm -f trading/login.html
+          fi
+
+      - name: Verify required routes and placeholders
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, sys, os
+
+          root = Path('.')
+          expected = [
+            'index.html',
+            'markets/forex.html','markets/commodities.html','markets/indices.html','markets/shares-cfds.html','markets/cryptocurrency.html',
+            'trading/account-types.html','trading/trading-conditions.html','trading/platforms.html','trading/how-to-start.html',
+            'platforms/metatrader-4.html','platforms/metatrader-5.html','platforms/webtrader.html',
+            'accounts/standard.html','accounts/premium.html','accounts/professional.html',
+            'tools/live-markets.html','tools/economic-calendar.html',
+            'company/about.html','company/contact.html','company/benefits.html',
+            'partnership/index.html',
+            'legal/terms-and-conditions.html','legal/privacy-policy.html','legal/risk-disclosure.html','legal/aml-policy.html','legal/client-agreement.html',
+            'legal/terms.html','legal/privacy.html'
+          ]
+          missing = [p for p in expected if not (root/p).exists()]
+          assert not missing, f'Missing expected routes: {missing}'
+
+          text_files = [p for p in root.rglob('*') if p.is_file() and p.suffix.lower() in {'.html','.js','.css'}]
+          combined = '\n'.join(p.read_text(encoding='utf-8', errors='replace') for p in text_files)
+          assert not re.search(r'login\.html|class=["\'][^"\']*btn-login|>\s*Login\s*<', combined, re.I), 'Login navigation still present'
+
+          html_files = sorted(root.rglob('*.html'))
+          bare_hash = []
+          for p in html_files:
+            t = p.read_text(encoding='utf-8', errors='replace')
+            if re.search(r'href\s*=\s*["\']#["\']', t, re.I):
+              bare_hash.append(str(p))
+          assert not bare_hash, f'Bare href="#" remains: {bare_hash}'
+
+          # These homepage routes are required to be explicit, not section anchors.
+          homepage = (root/'index.html').read_text(encoding='utf-8')
+          required_home_links = [
+            './markets/forex.html','./markets/commodities.html','./markets/indices.html','./markets/shares-cfds.html','./markets/cryptocurrency.html',
+            './trading/account-types.html','./trading/trading-conditions.html','./trading/platforms.html','./trading/how-to-start.html',
+            './platforms/metatrader-4.html','./platforms/metatrader-5.html','./platforms/webtrader.html',
+            './accounts/standard.html','./accounts/premium.html','./accounts/professional.html',
+            './tools/live-markets.html','./tools/economic-calendar.html','./company/about.html','./company/contact.html','./company/benefits.html',
+            './partnership/index.html','./trading/account-opening.html'
+          ]
+          missing_home = [h for h in required_home_links if h not in homepage]
+          assert not missing_home, f'Homepage route missing: {missing_home}'
+
+          print(f'PASS: {len(html_files)} HTML files; all required routes present; homepage routes explicit; no Login; no bare href="#".')
+
+      - name: Commit and push repairs
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No navigation changes required."
+            exit 0
+          fi
+          git commit -m "Repair all FXCentrum24 navigation routes [skip nav repair]"
+          git push origin HEAD:main
