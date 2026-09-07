@@ -52,6 +52,36 @@
     toggle.addEventListener('click',e=>{e.preventDefault();const open=!menu.classList.contains('is-open')&&!menu.classList.contains('open');menu.classList.toggle('is-open',open);menu.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));document.body.style.overflow=open?'hidden':'';});
     menu.querySelectorAll('.nav-item > .nav-trigger').forEach(t=>{if(t.dataset.fxcBound==='1')return;t.dataset.fxcBound='1';t.addEventListener('click',e=>{if(innerWidth>850)return;e.preventDefault();const item=t.closest('.nav-item');const wasOpen=item.classList.contains('is-open')||item.classList.contains('open');menu.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(x=>x.classList.remove('is-open','open'));t.setAttribute('aria-expanded',String(!wasOpen));if(!wasOpen)item.classList.add('is-open');});});
   };
+  const initPlatformTabs = () => {
+    document.querySelectorAll('.platforms-section').forEach(section => {
+      if (section.dataset.fxcPlatformTabs === '1') return;
+      const tabs = [...section.querySelectorAll('.platform-tab[data-platform]')];
+      const panels = [...section.querySelectorAll('.platform-features[data-platform-features]')];
+      const learn = section.querySelector('#platformLearnMore');
+      if (!tabs.length || !panels.length) return;
+      const config = {
+        mt4: { label:'Learn More — MetaTrader 4', path:'platforms/metatrader-4.html' },
+        mt5: { label:'Learn More — MetaTrader 5', path:'platforms/metatrader-5.html' },
+        webtrader: { label:'Learn More — WebTrader', path:'platforms/webtrader.html' }
+      };
+      const select = platform => {
+        const item = config[platform] || config.mt4;
+        tabs.forEach(tab => {
+          const active = tab.dataset.platform === platform;
+          tab.classList.toggle('is-active', active);
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        panels.forEach(panel => { panel.hidden = panel.dataset.platformFeatures !== platform; });
+        if (learn) {
+          learn.href = prefix() + item.path;
+          learn.innerHTML = `${item.label} <b aria-hidden="true">→</b>`;
+        }
+      };
+      tabs.forEach(tab => tab.addEventListener('click', () => select(tab.dataset.platform)));
+      select(tabs.find(tab => tab.classList.contains('is-active'))?.dataset.platform || 'mt4');
+      section.dataset.fxcPlatformTabs = '1';
+    });
+  };
   const initFinlogixHome = () => {
     if(!isHome) return;
     const host=document.querySelector('.hero-ticker-track')||document.querySelector('.hero-ticker');
@@ -60,6 +90,6 @@
     const init=()=>{if(window.Widget&&typeof window.Widget.init==='function')window.Widget.init({widgetId:'87c63d8a-2d03-409f-ba57-599ea3a57013',type:'StripBar',language:'en',symbolPairs:[{symbolId:'19',symbolName:'EURUSD'},{symbolId:'36',symbolName:'USDJPY'},{symbolId:'20',symbolName:'GBPAUD'},{symbolId:'44',symbolName:'XAUUSD'},{symbolId:'128',symbolName:'USWTI'},{symbolId:'157',symbolName:'SP500'}],isAdaptive:true});};
     if(window.Widget)init();else{const script=document.createElement('script');script.src='https://widget.finlogix.com/Widget.js';script.async=true;script.addEventListener('load',init,{once:true});document.head.appendChild(script);}
   };
-  const init=()=>{fixAll();closeMenus();initNavigation();initFinlogixHome();fixAll();new MutationObserver(()=>{fixAll();initNavigation();}).observe(document.body,{childList:true,subtree:true});};
+  const init=()=>{fixAll();closeMenus();initNavigation();initPlatformTabs();initFinlogixHome();fixAll();new MutationObserver(()=>{fixAll();initNavigation();initPlatformTabs();}).observe(document.body,{childList:true,subtree:true});};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
