@@ -2,804 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="description"
-    content="FXCentrum24 — Trade global markets with confidence through powerful platforms and professional trading conditions."
-  >
-
-  <meta
-    name="theme-color"
-    content="#06111f"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FXCentrum24 — Trade global markets with confidence through powerful platforms and professional trading conditions.">
+  <meta name="theme-color" content="#06111f">
   <title>FXCentrum24 | Trade Global Markets</title>
-
-  <!-- =========================================================
-       FONTS
-  ========================================================== -->
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
-
-  <!-- =========================================================
-       MAIN CSS
-  ========================================================== -->
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
+  <style>
+    @media (max-width:820px){
+      .menu-toggle{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;width:48px!important;height:48px!important;padding:0!important;}
+      .menu-toggle span{display:block!important;width:24px!important;height:3px!important;margin:0!important;background:#fff!important;border-radius:3px!important;flex:0 0 3px!important;}
+    }
+    .home-footer{display:block;background:#050d17;border-top:1px solid rgba(120,180,220,.10);}
+    .home-footer-main{padding:44px 0 32px;}
+    .home-footer-container{width:min(1320px,92%);margin:0 auto;}
+    .home-footer-grid{display:grid;grid-template-columns:1.35fr repeat(5,minmax(0,1fr));gap:24px;}
+    .home-footer-brand p{margin:14px 0 0;max-width:290px;color:#718499;font-size:11px;line-height:1.7;}
+    .home-footer-logo{display:inline-flex;align-items:center;gap:10px;color:#f3f8ff;font-size:18px;font-weight:800;letter-spacing:-.6px;}
+    .home-footer-logo strong{color:#ff344d;}
+    .home-footer-logo small{display:block;margin-top:4px;color:#71879b;font-size:7px;font-weight:500;letter-spacing:.5px;}
+    .home-footer-mark{width:26px;height:25px;display:flex;align-items:flex-end;gap:2px;}
+    .home-footer-mark i{width:4px;display:block;border-radius:2px 2px 0 0;background:#16a9ff;}
+    .home-footer-mark i:nth-child(1){height:8px;background:#ff3850}.home-footer-mark i:nth-child(2){height:13px}.home-footer-mark i:nth-child(3){height:19px}.home-footer-mark i:nth-child(4){height:25px;background:#22a8ff}
+    .home-footer-col h4{margin:0 0 13px;color:#f3f8ff;font-size:13px;}
+    .home-footer-col a{display:block;margin-bottom:9px;color:#71869d;font-size:11px;line-height:1.35;}
+    .home-footer-col a:hover,.home-footer-legal a:hover{color:#16a9ff;}
+    .home-footer-bottom{border-top:1px solid rgba(120,180,220,.07);background:#040b13;}
+    .home-footer-bottom-inner{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+    .home-footer-bottom p{margin:0;color:#5f7285;font-size:10px;}
+    .home-footer-legal{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+    .home-footer-legal a{color:#64798d;font-size:10px;}
+    @media(max-width:1050px){.home-footer-grid{grid-template-columns:repeat(3,1fr)}.home-footer-brand{grid-column:1/-1}.home-footer-bottom-inner{align-items:flex-start;flex-direction:column;padding:15px 0}}
+    @media(max-width:560px){.home-footer-container{width:calc(100% - 28px)}.home-footer-grid{grid-template-columns:1fr 1fr;gap:28px 18px}.home-footer-brand{grid-column:1/-1}.home-footer-col h4{font-size:12px}.home-footer-col a{font-size:10px}.home-footer-legal{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:8px 14px}}
+  </style>
 </head>
-
-
 <body>
-
-  <!-- =========================================================
-       SITE WRAPPER
-  ========================================================== -->
-
   <div class="site">
-
-    <!-- =======================================================
-         HEADER
-    ======================================================== -->
-
     <header class="site-header" id="siteHeader">
-
       <div class="header-inner">
-
-        <!-- BRAND -->
-
-        <a
-          href="#top"
-          class="brand"
-          aria-label="FXCentrum24 Home"
-        >
-
-          <span class="brand-mark" aria-hidden="true">
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-          </span>
-
-          <span class="brand-text">
-
-            <span class="brand-name">
-              <strong>FX</strong>CENTRUM24
-            </span>
-
-            <span class="brand-tagline">
-              Trade Today · A Brighter Tomorrow
-            </span>
-
-          </span>
-
+        <a href="#top" class="brand" aria-label="FXCentrum24 Home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="brand-text"><span class="brand-name"><strong>FX</strong>CENTRUM24</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span>
         </a>
-
-
-        <!-- MOBILE MENU BUTTON -->
-
-        <button
-          class="menu-toggle"
-          type="button"
-          aria-label="Open navigation"
-          aria-expanded="false"
-          aria-controls="mainNavigation"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
+        <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNavigation">
+          <span></span><span></span><span></span>
         </button>
-
-
-        <!-- ===================================================
-             MAIN NAVIGATION
-        ==================================================== -->
-
-        <nav
-          class="main-nav"
-          id="mainNavigation"
-          aria-label="Main Navigation"
-        >
-
-          <!-- MARKETS -->
-
-          <div class="nav-item">
-
-            <button
-              type="button"
-              class="nav-trigger"
-              aria-expanded="false"
-            >
-              <span>Markets</span>
-              <em>⌄</em>
-            </button>
-
-            <div class="dropdown">
-
-              <a href="./markets/forex.html">
-                <span>Forex</span>
-                <small>Major & minor currency pairs</small>
-              </a>
-
-              <a href="./markets/commodities.html">
-                <span>Commodities</span>
-                <small>Gold, oil, silver & more</small>
-              </a>
-
-              <a href="./markets/indices.html">
-                <span>Indices</span>
-                <small>Global stock indices</small>
-              </a>
-
-              <a href="./markets/shares-cfds.html">
-                <span>Shares CFDs</span>
-                <small>Global company shares</small>
-              </a>
-
-              <a href="./markets/cryptocurrency.html">
-                <span>Cryptocurrency</span>
-                <small>Popular digital assets</small>
-              </a>
-
-            </div>
-
-          </div>
-
-
-          <!-- TRADING -->
-
-          <div class="nav-item">
-
-            <button
-              type="button"
-              class="nav-trigger"
-              aria-expanded="false"
-            >
-              <span>Trading</span>
-              <em>⌄</em>
-            </button>
-
-            <div class="dropdown">
-
-              <a href="#accounts">
-                <span>Account Types</span>
-                <small>Choose your trading account</small>
-              </a>
-
-              <a href="#conditions">
-                <span>Trading Conditions</span>
-                <small>Spreads, execution & more</small>
-              </a>
-
-              <a href="#platforms">
-                <span>Platforms</span>
-                <small>Trade across every device</small>
-              </a>
-
-              <a href="#steps">
-                <span>How to Start</span>
-                <small>Start trading in 3 steps</small>
-              </a>
-
-            </div>
-
-          </div>
-
-
-          <!-- PLATFORMS -->
-
-          <div class="nav-item">
-
-            <button
-              type="button"
-              class="nav-trigger"
-              aria-expanded="false"
-            >
-              <span>Platforms</span>
-              <em>⌄</em>
-            </button>
-
-            <div class="dropdown">
-
-              <a href="#platforms">
-                <span>MetaTrader 4</span>
-                <small>Classic professional trading</small>
-              </a>
-
-              <a href="#platforms">
-                <span>MetaTrader 5</span>
-                <small>Advanced multi-asset platform</small>
-              </a>
-
-              <a href="#platforms">
-                <span>WebTrader</span>
-                <small>Trade directly from your browser</small>
-              </a>
-
-            </div>
-
-          </div>
-
-
-          <!-- ACCOUNTS -->
-
-          <div class="nav-item">
-
-            <button
-              type="button"
-              class="nav-trigger"
-              aria-expanded="false"
-            >
-              <span>Accounts</span>
-              <em>⌄</em>
-            </button>
-
-            <div class="dropdown">
-
-              <a href="#accounts">
-                <span>Standard</span>
-                <small>Simple & flexible trading</small>
-              </a>
-
-              <a href="#accounts">
-                <span>Premium</span>
-                <small>Enhanced trading conditions</small>
-              </a>
-
-              <a href="#accounts">
-                <span>Professional</span>
-                <small>Designed for active traders</small>
-              </a>
-
-            </div>
-
-          </div>
-
-
-          <!-- TOOLS -->
-
-          <div class="nav-item">
-
-            <button
-              type="button"
-              class="nav-trigger"
-              aria-expanded="false"
-            >
-              <span>Tools</span>
-              <em>⌄</em>
-            </button>
-
-            <div class="dropdown">
-
-              <a href="#markets">
-                <span>Live Markets</span>
-                <small>Real-time market overview</small>
-              </a>
-
-              <a href="#calendar">
-                <span>Economic Calendar</span>
-                <small>Track important market events</small>
-              </a>
-
-            </div>
-
-          </div>
-
-
-          <!-- COMPANY -->
-
-          <div class="nav-item">
-
-            <button
-              type="button"
-              class="nav-trigger"
-              aria-expanded="false"
-            >
-              <span>Company</span>
-              <em>⌄</em>
-            </button>
-
-            <div class="dropdown">
-
-              <a href="#about">
-                <span>About Us</span>
-                <small>Discover FXCentrum24</small>
-              </a>
-
-              <a href="#contact">
-                <span>Contact Us</span>
-                <small>We're here to help</small>
-              </a>
-
-              <a href="#benefits">
-                <span>Benefits</span>
-                <small>Why trade with us</small>
-              </a>
-
-            </div>
-
-          </div>
-
-
-          <!-- PARTNERSHIP -->
-
-          <a
-            href="#partner"
-            class="nav-link"
-          >
-            Partnership
-          </a>
-
+        <nav class="main-nav" id="mainNavigation" aria-label="Main Navigation">
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Markets</span><em>⌄</em></button><div class="dropdown">
+            <a href="./markets/forex.html"><span>Forex</span><small>Major & minor currency pairs</small></a>
+            <a href="./markets/commodities.html"><span>Commodities</span><small>Gold, oil, silver & more</small></a>
+            <a href="./markets/indices.html"><span>Indices</span><small>Global stock indices</small></a>
+            <a href="./markets/shares-cfds.html"><span>Shares CFDs</span><small>Global company shares</small></a>
+            <a href="./markets/cryptocurrency.html"><span>Cryptocurrency</span><small>Popular digital assets</small></a>
+          </div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Trading</span><em>⌄</em></button><div class="dropdown">
+            <a href="./trading/account-types.html"><span>Account Types</span><small>Choose your trading account</small></a>
+            <a href="./trading/trading-conditions.html"><span>Trading Conditions</span><small>Spreads, execution & more</small></a>
+            <a href="./trading/platforms.html"><span>Platforms</span><small>Trade across every device</small></a>
+            <a href="./trading/how-to-start.html"><span>How to Start</span><small>Start trading in 3 steps</small></a>
+          </div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Platforms</span><em>⌄</em></button><div class="dropdown">
+            <a href="./platforms/metatrader-4.html"><span>MetaTrader 4</span><small>Classic professional trading</small></a>
+            <a href="./platforms/metatrader-5.html"><span>MetaTrader 5</span><small>Advanced multi-asset platform</small></a>
+            <a href="./platforms/webtrader.html"><span>WebTrader</span><small>Trade directly from your browser</small></a>
+          </div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Accounts</span><em>⌄</em></button><div class="dropdown">
+            <a href="./accounts/standard.html"><span>Standard</span><small>Simple & flexible trading</small></a>
+            <a href="./accounts/premium.html"><span>Premium</span><small>Enhanced trading conditions</small></a>
+            <a href="./accounts/professional.html"><span>Professional</span><small>Designed for active traders</small></a>
+          </div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Tools</span><em>⌄</em></button><div class="dropdown">
+            <a href="./tools/live-markets.html"><span>Live Markets</span><small>Real-time market overview</small></a>
+            <a href="./tools/economic-calendar.html"><span>Economic Calendar</span><small>Track important market events</small></a>
+          </div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Company</span><em>⌄</em></button><div class="dropdown">
+            <a href="./company/about.html"><span>About Us</span><small>Discover FXCentrum24</small></a>
+            <a href="./company/contact.html"><span>Contact Us</span><small>We're here to help</small></a>
+            <a href="./company/benefits.html"><span>Benefits</span><small>Why trade with us</small></a>
+          </div></div>
+          <a href="./partnership/index.html" class="nav-link">Partnership</a>
         </nav>
-
-
-        <!-- HEADER ACTIONS -->
-
-        <div class="header-actions">
-
-          <a
-            href="#login"
-            class="btn btn-login"
-          >
-            Login
-          </a>
-
-          <a
-            href="#open-account"
-            class="btn btn-primary"
-          >
-            Open Account
-          </a>
-
-        </div>
-
+        <div class="header-actions"><a href="./trading/account-opening.html" class="btn btn-primary">Open Account</a></div>
       </div>
-
     </header>
 
-
-    <!-- =======================================================
-         HERO
-    ======================================================== -->
-
     <main id="top">
-
-      <section
-        class="hero"
-        id="hero"
-        aria-label="FXCentrum24 Global Markets"
-      >
-
-        <!-- ===================================================
-             VIDEO BACKGROUND
-        ==================================================== -->
-
-        <div
-          class="hero-video-layer"
-          aria-hidden="true"
-        >
-
-          <video
-            id="heroVideo"
-            class="hero-video"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-            poster="./assets/videos/hero-poster.webp"
-          >
-
-            <source
-              src="./assets/videos/hero-video.mp4"
-              type="video/mp4"
-            >
-
-          </video>
-
-        </div>
-
-
-        <!-- ===================================================
-             VIDEO DARK / TRANSPARENT OVERLAYS
-
-             These are deliberately separate layers.
-             CSS will control the transparency so the important
-             globe/world area remains visible.
-        ==================================================== -->
-
-        <div
-          class="hero-overlay hero-overlay-left"
-          aria-hidden="true"
-        ></div>
-
-        <div
-          class="hero-overlay hero-overlay-bottom"
-          aria-hidden="true"
-        ></div>
-
-        <div
-          class="hero-overlay hero-overlay-vignette"
-          aria-hidden="true"
-        ></div>
-
-
-        <!-- ===================================================
-             HERO GRID / ATMOSPHERE
-        ==================================================== -->
-
-        <div
-          class="hero-grid"
-          aria-hidden="true"
-        ></div>
-
-
-        <!-- ===================================================
-             HERO CONTENT
-        ==================================================== -->
-
+      <section class="hero" id="hero" aria-label="FXCentrum24 Global Markets">
+        <div class="hero-video-layer" aria-hidden="true"><video id="heroVideo" class="hero-video" autoplay muted loop playsinline preload="auto" poster="./assets/videos/hero-poster.webp"><source src="./assets/videos/hero-video.mp4" type="video/mp4"></video></div>
+        <div class="hero-overlay hero-overlay-left" aria-hidden="true"></div>
+        <div class="hero-overlay hero-overlay-bottom" aria-hidden="true"></div>
+        <div class="hero-overlay hero-overlay-vignette" aria-hidden="true"></div>
+        <div class="hero-grid" aria-hidden="true"></div>
         <div class="hero-container">
-
           <div class="hero-content reveal">
-
-            <!-- EYEBROW -->
-
-            <p class="hero-eyebrow">
-              GLOBAL MARKETS. REAL OPPORTUNITIES.
-            </p>
-
-
-            <!-- MAIN HEADING -->
-
-            <h1 class="hero-title">
-
-              <span class="hero-title-white">
-                Trade Smarter.
-              </span>
-
-              <span class="hero-title-blue">
-                Go Further.
-              </span>
-
-            </h1>
-
-
-            <!-- DESCRIPTION -->
-
-            <p class="hero-description">
-              Access Forex, commodities, indices and CFDs with
-              competitive trading conditions and powerful platforms.
-              Trade your way, anytime, anywhere.
-            </p>
-
-
-            <!-- CTA BUTTONS -->
-
-            <div class="hero-actions">
-
-              <a
-                href="#open-account"
-                class="btn btn-primary btn-hero"
-              >
-                <span>Open Account</span>
-                <span class="btn-arrow">→</span>
-              </a>
-
-              <a
-                href="#markets"
-                class="btn btn-outline btn-hero"
-              >
-                Explore Markets
-              </a>
-
-            </div>
-
-
-            <!-- =================================================
-                 HERO BENEFITS
-            ================================================== -->
-
+            <p class="hero-eyebrow">GLOBAL MARKETS. REAL OPPORTUNITIES.</p>
+            <h1 class="hero-title"><span class="hero-title-white">Trade Smarter.</span><span class="hero-title-blue">Go Further.</span></h1>
+            <p class="hero-description">Access Forex, commodities, indices and CFDs with competitive trading conditions and powerful platforms. Trade your way, anytime, anywhere.</p>
+            <div class="hero-actions"><a href="./trading/account-opening.html" class="btn btn-primary btn-hero"><span>Open Account</span><span class="btn-arrow">→</span></a><a href="./tools/live-markets.html" class="btn btn-outline btn-hero">Explore Markets</a></div>
             <div class="hero-benefits">
-
-              <div class="hero-benefit">
-
-                <span
-                  class="benefit-icon"
-                  aria-hidden="true"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  >
-                    <path d="M4 14c3-4 5-4 8 0s5 4 8 0"/>
-                    <path d="M4 10c3-4 5-4 8 0s5 4 8 0"/>
-                  </svg>
-                </span>
-
-                <span>
-                  <strong>Tight</strong>
-                  <small>Spreads</small>
-                </span>
-
-              </div>
-
-
-              <div class="hero-benefit">
-
-                <span
-                  class="benefit-icon"
-                  aria-hidden="true"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  >
-                    <path d="M13 2L4 14h7l-1 8 9-12h-7z"/>
-                  </svg>
-                </span>
-
-                <span>
-                  <strong>Fast</strong>
-                  <small>Execution</small>
-                </span>
-
-              </div>
-
-
-              <div class="hero-benefit">
-
-                <span
-                  class="benefit-icon"
-                  aria-hidden="true"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  >
-                    <rect x="3" y="4" width="18" height="13" rx="2"/>
-                    <path d="M8 21h8"/>
-                    <path d="M12 17v4"/>
-                  </svg>
-                </span>
-
-                <span>
-                  <strong>Multiple</strong>
-                  <small>Platforms</small>
-                </span>
-
-              </div>
-
-
-              <div class="hero-benefit">
-
-                <span
-                  class="benefit-icon"
-                  aria-hidden="true"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  >
-                    <circle cx="12" cy="12" r="9"/>
-                    <path d="M8 15c1.2 1 2.5 1.5 4 1.5 2.5 0 4-1.2 4-3"/>
-                    <path d="M8 9c1.2-1 2.5-1.5 4-1.5 2.5 0 4 1.2 4 3"/>
-                  </svg>
-                </span>
-
-                <span>
-                  <strong>Dedicated</strong>
-                  <small>Support</small>
-                </span>
-
-              </div>
-
+              <div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 14c3-4 5-4 8 0s5 4 8 0"/><path d="M4 10c3-4 5-4 8 0s5 4 8 0"/></svg></span><span><strong>Tight</strong><small>Spreads</small></span></div>
+              <div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><span><strong>Fast</strong><small>Execution</small></span></div>
+              <div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></span><span><strong>Multiple</strong><small>Platforms</small></span></div>
+              <div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 15c1.2 1 2.5 1.5 4 1.5 2.5 0 4-1.2 4-3"/><path d="M8 9c1.2-1 2.5-1.5 4-1.5 2.5 0 4 1.2 4 3"/></svg></span><span><strong>Dedicated</strong><small>Support</small></span></div>
             </div>
-
           </div>
-
-
-          <!-- =================================================
-               OPTIONAL VIDEO-SAFE AREA
-
-               This empty structural area lets CSS preserve the
-               central/right visual zone of the video.
-               No fake image is placed here.
-          ================================================== -->
-
-          <div
-            class="hero-visual-space"
-            aria-hidden="true"
-          ></div>
-
+          <div class="hero-visual-space" aria-hidden="true"></div>
         </div>
-
-
-        <!-- ===================================================
-             FLOATING MARKET DATA
-             
-             These are foreground UI elements. JS/CSS can later
-             animate/update them.
-        ==================================================== -->
-
-        <div
-          class="hero-market-panel reveal"
-          aria-label="Selected market prices"
-        >
-
-          <div class="hero-market-item">
-
-            <div>
-              <strong>EURUSD</strong>
-              <small>Euro / US Dollar</small>
-            </div>
-
-            <div class="market-value">
-              <b>1.0987</b>
-              <span class="positive">+0.24%</span>
-            </div>
-
-          </div>
-
-
-          <div class="hero-market-item">
-
-            <div>
-              <strong>XAUUSD</strong>
-              <small>Gold / US Dollar</small>
-            </div>
-
-            <div class="market-value">
-              <b>2,447.32</b>
-              <span class="positive">+0.18%</span>
-            </div>
-
-          </div>
-
-
-          <div class="hero-market-item">
-
-            <div>
-              <strong>GBPUSD</strong>
-              <small>British Pound / US Dollar</small>
-            </div>
-
-            <div class="market-value">
-              <b>1.2794</b>
-              <span class="negative">-0.12%</span>
-            </div>
-
-          </div>
-
-
-          <div class="hero-market-item">
-
-            <div>
-              <strong>US30</strong>
-              <small>Dow Jones Index</small>
-            </div>
-
-            <div class="market-value">
-              <b>40,823.6</b>
-              <span class="positive">+0.36%</span>
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- ===================================================
-             HERO BOTTOM LIVE TICKER
-        ==================================================== -->
-
-        <div
-          class="hero-ticker"
-          aria-label="Market ticker"
-        >
-
-          <div class="hero-ticker-label">
-            Live Markets
-          </div>
-
-          <div class="hero-ticker-track">
-
-            <span>
-              EURUSD
-              <b>1.0987</b>
-              <i class="positive">+0.24%</i>
-            </span>
-
-            <span>
-              GBPUSD
-              <b>1.2794</b>
-              <i class="negative">-0.12%</i>
-            </span>
-
-            <span>
-              USDJPY
-              <b>149.32</b>
-              <i class="positive">+0.31%</i>
-            </span>
-
-            <span>
-              XAUUSD
-              <b>2,447.32</b>
-              <i class="positive">+0.18%</i>
-            </span>
-
-            <span>
-              US30
-              <b>40,823.6</b>
-              <i class="positive">+0.36%</i>
-            </span>
-
-            <span>
-              BTCUSD
-              <b>112,840</b>
-              <i class="positive">+1.12%</i>
-            </span>
-
-          </div>
-
-        </div>
-
       </section>
 
-
-      <!-- =====================================================
-           TEMPORARY BLACK AREA
-
-           IMPORTANT:
-           Neeche ka actual website content abhi intentionally
-           render nahi kar rahe. Hero lock hone ke baad hi next
-           section add karenge.
-      ====================================================== -->
-
-      <section
-        class="next-section-placeholder"
-        aria-hidden="true"
-      ></section>
-
+      <section class="next-section-placeholder" aria-hidden="true"></section>
     </main>
 
-
-    <!-- =======================================================
-         FOOTER
-         
-         Temporarily hidden from visual flow.
-         We will add the complete footer later.
-    ======================================================== -->
-
-    <footer class="temporary-footer"></footer>
-
+    <footer class="home-footer" aria-label="Site footer">
+      <div class="home-footer-main"><div class="home-footer-container"><div class="home-footer-grid">
+        <div class="home-footer-brand">
+          <a class="home-footer-logo" href="./index.html" aria-label="FXCentrum24 Home"><span class="home-footer-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><strong>FX</strong>CENTRUM24<small>Trade Today · A Brighter Tomorrow</small></span></a>
+          <p>Access global markets through competitive trading conditions, powerful platforms and dedicated support.</p>
+        </div>
+        <div class="home-footer-col"><h4>Markets</h4><a href="./markets/forex.html">Forex</a><a href="./markets/commodities.html">Commodities</a><a href="./markets/indices.html">Indices</a><a href="./markets/shares-cfds.html">Shares CFDs</a><a href="./markets/cryptocurrency.html">Cryptocurrency</a></div>
+        <div class="home-footer-col"><h4>Trading</h4><a href="./trading/account-types.html">Account Types</a><a href="./trading/trading-conditions.html">Trading Conditions</a><a href="./trading/platforms.html">Platforms</a><a href="./trading/how-to-start.html">How to Start</a><a href="./trading/account-opening.html">Open Account</a></div>
+        <div class="home-footer-col"><h4>Platforms</h4><a href="./platforms/metatrader-4.html">MetaTrader 4</a><a href="./platforms/metatrader-5.html">MetaTrader 5</a><a href="./platforms/webtrader.html">WebTrader</a></div>
+        <div class="home-footer-col"><h4>Accounts</h4><a href="./accounts/standard.html">Standard</a><a href="./accounts/premium.html">Premium</a><a href="./accounts/professional.html">Professional</a><a href="./partnership/index.html">Partnership</a></div>
+        <div class="home-footer-col"><h4>Company</h4><a href="./company/about.html">About Us</a><a href="./company/benefits.html">Benefits</a><a href="./company/contact.html">Contact Us</a><a href="./tools/live-markets.html">Live Markets</a><a href="./tools/economic-calendar.html">Economic Calendar</a></div>
+      </div></div></div>
+      <div class="home-footer-bottom"><div class="home-footer-container home-footer-bottom-inner"><p>© 2026 FXCentrum24. All rights reserved.</p><div class="home-footer-legal"><a href="./legal/terms-and-conditions.html">Terms &amp; Conditions</a><a href="./legal/privacy-policy.html">Privacy Policy</a><a href="./legal/risk-disclosure.html">Risk Disclosure</a><a href="./legal/aml-policy.html">AML Policy</a><a href="./legal/client-agreement.html">Client Agreement</a></div></div></div>
+    </footer>
   </div>
-
-
-  <!-- =========================================================
-       JAVASCRIPT
-  ========================================================== -->
-
   <script src="./script.js"></script>
-
-
-<script src="./site-fixes.js" defer></script>
+  <script src="./site-fixes.js?v=20260907-home2"></script>
 </body>
 </html>
