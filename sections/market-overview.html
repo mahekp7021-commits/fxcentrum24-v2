@@ -1,49 +1,82 @@
 <!-- MARKET OVERVIEW — SECTION 02 -->
 <style>
 .hero-ticker{display:none!important}
-.fx-market-section{position:relative;z-index:1;padding:0 0 84px;background:#06111f;scroll-margin-top:96px}
+.fx-market-section{position:relative;z-index:1;padding:0 0 76px;background:#06111f}
 .fx-market-strip{width:100%;height:52px;overflow:hidden;background:#061a2b;border-top:1px solid rgba(0,168,255,.12);border-bottom:1px solid rgba(0,168,255,.15)}
 .fx-market-strip iframe{display:block;width:100%;height:52px;border:0}
-.fx-market-shell{padding-top:54px}
-.fx-market-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:28px}
-.fx-finlogix-chart{height:370px;min-height:370px;width:100%;overflow:hidden;background:#071725;border-radius:0 0 12px 12px}
-.fx-finlogix-chart iframe{display:block;width:100%;height:370px;border:0}
-.fx-calendar-card{margin-top:26px;border:1px solid rgba(0,168,255,.15);border-radius:16px;background:#071725;overflow:hidden;scroll-margin-top:96px}
-.fx-calendar-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid rgba(120,180,220,.10)}
-.fx-calendar-head h3{margin:0;color:#f7fbff;font-size:17px}.fx-calendar-head span{color:#00a8ff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
-.fx-calendar-body{width:100%;height:320px;min-height:320px;overflow:hidden}.fx-calendar-body iframe{display:block;width:100%;height:320px;min-height:320px;border:0}
-.fx-market-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}.fx-market-all{color:#00a8ff}
-@media(max-width:850px){.fx-market-shell{padding-top:38px}.fx-market-grid{grid-template-columns:1fr}.fx-finlogix-chart,.fx-finlogix-chart iframe{height:320px;min-height:320px}.fx-calendar-body,.fx-calendar-body iframe{height:320px;min-height:320px}.fx-calendar-card{scroll-margin-top:84px}.fx-market-heading{align-items:flex-start;flex-direction:column}}
+.fx-market-shell{width:min(1260px,calc(100% - 80px));margin:0 auto;padding-top:54px}
+.fx-market-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:26px}
+.fx-market-eyebrow{margin:0 0 8px;color:#0baeff;font-size:11px;font-weight:800;letter-spacing:1.55px;text-transform:uppercase}
+.fx-market-heading h2{margin:0;color:#f5f8ff;font-size:clamp(34px,3.05vw,44px);line-height:1.05;letter-spacing:-1.9px;font-weight:800}
+.fx-market-subtitle{margin:9px 0 0;color:#9fb4c7;font-size:13px;line-height:1.55}
+.fx-market-all{display:inline-flex;align-items:center;gap:9px;padding:10px 0;color:#12a8ff;font-size:12px;font-weight:750;border-bottom:1px solid rgba(18,168,255,.28)}
+.fx-market-all b{font-size:17px;font-weight:500}
+.fx-market-grid{display:block}
+.fx-market-board{display:none!important}
+.fx-chart-card{min-width:0;border:1px solid rgba(51,106,139,.42);border-radius:12px;background:rgba(4,21,36,.72);box-shadow:0 18px 48px rgba(0,0,0,.22);overflow:hidden}
+.fx-chart-head{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:0 18px;border-bottom:1px solid rgba(52,105,138,.28)}
+.fx-chart-symbol{display:flex;align-items:center;gap:10px;min-width:0}.fx-chart-icon{width:31px;height:31px;display:grid;place-items:center;color:#0baeff;border:1px solid rgba(11,174,255,.32);border-radius:7px;background:rgba(11,174,255,.07);font-size:19px}
+.fx-chart-symbol strong,.fx-chart-symbol small{display:block}.fx-chart-symbol strong{color:#edf6ff;font-size:12px}.fx-chart-symbol small{margin-top:3px;color:#6d879b;font-size:8px}.fx-chart-status{color:#14d9a0;font-size:8px;font-weight:800;letter-spacing:.65px;white-space:nowrap}.fx-chart-status span{display:inline-block;width:5px;height:5px;margin-right:5px;border-radius:50%;background:#14d9a0;box-shadow:0 0 10px rgba(20,217,160,.7)}
+.fx-chart-container{height:440px;min-height:440px;background:#020b14}.fx-finlogix-chart{width:100%;height:100%;background:#071725}.fx-finlogix-chart iframe{display:block;width:100%;height:100%;border:0}
+.fx-chart-footer{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(52,105,138,.26);background:rgba(2,12,21,.4)}.fx-chart-footer>div{padding:13px 16px;border-right:1px solid rgba(52,105,138,.16)}.fx-chart-footer>div:last-child{border-right:0}.fx-chart-footer small,.fx-chart-footer strong{display:block}.fx-chart-footer small{color:#607b91;font-size:8px}.fx-chart-footer strong{margin-top:4px;color:#dce9f4;font-size:10px}
+.fx-calendar-card{margin-top:26px;border:1px solid rgba(0,168,255,.15);border-radius:16px;background:#071725;overflow:hidden;scroll-margin-top:86px}.fx-calendar-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid rgba(120,180,220,.10)}.fx-calendar-head h3{margin:0;color:#f7fbff;font-size:17px}.fx-calendar-head span{color:#00a8ff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase}.fx-calendar-body{width:100%;height:340px;overflow:hidden}.fx-calendar-body iframe{display:block;width:100%;height:340px;border:0}
+/* Hidden compatibility mount for the legacy market JS; no visible custom widget remains. */
+.fx-legacy-market-compat{display:none!important}
+@media(max-width:850px){.fx-market-shell{width:92%;padding-top:38px}.fx-market-heading{align-items:flex-start;flex-direction:column}.fx-chart-container,.fx-finlogix-chart,.fx-finlogix-chart iframe{height:350px;min-height:350px}.fx-calendar-body,.fx-calendar-body iframe{height:330px}}
+@media(max-width:480px){.fx-market-section{padding-bottom:60px}.fx-chart-head{padding:0 13px}.fx-chart-container,.fx-finlogix-chart,.fx-finlogix-chart iframe{height:300px;min-height:300px}.fx-chart-footer{grid-template-columns:1fr 1fr}.fx-chart-footer>div:last-child{grid-column:1/-1;border-top:1px solid rgba(52,105,138,.16)}.fx-calendar-body,.fx-calendar-body iframe{height:320px}}
 </style>
+
 <section class="fx-market-section" id="markets" aria-labelledby="marketSectionTitle">
-  <div class="fx-market-strip" aria-label="Live market prices"><iframe src="./widgets/finlogix-strip.html" title="Finlogix live market running tape" scrolling="no"></iframe></div>
+  <div class="fx-market-strip" aria-label="Live market prices">
+    <iframe src="./widgets/finlogix-strip.html" title="Finlogix live market running tape" scrolling="no"></iframe>
+  </div>
+
   <div class="fx-market-shell">
     <div class="fx-market-heading">
-      <div><p class="fx-market-eyebrow">LIVE MARKET OVERVIEW</p><h2 id="marketSectionTitle">Real-Time Market Prices</h2><p class="fx-market-subtitle">Track global markets with live market data and an interactive trading chart.</p></div>
+      <div>
+        <p class="fx-market-eyebrow">LIVE MARKET OVERVIEW</p>
+        <h2 id="marketSectionTitle">Real-Time Market Prices</h2>
+        <p class="fx-market-subtitle">Track global markets with live Finlogix pricing, charts and market events.</p>
+      </div>
       <a class="fx-market-all" href="./markets/forex.html"><span>View All Markets</span><b aria-hidden="true">→</b></a>
     </div>
+
     <div class="fx-market-grid">
-      <div class="fx-market-board">
-        <div class="fx-market-tabs" role="tablist" aria-label="Market categories">
-          <button class="fx-market-tab is-active" type="button" role="tab" aria-selected="true" data-market-tab="forex">Forex</button><button class="fx-market-tab" type="button" role="tab" aria-selected="false" data-market-tab="commodities">Commodities</button><button class="fx-market-tab" type="button" role="tab" aria-selected="false" data-market-tab="indices">Indices</button><button class="fx-market-tab" type="button" role="tab" aria-selected="false" data-market-tab="shares">Shares</button><button class="fx-market-tab" type="button" role="tab" aria-selected="false" data-market-tab="crypto">Cryptocurrency</button>
-        </div>
-        <div class="fx-market-table-wrap"><table class="fx-market-table"><thead><tr><th>Symbol</th><th>Bid</th><th>Ask</th><th>Change</th><th>24H</th><th>Trend</th></tr></thead><tbody>
-          <tr data-market-category="forex" data-tv-symbol="FX:EURUSD"><td><strong>EURUSD</strong><small>Euro / US Dollar</small></td><td>1.16384</td><td>1.16386</td><td class="fx-positive">+0.24%</td><td>+0.31%</td><td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,23 14,20 24,22 35,15 45,17 57,11 67,14 79,7 90,9 98,4"/></svg></td></tr>
-          <tr data-market-category="forex" data-tv-symbol="FX:GBPUSD"><td><strong>GBPUSD</strong><small>British Pound / US Dollar</small></td><td>1.27942</td><td>1.27946</td><td class="fx-negative">-0.12%</td><td>-0.18%</td><td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,7 14,10 24,8 35,15 45,13 57,18 67,16 79,23 90,21 98,26"/></svg></td></tr>
-          <tr data-market-category="forex" data-tv-symbol="FX:USDJPY"><td><strong>USDJPY</strong><small>US Dollar / Japanese Yen</small></td><td>149.321</td><td>149.324</td><td class="fx-positive">+0.31%</td><td>+0.44%</td><td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,20 13,19 24,15 34,17 45,11 56,13 66,8 77,11 89,6 98,9"/></svg></td></tr>
-          <tr data-market-category="commodities" data-tv-symbol="OANDA:XAUUSD"><td><strong>XAUUSD</strong><small>Gold / US Dollar</small></td><td>2,447.32</td><td>2,447.68</td><td class="fx-positive">+0.18%</td><td>+0.22%</td><td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,24 14,19 25,21 36,15 48,16 58,10 69,12 80,6 90,8 98,3"/></svg></td></tr>
-          <tr data-market-category="indices" data-tv-symbol="TVC:DJI"><td><strong>US30</strong><small>Dow Jones Index</small></td><td>40,823.6</td><td>40,831.4</td><td class="fx-positive">+0.36%</td><td>+0.51%</td><td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,22 14,18 25,20 36,13 47,15 58,9 68,11 80,5 90,7 98,2"/></svg></td></tr>
-          <tr data-market-category="shares" data-tv-symbol="NASDAQ:AAPL"><td><strong>AAPL</strong><small>Apple Inc.</small></td><td>—</td><td>—</td><td class="fx-positive">+0.74%</td><td>+1.12%</td><td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,23 14,20 24,21 35,17 46,19 57,12 68,14 79,9 90,11 98,5"/></svg></td></tr>
-          <tr data-market-category="crypto" data-tv-symbol="COINBASE:BTCUSD"><td><strong>BTCUSD</strong><small>Bitcoin / US Dollar</small></td><td>112,840</td><td>112,920</td><td class="fx-positive">+1.12%</td><td>+1.86%</td><td><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="2,25 14,22 25,23 36,16 47,18 58,12 69,14 80,8 90,10 98,3"/></svg></td></tr>
-        </tbody></table></div>
-        <div class="fx-market-note"><span class="fx-live-dot"></span><span>Indicative market snapshot</span><span class="fx-market-note-sep">•</span><span>Live widget and chart data provided by Finlogix / TradingView</span></div>
+      <div class="fx-market-board fx-legacy-market-compat">
+        <div class="fx-market-tabs"></div>
+        <div class="fx-market-table"></div>
       </div>
+
       <div class="fx-chart-card">
-        <div class="fx-chart-head"><div class="fx-chart-symbol"><span class="fx-chart-icon">⌁</span><div><strong>Apple</strong><small>NASDAQ: AAPL</small></div></div><div class="fx-chart-status"><span></span> LIVE MARKET</div></div>
-        <div class="fx-chart-container"><div id="fxFinlogixBigChart" class="fx-finlogix-chart"><iframe src="./widgets/finlogix-bigchart.html" title="Finlogix Apple BigChart" scrolling="no"></iframe></div></div>
-        <div class="fx-chart-footer"><div><small>Selected market</small><strong>AAPL</strong></div><div><small>Market view</small><strong>Daily</strong></div><div><small>Data source</small><strong>Finlogix</strong></div></div>
+        <div class="fx-chart-head">
+          <div class="fx-chart-symbol">
+            <span class="fx-chart-icon">⌁</span>
+            <div><strong>Apple</strong><small>NASDAQ: AAPL</small></div>
+          </div>
+          <div class="fx-chart-status"><span></span> LIVE MARKET</div>
+        </div>
+        <div class="fx-chart-container">
+          <div id="fxFinlogixBigChart" class="fx-finlogix-chart">
+            <iframe src="./widgets/finlogix-bigchart.html" title="Finlogix Apple BigChart" scrolling="no"></iframe>
+          </div>
+          <div id="fxMarketChart" class="fx-legacy-market-compat" aria-hidden="true"></div>
+        </div>
+        <div class="fx-chart-footer">
+          <div><small>Selected market</small><strong>AAPL</strong></div>
+          <div><small>Market view</small><strong>Daily</strong></div>
+          <div><small>Data source</small><strong>Finlogix</strong></div>
+        </div>
       </div>
     </div>
-    <section class="fx-calendar-card" aria-labelledby="fxCalendarTitle"><div class="fx-calendar-head"><h3 id="fxCalendarTitle">Economic Events &amp; Earnings</h3><span>Live Finlogix Calendar</span></div><div class="fx-calendar-body"><iframe src="./widgets/finlogix-earning-calendar.html" title="Finlogix live earning calendar" scrolling="no"></iframe></div></section>
+
+    <section class="fx-calendar-card" aria-labelledby="fxCalendarTitle">
+      <div class="fx-calendar-head">
+        <h3 id="fxCalendarTitle">Economic Events &amp; Earnings</h3>
+        <span>Live Finlogix Calendar</span>
+      </div>
+      <div class="fx-calendar-body">
+        <iframe src="./widgets/finlogix-earning-calendar.html" title="Finlogix live earning calendar" scrolling="no"></iframe>
+      </div>
+    </section>
   </div>
 </section>
