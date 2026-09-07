@@ -1,11 +1,11 @@
 (() => {
   'use strict';
 
-  const path = location.pathname.toLowerCase();
-  const isHome = /\/index\.html?$/.test(path) || path.endsWith('/');
+  const path = window.location.pathname.toLowerCase();
+  const isHome = /\/index\.html?$/.test(path) || /\/$/.test(path);
   const isPartnership = /\/partnership(?:\/|$)/.test(path);
   const isNested = /\/(markets|trading|platforms|accounts|tools|company|legal|partnership)\//.test(path);
-  const prefix = () => (isHome || !isNested) ? './' : '../';
+  const prefix = (isHome || !isNested) ? './' : '../';
   const clean = value => (value || '').replace(/\s+/g, ' ').trim();
 
   const routes = {
@@ -38,20 +38,20 @@
     return null;
   }
 
-  function isUsableHtml(href) {
-    if (!href || href === '#') return false;
-    return /^(https?:|mailto:|tel:|javascript:)/i.test(href) || /\.html(?:$|[?#])/i.test(href);
-  }
-
   function fixLinks(root = document) {
     root.querySelectorAll('a').forEach(anchor => {
       const href = clean(anchor.getAttribute('href'));
       const label = clean(anchor.textContent);
       const lower = label.toLowerCase();
-      if (lower === 'login' || anchor.classList.contains('btn-login') || /(^|\/)login\.html(?:$|[?#])/i.test(href)) { anchor.remove(); return; }
-      if (isUsableHtml(href)) return;
+      if (lower === 'login' || anchor.classList.contains('btn-login') || /(^|\/)login\.html(?:$|[?#])/i.test(href)) {
+        anchor.remove();
+        return;
+      }
       const target = targetFor(label, href);
-      if (target) anchor.setAttribute('href', prefix() + target);
+      if (!target) return;
+      if (!href || href === '#' || href === '#top' || /^#/.test(href) || /(^|\/)terms\.html$/i.test(href) || /(^|\/)privacy\.html$/i.test(href)) {
+        anchor.setAttribute('href', prefix + target);
+      }
     });
   }
 
@@ -65,7 +65,7 @@
   }
 
   function normalizeSocials() {
-    const svg = {
+    const icons = {
       Facebook:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4.5c-.5-.1-1.8-.2-3.3-.2-3.2 0-5.4 2-5.4 5.6V13H5v4h3.3v7H12v-7h3.5l.6-4H12V10.3c0-1.2.3-2.3 2-2.3z"/></svg>',
       X:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4.3l3.1 4.4L16 4h2.9l-5.1 6 5.5 7.9H15L11.7 13 8 17.9H5.1l5.3-6.1L5 4z"/></svg>',
       LinkedIn:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 8.2A1.9 1.9 0 1 0 6.2 4.4a1.9 1.9 0 0 0 0 3.8zM4.6 9.7H7.8V19H4.6V9.7zM9.4 9.7h3.1V11c.4-.8 1.5-1.6 3.2-1.6 3.4 0 4 2.2 4 5.1V19h-3.2v-4c0-1 0-2.3-1.4-2.3s-1.7 1.1-1.7 2.2V19H9.4V9.7z"/></svg>',
@@ -74,40 +74,152 @@
     };
     document.querySelectorAll('.site-footer').forEach(footer => {
       const col = [...footer.querySelectorAll('.footer-col')].find(el => clean(el.querySelector('h4')?.textContent).toLowerCase() === 'stay connected');
-      if (!col) return;
-      col.innerHTML = `<h4>Stay Connected</h4><div class="social-row">${Object.entries(svg).map(([name,icon])=>`<a class="social-link" href="#" aria-label="${name}" aria-disabled="true" tabindex="-1">${icon}</a>`).join('')}</div>`;
+      if (!col || col.dataset.fxcSocials === '1') return;
+      col.dataset.fxcSocials = '1';
+      col.innerHTML = '<h4>Stay Connected</h4><div class="social-row">' + Object.entries(icons).map(([name,icon]) => `<a class="social-link" href="#" aria-label="${name}" aria-disabled="true" tabindex="-1">${icon}</a>`).join('') + '</div>';
     });
   }
 
-  function initMobileNav() {
-    const menu = document.querySelector('.main-nav');
-    const toggle = document.querySelector('.menu-toggle');
-    if (!menu || !toggle || toggle.dataset.fxcNavController === '1') return;
-    toggle.dataset.fxcNavController = '1';
-    const setMenu = open => {
-      menu.classList.toggle('is-open', open);
-      menu.classList.toggle('open', open);
-      toggle.setAttribute('aria-expanded', String(open));
-      document.body.classList.toggle('menu-open', open);
-      if (window.innerWidth <= 850) document.body.style.overflow = open ? 'hidden' : '';
-    };
-    toggle.addEventListener('click', e => { e.preventDefault(); e.stopImmediatePropagation(); setMenu(!menu.classList.contains('is-open') && !menu.classList.contains('open')); }, true);
-    menu.querySelectorAll('.nav-trigger').forEach(trigger => {
-      if (trigger.dataset.fxcNavController === '1') return;
-      trigger.dataset.fxcNavController = '1';
-      trigger.addEventListener('click', e => {
-        if (window.innerWidth > 850) return;
-        e.preventDefault(); e.stopImmediatePropagation();
+  function installMobileNavStyles() {
+    if (document.getElementById('fxc-mobile-nav-css')) return;
+    const style = document.createElement('style');
+    style.id = 'fxc-mobile-nav-css';
+    style.textContent = `
+      @media (max-width:850px) {
+        .site-header {
+          position: sticky !important;
+          top: 0 !important;
+          z-index: 100000 !important;
+        }
+        .main-nav {
+          position: fixed !important;
+          top: 74px !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          width: 100% !important;
+          max-height: calc(100vh - 74px) !important;
+          z-index: 100001 !important;
+          display: block !important;
+          padding: 18px 16px 32px !important;
+          background: #04101d !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          overflow-y: auto !important;
+          -webkit-overflow-scrolling: touch !important;
+          transform: translateX(100%) !important;
+          pointer-events: none !important;
+        }
+        .main-nav.is-open,
+        .main-nav.open {
+          transform: translateX(0) !important;
+          pointer-events: auto !important;
+        }
+        .main-nav .dropdown {
+          position: static !important;
+          width: 100% !important;
+          display: none !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: none !important;
+          padding: 0 0 10px !important;
+          border: 0 !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+          background: transparent !important;
+        }
+        .main-nav .nav-item.is-open > .dropdown,
+        .main-nav .nav-item.open > .dropdown {
+          display: block !important;
+        }
+        .main-nav .nav-trigger {
+          width: 100% !important;
+          min-height: 56px !important;
+          justify-content: space-between !important;
+          cursor: pointer !important;
+          touch-action: manipulation !important;
+        }
+        .menu-toggle,
+        .nav-trigger { touch-action: manipulation !important; }
+        body.menu-open { overflow: hidden !important; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function setMobileMenu(menu, toggle, open) {
+    menu.classList.toggle('is-open', open);
+    menu.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    document.body.classList.toggle('menu-open', open);
+    if (window.innerWidth <= 850) document.body.style.overflow = open ? 'hidden' : '';
+    else document.body.style.overflow = '';
+  }
+
+  function installMobileNavController() {
+    if (window.__fxcMobileNavControllerInstalled) return;
+    window.__fxcMobileNavControllerInstalled = true;
+
+    document.addEventListener('click', event => {
+      if (window.innerWidth > 850) return;
+
+      const toggle = event.target.closest('.menu-toggle');
+      if (toggle) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        const menu = document.querySelector('.main-nav');
+        if (!menu) return;
+        const open = !(menu.classList.contains('is-open') || menu.classList.contains('open'));
+        setMobileMenu(menu, toggle, open);
+        if (!open) {
+          menu.querySelectorAll('.nav-item.is-open, .nav-item.open').forEach(item => item.classList.remove('is-open','open'));
+          menu.querySelectorAll('.nav-trigger').forEach(t => t.setAttribute('aria-expanded','false'));
+        }
+        return;
+      }
+
+      const trigger = event.target.closest('.main-nav .nav-trigger');
+      if (trigger) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        const menu = trigger.closest('.main-nav');
         const item = trigger.closest('.nav-item');
-        const wasOpen = item?.classList.contains('is-open');
-        menu.querySelectorAll('.nav-item.is-open').forEach(openItem => openItem.classList.remove('is-open'));
+        if (!menu || !item) return;
+        const wasOpen = item.classList.contains('is-open') || item.classList.contains('open');
+        menu.querySelectorAll('.nav-item.is-open, .nav-item.open').forEach(other => {
+          if (other !== item) other.classList.remove('is-open','open');
+        });
         menu.querySelectorAll('.nav-trigger').forEach(t => t.setAttribute('aria-expanded','false'));
-        if (item && !wasOpen) { item.classList.add('is-open'); trigger.setAttribute('aria-expanded','true'); }
-      }, true);
+        item.classList.toggle('is-open', !wasOpen);
+        item.classList.toggle('open', !wasOpen);
+        trigger.setAttribute('aria-expanded', String(!wasOpen));
+      }
+    }, true);
+
+    document.addEventListener('click', event => {
+      if (window.innerWidth > 850) return;
+      const link = event.target.closest('.main-nav a');
+      if (!link) return;
+      const menu = document.querySelector('.main-nav');
+      const toggle = document.querySelector('.menu-toggle');
+      if (menu && toggle) setMobileMenu(menu, toggle, false);
+    }, true);
+
+    document.addEventListener('keydown', event => {
+      if (event.key !== 'Escape') return;
+      const menu = document.querySelector('.main-nav');
+      const toggle = document.querySelector('.menu-toggle');
+      if (menu && toggle) setMobileMenu(menu, toggle, false);
     });
-    menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false), true));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 850) setMenu(false); });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 850) {
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.menu-toggle');
+        if (menu && toggle) setMobileMenu(menu, toggle, false);
+      }
+    });
   }
 
   function initPlatformTabs() {
@@ -124,58 +236,43 @@
         'webtrader':{url:'platforms/webtrader.html',features:['Browser-based trading','No desktop installation required','Fast access across supported devices']}
       };
       const select = tab => {
-        tabs.forEach(t=>{const active=t===tab;t.classList.toggle('is-active',active);t.setAttribute('aria-selected',active?'true':'false');});
+        tabs.forEach(t => {
+          const active = t === tab;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
         const cfg = configs[clean(tab.textContent).toLowerCase()] || configs['metatrader 4'];
-        if (list) list.innerHTML = cfg.features.map(x=>`<li>${x}</li>`).join('');
-        if (actions) actions.innerHTML = `<a class="platform-action" href="${prefix()+cfg.url}">Learn More — ${clean(tab.textContent)} <b aria-hidden="true">→</b></a>`;
+        if (list) list.innerHTML = cfg.features.map(x => `<li>${x}</li>`).join('');
+        if (actions) actions.innerHTML = `<a class="platform-action" href="${prefix + cfg.url}">Learn More — ${clean(tab.textContent)} <b aria-hidden="true">→</b></a>`;
       };
-      tabs.forEach(tab=>tab.addEventListener('click',()=>select(tab)));
-      select(tabs.find(t=>t.classList.contains('is-active'))||tabs[0]);
+      tabs.forEach(tab => tab.addEventListener('click', () => select(tab)));
+      select(tabs.find(t => t.classList.contains('is-active')) || tabs[0]);
     });
-  }
-
-  function activateEmbeddedScripts(section) {
-    if (!section || section.dataset.fxcEmbeddedScripts === '1') return;
-    const scripts = [...section.querySelectorAll('script')];
-    if (!scripts.length) return;
-    section.dataset.fxcEmbeddedScripts = '1';
-    let chain = Promise.resolve();
-    scripts.forEach(original => {
-      chain = chain.then(() => new Promise(resolve => {
-        const replacement = document.createElement('script');
-        [...original.attributes].forEach(attr=>replacement.setAttribute(attr.name,attr.value));
-        if (original.src) {
-          replacement.async = false;
-          replacement.onload = replacement.onerror = () => { original.replaceWith(replacement); resolve(); };
-          replacement.src = original.src;
-        } else {
-          replacement.textContent = original.textContent || '';
-          original.replaceWith(replacement);
-          resolve();
-        }
-      }));
-    });
-  }
-
-  function initFinlogixHome() {
-    if (!isHome) return;
-    const section = document.querySelector('.fx-market-section');
-    if (section) activateEmbeddedScripts(section);
   }
 
   function init() {
+    installMobileNavStyles();
+    installMobileNavController();
     fixLinks();
     fixBenefitsPage();
     normalizeSocials();
-    initMobileNav();
     initPlatformTabs();
-    initFinlogixHome();
-    fixLinks();
-    new MutationObserver(() => {
-      fixLinks(); normalizeSocials(); initMobileNav(); initPlatformTabs(); if (isHome) initFinlogixHome();
-    }).observe(document.body,{childList:true,subtree:true});
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true}); else init();
-})();\n
-/* FXC MOBILE NAV FINAL HOTFIX */\n(() => {\n  if (window.__fxcMobileNavFinalHotfix) return;\n  window.__fxcMobileNavFinalHotfix = true;\n\n  const style = document.createElement('style');\n  style.id = 'fxc-mobile-nav-final-hotfix-style';\n  style.textContent = `\n    @media (max-width:850px) {\n      .site-header { position:sticky !important; top:0 !important; z-index:5000 !important; }\n      .main-nav { position:fixed !important; z-index:5100 !important; background:#04101d !important; opacity:1 !important; visibility:visible; }\n      .main-nav.is-open, .main-nav.open { transform:translateX(0) !important; }\n      .main-nav .dropdown { display:none !important; visibility:hidden !important; opacity:0 !important; }\n      .main-nav .nav-item.is-open > .dropdown,\n      .main-nav .nav-item.open > .dropdown { display:block !important; visibility:visible !important; opacity:1 !important; transform:none !important; }\n      .menu-toggle, .nav-trigger { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }\n      body.menu-open { overflow:hidden !important; }\n    }\n  `;\n  document.head.appendChild(style);\n\n  const isMobile = () => window.innerWidth <= 850;\n  document.addEventListener('click', (event) => {\n    if (!isMobile()) return;\n    const toggle = event.target.closest('.menu-toggle');\n    if (toggle) {\n      event.preventDefault();\n      event.stopImmediatePropagation();\n      const nav = document.querySelector('.main-nav');\n      if (!nav) return;\n      const open = !(nav.classList.contains('is-open') || nav.classList.contains('open'));\n      nav.classList.toggle('is-open', open);\n      nav.classList.toggle('open', open);\n      toggle.setAttribute('aria-expanded', String(open));\n      document.body.classList.toggle('menu-open', open);\n      return;\n    }\n\n    const trigger = event.target.closest('.main-nav .nav-trigger');\n    if (trigger) {\n      event.preventDefault();\n      event.stopImmediatePropagation();\n      const nav = trigger.closest('.main-nav');\n      const item = trigger.closest('.nav-item');\n      if (!nav || !item) return;\n      const open = !(item.classList.contains('is-open') || item.classList.contains('open'));\n      nav.querySelectorAll('.nav-item.is-open, .nav-item.open').forEach(other => {\n        if (other !== item) {\n          other.classList.remove('is-open','open');\n          const t = other.querySelector('.nav-trigger');\n          if (t) t.setAttribute('aria-expanded','false');\n        }\n      });\n      item.classList.toggle('is-open', open);\n      item.classList.toggle('open', open);\n      trigger.setAttribute('aria-expanded', String(open));\n    }\n  }, true);\n})();\n
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
+  else init();
+
+  let scheduled = false;
+  const observer = new MutationObserver(() => {
+    if (scheduled) return;
+    scheduled = true;
+    queueMicrotask(() => {
+      scheduled = false;
+      fixLinks();
+      normalizeSocials();
+      initMobileNavStyles();
+      initPlatformTabs();
+    });
+  });
+  observer.observe(document.body, {childList:true, subtree:true});
+})();
