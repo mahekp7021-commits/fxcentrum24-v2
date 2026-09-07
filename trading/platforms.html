@@ -299,5 +299,7 @@ document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 document.addEventListener("click",e=>{if(window.innerWidth<=850)return;if(!e.target.closest(".nav-item"))navItems.forEach(item=>item.classList.remove("is-open"))});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){mainNavigation.classList.remove("is-open");document.body.classList.remove("menu-open");menuToggle.setAttribute("aria-expanded","false");navItems.forEach(item=>item.classList.remove("is-open"))}});
 </script>
+
+<script src="../site-fixes.js" defer></script>
 </body>
 </html>
