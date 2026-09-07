@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const isHome = /\/index\.html?$/.test(location.pathname) || location.pathname.endsWith('/');
+  const isPartnership = /\/partnership(?:\/|$)/i.test(location.pathname);
   const isNested = /\/(markets|trading|platforms|accounts|tools|company|legal|partnership)\//i.test(location.pathname);
   const prefix = () => isHome || !isNested ? './' : '../';
   const norm = value => (value || '').replace(/\s+/g, ' ').trim();
@@ -17,6 +18,7 @@
   const fragments = {accounts:'trading/account-types.html',conditions:'trading/trading-conditions.html',platforms:'trading/platforms.html',steps:'trading/how-to-start.html',markets:'tools/live-markets.html',calendar:'tools/economic-calendar.html',about:'company/about.html',contact:'company/contact.html',benefits:'company/benefits.html',partner:'partnership/index.html','open-account':'trading/account-opening.html'};
   const targetFor = (label, href) => {
     const key = norm(label).toLowerCase();
+    if (key === 'open account' || key === 'open account now') return isPartnership ? 'partnership/account-opening.html' : 'trading/account-opening.html';
     const direct = Object.keys(routes).find(k => k.toLowerCase() === key);
     if (direct) return routes[direct];
     const legalKey = Object.keys(legal).find(k => k.toLowerCase() === key);
