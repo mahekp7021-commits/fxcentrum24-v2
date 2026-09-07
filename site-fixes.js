@@ -2,43 +2,38 @@
   'use strict';
 
   const path = window.location.pathname.toLowerCase();
-  const isHome = /\/index\.html?$/.test(path) || /\/$/.test(path);
-  const isPartnership = /\/partnership(?:\/|$)/.test(path);
-  const isNested = /\/(markets|trading|platforms|accounts|tools|company|legal|partnership)\//.test(path);
-  const prefix = (isHome || !isNested) ? './' : '../';
+  const nested = /\/(markets|trading|platforms|accounts|tools|company|legal|partnership)\//i.test(path);
+  const isPartnership = /\/partnership(?:\/|$)/i.test(path);
+  const prefix = nested ? '../' : './';
   const clean = value => (value || '').replace(/\s+/g, ' ').trim();
 
   const routes = {
     'Forex':'markets/forex.html','Commodities':'markets/commodities.html','Indices':'markets/indices.html','Shares CFDs':'markets/shares-cfds.html','Cryptocurrency':'markets/cryptocurrency.html',
     'Account Types':'trading/account-types.html','Trading Conditions':'trading/trading-conditions.html','Platforms':'trading/platforms.html','How to Start':'trading/how-to-start.html',
-    'MetaTrader 4':'platforms/metatrader-4.html','MetaTrader 5':'platforms/metatrader-5.html','MT4':'platforms/metatrader-4.html','MT5':'platforms/metatrader-5.html','WebTrader':'platforms/webtrader.html',
+    'MetaTrader 4':'platforms/metatrader-4.html','MetaTrader 5':'platforms/metatrader-5.html','WebTrader':'platforms/webtrader.html',
     'Standard':'accounts/standard.html','Premium':'accounts/premium.html','Professional':'accounts/professional.html',
     'Live Markets':'tools/live-markets.html','Economic Calendar':'tools/economic-calendar.html',
     'About Us':'company/about.html','Contact Us':'company/contact.html','Benefits':'company/benefits.html','FXCentrum24 Benefits':'company/benefits.html','Why FXCentrum24':'company/benefits.html',
-    'Partnership':'partnership/index.html','Open Partner Account':'partnership/account-opening.html','Open Partner Account →':'partnership/account-opening.html'
+    'Partnership':'partnership/index.html','Open Partner Account':'partnership/account-opening.html'
   };
-
   const legal = {
     'Terms & Conditions':'legal/terms-and-conditions.html','Terms and Conditions':'legal/terms-and-conditions.html',
     'Privacy Policy':'legal/privacy-policy.html','Risk Disclosure':'legal/risk-disclosure.html','AML Policy':'legal/aml-policy.html','Client Agreement':'legal/client-agreement.html'
   };
-
   const fragments = {
     accounts:'trading/account-types.html',conditions:'trading/trading-conditions.html',platforms:'trading/platforms.html',steps:'trading/how-to-start.html',
-    calendar:'tools/economic-calendar.html',about:'company/about.html',contact:'company/contact.html',benefits:'company/benefits.html',partner:'partnership/index.html',
+    markets:'tools/live-markets.html',calendar:'tools/economic-calendar.html',about:'company/about.html',contact:'company/contact.html',benefits:'company/benefits.html',partner:'partnership/index.html',
     'open-account':'trading/account-opening.html'
   };
 
   function targetFor(label, href) {
     const lower = clean(label).toLowerCase();
-    if (lower === 'open account' || lower === 'open account now' || lower === 'open account →') {
-      return isPartnership ? 'partnership/account-opening.html' : 'trading/account-opening.html';
-    }
-    if (lower === 'open partner account' || lower === 'open partner account →') return 'partnership/account-opening.html';
-    const routeKey = Object.keys(routes).find(k => k.toLowerCase() === lower);
-    if (routeKey) return routes[routeKey];
-    const legalKey = Object.keys(legal).find(k => k.toLowerCase() === lower);
-    if (legalKey) return legal[legalKey];
+    if (/^open account(?:\s*→)?$/i.test(clean(label))) return isPartnership ? 'partnership/account-opening.html' : 'trading/account-opening.html';
+    if (/^open partner account(?:\s*→)?$/i.test(clean(label))) return 'partnership/account-opening.html';
+    const route = Object.keys(routes).find(k => k.toLowerCase() === lower);
+    if (route) return routes[route];
+    const legalRoute = Object.keys(legal).find(k => k.toLowerCase() === lower);
+    if (legalRoute) return legal[legalRoute];
     if (href === '#top') return 'index.html';
     if (href && href.startsWith('#')) return fragments[href.slice(1).toLowerCase()] || null;
     if (href && /(^|\/)terms\.html$/i.test(href)) return 'legal/terms-and-conditions.html';
@@ -63,114 +58,37 @@
     });
   }
 
-  function fixBenefitsPage() {
-    if (!/\/company\/benefits\.html$/.test(path)) return;
-    const eyebrow = document.querySelector('.hero .eyebrow');
-    const title = document.querySelector('.hero h1');
-    if (eyebrow) eyebrow.textContent = 'FXCENTRUM24 BENEFITS';
-    if (title) title.innerHTML = 'The benefits of a clearer <span>trading experience.</span>';
-    document.title = 'FXCentrum24 Benefits | FXCentrum24';
+  function setHeaderHeight() {
+    const header = document.querySelector('.site-header');
+    if (header) document.documentElement.style.setProperty('--fxc-header-height', `${header.getBoundingClientRect().height}px`);
   }
 
-  function normalizeSocials() {
-    const icons = {
-      Facebook:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4.5c-.5-.1-1.8-.2-3.3-.2-3.2 0-5.4 2-5.4 5.6V13H5v4h3.3v7H12v-7h3.5l.6-4H12V10.3c0-1.2.3-2.3 2-2.3z"/></svg>',
-      X:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4.3l3.1 4.4L16 4h2.9l-5.1 6 5.5 7.9H15L11.7 13 8 17.9H5.1l5.3-6.1L5 4z"/></svg>',
-      LinkedIn:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 8.2A1.9 1.9 0 1 0 6.2 4.4a1.9 1.9 0 0 0 0 3.8zM4.6 9.7H7.8V19H4.6V9.7zM9.4 9.7h3.1V11c.4-.8 1.5-1.6 3.2-1.6 3.4 0 4 2.2 4 5.1V19h-3.2v-4c0-1 0-2.3-1.4-2.3s-1.7 1.1-1.7 2.2V19H9.4V9.7z"/></svg>',
-      YouTube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8.1a2.8 2.8 0 0 0-2-2C17.2 5.6 12 5.6 12 5.6s-5.2 0-7 .5a2.8 2.8 0 0 0-2 2C2.5 9.9 2.5 12 2.5 12s0 2.1.5 3.9a2.8 2.8 0 0 0 2 2c1.8.5 7 .5 7-.5s5.2 0 7-.5a2.8 2.8 0 0 0 2-2c.5-1.8.5-3.9.5-3.9s0-2.1-.5-3.9zM10 15.3V8.7l6 3.3-6 3.3z"/></svg>',
-      Instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2.8h10A4.2 4.2 0 0 1 21.2 7v10a4.2 4.2 0 0 1-4.2 4.2H7A4.2 4.2 0 0 1 2.8 17V7A4.2 4.2 0 0 1 7 2.8zm0 2A2.2 2.2 0 0 0 4.8 7v10A2.2 2.2 0 0 0 7 19.2h10a2.2 2.2 0 0 0 2.2-2.2V7A2.2 2.2 0 0 0 17 4.8H7zm5 2.6A4.6 4.6 0 1 1 7.4 12 4.6 4.6 0 0 1 12 7.4zm0 2A2.6 2.6 0 1 0 14.6 12 2.6 2.6 0 0 0 12 9.4z"/></svg>'
-    };
-    document.querySelectorAll('.site-footer').forEach(footer => {
-      const col = [...footer.querySelectorAll('.footer-col')].find(el => clean(el.querySelector('h4')?.textContent).toLowerCase() === 'stay connected');
-      if (!col || col.dataset.fxcSocials === '1') return;
-      col.dataset.fxcSocials = '1';
-      col.innerHTML = '<h4>Stay Connected</h4><div class="social-row">' + Object.entries(icons).map(([name,icon]) => `<a class="social-link" href="#" aria-label="${name}" aria-disabled="true" tabindex="-1">${icon}</a>`).join('') + '</div>';
-    });
-  }
+  function installMobileNavigation() {
+    if (window.__fxcMobileNavigationInstalled) return;
+    window.__fxcMobileNavigationInstalled = true;
 
-  function installMobileNavStyles() {
-    if (document.getElementById('fxc-mobile-nav-css')) return;
     const style = document.createElement('style');
-    style.id = 'fxc-mobile-nav-css';
+    style.id = 'fxc-mobile-nav-final';
     style.textContent = `
-      @media (max-width:850px) {
-        .site-header {
-          position: sticky !important;
-          top: 0 !important;
-          z-index: 100000 !important;
-        }
-        .main-nav {
-          position: fixed !important;
-          top: 74px !important;
-          left: 0 !important;
-          right: 0 !important;
-          bottom: 0 !important;
-          width: 100% !important;
-          max-height: calc(100vh - 74px) !important;
-          z-index: 100001 !important;
-          display: block !important;
-          padding: 18px 16px 32px !important;
-          background: #04101d !important;
-          opacity: 1 !important;
-          visibility: visible !important;
-          overflow-y: auto !important;
-          -webkit-overflow-scrolling: touch !important;
-          transform: translateX(100%) !important;
-          pointer-events: none !important;
-        }
-        .main-nav.is-open,
-        .main-nav.open {
-          transform: translateX(0) !important;
-          pointer-events: auto !important;
-        }
-        .main-nav .dropdown {
-          position: static !important;
-          width: 100% !important;
-          display: none !important;
-          opacity: 1 !important;
-          visibility: visible !important;
-          transform: none !important;
-          padding: 0 0 10px !important;
-          border: 0 !important;
-          border-radius: 0 !important;
-          box-shadow: none !important;
-          background: transparent !important;
-        }
-        .main-nav .nav-item.is-open > .dropdown,
-        .main-nav .nav-item.open > .dropdown {
-          display: block !important;
-        }
-        .main-nav .nav-trigger {
-          width: 100% !important;
-          min-height: 56px !important;
-          justify-content: space-between !important;
-          cursor: pointer !important;
-          touch-action: manipulation !important;
-        }
-        .menu-toggle,
-        .nav-trigger { touch-action: manipulation !important; }
-        body.menu-open { overflow: hidden !important; }
+      @media (max-width:850px){
+        .site-header{position:sticky!important;top:0!important;z-index:10000!important}
+        .main-nav{position:fixed!important;top:var(--fxc-header-height,74px)!important;left:0!important;right:0!important;bottom:0!important;width:100vw!important;display:none!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;padding:12px 16px 28px!important;margin:0!important;background:#04101d!important;border:0!important;box-shadow:0 20px 50px rgba(0,0,0,.45)!important;overflow-y:auto!important;overscroll-behavior:contain!important;transform:none!important;opacity:1!important;visibility:visible!important;z-index:10001!important}
+        .main-nav.is-open,.main-nav.open{display:flex!important}
+        .main-nav .dropdown{position:static!important;display:none!important;width:100%!important;max-width:none!important;margin:0!important;padding:0 0 8px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;opacity:1!important;visibility:visible!important;transform:none!important}
+        .main-nav .nav-item.is-open>.dropdown,.main-nav .nav-item.open>.dropdown{display:block!important}
+        .main-nav .nav-trigger,.main-nav .nav-link{width:100%!important;min-height:56px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 4px!important;border:0!important;background:transparent!important;color:#dce8f4!important;font-size:15px!important;text-align:left!important;white-space:normal!important}
+        .main-nav .nav-link{justify-content:flex-start!important}
+        .main-nav .nav-item{width:100%!important;border-bottom:1px solid rgba(120,180,220,.10)!important}
+        .main-nav .dropdown a{display:block!important;width:100%!important;padding:11px 8px!important}
+        body.menu-open{overflow:hidden!important}
       }
     `;
     document.head.appendChild(style);
-  }
-
-  function setMobileMenu(menu, toggle, open) {
-    menu.classList.toggle('is-open', open);
-    menu.classList.toggle('open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-    document.body.classList.toggle('menu-open', open);
-    document.body.style.overflow = open && window.innerWidth <= 850 ? 'hidden' : '';
-  }
-
-  function installMobileNavController() {
-    if (window.__fxcMobileNavControllerInstalled) return;
-    window.__fxcMobileNavControllerInstalled = true;
+    setHeaderHeight();
+    window.addEventListener('resize', setHeaderHeight, {passive:true});
 
     document.addEventListener('click', event => {
       if (window.innerWidth > 850) return;
-
       const toggle = event.target.closest('.menu-toggle');
       if (toggle) {
         event.preventDefault();
@@ -178,92 +96,61 @@
         const menu = document.querySelector('.main-nav');
         if (!menu) return;
         const open = !(menu.classList.contains('is-open') || menu.classList.contains('open'));
-        setMobileMenu(menu, toggle, open);
-        if (!open) {
-          menu.querySelectorAll('.nav-item.is-open, .nav-item.open').forEach(item => item.classList.remove('is-open','open'));
-          menu.querySelectorAll('.nav-trigger').forEach(t => t.setAttribute('aria-expanded','false'));
-        }
+        menu.classList.toggle('is-open', open);
+        menu.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+        document.body.classList.toggle('menu-open', open);
         return;
       }
-
       const trigger = event.target.closest('.main-nav .nav-trigger');
       if (trigger) {
         event.preventDefault();
         event.stopImmediatePropagation();
-        const menu = trigger.closest('.main-nav');
         const item = trigger.closest('.nav-item');
-        if (!menu || !item) return;
-        const wasOpen = item.classList.contains('is-open') || item.classList.contains('open');
-        menu.querySelectorAll('.nav-item.is-open, .nav-item.open').forEach(other => {
-          if (other !== item) other.classList.remove('is-open','open');
-        });
-        menu.querySelectorAll('.nav-trigger').forEach(t => t.setAttribute('aria-expanded','false'));
-        item.classList.toggle('is-open', !wasOpen);
-        item.classList.toggle('open', !wasOpen);
-        trigger.setAttribute('aria-expanded', String(!wasOpen));
+        const menu = trigger.closest('.main-nav');
+        if (!item || !menu) return;
+        const open = !(item.classList.contains('is-open') || item.classList.contains('open'));
+        menu.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(other => { if (other !== item) other.classList.remove('is-open','open'); });
+        menu.querySelectorAll('.nav-trigger').forEach(button => button.setAttribute('aria-expanded','false'));
+        item.classList.toggle('is-open', open);
+        item.classList.toggle('open', open);
+        trigger.setAttribute('aria-expanded', String(open));
+        return;
       }
-    }, true);
-
-    document.addEventListener('click', event => {
-      if (window.innerWidth > 850) return;
       const link = event.target.closest('.main-nav a');
-      if (!link) return;
-      const menu = document.querySelector('.main-nav');
-      const toggle = document.querySelector('.menu-toggle');
-      if (menu && toggle) setMobileMenu(menu, toggle, false);
+      if (link) {
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.menu-toggle');
+        if (menu) menu.classList.remove('is-open','open');
+        if (toggle) { toggle.setAttribute('aria-expanded','false'); toggle.setAttribute('aria-label','Open navigation'); }
+        document.body.classList.remove('menu-open');
+      }
     }, true);
 
     document.addEventListener('keydown', event => {
-      if (event.key !== 'Escape') return;
+      if (event.key !== 'Escape' || window.innerWidth > 850) return;
       const menu = document.querySelector('.main-nav');
       const toggle = document.querySelector('.menu-toggle');
-      if (menu && toggle) setMobileMenu(menu, toggle, false);
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 850) {
-        const menu = document.querySelector('.main-nav');
-        const toggle = document.querySelector('.menu-toggle');
-        if (menu && toggle) setMobileMenu(menu, toggle, false);
-      }
+      if (menu) menu.classList.remove('is-open','open');
+      if (toggle) { toggle.setAttribute('aria-expanded','false'); toggle.setAttribute('aria-label','Open navigation'); }
+      document.body.classList.remove('menu-open');
     });
   }
 
-  function initPlatformTabs() {
-    document.querySelectorAll('.platforms-section').forEach(section => {
-      if (section.dataset.fxcTabs === '1') return;
-      const tabs = [...section.querySelectorAll('.platform-tab')];
-      if (!tabs.length) return;
-      section.dataset.fxcTabs = '1';
-      const list = section.querySelector('.platform-features');
-      const actions = section.querySelector('.platform-actions');
-      const configs = {
-        'metatrader 4':{url:'platforms/metatrader-4.html',features:['Advanced charting tools','Wide range of indicators','Desktop, Android mobile and web']},
-        'metatrader 5':{url:'platforms/metatrader-5.html',features:['Multi-asset trading capabilities','Advanced analytical tools','Desktop, mobile and web access']},
-        'webtrader':{url:'platforms/webtrader.html',features:['Browser-based trading','No desktop installation required','Fast access across supported devices']}
-      };
-      const select = tab => {
-        tabs.forEach(t => {
-          const active = t === tab;
-          t.classList.toggle('is-active', active);
-          t.setAttribute('aria-selected', active ? 'true' : 'false');
-        });
-        const cfg = configs[clean(tab.textContent).toLowerCase()] || configs['metatrader 4'];
-        if (list) list.innerHTML = cfg.features.map(x => `<li>${x}</li>`).join('');
-        if (actions) actions.innerHTML = `<a class="platform-action" href="${prefix + cfg.url}">Learn More — ${clean(tab.textContent)} <b aria-hidden="true">→</b></a>`;
-      };
-      tabs.forEach(tab => tab.addEventListener('click', () => select(tab)));
-      select(tabs.find(t => t.classList.contains('is-active')) || tabs[0]);
+  function neutralizePlaceholderSocials() {
+    document.querySelectorAll('.site-footer a.social-link[href="#"]').forEach(link => {
+      link.addEventListener('click', event => event.preventDefault(), { passive:false });
+      link.setAttribute('aria-disabled','true');
+      link.setAttribute('tabindex','-1');
     });
   }
 
   function init() {
-    installMobileNavStyles();
-    installMobileNavController();
     fixLinks();
-    fixBenefitsPage();
-    normalizeSocials();
-    initPlatformTabs();
+    installMobileNavigation();
+    neutralizePlaceholderSocials();
+    setTimeout(() => { fixLinks(); neutralizePlaceholderSocials(); }, 200);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
