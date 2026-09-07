@@ -10,20 +10,31 @@
       <p class="platforms-description">Experience cutting-edge platforms designed for traders of all levels.</p>
 
       <div class="platform-tabs" role="tablist" aria-label="Trading platforms">
-        <button class="platform-tab is-active" type="button" role="tab" aria-selected="true">MetaTrader 4</button>
-        <button class="platform-tab" type="button" role="tab" aria-selected="false">MetaTrader 5</button>
-        <button class="platform-tab" type="button" role="tab" aria-selected="false">WebTrader</button>
+        <button class="platform-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="platformFeatures" data-platform="mt4">MetaTrader 4</button>
+        <button class="platform-tab" type="button" role="tab" aria-selected="false" aria-controls="platformFeatures" data-platform="mt5">MetaTrader 5</button>
+        <button class="platform-tab" type="button" role="tab" aria-selected="false" aria-controls="platformFeatures" data-platform="webtrader">WebTrader</button>
       </div>
 
-      <ul class="platform-features">
-        <li>Advanced charting tools</li>
-        <li>Wide range of indicators</li>
-        <li>Available on Desktop, Android mobile and web</li>
-        <li>Trusted by millions of traders</li>
-      </ul>
+      <div class="platform-feature-panel" id="platformFeatures" role="tabpanel" aria-live="polite">
+        <ul class="platform-features" data-platform-features="mt4">
+          <li>Advanced charting, indicators and analytical tools</li>
+          <li>Expert Advisors and custom trading strategies supported</li>
+          <li>Classic, familiar platform for focused Forex trading</li>
+        </ul>
+        <ul class="platform-features" data-platform-features="mt5" hidden>
+          <li>Multi-asset trading with advanced charting and analysis</li>
+          <li>More timeframes, order types and built-in trading tools</li>
+          <li>Built for traders who need deeper market functionality</li>
+        </ul>
+        <ul class="platform-features" data-platform-features="webtrader" hidden>
+          <li>Trade directly from your browser with no installation</li>
+          <li>Clean web interface designed for fast market access</li>
+          <li>Convenient for desktop and browser-based trading</li>
+        </ul>
+      </div>
 
       <div class="platform-actions">
-        <a class="platform-action" href="./trading/platforms.html">Compare Platforms <b aria-hidden="true">→</b></a>
+        <a class="platform-action" id="platformLearnMore" href="./platforms/metatrader-4.html">Learn More — MetaTrader 4 <b aria-hidden="true">→</b></a>
       </div>
     </div>
 
