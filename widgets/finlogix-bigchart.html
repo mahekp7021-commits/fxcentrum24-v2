@@ -26,14 +26,16 @@ Widget.init({
   isAdaptive:true
 });
 (function(){
-  function sendSize(){
+  function fit(){
     var h=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,document.documentElement.offsetHeight,document.body.offsetHeight);
-    if(h>0) window.parent.postMessage({type:'fxc-finlogix-resize',height:h},'*');
+    if(h>0 && window.frameElement) window.frameElement.style.height=Math.ceil(h)+'px';
   }
-  new ResizeObserver(sendSize).observe(document.documentElement);
-  new ResizeObserver(sendSize).observe(document.body);
-  [100,300,700,1200,2000].forEach(function(ms){setTimeout(sendSize,ms);});
-  window.addEventListener('load',sendSize);
+  if(window.ResizeObserver){
+    new ResizeObserver(fit).observe(document.documentElement);
+    new ResizeObserver(fit).observe(document.body);
+  }
+  [100,300,700,1200,2000].forEach(function(ms){setTimeout(fit,ms);});
+  window.addEventListener('load',fit);
 })();
 </script>
 </body>
