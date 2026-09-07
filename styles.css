@@ -659,3 +659,13 @@ main > section:not(.hero) { min-height: 360px; }
   .hero-ticker-item b { font-size: 9px; }
   .hero-ticker-item i { font-size: 8px; }
 }
+
+
+/* FXC MOBILE NAV CSS FINAL */
+@media (max-width:850px){
+  .site-header{z-index:5000 !important;position:sticky !important;top:0 !important;}
+  .main-nav{z-index:5100 !important;background:#04101d !important;opacity:1 !important;}
+  .main-nav.is-open,.main-nav.open{transform:translateX(0) !important;}
+  .main-nav .dropdown{display:none !important;}
+  .main-nav .nav-item.is-open>.dropdown,.main-nav .nav-item.open>.dropdown{display:block !important;opacity:1 !important;visibility:visible !important;}
+}
