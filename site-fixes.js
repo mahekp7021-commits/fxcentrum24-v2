@@ -42,8 +42,7 @@
   function isUsableRelativeHtml(href) {
     if (!href || href === '#') return false;
     if (/^(https?:|mailto:|tel:|javascript:)/i.test(href)) return true;
-    if (href.startsWith('./') || href.startsWith('../') || href.startsWith('/')) return /\.html(?:$|[?#])/i.test(href) || href === '/';
-    return /\.html(?:$|[?#])/i.test(href);
+    return href.startsWith('./') || href.startsWith('../') || href.startsWith('/') ? /\.html(?:$|[?#])/i.test(href) || href === '/' : /\.html(?:$|[?#])/i.test(href);
   }
 
   function fixLinks(root = document) {
@@ -51,17 +50,8 @@
       const href = clean(anchor.getAttribute('href'));
       const label = clean(anchor.textContent);
       const lower = label.toLowerCase();
-
-      if (lower === 'login' || anchor.classList.contains('btn-login') || /(^|\/)login\.html(?:$|[?#])/i.test(href)) {
-        anchor.remove();
-        return;
-      }
-
-      // Never rewrite an already-valid relative/absolute HTML destination.
-      // This prevents nested pages such as Partnership from becoming
-      // /partnership/partnership/index.html through repeated prefixing.
+      if (lower === 'login' || anchor.classList.contains('btn-login') || /(^|\/)login\.html(?:$|[?#])/i.test(href)) { anchor.remove(); return; }
       if (isUsableRelativeHtml(href)) return;
-
       const target = targetFor(label, href);
       if (target) anchor.setAttribute('href', prefix() + target);
     });
@@ -77,37 +67,20 @@
   }
 
   function normalizeSocials() {
-    const socialIcons = {
+    const icons = {
       Facebook:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4.5c-.5-.1-1.8-.2-3.3-.2-3.2 0-5.4 2-5.4 5.6V13H5v4h3.3v7H12v-7h3.5l.6-4H12V10.3c0-1.2.3-2.3 2-2.3z"/></svg>',
       X:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4.3l3.1 4.4L16 4h2.9l-5.1 6 5.5 7.9H15L11.7 13 8 17.9H5.1l5.3-6.1L5 4z"/></svg>',
       LinkedIn:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 8.2A1.9 1.9 0 1 0 6.2 4.4a1.9 1.9 0 0 0 0 3.8zM4.6 9.7H7.8V19H4.6V9.7zM9.4 9.7h3.1V11c.4-.8 1.5-1.6 3.2-1.6 3.4 0 4 2.2 4 5.1V19h-3.2v-4c0-1 0-2.3-1.4-2.3s-1.7 1.1-1.7 2.2V19H9.4V9.7z"/></svg>',
       YouTube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8.1a2.8 2.8 0 0 0-2-2C17.2 5.6 12 5.6 12 5.6s-5.2 0-7 .5a2.8 2.8 0 0 0-2 2C2.5 9.9 2.5 12 2.5 12s0 2.1.5 3.9a2.8 2.8 0 0 0 2 2c1.8.5 7 .5 7 .5s5.2 0 7-.5a2.8 2.8 0 0 0 2-2c.5-1.8.5-3.9.5-3.9s0-2.1-.5-3.9zM10 15.3V8.7l6 3.3-6 3.3z"/></svg>',
-      Instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2.8h10A4.2 4.2 0 0 1 21.2 7v10a4.2 4.2 0 0 1-4.2 4.2H7A4.2 4.2 0 0 1 2.8 17V7A4.2 4.2 0 0 1 7 2.8zm0 2A2.2 2.2 0 0 0 4.8 7v10A2.2 2.2 0 0 0 7 19.2h10a2.2 2.2 0 0 0 2.2-2.2V7A2.2 2.2 0 0 0 17 4.8H7zm5 2.6A4.6 4.6 0 1 1 7.4 12 4.6 4.6 0 0 1 12 7.4zm0 2A2.6 2.6 0 1 0 14.6 12 2.6 2.6 0 0 0 12 9.4zm5.1-2.1a1.1 1.1 0 1 1-1.1 1.1 1.1 0 0 1 1.1-1.1z"/></svg>'
+      Instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2.8h10A4.2 4.2 0 0 1 21.2 7v10a4.2 4.2 0 0 1-4.2 4.2H7A4.2 4.2 0 0 1 2.8 17V7A4.2 4.2 0 0 1 7 2.8zm0 2A2.2 2.2 0 0 0 4.8 7v10A2.2 2.2 0 0 0 7 19.2h10a2.2 2.2 0 0 0 2.2-2.2V7A2.2 2.2 0 0 0 17 4.8H7zm5 2.6A4.6 4.6 0 1 1 7.4 12 4.6 4.6 0 0 1 12 7.4zm0 2A2.6 2.6 0 1 0 14.6 12 2.6 2.6 0 0 0 12 9.4zm5.1-2.1a1.1 1.1 0 1 1-1.1 1.1 1.1 0 0 1-1.1-1.1z"/></svg>'
     };
-
     document.querySelectorAll('.site-footer').forEach(footer => {
       let col = [...footer.querySelectorAll('.footer-col')].find(el => clean(el.querySelector('h4')?.textContent).toLowerCase() === 'stay connected');
-      if (!col) {
-        const grid = footer.querySelector('.footer-grid') || footer.querySelector('.footer-columns');
-        if (!grid) return;
-        col = document.createElement('div');
-        col.className = 'footer-col';
-        grid.appendChild(col);
-      }
-
-      const existing = col.querySelector('.social-row');
-      if (existing) {
-        existing.innerHTML = Object.entries(socialIcons).map(([name, svg]) => `<a class="social-link" href="#" aria-label="${name}" aria-disabled="true" tabindex="-1">${svg}</a>`).join('');
-      } else {
-        col.innerHTML = `<h4>Stay Connected</h4><div class="social-row">${Object.entries(socialIcons).map(([name, svg]) => `<a class="social-link" href="#" aria-label="${name}" aria-disabled="true" tabindex="-1">${svg}</a>`).join('')}</div>`;
-      }
+      if (!col) return;
+      col.innerHTML = `<h4>Stay Connected</h4><div class="social-row">${Object.entries(icons).map(([name,svg]) => `<a class="social-link" href="#" aria-label="${name}" aria-disabled="true" tabindex="-1">${svg}</a>`).join('')}</div>`;
     });
-
     if (!document.getElementById('fxc-social-standard-style')) {
-      const style = document.createElement('style');
-      style.id = 'fxc-social-standard-style';
-      style.textContent = `.footer-col .social-row{display:flex;gap:8px;flex-wrap:wrap}.footer-col .social-link{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(120,180,220,.25);border-radius:50%;background:#0a1724;color:#d6e5f0}.footer-col .social-link svg{width:16px;height:16px;fill:currentColor}.footer-col .social-link[aria-disabled="true"]{cursor:default}`;
-      document.head.appendChild(style);
+      const style=document.createElement('style'); style.id='fxc-social-standard-style'; style.textContent='.footer-col .social-row{display:flex;gap:8px;flex-wrap:wrap}.footer-col .social-link{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(120,180,220,.25);border-radius:50%;background:#0a1724;color:#d6e5f0}.footer-col .social-link svg{width:16px;height:16px;fill:currentColor}.footer-col .social-link[aria-disabled="true"]{cursor:default}'; document.head.appendChild(style);
     }
   }
 
@@ -120,42 +93,50 @@
   }
 
   function initPlatformTabs() {
-    document.querySelectorAll('.platforms-section').forEach(section => {
-      if (section.dataset.fxcTabs === '1') return;
-      const tabs=[...section.querySelectorAll('.platform-tab')];
-      if(!tabs.length)return;
+    document.querySelectorAll('.platforms-section').forEach(section=>{
+      if(section.dataset.fxcTabs==='1')return;
+      const tabs=[...section.querySelectorAll('.platform-tab')]; if(!tabs.length)return;
       section.dataset.fxcTabs='1';
-      const list=section.querySelector('.platform-features');
-      const actions=section.querySelector('.platform-actions');
-      const configs={
-        'metatrader 4':{url:'platforms/metatrader-4.html',features:['Advanced charting tools','Wide range of indicators','Desktop, Android mobile and web']},
-        'metatrader 5':{url:'platforms/metatrader-5.html',features:['Multi-asset trading capabilities','Advanced analytical tools','Desktop, mobile and web access']},
-        'webtrader':{url:'platforms/webtrader.html',features:['Browser-based trading','No desktop installation required','Fast access across supported devices']}
-      };
+      const list=section.querySelector('.platform-features'); const actions=section.querySelector('.platform-actions');
+      const configs={'metatrader 4':{url:'platforms/metatrader-4.html',features:['Advanced charting tools','Wide range of indicators','Desktop, Android mobile and web']},'metatrader 5':{url:'platforms/metatrader-5.html',features:['Multi-asset trading capabilities','Advanced analytical tools','Desktop, mobile and web access']},'webtrader':{url:'platforms/webtrader.html',features:['Browser-based trading','No desktop installation required','Fast access across supported devices']}};
       const select=tab=>{tabs.forEach(t=>{const active=t===tab;t.classList.toggle('is-active',active);t.setAttribute('aria-selected',active?'true':'false');});const cfg=configs[clean(tab.textContent).toLowerCase()]||configs['metatrader 4'];if(list)list.innerHTML=cfg.features.map(x=>`<li>${x}</li>`).join('');if(actions)actions.innerHTML=`<a id="platformLearnMore" class="platform-action" href="${prefix()+cfg.url}">Learn More — ${clean(tab.textContent)} <b aria-hidden="true">→</b></a>`;};
-      tabs.forEach(tab=>tab.addEventListener('click',()=>select(tab)));
-      select(tabs.find(t=>t.classList.contains('is-active'))||tabs[0]);
+      tabs.forEach(tab=>tab.addEventListener('click',()=>select(tab))); select(tabs.find(t=>t.classList.contains('is-active'))||tabs[0]);
     });
   }
 
-  function initFinlogixHome(){
-    if(!isHome)return;
-    const host=document.querySelector('.hero-ticker-track')||document.querySelector('.hero-ticker');
-    if(!host||document.getElementById('fxc-finlogix-home-strip'))return;
-    host.innerHTML='<div id="fxc-finlogix-home-strip" class="fxc-finlogix-home-strip"><div class="finlogix-container"></div></div>';
-    const start=()=>window.Widget?.init?.({widgetId:'87c63d8a-2d03-409f-ba57-599ea3a57013',type:'StripBar',language:'en',symbolPairs:[{symbolId:'19',symbolName:'EURUSD'},{symbolId:'36',symbolName:'USDJPY'},{symbolId:'20',symbolName:'GBPAUD'},{symbolId:'44',symbolName:'XAUUSD'},{symbolId:'128',symbolName:'USWTI'},{symbolId:'157',symbolName:'SP500'}],isAdaptive:true});
-    if(window.Widget)start();else{const s=document.createElement('script');s.src='https://widget.finlogix.com/Widget.js';s.async=true;s.addEventListener('load',start,{once:true});document.head.appendChild(s);}
+  function loadFinlogixScript(callback) {
+    if(window.Widget&&typeof window.Widget.init==='function'){callback();return;}
+    const existing=document.querySelector('script[data-fx-finlogix="true"]');
+    if(existing){existing.addEventListener('load',callback,{once:true});return;}
+    const script=document.createElement('script'); script.src='https://widget.finlogix.com/Widget.js'; script.async=true; script.dataset.fxFinlogix='true'; script.addEventListener('load',callback,{once:true}); document.head.appendChild(script);
+  }
+
+  function initFinlogixWidgets() {
+    if (!isHome) return;
+    const marketSection=document.querySelector('.fx-market-section');
+    if(!marketSection) return;
+    loadFinlogixScript(()=>{
+      const strip=marketSection.querySelector('#fx-finlogix-strip');
+      if(strip&&!strip.dataset.fxcReady){
+        strip.dataset.fxcReady='1';
+        window.Widget.init({widgetId:'87c63d8a-2d03-409f-ba57-599ea3a57013',type:'StripBar',language:'en',symbolPairs:[{symbolId:'19',symbolName:'EURUSD'},{symbolId:'36',symbolName:'USDJPY'},{symbolId:'20',symbolName:'GBPAUD'},{symbolId:'44',symbolName:'XAUUSD'},{symbolId:'128',symbolName:'USWTI'},{symbolId:'157',symbolName:'SP500'}],isAdaptive:true});
+      }
+      const big=marketSection.querySelector('#fxFinlogixBigChart .finlogix-container');
+      if(big&&!big.dataset.fxcReady){
+        big.dataset.fxcReady='1';
+        window.Widget.init({widgetId:'87c63d8a-2d03-409f-ba57-599ea3a57013',type:'BigChart',language:'en',symbolName:'Apple',hasSearchBar:false,hasSymbolName:false,hasSymbolChange:false,hasButton:false,chartShape:'candles',timePeriod:'D1',isAdaptive:true});
+      }
+      const calendar=marketSection.querySelector('#fx-finlogix-calendar');
+      if(calendar&&!calendar.dataset.fxcReady){
+        calendar.dataset.fxcReady='1';
+        window.Widget.init({widgetId:'87c63d8a-2d03-409f-ba57-599ea3a57013',type:'EarningCalendar',language:'en',importanceOptions:['low','medium','high'],dateRangeOptions:['recentAndNext','today','tomorrow','thisWeek','nextWeek','thisMonth'],isAdaptive:true});
+      }
+    });
   }
 
   function init(){
-    fixLinks();
-    fixBenefitsPage();
-    normalizeSocials();
-    initMobileNav();
-    initPlatformTabs();
-    initFinlogixHome();
-    fixLinks();
-    new MutationObserver(()=>{fixLinks();normalizeSocials();initPlatformTabs();}).observe(document.body,{childList:true,subtree:true});
+    fixLinks(); fixBenefitsPage(); normalizeSocials(); initMobileNav(); initPlatformTabs(); initFinlogixWidgets(); fixLinks();
+    new MutationObserver(()=>{fixLinks();normalizeSocials();initPlatformTabs();initFinlogixWidgets();}).observe(document.body,{childList:true,subtree:true});
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
