@@ -11,8 +11,7 @@
     'Standard':'accounts/standard.html','Premium':'accounts/premium.html','Professional':'accounts/professional.html',
     'Live Markets':'tools/live-markets.html','Economic Calendar':'tools/economic-calendar.html',
     'About Us':'company/about.html','Contact Us':'company/contact.html','Benefits':'company/benefits.html',
-    'Partnership':'partnership/index.html','Open Account':'trading/account-opening.html','Open Account Now':'trading/account-opening.html',
-    'Explore Markets':'tools/live-markets.html','Explore All Markets':'tools/live-markets.html','View All Markets':'tools/live-markets.html'
+    'Partnership':'partnership/index.html','Open Account':'trading/account-opening.html','Open Account Now':'trading/account-opening.html'
   };
   const legal = {'Terms & Conditions':'legal/terms-and-conditions.html','Terms and Conditions':'legal/terms-and-conditions.html','Privacy Policy':'legal/privacy-policy.html','Risk Disclosure':'legal/risk-disclosure.html','AML Policy':'legal/aml-policy.html','Client Agreement':'legal/client-agreement.html'};
   const fragments = {accounts:'trading/account-types.html',conditions:'trading/trading-conditions.html',platforms:'trading/platforms.html',steps:'trading/how-to-start.html',markets:'tools/live-markets.html',calendar:'tools/economic-calendar.html',about:'company/about.html',contact:'company/contact.html',benefits:'company/benefits.html',partner:'partnership/index.html','open-account':'trading/account-opening.html'};
