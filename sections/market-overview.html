@@ -12,13 +12,15 @@
 .fx-market-all{display:inline-flex;align-items:center;gap:9px;padding:10px 0;color:#12a8ff;font-size:12px;font-weight:750;border-bottom:1px solid rgba(18,168,255,.28)}
 .fx-market-all b{font-size:17px;font-weight:500}
 .fx-market-bigchart{width:100%;min-width:0}
-.fx-market-bigchart .finlogix-container{width:100%}
+.fx-market-bigchart iframe{display:block;width:100%;height:420px;border:0;background:transparent}
 @media(max-width:900px){
   .fx-market-shell{width:92%;padding-top:34px}
   .fx-market-heading{align-items:flex-start;flex-direction:column}
+  .fx-market-bigchart iframe{height:390px}
 }
 @media(max-width:480px){
   .fx-market-section{padding-bottom:50px}
+  .fx-market-bigchart iframe{height:360px}
 }
 </style>
 
@@ -38,25 +40,7 @@
     </div>
 
     <div class="fx-market-bigchart" aria-label="Finlogix Apple Real-Time Chart">
-      <!-- Finlogix Widget BEGIN-->
-      <div class="finlogix-container"></div>
-      <script type="text/javascript" src="https://widget.finlogix.com/Widget.js"></script>
-      <script type="text/javascript">
-              Widget.init({
-                              widgetId: "87c63d8a-2d03-409f-ba57-599ea3a57013",
-                              type: "BigChart",
-                              language: "en",
-                              symbolName: "Apple",
-                              hasSearchBar: false,
-                              hasSymbolName: false,
-                              hasSymbolChange: false,
-                              hasButton: false,
-                              chartShape: "candles",
-                              timePeriod: "D1",
-                              isAdaptive: true
-              });
-      </script>
-      <!-- Finlogix Widget END-->
+      <iframe src="./widgets/finlogix-bigchart.html" title="Finlogix Apple Real-Time Chart" scrolling="no"></iframe>
     </div>
   </div>
 </section>
