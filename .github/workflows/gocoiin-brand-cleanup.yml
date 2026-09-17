@@ -2,8 +2,6 @@ name: GO COIIN Brand Cleanup
 on:
   push:
     branches: [main]
-    paths:
-      - 'index.html'
 permissions:
   contents: write
 jobs:
