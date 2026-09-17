@@ -68,7 +68,7 @@
   function fixLinks(root=document) {
     root.querySelectorAll('a').forEach(anchor => {
       const href = clean(anchor.getAttribute('href')), label = clean(anchor.textContent), lower = label.toLowerCase();
-      if (lower === 'login' || anchor.classList.contains('btn-login') || /(^|\/)login\.html(?:$|[?#])/i.test(href)) { anchor.remove(); return; }
+      if (lower === 'login' || anchor.classList.contains('btn-login')) { anchor.setAttribute('href', 'https://fxcetrumrealmt5.tgsm.io/'); return; }
       const target = routeFor(label, href); if (!target) return;
       if (!/^(?:https?:|mailto:|tel:|javascript:)/i.test(href) && !href.startsWith('#')) return;
       anchor.setAttribute('href', prefix + target);
