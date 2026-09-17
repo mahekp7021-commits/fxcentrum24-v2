@@ -71,6 +71,8 @@
       const lower = label.toLowerCase();
       if (lower === 'login' || anchor.classList.contains('btn-login')) {
         anchor.setAttribute('href', LOGIN_URL);
+        anchor.setAttribute('target', '_blank');
+        anchor.setAttribute('rel', 'noopener noreferrer');
         return;
       }
       const target = routeFor(label, href);
@@ -240,6 +242,8 @@
     const overlay=document.createElement('a');
     overlay.className='gocoiin-chart-login-overlay';
     overlay.href=LOGIN_URL;
+    overlay.target='_blank';
+    overlay.rel='noopener noreferrer';
     overlay.setAttribute('aria-label','Open Login');
     overlay.title='Open Login';
     overlay.style.cssText='position:absolute;inset:0;z-index:2147483000;display:block;background:transparent;cursor:pointer;touch-action:manipulation;';
