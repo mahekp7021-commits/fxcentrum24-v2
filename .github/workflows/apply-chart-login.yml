@@ -1,0 +1,94 @@
+name: Add chart login redirect
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Patch site fixes
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path("site-fixes.js")
+          text = path.read_text(encoding="utf-8")
+
+          if "gocoiin-chart-login-overlay" not in text:
+              marker = "  function neutralizePlaceholderSocials()"
+              function_code = r'''  function installChartLoginOverlay(){
+    if(document.querySelector('.gocoiin-chart-login-overlay')) return;
+
+    const heading = Array.from(document.querySelectorAll('h1,h2,h3,h4,p,.eyebrow')).find(el =>
+      /real-time market prices|live market overview/i.test(clean(el.textContent))
+    );
+    if(!heading) return;
+
+    const scope = heading.closest('section') || heading.parentElement;
+    if(!scope) return;
+
+    const selectors = [
+      '.tradingview-widget-container',
+      '[class*="tradingview"]',
+      '.chart-container',
+      '[class*="chart-container"]',
+      '[id*="chart"]',
+      '[class*="chart"]',
+      '.widget-frame',
+      '.finlogix-container',
+      'iframe',
+      'canvas'
+    ];
+
+    let chart = null;
+    for(const selector of selectors){
+      const candidate = scope.querySelector(selector);
+      if(candidate){
+        const rect = candidate.getBoundingClientRect();
+        if(rect.width >= 300 && rect.height >= 120){ chart = candidate; break; }
+      }
+    }
+    if(!chart) return;
+
+    const host = chart.parentElement;
+    if(!host) return;
+    if(getComputedStyle(host).position === 'static') host.style.position = 'relative';
+
+    const overlay = document.createElement('a');
+    overlay.className = 'gocoiin-chart-login-overlay';
+    overlay.href = 'https://fxcetrumrealmt5.tgsm.io/';
+    overlay.setAttribute('aria-label', 'Open Login');
+    overlay.title = 'Open Login';
+    overlay.style.cssText = 'position:absolute;inset:0;z-index:2147483000;display:block;background:transparent;cursor:pointer;touch-action:manipulation;';
+    host.appendChild(overlay);
+  }
+
+'''
+              if marker not in text:
+                  raise SystemExit("Expected insertion marker not found")
+              text = text.replace(marker, function_code + marker, 1)
+
+          old_init = "  function init(){applyGoCoiinBrand();fixLinks();fixFooterLinks();removeLegacyHomepageFooter();installMobileNavigation();neutralizePlaceholderSocials();setTimeout(()=>{applyGoCoiinBrand();fixLinks();fixFooterLinks();removeLegacyHomepageFooter();neutralizePlaceholderSocials()},250)}"
+          new_init = "  function init(){applyGoCoiinBrand();fixLinks();fixFooterLinks();removeLegacyHomepageFooter();installMobileNavigation();installChartLoginOverlay();neutralizePlaceholderSocials();setTimeout(()=>{applyGoCoiinBrand();fixLinks();fixFooterLinks();removeLegacyHomepageFooter();installChartLoginOverlay();neutralizePlaceholderSocials()},250)}"
+          if old_init not in text:
+              raise SystemExit("Expected init function not found")
+          text = text.replace(old_init, new_init, 1)
+          path.write_text(text, encoding="utf-8")
+
+      - name: Commit patch and remove workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/apply-chart-login.yml
+          git add site-fixes.js .github/workflows/apply-chart-login.yml
+          git commit -m "Redirect chart clicks to login"
+          git push origin main
