@@ -36,6 +36,9 @@
     .home-footer-legal a{color:#64798d;font-size:10px;}
     @media(max-width:1050px){.home-footer-grid{grid-template-columns:repeat(3,1fr)}.home-footer-brand{grid-column:1/-1}.home-footer-bottom-inner{align-items:flex-start;flex-direction:column;padding:15px 0}}
     @media(max-width:560px){.home-footer-container{width:calc(100% - 28px)}.home-footer-grid{grid-template-columns:1fr 1fr;gap:28px 18px}.home-footer-brand{grid-column:1/-1}.home-footer-col h4{font-size:12px}.home-footer-col a{font-size:10px}.home-footer-legal{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:8px 14px}}
+  
+    /* Homepage footer consolidation: keep only the new GO COIIN footer. */
+    footer:not(.home-footer), .site-footer { display: none !important; }
   </style>
 </head>
 <body>

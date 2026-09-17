@@ -80,6 +80,12 @@
     document.querySelectorAll('.site-footer a').forEach(anchor => { const target=routeFor(clean(anchor.textContent),clean(anchor.getAttribute('href'))); if(target) anchor.setAttribute('href',prefix+target); });
   }
 
+
+  function removeLegacyHomepageFooter() {
+    if (path !== '/' && !/\/index\.html$/i.test(path)) return;
+    document.querySelectorAll('footer:not(.home-footer), .site-footer').forEach(el => el.remove());
+  }
+
   function setHeaderHeight(){ const header=document.querySelector('.site-header'); if(header) document.documentElement.style.setProperty('--fxc-header-height',`${header.getBoundingClientRect().height}px`); }
   function closeMenu(){ const nav=document.querySelector('.main-nav'), toggle=document.querySelector('.menu-toggle'); if(nav){nav.classList.remove('is-open','open');nav.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(item=>item.classList.remove('is-open','open'));} if(toggle){toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation');} document.body.classList.remove('menu-open');document.body.style.removeProperty('overflow'); }
   function setMenuOpen(open){ const nav=document.querySelector('.main-nav'),toggle=document.querySelector('.menu-toggle'); if(!nav||!toggle)return; nav.classList.toggle('is-open',open);nav.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');document.body.classList.toggle('menu-open',open);if(open&&innerWidth<=850)document.body.style.overflow='hidden';else document.body.style.removeProperty('overflow'); }
@@ -119,6 +125,6 @@
   }
 
   function neutralizePlaceholderSocials(){document.querySelectorAll('.site-footer a.social-link[href="#"]').forEach(link=>{link.addEventListener('click',e=>e.preventDefault(),{passive:false});link.setAttribute('aria-disabled','true')})}
-  function init(){applyGoCoiinBrand();fixLinks();fixFooterLinks();installMobileNavigation();neutralizePlaceholderSocials();setTimeout(()=>{applyGoCoiinBrand();fixLinks();fixFooterLinks();neutralizePlaceholderSocials()},250)}
+  function init(){applyGoCoiinBrand();fixLinks();fixFooterLinks();removeLegacyHomepageFooter();installMobileNavigation();neutralizePlaceholderSocials();setTimeout(()=>{applyGoCoiinBrand();fixLinks();fixFooterLinks();removeLegacyHomepageFooter();neutralizePlaceholderSocials()},250)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
