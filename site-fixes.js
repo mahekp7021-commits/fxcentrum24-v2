@@ -7,6 +7,7 @@
   const prefix = nested ? '../' : './';
   const clean = value => (value || '').replace(/\s+/g, ' ').trim();
   const LOGIN_URL = 'https://fxcetrumrealmt5.tgsm.io/';
+  const isHomepage = path === '/' || /\/index\.html$/i.test(path);
 
   function applyGoCoiinBrand() {
     const oldBrand = /FXCentrum24/gi;
@@ -33,7 +34,7 @@
     document.querySelectorAll('.brand-name').forEach(el => { el.innerHTML = '<strong>GO</strong> COIIN'; });
     document.querySelectorAll('.home-footer-logo').forEach(el => {
       const small = el.querySelector('small');
-      if (small) el.innerHTML = '<span class="home-footer-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><strong>GO</strong> COIIN</span>';
+      if (small) el.innerHTML = '<span class="home-footer-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><strong>GO</strong> COIIN<small>Trade Today · A Brighter Tomorrow</small></span>';
     });
   }
 
@@ -84,8 +85,26 @@
   }
 
   function removeLegacyHomepageFooter() {
-    if (path !== '/' && !/\/index\.html$/i.test(path)) return;
+    if (!isHomepage) return;
     document.querySelectorAll('footer:not(.home-footer), .site-footer').forEach(el => el.remove());
+  }
+
+  function installHomepageFooterGuard() {
+    if (!isHomepage || window.__gocoiinFooterGuardInstalled) return;
+    window.__gocoiinFooterGuardInstalled = true;
+
+    const remove = () => {
+      document.querySelectorAll('footer:not(.home-footer), .site-footer').forEach(el => el.remove());
+    };
+
+    remove();
+    const observer = new MutationObserver(() => remove());
+    observer.observe(document.documentElement, { childList:true, subtree:true });
+
+    const style = document.createElement('style');
+    style.id = 'gocoiin-home-footer-guard';
+    style.textContent = 'footer:not(.home-footer), .site-footer { display:none!important; visibility:hidden!important; height:0!important; min-height:0!important; margin:0!important; padding:0!important; overflow:hidden!important; }';
+    document.head.appendChild(style);
   }
 
   function neutralizePlaceholderSocials() {
@@ -203,33 +222,21 @@
     if (!scope) return;
 
     const selectors = [
-      '.tradingview-widget-container',
-      '[class*="tradingview"]',
-      '.chart-container',
-      '[class*="chart-container"]',
-      '[id*="chart"]',
-      '[class*="chart"]',
-      '.widget-frame',
-      '.finlogix-container',
-      'iframe',
-      'canvas'
+      '.tradingview-widget-container','[class*="tradingview"]','.chart-container','[class*="chart-container"]','[id*="chart"]','[class*="chart"]','.widget-frame','.finlogix-container','iframe','canvas'
     ];
-
-    let chart = null;
-    for (const selector of selectors) {
-      const candidates = scope.querySelectorAll(selector);
-      for (const candidate of candidates) {
-        const rect = candidate.getBoundingClientRect();
-        if (rect.width >= 300 && rect.height >= 120) { chart = candidate; break; }
+    let chart=null;
+    for(const selector of selectors){
+      const candidates=scope.querySelectorAll(selector);
+      for(const candidate of candidates){
+        const rect=candidate.getBoundingClientRect();
+        if(rect.width>=300&&rect.height>=120){chart=candidate;break;}
       }
-      if (chart) break;
+      if(chart)break;
     }
-    if (!chart) return;
-
-    const host = chart.parentElement;
-    if (!host) return;
-    if (getComputedStyle(host).position === 'static') host.style.position='relative';
-
+    if(!chart)return;
+    const host=chart.parentElement;
+    if(!host)return;
+    if(getComputedStyle(host).position==='static')host.style.position='relative';
     const overlay=document.createElement('a');
     overlay.className='gocoiin-chart-login-overlay';
     overlay.href=LOGIN_URL;
@@ -243,10 +250,11 @@
     applyGoCoiinBrand();
     fixLinks();
     removeLegacyHomepageFooter();
+    installHomepageFooterGuard();
     installMobileNavigation();
     neutralizePlaceholderSocials();
     installChartLoginOverlay();
-    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); removeLegacyHomepageFooter(); neutralizePlaceholderSocials(); installChartLoginOverlay(); }, 250);
+    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); removeLegacyHomepageFooter(); installHomepageFooterGuard(); neutralizePlaceholderSocials(); installChartLoginOverlay(); }, 250);
     setTimeout(installChartLoginOverlay, 1000);
     setTimeout(installChartLoginOverlay, 2500);
   }
