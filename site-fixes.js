@@ -6,19 +6,19 @@
   const isPartnership = /\/partnership(?:\/|$)/i.test(path);
   const prefix = nested ? '../' : './';
   const clean = value => (value || '').replace(/\s+/g, ' ').trim();
+  const LOGIN_URL = 'https://fxcetrumrealmt5.tgsm.io/';
 
-  /* GO COIIN brand migration: keep the existing layout/markup, but replace the old brand everywhere on every page. */
   function applyGoCoiinBrand() {
     const oldBrand = /FXCentrum24/gi;
     const oldBrandSpaced = /FX\s*Centrum\s*24/gi;
-
     document.title = clean(document.title).replace(oldBrand, 'GO COIIN').replace(oldBrandSpaced, 'GO COIIN');
 
     document.querySelectorAll('meta[content], [aria-label], [title], [alt]').forEach(el => {
-      ['content', 'aria-label', 'title', 'alt'].forEach(attr => {
-        if (!el.hasAttribute(attr)) return;
-        const value = el.getAttribute(attr);
-        el.setAttribute(attr, value.replace(oldBrand, 'GO COIIN').replace(oldBrandSpaced, 'GO COIIN'));
+      ['content','aria-label','title','alt'].forEach(attr => {
+        if (el.hasAttribute(attr)) {
+          const value = el.getAttribute(attr) || '';
+          el.setAttribute(attr, value.replace(oldBrand, 'GO COIIN').replace(oldBrandSpaced, 'GO COIIN'));
+        }
       });
     });
 
@@ -30,10 +30,7 @@
       });
     });
 
-    document.querySelectorAll('.brand-name').forEach(el => {
-      el.innerHTML = '<strong>GO</strong> COIIN';
-    });
-
+    document.querySelectorAll('.brand-name').forEach(el => { el.innerHTML = '<strong>GO</strong> COIIN'; });
     document.querySelectorAll('.home-footer-logo').forEach(el => {
       const small = el.querySelector('small');
       if (small) el.innerHTML = '<span class="home-footer-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><strong>GO</strong> COIIN</span>';
@@ -46,8 +43,7 @@
     'MetaTrader 4':'platforms/metatrader-4.html','MT4':'platforms/metatrader-4.html','MetaTrader 5':'platforms/metatrader-5.html','MT5':'platforms/metatrader-5.html','WebTrader':'platforms/webtrader.html',
     'Standard':'accounts/standard.html','Premium':'accounts/premium.html','Professional':'accounts/professional.html',
     'Live Markets':'tools/live-markets.html','Economic Calendar':'tools/economic-calendar.html',
-    'About Us':'company/about.html','Contact Us':'company/contact.html','Benefits':'company/benefits.html','GO COIIN Benefits':'company/benefits.html','Why GO COIIN':'company/benefits.html',
-    'Partnership':'partnership/index.html'
+    'About Us':'company/about.html','Contact Us':'company/contact.html','Benefits':'company/benefits.html','GO COIIN Benefits':'company/benefits.html','Why GO COIIN':'company/benefits.html','Partnership':'partnership/index.html'
   };
   const legal = {'Terms & Conditions':'legal/terms-and-conditions.html','Terms and Conditions':'legal/terms-and-conditions.html','Privacy Policy':'legal/privacy-policy.html','Risk Disclosure':'legal/risk-disclosure.html','AML Policy':'legal/aml-policy.html','Client Agreement':'legal/client-agreement.html'};
   const fragments = {accounts:'trading/account-types.html',conditions:'trading/trading-conditions.html',platforms:'trading/platforms.html',steps:'trading/how-to-start.html',markets:'tools/live-markets.html',calendar:'tools/economic-calendar.html',about:'company/about.html',contact:'company/contact.html',benefits:'company/benefits.html',partner:'partnership/index.html','open-account':'trading/account-opening.html'};
@@ -56,8 +52,10 @@
     const text = clean(label), lower = text.toLowerCase();
     if (/^open account(?:\s*→)?$/i.test(text)) return isPartnership ? 'partnership/account-opening.html' : 'trading/account-opening.html';
     if (/^open partner account(?:\s*→)?$/i.test(text)) return 'partnership/account-opening.html';
-    const direct = Object.keys(routes).find(key => key.toLowerCase() === lower); if (direct) return routes[direct];
-    const compliance = Object.keys(legal).find(key => key.toLowerCase() === lower); if (compliance) return legal[compliance];
+    const direct = Object.keys(routes).find(key => key.toLowerCase() === lower);
+    if (direct) return routes[direct];
+    const compliance = Object.keys(legal).find(key => key.toLowerCase() === lower);
+    if (compliance) return legal[compliance];
     if (href === '#top') return 'index.html';
     if (href && href.startsWith('#')) return fragments[href.slice(1).toLowerCase()] || null;
     if (href && /(^|\/)terms\.html$/i.test(href)) return 'legal/terms-and-conditions.html';
@@ -67,33 +65,74 @@
 
   function fixLinks(root=document) {
     root.querySelectorAll('a').forEach(anchor => {
-      const href = clean(anchor.getAttribute('href')), label = clean(anchor.textContent), lower = label.toLowerCase();
-      if (lower === 'login' || anchor.classList.contains('btn-login')) { anchor.setAttribute('href', 'https://fxcetrumrealmt5.tgsm.io/'); return; }
-      const target = routeFor(label, href); if (!target) return;
+      const href = clean(anchor.getAttribute('href'));
+      const label = clean(anchor.textContent);
+      const lower = label.toLowerCase();
+      if (lower === 'login' || anchor.classList.contains('btn-login')) {
+        anchor.setAttribute('href', LOGIN_URL);
+        return;
+      }
+      const target = routeFor(label, href);
+      if (!target) return;
       if (!/^(?:https?:|mailto:|tel:|javascript:)/i.test(href) && !href.startsWith('#')) return;
       anchor.setAttribute('href', prefix + target);
     });
-    root.querySelectorAll('.site-footer a').forEach(anchor => { const target=routeFor(clean(anchor.textContent),clean(anchor.getAttribute('href'))); if(target) anchor.setAttribute('href',prefix+target); });
+    root.querySelectorAll('.site-footer a').forEach(anchor => {
+      const target = routeFor(clean(anchor.textContent), clean(anchor.getAttribute('href')));
+      if (target) anchor.setAttribute('href', prefix + target);
+    });
   }
-
-  function fixFooterLinks() {
-    document.querySelectorAll('.site-footer a').forEach(anchor => { const target=routeFor(clean(anchor.textContent),clean(anchor.getAttribute('href'))); if(target) anchor.setAttribute('href',prefix+target); });
-  }
-
 
   function removeLegacyHomepageFooter() {
     if (path !== '/' && !/\/index\.html$/i.test(path)) return;
     document.querySelectorAll('footer:not(.home-footer), .site-footer').forEach(el => el.remove());
   }
 
-  function setHeaderHeight(){ const header=document.querySelector('.site-header'); if(header) document.documentElement.style.setProperty('--fxc-header-height',`${header.getBoundingClientRect().height}px`); }
-  function closeMenu(){ const nav=document.querySelector('.main-nav'), toggle=document.querySelector('.menu-toggle'); if(nav){nav.classList.remove('is-open','open');nav.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(item=>item.classList.remove('is-open','open'));} if(toggle){toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation');} document.body.classList.remove('menu-open');document.body.style.removeProperty('overflow'); }
-  function setMenuOpen(open){ const nav=document.querySelector('.main-nav'),toggle=document.querySelector('.menu-toggle'); if(!nav||!toggle)return; nav.classList.toggle('is-open',open);nav.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');document.body.classList.toggle('menu-open',open);if(open&&innerWidth<=850)document.body.style.overflow='hidden';else document.body.style.removeProperty('overflow'); }
+  function neutralizePlaceholderSocials() {
+    document.querySelectorAll('.site-footer a.social-link[href="#"]').forEach(link => {
+      link.addEventListener('click', e => e.preventDefault(), {passive:false});
+      link.setAttribute('aria-disabled','true');
+    });
+  }
 
-  function installMobileStyles(){
-    if(document.getElementById('fxc-mobile-nav-final'))return;
-    const style=document.createElement('style'); style.id='fxc-mobile-nav-final';
-    style.textContent=`@media(max-width:850px){
+  function setHeaderHeight() {
+    const header = document.querySelector('.site-header');
+    if (header) document.documentElement.style.setProperty('--fxc-header-height', `${header.getBoundingClientRect().height}px`);
+  }
+
+  function closeMenu() {
+    const nav = document.querySelector('.main-nav');
+    const toggle = document.querySelector('.menu-toggle');
+    if (nav) {
+      nav.classList.remove('is-open','open');
+      nav.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(item => item.classList.remove('is-open','open'));
+    }
+    if (toggle) {
+      toggle.setAttribute('aria-expanded','false');
+      toggle.setAttribute('aria-label','Open navigation');
+    }
+    document.body.classList.remove('menu-open');
+    document.body.style.removeProperty('overflow');
+  }
+
+  function setMenuOpen(open) {
+    const nav = document.querySelector('.main-nav');
+    const toggle = document.querySelector('.menu-toggle');
+    if (!nav || !toggle) return;
+    nav.classList.toggle('is-open',open);
+    nav.classList.toggle('open',open);
+    toggle.setAttribute('aria-expanded',String(open));
+    toggle.setAttribute('aria-label',open ? 'Close navigation' : 'Open navigation');
+    document.body.classList.toggle('menu-open',open);
+    if (open && innerWidth <= 850) document.body.style.overflow='hidden';
+    else document.body.style.removeProperty('overflow');
+  }
+
+  function installMobileStyles() {
+    if (document.getElementById('fxc-mobile-nav-final')) return;
+    const style = document.createElement('style');
+    style.id = 'fxc-mobile-nav-final';
+    style.textContent = `@media(max-width:850px){
       .site-header{position:sticky!important;top:0!important;z-index:100000!important;overflow:visible!important}
       .header-inner{position:relative!important;z-index:100001!important}
       .menu-toggle{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;width:48px!important;height:48px!important;padding:0!important;position:relative!important;z-index:100002!important;overflow:visible!important}
@@ -107,24 +146,111 @@
       .main-nav .nav-item.is-open>.dropdown,.main-nav .nav-item.open>.dropdown{display:block!important}
       .main-nav .dropdown a{display:block!important;width:100%!important;padding:12px 10px!important;color:#b8cbdb!important;touch-action:manipulation!important}
       .main-nav .dropdown a span{font-size:14px!important}.main-nav .dropdown a small{display:block!important;margin-top:3px!important;color:#71879d!important;font-size:10px!important;line-height:1.4!important}
-      .site-footer{position:relative!important;z-index:1!important}.site-footer a{position:relative!important;z-index:2!important;pointer-events:auto!important;touch-action:manipulation!important}
     }`;
     document.head.appendChild(style);
   }
 
-  function installMobileNavigation(){
-    if(window.__fxcMobileNavigationInstalled)return; window.__fxcMobileNavigationInstalled=true; installMobileStyles(); setHeaderHeight(); window.addEventListener('resize',setHeaderHeight,{passive:true});
+  function installMobileNavigation() {
+    if (window.__fxcMobileNavigationInstalled) return;
+    window.__fxcMobileNavigationInstalled = true;
+    installMobileStyles();
+    setHeaderHeight();
+    window.addEventListener('resize',setHeaderHeight,{passive:true});
     let suppressClickUntil=0;
-    function handle(event){ if(innerWidth>850)return; const toggle=event.target.closest('.menu-toggle'), trigger=event.target.closest('.main-nav .nav-trigger'); if(!toggle&&!trigger)return; event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();suppressClickUntil=Date.now()+700;
-      if(toggle){const nav=document.querySelector('.main-nav');const open=!(nav&&(nav.classList.contains('is-open')||nav.classList.contains('open'))); if(open)setMenuOpen(true);else closeMenu();return;}
-      const item=trigger.closest('.nav-item'),nav=trigger.closest('.main-nav');if(!item||!nav)return;const wasOpen=item.classList.contains('is-open')||item.classList.contains('open');nav.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(other=>{if(other!==item)other.classList.remove('is-open','open')});nav.querySelectorAll('.nav-trigger').forEach(b=>b.setAttribute('aria-expanded','false'));item.classList.toggle('is-open',!wasOpen);item.classList.toggle('open',!wasOpen);trigger.setAttribute('aria-expanded',String(!wasOpen));
+
+    function handle(event) {
+      if (innerWidth>850) return;
+      const toggle=event.target.closest('.menu-toggle');
+      const trigger=event.target.closest('.main-nav .nav-trigger');
+      if(!toggle&&!trigger) return;
+      event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
+      suppressClickUntil=Date.now()+700;
+      if(toggle){
+        const nav=document.querySelector('.main-nav');
+        const open=!(nav&&(nav.classList.contains('is-open')||nav.classList.contains('open')));
+        if(open)setMenuOpen(true);else closeMenu();
+        return;
+      }
+      const item=trigger.closest('.nav-item'),nav=trigger.closest('.main-nav');
+      if(!item||!nav)return;
+      const wasOpen=item.classList.contains('is-open')||item.classList.contains('open');
+      nav.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(other=>{if(other!==item)other.classList.remove('is-open','open')});
+      nav.querySelectorAll('.nav-trigger').forEach(b=>b.setAttribute('aria-expanded','false'));
+      item.classList.toggle('is-open',!wasOpen);item.classList.toggle('open',!wasOpen);
+      trigger.setAttribute('aria-expanded',String(!wasOpen));
     }
+
     document.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')handle(e)},true);
-    document.addEventListener('click',e=>{if(Date.now()<suppressClickUntil&&(e.target.closest('.menu-toggle')||e.target.closest('.main-nav .nav-trigger'))){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();return;}if(innerWidth>850)return;const toggle=e.target.closest('.menu-toggle'),trigger=e.target.closest('.main-nav .nav-trigger');if(toggle||trigger){handle(e);return;}if(e.target.closest('.main-nav a'))closeMenu()},true);
+    document.addEventListener('click',e=>{
+      if(Date.now()<suppressClickUntil&&(e.target.closest('.menu-toggle')||e.target.closest('.main-nav .nav-trigger'))){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();return;}
+      if(innerWidth>850)return;
+      const toggle=e.target.closest('.menu-toggle'),trigger=e.target.closest('.main-nav .nav-trigger');
+      if(toggle||trigger){handle(e);return;}
+      if(e.target.closest('.main-nav a'))closeMenu();
+    },true);
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
   }
 
-  function neutralizePlaceholderSocials(){document.querySelectorAll('.site-footer a.social-link[href="#"]').forEach(link=>{link.addEventListener('click',e=>e.preventDefault(),{passive:false});link.setAttribute('aria-disabled','true')})}
-  function init(){applyGoCoiinBrand();fixLinks();fixFooterLinks();removeLegacyHomepageFooter();installMobileNavigation();neutralizePlaceholderSocials();setTimeout(()=>{applyGoCoiinBrand();fixLinks();fixFooterLinks();removeLegacyHomepageFooter();neutralizePlaceholderSocials()},250)}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+  function installChartLoginOverlay() {
+    if (document.querySelector('.gocoiin-chart-login-overlay')) return;
+
+    const heading = Array.from(document.querySelectorAll('h1,h2,h3,h4,p,.eyebrow')).find(el =>
+      /real-time market prices|real-time market overview|live market dashboard/i.test(clean(el.textContent))
+    );
+    if (!heading) return;
+
+    const scope = heading.closest('section') || heading.parentElement;
+    if (!scope) return;
+
+    const selectors = [
+      '.tradingview-widget-container',
+      '[class*="tradingview"]',
+      '.chart-container',
+      '[class*="chart-container"]',
+      '[id*="chart"]',
+      '[class*="chart"]',
+      '.widget-frame',
+      '.finlogix-container',
+      'iframe',
+      'canvas'
+    ];
+
+    let chart = null;
+    for (const selector of selectors) {
+      const candidates = scope.querySelectorAll(selector);
+      for (const candidate of candidates) {
+        const rect = candidate.getBoundingClientRect();
+        if (rect.width >= 300 && rect.height >= 120) { chart = candidate; break; }
+      }
+      if (chart) break;
+    }
+    if (!chart) return;
+
+    const host = chart.parentElement;
+    if (!host) return;
+    if (getComputedStyle(host).position === 'static') host.style.position='relative';
+
+    const overlay=document.createElement('a');
+    overlay.className='gocoiin-chart-login-overlay';
+    overlay.href=LOGIN_URL;
+    overlay.setAttribute('aria-label','Open Login');
+    overlay.title='Open Login';
+    overlay.style.cssText='position:absolute;inset:0;z-index:2147483000;display:block;background:transparent;cursor:pointer;touch-action:manipulation;';
+    host.appendChild(overlay);
+  }
+
+  function init() {
+    applyGoCoiinBrand();
+    fixLinks();
+    removeLegacyHomepageFooter();
+    installMobileNavigation();
+    neutralizePlaceholderSocials();
+    installChartLoginOverlay();
+    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); removeLegacyHomepageFooter(); neutralizePlaceholderSocials(); installChartLoginOverlay(); }, 250);
+    setTimeout(installChartLoginOverlay, 1000);
+    setTimeout(installChartLoginOverlay, 2500);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
 })();
