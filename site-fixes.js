@@ -7,13 +7,46 @@
   const prefix = nested ? '../' : './';
   const clean = value => (value || '').replace(/\s+/g, ' ').trim();
 
+  /* GO COIIN brand migration: keep the existing layout/markup, but replace the old brand everywhere on every page. */
+  function applyGoCoiinBrand() {
+    const oldBrand = /FXCentrum24/gi;
+    const oldBrandSpaced = /FX\s*Centrum\s*24/gi;
+
+    document.title = clean(document.title).replace(oldBrand, 'GO COIIN').replace(oldBrandSpaced, 'GO COIIN');
+
+    document.querySelectorAll('meta[content], [aria-label], [title], [alt]').forEach(el => {
+      ['content', 'aria-label', 'title', 'alt'].forEach(attr => {
+        if (!el.hasAttribute(attr)) return;
+        const value = el.getAttribute(attr);
+        el.setAttribute(attr, value.replace(oldBrand, 'GO COIIN').replace(oldBrandSpaced, 'GO COIIN'));
+      });
+    });
+
+    document.querySelectorAll('body *').forEach(el => {
+      el.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE && node.nodeValue) {
+          node.nodeValue = node.nodeValue.replace(oldBrand, 'GO COIIN').replace(oldBrandSpaced, 'GO COIIN');
+        }
+      });
+    });
+
+    document.querySelectorAll('.brand-name').forEach(el => {
+      el.innerHTML = '<strong>GO</strong> COIIN';
+    });
+
+    document.querySelectorAll('.home-footer-logo').forEach(el => {
+      const small = el.querySelector('small');
+      if (small) el.innerHTML = '<span class="home-footer-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><strong>GO</strong> COIIN</span>';
+    });
+  }
+
   const routes = {
     'Forex':'markets/forex.html','Commodities':'markets/commodities.html','Indices':'markets/indices.html','Shares CFDs':'markets/shares-cfds.html','Cryptocurrency':'markets/cryptocurrency.html',
     'Account Types':'trading/account-types.html','Trading Conditions':'trading/trading-conditions.html','Platforms':'trading/platforms.html','How to Start':'trading/how-to-start.html',
     'MetaTrader 4':'platforms/metatrader-4.html','MT4':'platforms/metatrader-4.html','MetaTrader 5':'platforms/metatrader-5.html','MT5':'platforms/metatrader-5.html','WebTrader':'platforms/webtrader.html',
     'Standard':'accounts/standard.html','Premium':'accounts/premium.html','Professional':'accounts/professional.html',
     'Live Markets':'tools/live-markets.html','Economic Calendar':'tools/economic-calendar.html',
-    'About Us':'company/about.html','Contact Us':'company/contact.html','Benefits':'company/benefits.html','FXCentrum24 Benefits':'company/benefits.html','Why FXCentrum24':'company/benefits.html',
+    'About Us':'company/about.html','Contact Us':'company/contact.html','Benefits':'company/benefits.html','GO COIIN Benefits':'company/benefits.html','Why GO COIIN':'company/benefits.html',
     'Partnership':'partnership/index.html'
   };
   const legal = {'Terms & Conditions':'legal/terms-and-conditions.html','Terms and Conditions':'legal/terms-and-conditions.html','Privacy Policy':'legal/privacy-policy.html','Risk Disclosure':'legal/risk-disclosure.html','AML Policy':'legal/aml-policy.html','Client Agreement':'legal/client-agreement.html'};
@@ -86,6 +119,6 @@
   }
 
   function neutralizePlaceholderSocials(){document.querySelectorAll('.site-footer a.social-link[href="#"]').forEach(link=>{link.addEventListener('click',e=>e.preventDefault(),{passive:false});link.setAttribute('aria-disabled','true')})}
-  function init(){fixLinks();fixFooterLinks();installMobileNavigation();neutralizePlaceholderSocials();setTimeout(()=>{fixLinks();fixFooterLinks();neutralizePlaceholderSocials()},250)}
+  function init(){applyGoCoiinBrand();fixLinks();fixFooterLinks();installMobileNavigation();neutralizePlaceholderSocials();setTimeout(()=>{applyGoCoiinBrand();fixLinks();fixFooterLinks();neutralizePlaceholderSocials()},250)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
