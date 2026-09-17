@@ -1,0 +1,95 @@
+name: Add GO COIIN Login Button
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  add-login:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Add Login button to every site header
+        shell: python
+        run: |
+          from pathlib import Path
+
+          LOGIN_URL = "https://fxcetrumrealmt5.tgsm.io/"
+          login = f'<a href="{LOGIN_URL}" class="btn btn-login">Login</a>'
+
+          changed = []
+          for path in Path('.').rglob('*.html'):
+              if '.git' in path.parts:
+                  continue
+              text = path.read_text(encoding='utf-8')
+              if '<header' not in text or 'class="site-header"' not in text:
+                  continue
+
+              original = text
+
+              # If a Login button already exists, normalize its destination.
+              import re
+              text = re.sub(
+                  r'<a([^>]*class=["\'][^"\']*\bbtn-login\b[^"\']*["\'][^>]*)>\s*Login\s*</a>',
+                  lambda m: re.sub(r'href=["\'][^"\']*["\']', f'href="{LOGIN_URL}"', m.group(1), count=1) and '<a' + re.sub(r'href=["\'][^"\']*["\']', f'href="{LOGIN_URL}"', m.group(1), count=1) + '>Login</a>',
+                  text,
+                  flags=re.I,
+              )
+
+              if 'class="btn btn-login"' not in text and "class='btn btn-login'" not in text:
+                  marker = '<div class="header-actions">'
+                  if marker in text:
+                      text = text.replace(marker, marker + login, 1)
+                  else:
+                      header_end = re.search(r'</header>', text, flags=re.I)
+                      if header_end:
+                          text = text[:header_end.start()] + login + '\n' + text[header_end.start():]
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(str(path))
+
+          print(f'Updated {len(changed)} HTML files')
+          for item in changed:
+              print(item)
+
+      - name: Keep site-fixes from removing Login
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('site-fixes.js')
+          text = p.read_text(encoding='utf-8')
+          old = "if (lower === 'login' || anchor.classList.contains('btn-login') || /(^|\\/)login\\.html(?:$|[?#])/i.test(href)) { anchor.remove(); return; }"
+          new = "if (lower === 'login' || anchor.classList.contains('btn-login')) { anchor.setAttribute('href', 'https://fxcetrumrealmt5.tgsm.io/'); return; }"
+          if old in text:
+              p.write_text(text.replace(old, new, 1), encoding='utf-8')
+              print('Updated site-fixes.js Login handling')
+          else:
+              print('Login removal rule already changed or not found')
+
+      - name: Commit website changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html' site-fixes.js
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Add MT5 Login button to all headers"
+          git push
+
+      - name: Remove temporary workflow
+        shell: bash
+        run: |
+          git rm -f .github/workflows/add-login-button.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Remove temporary login migration workflow"
+          git push
