@@ -36,104 +36,37 @@
     .home-footer-legal a{color:#64798d;font-size:10px;}
     @media(max-width:1050px){.home-footer-grid{grid-template-columns:repeat(3,1fr)}.home-footer-brand{grid-column:1/-1}.home-footer-bottom-inner{align-items:flex-start;flex-direction:column;padding:15px 0}}
     @media(max-width:560px){.home-footer-container{width:calc(100% - 28px)}.home-footer-grid{grid-template-columns:1fr 1fr;gap:28px 18px}.home-footer-brand{grid-column:1/-1}.home-footer-col h4{font-size:12px}.home-footer-col a{font-size:10px}.home-footer-legal{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:8px 14px}}
-  
-    /* Homepage footer consolidation: keep only the new GO COIIN footer. */
-    footer:not(.home-footer), .site-footer { display: none !important; }
+    footer:not(.home-footer), .site-footer { display:none!important; visibility:hidden!important; height:0!important; min-height:0!important; margin:0!important; padding:0!important; overflow:hidden!important; }
   </style>
 </head>
 <body>
   <div class="site">
     <header class="site-header" id="siteHeader">
       <div class="header-inner">
-        <a href="#top" class="brand" aria-label="FXCentrum24 Home">
-          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-          <span class="brand-text"><span class="brand-name"><strong>FX</strong>CENTRUM24</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span>
-        </a>
-        <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNavigation">
-          <span></span><span></span><span></span>
-        </button>
+        <a href="#top" class="brand" aria-label="FXCentrum24 Home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-text"><span class="brand-name"><strong>FX</strong>CENTRUM24</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span></a>
+        <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNavigation"><span></span><span></span><span></span></button>
         <nav class="main-nav" id="mainNavigation" aria-label="Main Navigation">
-          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Markets</span><em>⌄</em></button><div class="dropdown">
-            <a href="./markets/forex.html"><span>Forex</span><small>Major & minor currency pairs</small></a>
-            <a href="./markets/commodities.html"><span>Commodities</span><small>Gold, oil, silver & more</small></a>
-            <a href="./markets/indices.html"><span>Indices</span><small>Global stock indices</small></a>
-            <a href="./markets/shares-cfds.html"><span>Shares CFDs</span><small>Global company shares</small></a>
-            <a href="./markets/cryptocurrency.html"><span>Cryptocurrency</span><small>Popular digital assets</small></a>
-          </div></div>
-          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Trading</span><em>⌄</em></button><div class="dropdown">
-            <a href="./trading/account-types.html"><span>Account Types</span><small>Choose your trading account</small></a>
-            <a href="./trading/trading-conditions.html"><span>Trading Conditions</span><small>Spreads, execution & more</small></a>
-            <a href="./trading/platforms.html"><span>Platforms</span><small>Trade across every device</small></a>
-            <a href="./trading/how-to-start.html"><span>How to Start</span><small>Start trading in 3 steps</small></a>
-          </div></div>
-          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Platforms</span><em>⌄</em></button><div class="dropdown">
-            <a href="./platforms/metatrader-4.html"><span>MetaTrader 4</span><small>Classic professional trading</small></a>
-            <a href="./platforms/metatrader-5.html"><span>MetaTrader 5</span><small>Advanced multi-asset platform</small></a>
-            <a href="./platforms/webtrader.html"><span>WebTrader</span><small>Trade directly from your browser</small></a>
-          </div></div>
-          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Accounts</span><em>⌄</em></button><div class="dropdown">
-            <a href="./accounts/standard.html"><span>Standard</span><small>Simple & flexible trading</small></a>
-            <a href="./accounts/premium.html"><span>Premium</span><small>Enhanced trading conditions</small></a>
-            <a href="./accounts/professional.html"><span>Professional</span><small>Designed for active traders</small></a>
-          </div></div>
-          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Tools</span><em>⌄</em></button><div class="dropdown">
-            <a href="./tools/live-markets.html"><span>Live Markets</span><small>Real-time market overview</small></a>
-            <a href="./tools/economic-calendar.html"><span>Economic Calendar</span><small>Track important market events</small></a>
-          </div></div>
-          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Company</span><em>⌄</em></button><div class="dropdown">
-            <a href="./company/about.html"><span>About Us</span><small>Discover FXCentrum24</small></a>
-            <a href="./company/contact.html"><span>Contact Us</span><small>We're here to help</small></a>
-            <a href="./company/benefits.html"><span>Benefits</span><small>Why trade with us</small></a>
-          </div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Markets</span><em>⌄</em></button><div class="dropdown"><a href="./markets/forex.html"><span>Forex</span><small>Major & minor currency pairs</small></a><a href="./markets/commodities.html"><span>Commodities</span><small>Gold, oil, silver & more</small></a><a href="./markets/indices.html"><span>Indices</span><small>Global stock indices</small></a><a href="./markets/shares-cfds.html"><span>Shares CFDs</span><small>Global company shares</small></a><a href="./markets/cryptocurrency.html"><span>Cryptocurrency</span><small>Popular digital assets</small></a></div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Trading</span><em>⌄</em></button><div class="dropdown"><a href="./trading/account-types.html"><span>Account Types</span><small>Choose your trading account</small></a><a href="./trading/trading-conditions.html"><span>Trading Conditions</span><small>Spreads, execution & more</small></a><a href="./trading/platforms.html"><span>Platforms</span><small>Trade across every device</small></a><a href="./trading/how-to-start.html"><span>How to Start</span><small>Start trading in 3 steps</small></a></div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Platforms</span><em>⌄</em></button><div class="dropdown"><a href="./platforms/metatrader-4.html"><span>MetaTrader 4</span><small>Classic professional trading</small></a><a href="./platforms/metatrader-5.html"><span>MetaTrader 5</span><small>Advanced multi-asset platform</small></a><a href="./platforms/webtrader.html"><span>WebTrader</span><small>Trade directly from your browser</small></a></div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Accounts</span><em>⌄</em></button><div class="dropdown"><a href="./accounts/standard.html"><span>Standard</span><small>Simple & flexible trading</small></a><a href="./accounts/premium.html"><span>Premium</span><small>Enhanced trading conditions</small></a><a href="./accounts/professional.html"><span>Professional</span><small>Designed for active traders</small></a></div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Tools</span><em>⌄</em></button><div class="dropdown"><a href="./tools/live-markets.html"><span>Live Markets</span><small>Real-time market overview</small></a><a href="./tools/economic-calendar.html"><span>Economic Calendar</span><small>Track important market events</small></a></div></div>
+          <div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Company</span><em>⌄</em></button><div class="dropdown"><a href="./company/about.html"><span>About Us</span><small>Discover FXCentrum24</small></a><a href="./company/contact.html"><span>Contact Us</span><small>We're here to help</small></a><a href="./company/benefits.html"><span>Benefits</span><small>Why trade with us</small></a></div></div>
           <a href="./partnership/index.html" class="nav-link">Partnership</a>
         </nav>
         <div class="header-actions"><a href="https://fxcetrumrealmt5.tgsm.io/" class="btn btn-login">Login</a><a href="./trading/account-opening.html" class="btn btn-primary">Open Account</a></div>
       </div>
     </header>
-
     <main id="top">
-      <section class="hero" id="hero" aria-label="FXCentrum24 Global Markets">
-        <div class="hero-video-layer" aria-hidden="true"><video id="heroVideo" class="hero-video" autoplay muted loop playsinline preload="auto" poster="./assets/videos/hero-poster.webp"><source src="./assets/videos/hero-video.mp4" type="video/mp4"></video></div>
-        <div class="hero-overlay hero-overlay-left" aria-hidden="true"></div>
-        <div class="hero-overlay hero-overlay-bottom" aria-hidden="true"></div>
-        <div class="hero-overlay hero-overlay-vignette" aria-hidden="true"></div>
-        <div class="hero-grid" aria-hidden="true"></div>
-        <div class="hero-container">
-          <div class="hero-content reveal">
-            <p class="hero-eyebrow">GLOBAL MARKETS. REAL OPPORTUNITIES.</p>
-            <h1 class="hero-title"><span class="hero-title-white">Trade Smarter.</span><span class="hero-title-blue">Go Further.</span></h1>
-            <p class="hero-description">Access Forex, commodities, indices and CFDs with competitive trading conditions and powerful platforms. Trade your way, anytime, anywhere.</p>
-            <div class="hero-actions"><a href="./trading/account-opening.html" class="btn btn-primary btn-hero"><span>Open Account</span><span class="btn-arrow">→</span></a><a href="./tools/live-markets.html" class="btn btn-outline btn-hero">Explore Markets</a></div>
-            <div class="hero-benefits">
-              <div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 14c3-4 5-4 8 0s5 4 8 0"/><path d="M4 10c3-4 5-4 8 0s5 4 8 0"/></svg></span><span><strong>Tight</strong><small>Spreads</small></span></div>
-              <div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><span><strong>Fast</strong><small>Execution</small></span></div>
-              <div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></span><span><strong>Multiple</strong><small>Platforms</small></span></div>
-              <div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 15c1.2 1 2.5 1.5 4 1.5 2.5 0 4-1.2 4-3"/><path d="M8 9c1.2-1 2.5-1.5 4-1.5 2.5 0 4 1.2 4 3"/></svg></span><span><strong>Dedicated</strong><small>Support</small></span></div>
-            </div>
-          </div>
-          <div class="hero-visual-space" aria-hidden="true"></div>
-        </div>
-      </section>
-
+      <section class="hero" id="hero" aria-label="FXCentrum24 Global Markets"><div class="hero-video-layer" aria-hidden="true"><video id="heroVideo" class="hero-video" autoplay muted loop playsinline preload="auto" poster="./assets/videos/hero-poster.webp"><source src="./assets/videos/hero-video.mp4" type="video/mp4"></video></div><div class="hero-overlay hero-overlay-left" aria-hidden="true"></div><div class="hero-overlay hero-overlay-bottom" aria-hidden="true"></div><div class="hero-overlay hero-overlay-vignette" aria-hidden="true"></div><div class="hero-grid" aria-hidden="true"></div><div class="hero-container"><div class="hero-content reveal"><p class="hero-eyebrow">GLOBAL MARKETS. REAL OPPORTUNITIES.</p><h1 class="hero-title"><span class="hero-title-white">Trade Smarter.</span><span class="hero-title-blue">Go Further.</span></h1><p class="hero-description">Access Forex, commodities, indices and CFDs with competitive trading conditions and powerful platforms. Trade your way, anytime, anywhere.</p><div class="hero-actions"><a href="./trading/account-opening.html" class="btn btn-primary btn-hero"><span>Open Account</span><span class="btn-arrow">→</span></a><a href="./tools/live-markets.html" class="btn btn-outline btn-hero">Explore Markets</a></div><div class="hero-benefits"><div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 14c3-4 5-4 8 0s5 4 8 0"/><path d="M4 10c3-4 5-4 8 0s5 4 8 0"/></svg></span><span><strong>Tight</strong><small>Spreads</small></span></div><div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><span><strong>Fast</strong><small>Execution</small></span></div><div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></span><span><strong>Multiple</strong><small>Platforms</small></span></div><div class="hero-benefit"><span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 15c1.2 1 2.5 1.5 4 1.5 2.5 0 4-1.2 4-3"/><path d="M8 9c1.2-1 2.5-1.5 4-1.5 2.5 0 4 1.2 4 3"/></svg></span><span><strong>Dedicated</strong><small>Support</small></span></div></div></div><div class="hero-visual-space" aria-hidden="true"></div></div></section>
       <section class="next-section-placeholder" aria-hidden="true"></section>
     </main>
-
     <footer class="home-footer" aria-label="Site footer">
-      <div class="home-footer-main"><div class="home-footer-container"><div class="home-footer-grid">
-        <div class="home-footer-brand">
-          <a class="home-footer-logo" href="./index.html" aria-label="FXCentrum24 Home"><span class="home-footer-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><strong>FX</strong>CENTRUM24<small>Trade Today · A Brighter Tomorrow</small></span></a>
-          <p>Access global markets through competitive trading conditions, powerful platforms and dedicated support.</p>
-        </div>
-        <div class="home-footer-col"><h4>Markets</h4><a href="./markets/forex.html">Forex</a><a href="./markets/commodities.html">Commodities</a><a href="./markets/indices.html">Indices</a><a href="./markets/shares-cfds.html">Shares CFDs</a><a href="./markets/cryptocurrency.html">Cryptocurrency</a></div>
-        <div class="home-footer-col"><h4>Trading</h4><a href="./trading/account-types.html">Account Types</a><a href="./trading/trading-conditions.html">Trading Conditions</a><a href="./trading/platforms.html">Platforms</a><a href="./trading/how-to-start.html">How to Start</a><a href="./trading/account-opening.html">Open Account</a></div>
-        <div class="home-footer-col"><h4>Platforms</h4><a href="./platforms/metatrader-4.html">MetaTrader 4</a><a href="./platforms/metatrader-5.html">MetaTrader 5</a><a href="./platforms/webtrader.html">WebTrader</a></div>
-        <div class="home-footer-col"><h4>Accounts</h4><a href="./accounts/standard.html">Standard</a><a href="./accounts/premium.html">Premium</a><a href="./accounts/professional.html">Professional</a><a href="./partnership/index.html">Partnership</a></div>
-        <div class="home-footer-col"><h4>Company</h4><a href="./company/about.html">About Us</a><a href="./company/benefits.html">Benefits</a><a href="./company/contact.html">Contact Us</a><a href="./tools/live-markets.html">Live Markets</a><a href="./tools/economic-calendar.html">Economic Calendar</a></div>
-      </div></div></div>
+      <div class="home-footer-main"><div class="home-footer-container"><div class="home-footer-grid"><div class="home-footer-brand"><a class="home-footer-logo" href="./index.html" aria-label="FXCentrum24 Home"><span class="home-footer-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><strong>FX</strong>CENTRUM24<small>Trade Today · A Brighter Tomorrow</small></span></a><p>Access global markets through competitive trading conditions, powerful platforms and dedicated support.</p></div><div class="home-footer-col"><h4>Markets</h4><a href="./markets/forex.html">Forex</a><a href="./markets/commodities.html">Commodities</a><a href="./markets/indices.html">Indices</a><a href="./markets/shares-cfds.html">Shares CFDs</a><a href="./markets/cryptocurrency.html">Cryptocurrency</a></div><div class="home-footer-col"><h4>Trading</h4><a href="./trading/account-types.html">Account Types</a><a href="./trading/trading-conditions.html">Trading Conditions</a><a href="./trading/platforms.html">Platforms</a><a href="./trading/how-to-start.html">How to Start</a><a href="./trading/account-opening.html">Open Account</a></div><div class="home-footer-col"><h4>Platforms</h4><a href="./platforms/metatrader-4.html">MetaTrader 4</a><a href="./platforms/metatrader-5.html">MetaTrader 5</a><a href="./platforms/webtrader.html">WebTrader</a></div><div class="home-footer-col"><h4>Accounts</h4><a href="./accounts/standard.html">Standard</a><a href="./accounts/premium.html">Premium</a><a href="./accounts/professional.html">Professional</a><a href="./partnership/index.html">Partnership</a></div><div class="home-footer-col"><h4>Company</h4><a href="./company/about.html">About Us</a><a href="./company/benefits.html">Benefits</a><a href="./company/contact.html">Contact Us</a><a href="./tools/live-markets.html">Live Markets</a><a href="./tools/economic-calendar.html">Economic Calendar</a></div></div></div></div>
       <div class="home-footer-bottom"><div class="home-footer-container home-footer-bottom-inner"><p>© 2026 FXCentrum24. All rights reserved.</p><div class="home-footer-legal"><a href="./legal/terms-and-conditions.html">Terms &amp; Conditions</a><a href="./legal/privacy-policy.html">Privacy Policy</a><a href="./legal/risk-disclosure.html">Risk Disclosure</a><a href="./legal/aml-policy.html">AML Policy</a><a href="./legal/client-agreement.html">Client Agreement</a></div></div></div>
     </footer>
   </div>
   <script src="./script.js"></script>
-  <script src="./site-fixes.js?v=20260907-home2"></script>
+  <script src="./site-fixes.js?v=20260917-footerfix2"></script>
 </body>
 </html>
