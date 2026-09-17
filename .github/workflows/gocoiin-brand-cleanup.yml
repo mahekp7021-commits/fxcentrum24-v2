@@ -1,0 +1,31 @@
+name: GO COIIN Brand Cleanup
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+permissions:
+  contents: write
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace legacy brand in homepage
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('FXCentrum24', 'GO COIIN')
+          p.write_text(s, encoding='utf-8')
+          PY
+          if git diff --quiet -- index.html; then
+            echo 'No legacy homepage branding found.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Remove legacy FXCentrum24 branding from homepage'
+          git push
