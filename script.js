@@ -65,38 +65,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const markup = await response.text();
     placeholder.insertAdjacentHTML("beforebegin", markup);
     placeholder.remove();
-    normalizeHomepageMarketOrder();
     initFxMarketOverview();
   } catch (error) { console.error("FXCentrum24 market section failed to load:", error); }
 });
-
-function normalizeHomepageMarketOrder() {
-  const tickerSection = document.querySelector(".fx-market-section");
-  if (!tickerSection || !tickerSection.parentNode) return;
-
-  const tapes = [...document.querySelectorAll(".fx-site-running-tape")];
-  const marketDataSections = [...document.querySelectorAll(".fx-market-data-section")];
-
-  // Keep exactly one running tape and one Market Data section.
-  tapes.slice(1).forEach(node => node.remove());
-  marketDataSections.slice(1).forEach(node => node.remove());
-
-  const tape = document.querySelector(".fx-site-running-tape");
-  const marketData = document.querySelector(".fx-market-data-section");
-
-  // Canonical order: Finlogix Running Tape -> Market Tickers -> Market Data.
-  // Running Tape must always sit directly ABOVE Market Tickers.
-  if (tape && tape !== tickerSection.previousElementSibling) {
-    tickerSection.parentNode.insertBefore(tape, tickerSection);
-  }
-
-  if (marketData) {
-    // Market Data must remain directly BELOW Market Tickers.
-    if (marketData !== tickerSection.nextElementSibling) {
-      tickerSection.parentNode.insertBefore(marketData, tickerSection.nextElementSibling);
-    }
-  }
-}
 
 function initFxMarketOverview() {
   const section = document.querySelector(".fx-market-section");
@@ -160,46 +131,6 @@ function initFxMarketOverview() {
   });
 }
 
-(() => {
-  const mountLiveTicker = () => {
-    if (document.querySelector(".fx-site-running-tape")) {
-      normalizeHomepageMarketOrder();
-      return true;
-    }
-
-    const section = document.querySelector(".fx-market-section");
-    if (!section || !section.parentNode) return false;
-
-    const wrap = document.createElement("div");
-    wrap.className = "fx-site-running-tape";
-    wrap.setAttribute("aria-label", "Finlogix live market prices");
-    wrap.innerHTML = '<iframe src="./widgets/finlogix-strip.html?v=20260918-final" title="Finlogix live market prices" scrolling="no"></iframe>';
-
-    section.parentNode.insertBefore(wrap, section);
-    normalizeHomepageMarketOrder();
-    return true;
-  };
-
-  const start = () => {
-    mountLiveTicker();
-    normalizeHomepageMarketOrder();
-
-    const observer = new MutationObserver(() => {
-      const ready = mountLiveTicker();
-      normalizeHomepageMarketOrder();
-      if (ready && document.querySelector(".fx-market-data-section")) {
-        // Keep observing so late-loaded sections cannot move these market blocks elsewhere.
-      }
-    });
-    observer.observe(document.body, { childList:true, subtree:true });
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", start, { once:true });
-  } else {
-    start();
-  }
-})();
 
 
 (() => {
