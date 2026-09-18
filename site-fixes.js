@@ -16,7 +16,7 @@
     const link = document.createElement('link');
     link.id = 'gocoiin-global-premium-theme';
     link.rel = 'stylesheet';
-    link.href = prefix + 'premium-light.css?v=20260918-global-glossy2';
+    link.href = prefix + 'premium-light.css?v=20260918-global-glossy3';
     document.head.appendChild(link);
   }
 
