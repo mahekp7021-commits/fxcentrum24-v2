@@ -119,9 +119,34 @@ function initFxMarketOverview() {
     return customElements.whenDefined(name);
   };
 
+  const loadForexScreener = () => {
+    const container = section.querySelector(".fx-market-data-section .tradingview-widget-container");
+    if (!container || container.dataset.gocoiinScreenerLoaded === "true") return Promise.resolve();
+
+    container.dataset.gocoiinScreenerLoaded = "true";
+
+    const widgetScript = document.createElement("script");
+    widgetScript.type = "text/javascript";
+    widgetScript.async = true;
+    widgetScript.src = "https://s3.tradingview.com/external-embedding/embed-widget-screener.js";
+    widgetScript.textContent = JSON.stringify({
+      market: "forex",
+      showToolbar: true,
+      defaultColumn: "performance",
+      defaultScreen: "general",
+      isTransparent: false,
+      locale: "en",
+      colorTheme: "light",
+      width: "100%",
+      height: 550
+    });
+    container.appendChild(widgetScript);
+    return Promise.resolve();
+  };
+
   Promise.all([
     ensureElement("tv-tickers", "https://widgets.tradingview-widget.com/w/en/tv-tickers.js", "gocoiinTradingviewTickers"),
-    ensureElement("tv-market-data", "https://widgets.tradingview-widget.com/w/en/tv-market-data.js", "gocoiinTradingviewMarketData")
+    loadForexScreener()
   ]).catch(error => {
     console.error("GO COIIN TradingView widgets failed to load:", error);
   });
