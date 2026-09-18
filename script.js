@@ -118,7 +118,8 @@ function initFxMarketOverview() {
     ["ICPUSDT","ICP","Internet Computer"],
     ["SEIUSDT","SEI","Sei"],
     ["TIAUSDT","TIA","Celestia"],
-    ["SHIBUSDT","SHI","Shiba Inu"]
+    ["SHIBUSDT","SHI","Shiba Inu"],
+    ["LDOUSDT","LDO","Lido DAO"]
   ];
 
   const number = value => {
@@ -215,22 +216,105 @@ function initFxMarketOverview() {
     }
   };
 
-  const update = async () => {
+  let socket = null;
+  let reconnectTimer = null;
+
+  const refreshGold = async () => {
+    update.gold = await fetchGold();
+    renderFeatured(update.gold);
+    renderRows(update.gold);
+  };
+
+  const connectLiveCryptoFeed = async () => {
+    const streamNames = cryptoMarkets.map(x => x[0].toLowerCase() + "@ticker").join("/");
+    const url = "wss://stream.binance.com:9443/stream?streams=" + streamNames;
+
     try {
-      await Promise.all([fetchCrypto(), fetchGold().then(g=>{ update.gold=g; })]);
-      renderFeatured(update.gold);
-      renderRows(update.gold);
-      const count=marketData.length+(update.gold?1:0);
-      const countNode=document.getElementById("fxPairCount");
-      if(countNode) countNode.textContent=count+" pairs";
-      const updated=document.getElementById("fxUpdatedAt");
-      if(updated) updated.textContent="Updated "+new Date().toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
-    } catch(error) {
-      console.error("Live market feed failed",error);
-      if(!marketData.length) rowsHost.innerHTML='<tr><td colspan="8" class="fx-loading-row">Live market data is temporarily unavailable. Please try again shortly.</td></tr>';
+      if (socket) socket.close();
+      socket = new WebSocket(url);
+
+      socket.onopen = () => {
+        const updated = document.getElementById("fxUpdatedAt");
+        if (updated) updated.textContent = "Live • " + new Date().toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+      };
+
+      socket.onmessage = event => {
+        try {
+          const packet = JSON.parse(event.data);
+          const d = packet.data || packet;
+          if (!d || !d.s) return;
+
+          const existing = marketData.find(x => x.symbol === d.s);
+          if (existing) {
+            existing.price = Number(d.c);
+            existing.change = Number(d.P);
+            existing.high = Number(d.h);
+            existing.low = Number(d.l);
+            existing.volume = Number(d.q);
+          } else {
+            const meta = cryptoMarkets.find(x => x[0] === d.s);
+            if (meta) {
+              marketData.push({
+                symbol: meta[0], code: meta[1], name: meta[2],
+                price: Number(d.c), change: Number(d.P),
+                high: Number(d.h), low: Number(d.l), volume: Number(d.q), isGold:false
+              });
+            }
+          }
+
+          renderFeatured(update.gold);
+          renderRows(update.gold);
+
+          const updated = document.getElementById("fxUpdatedAt");
+          if (updated) updated.textContent = "Live • " + new Date().toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+        } catch (error) {
+          console.warn("Live ticker message parse failed", error);
+        }
+      };
+
+      socket.onerror = () => {
+        try { socket.close(); } catch (_) {}
+      };
+
+      socket.onclose = () => {
+        clearTimeout(reconnectTimer);
+        reconnectTimer = setTimeout(connectLiveCryptoFeed, 5000);
+        const updated = document.getElementById("fxUpdatedAt");
+        if (updated) updated.textContent = "Reconnecting live feed…";
+      };
+    } catch (error) {
+      console.warn("Binance WebSocket connection failed", error);
+      clearTimeout(reconnectTimer);
+      reconnectTimer = setTimeout(connectLiveCryptoFeed, 5000);
     }
   };
-  update.gold=null;
+
+  const update = async () => {
+    try {
+      // REST gives the first complete snapshot (24h high/low/change/volume).
+      // Binance's public market feed is then kept live through WebSocket updates.
+      await fetchCrypto();
+      update.gold = await fetchGold();
+
+      renderFeatured(update.gold);
+      renderRows(update.gold);
+
+      const count = marketData.length + (update.gold ? 1 : 0);
+      const countNode = document.getElementById("fxPairCount");
+      if (countNode) countNode.textContent = count + " pairs";
+
+      const updated = document.getElementById("fxUpdatedAt");
+      if (updated) updated.textContent = "Live • " + new Date().toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+
+      connectLiveCryptoFeed();
+    } catch(error) {
+      console.error("Live market feed failed",error);
+      if(!marketData.length) {
+        rowsHost.innerHTML='<tr><td colspan="8" class="fx-loading-row">Live market data is temporarily unavailable. Please try again shortly.</td></tr>';
+      }
+    }
+  };
+  update.gold = null;
 
   section.querySelectorAll(".fx-market-tab").forEach(tab=>{
     tab.addEventListener("click",()=>{
