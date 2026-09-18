@@ -438,7 +438,7 @@ main > section:not(.hero) { min-height: 360px; }
   .dropdown { position: static; display: none; width: 100%; opacity: 1; visibility: visible; transform: none; box-shadow: none; }
   .nav-item.open .dropdown { display: block; }
   .header-actions { margin-left: auto; }
-  .btn-login { display: none; }
+  .btn-login { display: inline-flex; }
   .menu-toggle { display: block; }
 
   .hero { min-height: 680px; }
@@ -669,4 +669,19 @@ main > section:not(.hero) { min-height: 360px; }
   .main-nav .nav-item.is-open>.dropdown,.main-nav .nav-item.open>.dropdown{display:block !important;opacity:1 !important;visibility:visible !important;transform:none !important;}
   .menu-toggle,.nav-trigger{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
   body.menu-open{overflow:hidden !important;}
+}
+
+@media (max-width: 520px) {
+  .header-actions { gap: 7px; }
+  .header-actions .btn-login {
+    display: inline-flex !important;
+    min-height: 42px;
+    padding: 9px 10px;
+    font-size: 10px;
+  }
+  .header-actions .btn-primary {
+    min-height: 42px;
+    padding: 9px 11px;
+    font-size: 10px;
+  }
 }
