@@ -124,11 +124,36 @@
       const withdrawal = document.createElement('a');
       withdrawal.href = prefix + 'trading/withdrawal.html';
       withdrawal.textContent = 'Withdrawal';
+      withdrawal.className = 'gocoiin-withdrawal-nav-link';
       withdrawal.setAttribute('data-gocoiin-withdrawal-link','true');
       nav.appendChild(withdrawal);
     }
 
     nav.querySelectorAll('[data-gocoiin-admin-link]').forEach(link => link.remove());
+
+    if (!document.getElementById('gocoiin-withdrawal-nav-style')) {
+      const style = document.createElement('style');
+      style.id = 'gocoiin-withdrawal-nav-style';
+      style.textContent = [
+        '.main-nav .gocoiin-withdrawal-nav-link{',
+        'display:inline-flex!important;',
+        'align-items:center!important;',
+        'white-space:nowrap!important;',
+        'padding:10px 9px!important;',
+        'margin:0!important;',
+        'font-size:11px!important;',
+        'line-height:1.2!important;',
+        'font-weight:700!important;',
+        'color:#d9e6f2!important;',
+        'text-decoration:none!important;',
+        'flex:0 0 auto!important;',
+        'letter-spacing:0!important;',
+        '}',
+        '.main-nav .gocoiin-withdrawal-nav-link:hover{color:#fff!important;}',
+        '@media(max-width:850px){.main-nav .gocoiin-withdrawal-nav-link{font-size:10px!important;}}'
+      ].join('');
+      document.head.appendChild(style);
+    }
   }
 
   function normalizeHeaderActions() {
