@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const cssId = "fx-market-overview-css";
     if (!document.getElementById(cssId)) {
       const link = document.createElement("link");
-      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css?v=20260918-final-order-ticker";
+      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css?v=20260918-final-canonical-order-2";
       document.head.appendChild(link);
     }
     const response = await fetch("./sections/market-overview.html", { cache: "no-cache" });
@@ -65,13 +65,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const markup = await response.text();
     placeholder.insertAdjacentHTML("beforebegin", markup);
     placeholder.remove();
-
-    const marketOverview = document.querySelector(".fx-market-section");
-    if (marketOverview && !document.querySelector(".fx-market-data-section")) {
-      const marketDataResponse = await fetch("./sections/market-data.html", { cache: "no-cache" });
-      if (!marketDataResponse.ok) throw new Error(`Market Data section HTTP ${marketDataResponse.status}`);
-      marketOverview.insertAdjacentHTML("afterend", await marketDataResponse.text());
-    }
 
     initFxMarketOverview();
   } catch (error) { console.error("FXCentrum24 market sections failed to load:", error); }
@@ -108,53 +101,34 @@ function initFxMarketOverview() {
 }
 
 (() => {
-  const mountLiveTicker = async () => {
-    const section = document.querySelector(".fx-market-section");
-    if (!section || section.dataset.liveTickerMounted === "true") return;
-    section.dataset.liveTickerMounted = "true";
-
-    const wrap = document.createElement("div");
-    wrap.className = "fx-site-running-tape";
-    wrap.setAttribute("aria-label", "Live market ticker");
-
-    const parent = section.parentElement;
-    if (!parent) return;
-    parent.insertBefore(wrap, section);
-
+  const initEmbeddedRunningTicker = async () => {
+    const ticker = document.querySelector(".fx-site-running-tape tv-ticker-tape");
+    if (!ticker || ticker.dataset.loaded === "true") return;
+    ticker.dataset.loaded = "true";
+    if (customElements.get("tv-ticker-tape")) return;
     try {
-      await import("https://www.tradingview-widget.com/w/en/tv-ticker-tape.js");
-      const ticker = document.createElement("tv-ticker-tape");
-      ticker.setAttribute("symbols", "FX:EURUSD,FX:GBPUSD,FX:USDJPY,OANDA:XAUUSD,TVC:DJI,BITSTAMP:BTCUSD");
-      ticker.setAttribute("theme", "dark");
-      ticker.setAttribute("transparent", "");
-      ticker.setAttribute("locale", "en");
-      ticker.setAttribute("item-size", "compact");
-      ticker.setAttribute("show-hover", "false");
-      wrap.replaceChildren(ticker);
-      wrap.classList.add("is-live");
+      await import("https://www.tradingview.com/widget-docs/assets/tv-ticker-tape.js");
     } catch (error) {
-      wrap.remove();
-      console.error("GO COIIN running market ticker failed to load:", error);
+      try {
+        await import("https://www.tradingview-widget.com/w/en/tv-ticker-tape.js");
+      } catch (innerError) {
+        console.warn("GO COIIN running ticker module unavailable.", innerError);
+      }
     }
   };
-
-  const observeForMarketSection = () => {
-    mountLiveTicker();
-    if (document.querySelector(".fx-market-section")) return;
-    const observer = new MutationObserver(() => {
-      if (document.querySelector(".fx-market-section")) {
-        observer.disconnect();
-        mountLiveTicker();
-      }
-    });
-    observer.observe(document.body, { childList:true, subtree:true });
+  const run = () => {
+    initEmbeddedRunningTicker();
+    if (!document.querySelector(".fx-site-running-tape tv-ticker-tape")) {
+      const observer = new MutationObserver(() => {
+        if (document.querySelector(".fx-site-running-tape tv-ticker-tape")) {
+          observer.disconnect();
+          initEmbeddedRunningTicker();
+        }
+      });
+      observer.observe(document.body,{childList:true,subtree:true});
+    }
   };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", observeForMarketSection, { once:true });
-  } else {
-    observeForMarketSection();
-  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",run,{once:true}); else run();
 })();
 
 
