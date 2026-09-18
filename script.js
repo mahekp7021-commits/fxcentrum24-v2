@@ -120,8 +120,13 @@ function initFxMarketOverview() {
   };
 
   const loadForexScreener = () => {
-    const container = section.querySelector(".fx-market-data-section .tradingview-widget-container");
+    // Market Data is a sibling of the Market Tickers section, so query the page,
+    // not the ticker section itself.
+    const container = document.querySelector(".fx-market-data-section .tradingview-widget-container");
     if (!container || container.dataset.gocoiinScreenerLoaded === "true") return Promise.resolve();
+
+    const widgetHost = container.querySelector(".tradingview-widget-container__widget");
+    if (!widgetHost) return Promise.resolve();
 
     container.dataset.gocoiinScreenerLoaded = "true";
 
@@ -129,7 +134,7 @@ function initFxMarketOverview() {
     widgetScript.type = "text/javascript";
     widgetScript.async = true;
     widgetScript.src = "https://s3.tradingview.com/external-embedding/embed-widget-screener.js";
-    widgetScript.textContent = JSON.stringify({
+    widgetScript.text = JSON.stringify({
       market: "forex",
       showToolbar: true,
       defaultColumn: "performance",
@@ -140,7 +145,9 @@ function initFxMarketOverview() {
       width: "100%",
       height: 550
     });
-    container.appendChild(widgetScript);
+
+    // Keep the TradingView widget exactly in the section's widget host.
+    widgetHost.appendChild(widgetScript);
     return Promise.resolve();
   };
 
