@@ -233,3 +233,27 @@ html body .fx-market-section .fx-market-tickers-card{
   margin:0;
   padding:0;
 }
+
+
+/* Forex Screener widget host */
+.fx-market-data-section .tradingview-widget-container{
+  width:100%;
+  min-height:550px;
+  background:#fff;
+}
+.fx-market-data-section .tradingview-widget-container__widget{
+  width:100%;
+  min-height:550px;
+}
+.fx-market-data-section .tradingview-widget-copyright{
+  padding:4px 10px 8px;
+  background:#fff;
+  font-size:10px;
+}
+@media(max-width:900px){
+  .fx-market-data-card,
+  .fx-market-data-section .tradingview-widget-container,
+  .fx-market-data-section .tradingview-widget-container__widget{
+    min-height:550px;
+  }
+}
