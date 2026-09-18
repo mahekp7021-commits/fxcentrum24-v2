@@ -53,50 +53,79 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", async () => {
   const placeholder = document.querySelector(".next-section-placeholder");
   if (!placeholder || document.querySelector(".fx-market-section")) return;
-
   try {
     const cssId = "fx-market-overview-css";
     if (!document.getElementById(cssId)) {
       const link = document.createElement("link");
-      link.id = cssId;
-      link.rel = "stylesheet";
-      link.href = "./sections/market-overview.css?v=20260918-tv-summary-marketdata-final";
+      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css?v=20260918-final-marketdata";
       document.head.appendChild(link);
     }
-
     const response = await fetch("./sections/market-overview.html", { cache: "no-cache" });
     if (!response.ok) throw new Error(`Market section HTTP ${response.status}`);
-
-    placeholder.insertAdjacentHTML("beforebegin", await response.text());
+    const markup = await response.text();
+    placeholder.insertAdjacentHTML("beforebegin", markup);
     placeholder.remove();
-
-    const tickerTag = document.querySelector("tv-tickers");
-    if (tickerTag && !customElements.get("tv-tickers")) {
-      const tickerScript = document.createElement("script");
-      tickerScript.type = "module";
-      tickerScript.src = "https://widgets.tradingview-widget.com/w/en/tv-tickers.js";
-      tickerScript.dataset.gocoiinTradingviewTickers = "true";
-      document.head.appendChild(tickerScript);
-    }
-
-    const marketDataTag = document.querySelector("tv-market-data");
-    if (marketDataTag && !customElements.get("tv-market-data")) {
-      const marketDataScript = document.createElement("script");
-      marketDataScript.type = "module";
-      marketDataScript.src = "https://widgets.tradingview-widget.com/w/en/tv-market-data.js";
-      marketDataScript.dataset.gocoiinTradingviewMarketData = "true";
-      document.head.appendChild(marketDataScript);
-    }
-
-    const definitions = [];
-    if (tickerTag) definitions.push(customElements.whenDefined("tv-tickers"));
-    if (marketDataTag) definitions.push(customElements.whenDefined("tv-market-data"));
-    if (definitions.length) await Promise.all(definitions);
-  } catch (error) {
-    console.error("GO COIIN Market Summary failed to load:", error);
-  }
+    initFxMarketOverview();
+  } catch (error) { console.error("FXCentrum24 market section failed to load:", error); }
 });
 
+function initFxMarketOverview() {
+  const section = document.querySelector(".fx-market-section");
+  if (!section || section.dataset.initialized === "true") return;
+  section.dataset.initialized = "true";
+
+  const ensureElement = (name, src, dataAttr) => {
+    const tag = section.querySelector(name);
+    if (!tag) return Promise.resolve();
+
+    if (customElements.get(name)) return Promise.resolve();
+
+    const existing = document.querySelector(`script[data-${dataAttr}="true"]`);
+    if (existing) return customElements.whenDefined(name);
+
+    const moduleScript = document.createElement("script");
+    moduleScript.type = "module";
+    moduleScript.src = src;
+    moduleScript.dataset[dataAttr] = "true";
+    document.head.appendChild(moduleScript);
+    return customElements.whenDefined(name);
+  };
+
+  Promise.all([
+    ensureElement("tv-tickers", "https://widgets.tradingview-widget.com/w/en/tv-tickers.js", "gocoiinTradingviewTickers"),
+    ensureElement("tv-market-data", "https://widgets.tradingview-widget.com/w/en/tv-market-data.js", "gocoiinTradingviewMarketData")
+  ]).catch(error => {
+    console.error("GO COIIN TradingView widgets failed to load:", error);
+  });
+}
+
+(() => {
+  const mountLiveTicker = async () => {
+    const section = document.querySelector(".fx-market-section");
+    if (!section || section.dataset.liveTickerMounted === "true") return;
+    section.dataset.liveTickerMounted = "true";
+    const wrap = document.createElement("div");
+    wrap.className = "fx-live-ticker-wrap"; wrap.setAttribute("aria-label", "Live market ticker");
+    wrap.innerHTML = `<div class="fx-live-ticker-fallback"><strong>LIVE MARKETS</strong><span>Loading current market prices…</span></div>`;
+    const shell = section.querySelector(".fx-market-shell");
+    if (!shell) return;
+    shell.insertBefore(wrap, shell.firstElementChild);
+    try {
+      await import("https://www.tradingview-widget.com/w/en/tv-ticker-tape.js");
+      const ticker = document.createElement("tv-ticker-tape");
+      ticker.setAttribute("symbols", "FX:EURUSD,FX:GBPUSD,FX:USDJPY,OANDA:XAUUSD,TVC:DJI,BITSTAMP:BTCUSD");
+      ticker.setAttribute("theme", "dark"); ticker.setAttribute("transparent", ""); ticker.setAttribute("locale", "en"); ticker.setAttribute("item-size", "compact"); ticker.setAttribute("show-hover", "false");
+      wrap.replaceChildren(ticker);
+    } catch (error) { console.error("FXCentrum24 live ticker failed to load:", error); }
+  };
+  const observeForMarketSection = () => {
+    mountLiveTicker();
+    if (document.querySelector(".fx-market-section")) return;
+    const observer = new MutationObserver(() => { if (document.querySelector(".fx-market-section")) { observer.disconnect(); mountLiveTicker(); } });
+    observer.observe(document.body, { childList:true, subtree:true });
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", observeForMarketSection, { once:true }); else observeForMarketSection();
+})();
 
 (() => {
   const heroTicker = document.querySelector(".hero-ticker");
