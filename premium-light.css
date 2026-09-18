@@ -294,3 +294,280 @@ html body .home-footer{
     min-height:550px!important;
   }
 }
+
+
+/* =========================================================
+   GO COIIN — GLOBAL PREMIUM GLOSSY SYSTEM
+   Loaded across the entire site. Functional markup and URLs
+   remain untouched; this layer only polishes presentation.
+   ========================================================= */
+
+:root{
+  --gc-bg:#f4f8fc;
+  --gc-surface:#ffffff;
+  --gc-surface-2:#edf6fc;
+  --gc-ink:#10263d;
+  --gc-muted:#6c8193;
+  --gc-blue:#0b9ff0;
+  --gc-blue-2:#0a7fd0;
+  --gc-red:#ff3b59;
+  --gc-border:#d9e6ef;
+  --gc-shadow:0 16px 42px rgba(28,77,108,.10);
+  --gc-shadow-hover:0 24px 55px rgba(28,77,108,.16);
+}
+
+/* Global canvas for all non-video surfaces */
+body{
+  background:
+    radial-gradient(circle at 8% 0%,rgba(11,159,240,.05),transparent 28%),
+    linear-gradient(180deg,#f8fbfe 0%,#f2f7fb 100%) !important;
+  color:var(--gc-ink);
+}
+body:not(:has(.hero-video-layer)){
+  background:
+    radial-gradient(circle at 10% 0%,rgba(11,159,240,.06),transparent 26%),
+    linear-gradient(180deg,#f8fbfe 0%,#f1f6fa 100%) !important;
+}
+
+/* Universal glass cards / surfaces */
+.glass-card,
+.card,
+.panel,
+.feature-card,
+.info-card,
+.content-card,
+.form-shell,
+.hero-panel,
+.table-card,
+.data-card{
+  border-color:var(--gc-border)!important;
+  box-shadow:var(--gc-shadow)!important;
+  transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s ease,border-color .28s ease,background .28s ease,filter .28s ease;
+}
+.glass-card:hover,
+.card:hover,
+.panel:hover,
+.feature-card:hover,
+.info-card:hover,
+.content-card:hover,
+.form-shell:hover,
+.hero-panel:hover,
+.table-card:hover,
+.data-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--gc-shadow-hover)!important;
+  border-color:#bdd8e8!important;
+}
+
+/* Headers / navigation on every page */
+.site-header{
+  background:rgba(255,255,255,.90)!important;
+  border-bottom:1px solid rgba(191,211,226,.75)!important;
+  box-shadow:0 8px 30px rgba(24,67,96,.08)!important;
+  backdrop-filter:blur(18px) saturate(140%)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(140%)!important;
+}
+.site-header .brand-name{color:var(--gc-ink)!important}
+.site-header .brand-tagline{color:#71869a!important}
+.site-header .nav-trigger,
+.site-header .nav-link{color:#294761!important;transition:color .2s ease,transform .2s ease,text-shadow .2s ease}
+.site-header .nav-trigger:hover,
+.site-header .nav-link:hover{color:var(--gc-blue)!important;transform:translateY(-1px)}
+.site-header .nav-trigger em{color:#7c91a2!important}
+.site-header .dropdown{
+  background:rgba(255,255,255,.97)!important;
+  border:1px solid #d8e5ee!important;
+  box-shadow:0 20px 45px rgba(26,66,94,.16)!important;
+  backdrop-filter:blur(16px)!important;
+}
+.site-header .dropdown a{color:#294761!important;transition:background .2s ease,color .2s ease,transform .2s ease}
+.site-header .dropdown a:hover{
+  background:linear-gradient(135deg,#edf8ff,#f8fcff)!important;
+  color:var(--gc-blue)!important;
+  transform:translateX(3px);
+}
+
+/* Withdrawal utility link — visible on the light header */
+.main-nav .gocoiin-withdrawal-nav-link{
+  color:#294761!important;
+  text-shadow:none!important;
+  border-radius:8px;
+  transition:color .2s ease,background .2s ease,transform .2s ease,box-shadow .2s ease!important;
+}
+.main-nav .gocoiin-withdrawal-nav-link:hover{
+  color:#087fcb!important;
+  background:rgba(11,159,240,.08)!important;
+  transform:translateY(-1px);
+  box-shadow:0 8px 18px rgba(11,159,240,.08);
+}
+
+/* Buttons — glossy interaction */
+.btn,
+button,
+.platform-action,
+.platform-tab{
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease,background .22s ease,color .22s ease,filter .22s ease!important;
+}
+.btn-primary,
+.platform-open-account{
+  background:linear-gradient(180deg,#ff4b67 0%,#ff3152 100%)!important;
+  box-shadow:0 10px 26px rgba(255,59,89,.24)!important;
+}
+.btn-primary:hover,
+.platform-open-account:hover{
+  transform:translateY(-2px)!important;
+  filter:saturate(1.05)!important;
+  box-shadow:0 16px 34px rgba(255,59,89,.30)!important;
+}
+.btn-login,
+.btn-outline{
+  background:rgba(255,255,255,.78)!important;
+  color:#17344c!important;
+  border-color:#bfd3e1!important;
+  box-shadow:0 6px 18px rgba(27,73,103,.05)!important;
+}
+.btn-login:hover,
+.btn-outline:hover{
+  transform:translateY(-2px)!important;
+  background:rgba(238,248,253,.94)!important;
+  border-color:#79bfe0!important;
+  color:#067fca!important;
+  box-shadow:0 12px 24px rgba(11,159,240,.10)!important;
+}
+
+/* Form controls across inner pages */
+input,select,textarea{
+  background:rgba(255,255,255,.92)!important;
+  color:#19364e!important;
+  border-color:#cadce8!important;
+  box-shadow:0 4px 12px rgba(27,76,106,.04)!important;
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease,background .2s ease!important;
+}
+input:focus,select:focus,textarea:focus{
+  background:#fff!important;
+  border-color:#69b9de!important;
+  box-shadow:0 0 0 4px rgba(11,159,240,.10),0 10px 24px rgba(27,76,106,.07)!important;
+  outline:none!important;
+}
+
+/* Generic page sections */
+main > section:not(.hero){
+  background:linear-gradient(180deg,#f8fbfe 0%,#eef5fa 100%)!important;
+  color:var(--gc-ink);
+}
+section + section{border-top:1px solid rgba(190,212,226,.42)}
+.container,.shell,.page-shell,.content-shell{position:relative}
+
+/* Titles / supporting copy */
+.eyebrow,.section-eyebrow{
+  color:var(--gc-blue)!important;
+}
+.page-title,
+.section-title,
+.content-title,
+h1,h2,h3{
+  color:var(--gc-ink);
+}
+p,.lead,.subtitle,.section-subtitle{
+  color:var(--gc-muted);
+}
+
+/* Tables / screener / lists */
+table,
+.table-wrap,
+.table-container,
+.screener-card{
+  background:#fff!important;
+  border-color:var(--gc-border)!important;
+  box-shadow:var(--gc-shadow)!important;
+}
+table th{
+  background:#f0f7fb!important;
+  color:#456077!important;
+}
+table td{border-color:#e5edf3!important;color:#2d4a61}
+table tr:hover td{background:#f7fbfe!important}
+
+/* Image cards and market tiles */
+.market-card,
+.market-category-card,
+.platform-card,
+.account-card,
+.feature-tile{
+  background:linear-gradient(145deg,#fff 0%,#f5faff 100%)!important;
+  border:1px solid var(--gc-border)!important;
+  box-shadow:var(--gc-shadow)!important;
+  transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s ease,border-color .28s ease,filter .28s ease!important;
+}
+.market-card:hover,
+.market-category-card:hover,
+.platform-card:hover,
+.account-card:hover,
+.feature-tile:hover{
+  transform:translateY(-5px)!important;
+  box-shadow:var(--gc-shadow-hover)!important;
+  border-color:#b9d7e8!important;
+}
+
+/* Glossy sheen animation on supported cards */
+.market-card::before,
+.market-category-card::before,
+.platform-card::before,
+.account-card::before,
+.feature-tile::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  pointer-events:none;
+  border-radius:inherit;
+  background:linear-gradient(120deg,rgba(255,255,255,.36),transparent 30%,transparent 70%,rgba(255,255,255,.18));
+  opacity:0;
+  transition:opacity .28s ease;
+}
+.market-card:hover::before,
+.market-category-card:hover::before,
+.platform-card:hover::before,
+.account-card:hover::before,
+.feature-tile:hover::before{opacity:1}
+
+/* Light-page hero / inner hero panels */
+.hero:not(:has(.hero-video-layer)){
+  background:
+    radial-gradient(circle at 82% 18%,rgba(11,159,240,.12),transparent 36%),
+    linear-gradient(135deg,#f7fbfe 0%,#e9f5fc 52%,#ffffff 100%)!important;
+  color:var(--gc-ink)!important;
+  border-bottom:1px solid #dbe7ef!important;
+}
+.hero:not(:has(.hero-video-layer)) h1,
+.hero:not(:has(.hero-video-layer)) h2{color:var(--gc-ink)!important}
+.hero:not(:has(.hero-video-layer)) p{color:#61778a!important}
+.hero:not(:has(.hero-video-layer)) .hero-panel{
+  background:rgba(255,255,255,.82)!important;
+  border-color:#d3e4ee!important;
+  backdrop-filter:blur(14px)!important;
+}
+
+/* Footer — dark glass contrast */
+.site-footer,
+.home-footer{
+  background:linear-gradient(180deg,#071724 0%,#040c15 100%)!important;
+  color:#eef6fd!important;
+  border-top:1px solid rgba(103,155,188,.20)!important;
+}
+
+/* Gentle entrance animation */
+@keyframes gcFadeUp{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+.gc-animate{
+  animation:gcFadeUp .55s ease both;
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}
