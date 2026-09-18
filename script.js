@@ -50,87 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const placeholder = document.querySelector(".next-section-placeholder");
-  if (!placeholder || document.querySelector(".fx-market-section")) return;
-  try {
-    const cssId = "fx-market-overview-css";
-    if (!document.getElementById(cssId)) {
-      const link = document.createElement("link");
-      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css?v=20260918-final-canonical-order-2";
-      document.head.appendChild(link);
-    }
-    const response = await fetch("./sections/market-overview.html", { cache: "no-cache" });
-    if (!response.ok) throw new Error(`Market section HTTP ${response.status}`);
-    const markup = await response.text();
-    placeholder.insertAdjacentHTML("beforebegin", markup);
-    placeholder.remove();
-
-    initFxMarketOverview();
-  } catch (error) { console.error("FXCentrum24 market sections failed to load:", error); }
-});
-
-function initFxMarketOverview() {
-  const section = document.querySelector(".fx-market-section");
-  if (!section || section.dataset.initialized === "true") return;
-  section.dataset.initialized = "true";
-
-  const ensureElement = (name, src, dataAttr) => {
-    const tag = document.querySelector(name);
-    if (!tag) return Promise.resolve();
-
-    if (customElements.get(name)) return Promise.resolve();
-
-    const existing = document.querySelector(`script[data-${dataAttr}="true"]`);
-    if (existing) return customElements.whenDefined(name);
-
-    const moduleScript = document.createElement("script");
-    moduleScript.type = "module";
-    moduleScript.src = src;
-    moduleScript.dataset[dataAttr] = "true";
-    document.head.appendChild(moduleScript);
-    return customElements.whenDefined(name);
-  };
-
-  Promise.all([
-    ensureElement("tv-tickers", "https://widgets.tradingview-widget.com/w/en/tv-tickers.js", "gocoiinTradingviewTickers"),
-    ensureElement("tv-market-data", "https://widgets.tradingview-widget.com/w/en/tv-market-data.js", "gocoiinTradingviewMarketData")
-  ]).catch(error => {
-    console.error("GO COIIN TradingView widgets failed to load:", error);
-  });
-}
-
-(() => {
-  const initEmbeddedRunningTicker = async () => {
-    const ticker = document.querySelector(".fx-site-running-tape tv-ticker-tape");
-    if (!ticker || ticker.dataset.loaded === "true") return;
-    ticker.dataset.loaded = "true";
-    if (customElements.get("tv-ticker-tape")) return;
-    try {
-      await import("https://www.tradingview.com/widget-docs/assets/tv-ticker-tape.js");
-    } catch (error) {
-      try {
-        await import("https://www.tradingview-widget.com/w/en/tv-ticker-tape.js");
-      } catch (innerError) {
-        console.warn("GO COIIN running ticker module unavailable.", innerError);
-      }
-    }
-  };
-  const run = () => {
-    initEmbeddedRunningTicker();
-    if (!document.querySelector(".fx-site-running-tape tv-ticker-tape")) {
-      const observer = new MutationObserver(() => {
-        if (document.querySelector(".fx-site-running-tape tv-ticker-tape")) {
-          observer.disconnect();
-          initEmbeddedRunningTicker();
-        }
-      });
-      observer.observe(document.body,{childList:true,subtree:true});
-    }
-  };
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",run,{once:true}); else run();
-})();
-
 
 (() => {
   const heroTicker = document.querySelector(".hero-ticker");
@@ -186,12 +105,12 @@ function initFxMarketOverview() {
 (() => {
   const loadMarketCategories = async () => {
     if (document.querySelector(".market-categories")) return true;
-    const marketSection=document.querySelector(".fx-market-section"); if(!marketSection) return false;
+    const marketDataSection=document.querySelector(".fx-market-data-section"); const marketSection=document.querySelector(".fx-market-section"); if(!marketSection && !marketDataSection) return false;
     try {
       const cssId="fx-market-categories-css";
       if(!document.getElementById(cssId)){const link=document.createElement("link");link.id=cssId;link.rel="stylesheet";link.href="./sections/market-categories.css";document.head.appendChild(link);}
       const response=await fetch("./sections/market-categories.html",{cache:"no-cache"}); if(!response.ok) throw new Error(`Market categories HTTP ${response.status}`);
-      const markup=await response.text(); marketSection.insertAdjacentHTML("afterend",markup); return true;
+      const markup=await response.text(); (marketDataSection || marketSection).insertAdjacentHTML("afterend",markup); return true;
     } catch(error){console.error("FXCentrum24 market categories failed to load:",error);return false;}
   };
   const start=async()=>{if(await loadMarketCategories())return;const observer=new MutationObserver(async()=>{if(await loadMarketCategories())observer.disconnect();});observer.observe(document.body,{childList:true,subtree:true});};
