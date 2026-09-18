@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const cssId = "fx-market-overview-css";
     if (!document.getElementById(cssId)) {
       const link = document.createElement("link");
-      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css?v=20260918-final-marketdata";
+      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css?v=20260918-original-final?v=20260918-original-final";
       document.head.appendChild(link);
     }
     const response = await fetch("./sections/market-overview.html", { cache: "no-cache" });
@@ -107,7 +107,7 @@ function initFxMarketOverview() {
 
     const wrap = document.createElement("div");
     wrap.className = "fx-site-running-tape";
-    wrap.setAttribute("aria-label", "Live market prices");
+    wrap.setAttribute("aria-label", "Finlogix live market prices");
     wrap.innerHTML = '<iframe src="./widgets/finlogix-strip.html?v=20260918-final" title="Finlogix live market prices" scrolling="no"></iframe>';
     section.parentNode.insertBefore(wrap, section);
     return true;
@@ -127,6 +127,7 @@ function initFxMarketOverview() {
     start();
   }
 })();
+
 
 (() => {
   const heroTicker = document.querySelector(".hero-ticker");
