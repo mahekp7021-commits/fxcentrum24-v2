@@ -134,7 +134,10 @@ button{font:inherit}
   height:600px !important;
   min-height:600px !important;
   max-height:600px !important;
-  overflow:hidden !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  overscroll-behavior:contain !important;
+  -webkit-overflow-scrolling:touch !important;
   background:#fff;
 }
 .widget-frame.calendar .finlogix-container,
@@ -319,6 +322,41 @@ button{font:inherit}
 </script>
 
 
+
+<script>
+(() => {
+  const calendar = document.getElementById("economic-calendar-93698");
+  if (!calendar) return;
+
+  const fixCalendar = () => {
+    // Ensure any provider iframe can receive scroll input.
+    calendar.querySelectorAll("iframe").forEach(frame => {
+      frame.setAttribute("scrolling","yes");
+      frame.style.setProperty("width","100%","important");
+      frame.style.setProperty("border","0","important");
+    });
+
+    // FXVerify may render a sticky/cloned header after "Show More".
+    // Remove only an exact duplicate header row.
+    calendar.querySelectorAll("table").forEach(table => {
+      const rows = table.querySelectorAll("thead tr");
+      if (rows.length < 2) return;
+      const first = (rows[0].innerText || "").replace(/\s+/g," ").trim();
+      for (let i = 1; i < rows.length; i++) {
+        const current = (rows[i].innerText || "").replace(/\s+/g," ").trim();
+        if (current && current === first) rows[i].remove();
+      }
+    });
+  };
+
+  const observer = new MutationObserver(fixCalendar);
+  observer.observe(calendar,{childList:true,subtree:true});
+  fixCalendar();
+
+  // Re-check after the provider finishes its "Show More" expansion.
+  [300,800,1500,2500].forEach(ms => setTimeout(fixCalendar,ms));
+})();
+</script>
 
 <script src="../site-fixes.js" defer></script>
 </body>
