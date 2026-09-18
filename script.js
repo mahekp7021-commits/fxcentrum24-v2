@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const link = document.createElement("link");
       link.id = cssId;
       link.rel = "stylesheet";
-      link.href = "./sections/market-overview.css?v=20260918-tv-summary-white-final";
+      link.href = "./sections/market-overview.css?v=20260918-tv-summary-marketdata-final";
       document.head.appendChild(link);
     }
 
@@ -70,18 +70,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     placeholder.insertAdjacentHTML("beforebegin", await response.text());
     placeholder.remove();
 
-    const tag = document.querySelector("tv-tickers");
-    if (!tag) return;
-
-    if (!customElements.get("tv-tickers")) {
-      const moduleScript = document.createElement("script");
-      moduleScript.type = "module";
-      moduleScript.src = "https://widgets.tradingview-widget.com/w/en/tv-tickers.js";
-      moduleScript.dataset.gocoiinTradingviewTickers = "true";
-      document.head.appendChild(moduleScript);
+    const tickerTag = document.querySelector("tv-tickers");
+    if (tickerTag && !customElements.get("tv-tickers")) {
+      const tickerScript = document.createElement("script");
+      tickerScript.type = "module";
+      tickerScript.src = "https://widgets.tradingview-widget.com/w/en/tv-tickers.js";
+      tickerScript.dataset.gocoiinTradingviewTickers = "true";
+      document.head.appendChild(tickerScript);
     }
 
-    await customElements.whenDefined("tv-tickers");
+    const marketDataTag = document.querySelector("tv-market-data");
+    if (marketDataTag && !customElements.get("tv-market-data")) {
+      const marketDataScript = document.createElement("script");
+      marketDataScript.type = "module";
+      marketDataScript.src = "https://widgets.tradingview-widget.com/w/en/tv-market-data.js";
+      marketDataScript.dataset.gocoiinTradingviewMarketData = "true";
+      document.head.appendChild(marketDataScript);
+    }
+
+    const definitions = [];
+    if (tickerTag) definitions.push(customElements.whenDefined("tv-tickers"));
+    if (marketDataTag) definitions.push(customElements.whenDefined("tv-market-data"));
+    if (definitions.length) await Promise.all(definitions);
   } catch (error) {
     console.error("GO COIIN Market Summary failed to load:", error);
   }
