@@ -124,3 +124,21 @@
   min-height:110px;
   background:transparent!important;
 }
+/* FINAL: force the complete Market Tickers section to white */
+html body .fx-market-section{
+  background:#fff!important;
+  color:#111827!important;
+}
+html body .fx-market-section .fx-market-heading h2{
+  color:#111827!important;
+}
+html body .fx-market-section .fx-market-subtitle{
+  color:#617080!important;
+}
+html body .fx-market-section .fx-market-strip{
+  background:#fff!important;
+}
+html body .fx-market-section .fx-market-tickers-card{
+  background:transparent!important;
+  border-color:#e4e8ec!important;
+}
