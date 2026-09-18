@@ -213,3 +213,34 @@ html body .fx-market-section .fx-market-tickers-card{
   .fx-market-data-card,
   .fx-market-data-card tv-market-data{min-height:240px}
 }
+
+
+/* Canonical homepage order: Hero → Running Tape → Market Tickers → Market Data → Global Markets → Platforms → Accounts → Footer */
+main#top{
+  display:flex;
+  flex-direction:column;
+}
+main#top>*{order:10}
+main#top>.hero{order:1}
+main#top>.fx-site-running-tape{order:2}
+main#top>.fx-market-section{order:3}
+main#top>.fx-market-data-section{order:4}
+main#top>.market-categories{order:5}
+main#top>.platforms-section{order:6}
+main#top>.fx-accounts-section{order:7}
+
+.fx-site-running-tape{
+  width:100%;
+  min-height:46px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  background:#06111f;
+  border-top:1px solid rgba(38,128,173,.35);
+  border-bottom:1px solid rgba(16,90,126,.45);
+}
+.fx-site-running-tape tv-ticker-tape{
+  display:block;
+  width:100%;
+  min-height:46px;
+}
