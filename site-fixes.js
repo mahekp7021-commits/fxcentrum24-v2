@@ -9,6 +9,19 @@
   const LOGIN_URL = 'https://fxcetrumrealmt5.tgsm.io/';
   const isHomepage = path === '/' || /\/index\.html$/i.test(path);
 
+  function loadGlobalPremiumTheme() {
+    const existing = document.getElementById('gocoiin-global-premium-theme');
+    if (existing) return;
+
+    const link = document.createElement('link');
+    link.id = 'gocoiin-global-premium-theme';
+    link.rel = 'stylesheet';
+    link.href = prefix + 'premium-light.css?v=20260918-global-glossy2';
+    document.head.appendChild(link);
+  }
+
+  loadGlobalPremiumTheme();
+
   function applyGoCoiinBrand() {
     const oldBrand = /FXCentrum24/gi;
     const oldBrandSpaced = /FX\s*Centrum\s*24/gi;
@@ -144,12 +157,12 @@
         'font-size:11px!important;',
         'line-height:1.2!important;',
         'font-weight:700!important;',
-        'color:#d9e6f2!important;',
+        'color:#294761!important;',
         'text-decoration:none!important;',
         'flex:0 0 auto!important;',
         'letter-spacing:0!important;',
         '}',
-        '.main-nav .gocoiin-withdrawal-nav-link:hover{color:#fff!important;}',
+        '.main-nav .gocoiin-withdrawal-nav-link:hover{color:#087fcb!important;background:rgba(11,159,240,.08)!important;}',
         '@media(max-width:850px){.main-nav .gocoiin-withdrawal-nav-link{display:block!important;width:100%!important;box-sizing:border-box!important;padding:11px 10px!important;margin:0!important;text-align:left!important;font-size:14px!important;line-height:1.25!important;font-weight:700!important;white-space:nowrap!important;color:#d9e6f2!important;}}'
       ].join('');
       document.head.appendChild(style);
