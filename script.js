@@ -60,37 +60,55 @@ document.addEventListener("DOMContentLoaded", async () => {
       const link = document.createElement("link");
       link.id = cssId;
       link.rel = "stylesheet";
-      link.href = "./sections/market-overview.css?v=20260918-market-overview-final";
+      link.href = "./sections/market-overview.css?v=20260918-tickers-movers-final";
       document.head.appendChild(link);
     }
 
     const response = await fetch("./sections/market-overview.html", { cache: "no-cache" });
-    if (!response.ok) throw new Error(`Market Overview HTTP ${response.status}`);
+    if (!response.ok) throw new Error(`Market Tickers HTTP ${response.status}`);
 
     placeholder.insertAdjacentHTML("beforebegin", await response.text());
-    const marketOverview = document.querySelector(".fx-market-section");
-    if (!marketOverview) throw new Error("Market Overview section was not inserted.");
+    const marketTickers = document.querySelector(".fx-market-section");
+    if (!marketTickers) throw new Error("Market Tickers section was not inserted.");
 
-    // Exactly one Finlogix running tape, immediately before Market Overview.
+    // One Finlogix running tape, immediately before Market Tickers.
     if (!document.querySelector(".fx-site-running-tape")) {
       const tape = document.createElement("div");
       tape.className = "fx-site-running-tape";
       tape.setAttribute("aria-label", "Live market prices");
-      tape.innerHTML = '<iframe src="./widgets/finlogix-strip.html?v=20260918" title="Live market prices" scrolling="no"></iframe>';
-      marketOverview.parentNode.insertBefore(tape, marketOverview);
+      tape.innerHTML = '<iframe src="./widgets/finlogix-strip.html?v=20260918-final" title="Live market prices" scrolling="no"></iframe>';
+      marketTickers.parentNode.insertBefore(tape, marketTickers);
     }
 
-    const tickerScript = document.createElement("script");
-    tickerScript.type = "module";
-    tickerScript.src = "https://widgets.tradingview-widget.com/w/en/tv-market-overview.js";
-    tickerScript.dataset.gocoiinMarketOverview = "true";
-    if (!document.querySelector('script[data-gocoiin-market-overview="true"]')) {
-      document.head.appendChild(tickerScript);
+    // Market Overview comes directly after Market Tickers.
+    if (!document.querySelector(".fx-market-movers-section")) {
+      const moversResponse = await fetch("./sections/market-movers.html", { cache: "no-cache" });
+      if (!moversResponse.ok) throw new Error(`Market Overview HTTP ${moversResponse.status}`);
+      marketTickers.insertAdjacentHTML("afterend", await moversResponse.text());
     }
 
     placeholder.remove();
+
+    const loadElement = (name, src) => {
+      if (customElements.get(name)) return Promise.resolve();
+      const selector = name.replace(/[^a-z0-9-]/gi, "");
+      const attr = `data-gocoiin-widget="${selector}"`;
+      if (!document.querySelector(`script[${attr}]`)) {
+        const moduleScript = document.createElement("script");
+        moduleScript.type = "module";
+        moduleScript.src = src;
+        moduleScript.setAttribute("data-gocoiin-widget", selector);
+        document.head.appendChild(moduleScript);
+      }
+      return customElements.whenDefined(name);
+    };
+
+    await Promise.all([
+      loadElement("tv-tickers", "https://widgets.tradingview-widget.com/w/en/tv-tickers.js"),
+      loadElement("tv-market-overview", "https://widgets.tradingview-widget.com/w/en/tv-market-overview.js")
+    ]);
   } catch (error) {
-    console.error("GO COIIN market overview failed to load:", error);
+    console.error("GO COIIN market widgets failed to load:", error);
   }
 });
 
@@ -98,12 +116,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 (() => {
   const loadMarketCategories = async () => {
     if (document.querySelector(".market-categories")) return true;
-    const marketSection=document.querySelector(".fx-market-section"); if(!marketSection) return false;
+    const marketOverviewSection=document.querySelector(".fx-market-movers-section"); const marketSection=document.querySelector(".fx-market-section"); if(!marketSection && !marketOverviewSection) return false;
     try {
       const cssId="fx-market-categories-css";
       if(!document.getElementById(cssId)){const link=document.createElement("link");link.id=cssId;link.rel="stylesheet";link.href="./sections/market-categories.css";document.head.appendChild(link);}
       const response=await fetch("./sections/market-categories.html",{cache:"no-cache"}); if(!response.ok) throw new Error(`Market categories HTTP ${response.status}`);
-      const markup=await response.text(); marketSection.insertAdjacentHTML("afterend",markup); return true;
+      const markup=await response.text(); (marketOverviewSection || marketSection).insertAdjacentHTML("afterend",markup); return true;
     } catch(error){console.error("FXCentrum24 market categories failed to load:",error);return false;}
   };
   const start=async()=>{if(await loadMarketCategories())return;const observer=new MutationObserver(async()=>{if(await loadMarketCategories())observer.disconnect();});observer.observe(document.body,{childList:true,subtree:true});};
