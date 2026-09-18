@@ -205,6 +205,12 @@
     });
   }
 
+  function isLiveMarketChartSection(node) {
+    const section = node.closest('section') || node.parentElement;
+    if (!section) return false;
+    return /real-time market prices|real-time market overview|live market dashboard/i.test(clean(section.textContent));
+  }
+
   function installFinlogixWidgetShields() {
     ensureMarketActionModal();
 
@@ -215,6 +221,12 @@
       'iframe[src*="finlogix"],iframe[src*="finlogix.com"],iframe[src*="widget.finlogix"]'
     ).forEach(el => {
       if (el.closest('#gocoiin-market-action-modal')) return;
+      if (isLiveMarketChartSection(el)) {
+        const removeFrom = el.tagName === 'IFRAME' ? (el.parentElement || el) : el;
+        removeFrom.querySelectorAll('.gocoiin-finlogix-shield').forEach(shield => shield.remove());
+        removeFrom.querySelectorAll('.gocoiin-chart-login-overlay').forEach(overlay => overlay.remove());
+        return;
+      }
 
       let target = el;
       const frame = el.tagName === 'IFRAME';
@@ -428,42 +440,10 @@
   }
 
   function installChartLoginOverlay() {
-    if (document.querySelector('.gocoiin-chart-login-overlay')) return;
-
-    const heading = Array.from(document.querySelectorAll('h1,h2,h3,h4,p,.eyebrow')).find(el =>
-      /real-time market prices|real-time market overview|live market dashboard/i.test(clean(el.textContent))
-    );
-    if (!heading) return;
-
-    const scope = heading.closest('section') || heading.parentElement;
-    if (!scope) return;
-
-    const selectors = [
-      '.tradingview-widget-container','[class*="tradingview"]','.chart-container','[class*="chart-container"]','[id*="chart"]','[class*="chart"]','.widget-frame','.finlogix-container','iframe','canvas'
-    ];
-    let chart=null;
-    for(const selector of selectors){
-      const candidates=scope.querySelectorAll(selector);
-      for(const candidate of candidates){
-        const rect=candidate.getBoundingClientRect();
-        if(rect.width>=300&&rect.height>=120){chart=candidate;break;}
-      }
-      if(chart)break;
-    }
-    if(!chart)return;
-    const host=chart.parentElement;
-    if(!host)return;
-    if(getComputedStyle(host).position==='static')host.style.position='relative';
-
-    const overlay=document.createElement('button');
-    overlay.type='button';
-    overlay.className='gocoiin-chart-login-overlay';
-    overlay.setAttribute('aria-label','Open trading options');
-    overlay.title='Open trading options';
-    overlay.style.cssText='position:absolute;inset:0;z-index:2147483000;display:block;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent;cursor:pointer;touch-action:manipulation;';
-    overlay.addEventListener('click', openMarketActionModal);
-    host.appendChild(overlay);
+    // Intentionally disabled: the live market chart must remain directly interactive.
+    document.querySelectorAll('.gocoiin-chart-login-overlay').forEach(el => el.remove());
   }
+
 
   function installTickerActionHandlers() {
     if (window.__gocoiinTickerActionsInstalled) return;
