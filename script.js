@@ -50,6 +50,63 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+document.addEventListener("DOMContentLoaded", async () => {
+  const placeholder = document.querySelector(".next-section-placeholder");
+  if (!placeholder) return;
+  try {
+    const cssId = "fx-market-overview-css";
+    if (!document.getElementById(cssId)) {
+      const link = document.createElement("link");
+      link.id = cssId;
+      link.rel = "stylesheet";
+      link.href = "./sections/market-overview.css?v=20260918-clean-final";
+      document.head.appendChild(link);
+    }
+
+    const overviewResponse = await fetch("./sections/market-overview.html", { cache: "no-cache" });
+    if (!overviewResponse.ok) throw new Error(`Market Overview HTTP ${overviewResponse.status}`);
+    placeholder.insertAdjacentHTML("beforebegin", await overviewResponse.text());
+
+    const marketOverview = document.querySelector(".fx-market-section");
+    if (!marketOverview) throw new Error("Market Overview section was not inserted.");
+
+    if (!document.querySelector(".fx-site-running-tape")) {
+      const tape = document.createElement("div");
+      tape.className = "fx-site-running-tape";
+      tape.setAttribute("aria-label", "Live market prices");
+      tape.innerHTML = '<iframe src="./widgets/finlogix-strip.html?v=20260918-final" title="Live market prices" scrolling="no"></iframe>';
+      marketOverview.parentNode.insertBefore(tape, marketOverview);
+    }
+
+    if (!document.querySelector(".fx-market-data-section")) {
+      const dataResponse = await fetch("./sections/market-data.html", { cache: "no-cache" });
+      if (!dataResponse.ok) throw new Error(`Market Data HTTP ${dataResponse.status}`);
+      marketOverview.insertAdjacentHTML("afterend", await dataResponse.text());
+    }
+
+    placeholder.remove();
+
+    const loadElement = (name, src) => {
+      if (customElements.get(name)) return Promise.resolve();
+      const selector = name.replace(/[^a-z0-9-]/gi,"");
+      if (!document.querySelector(`script[data-gocoiin-widget="${selector}"]`)) {
+        const moduleScript = document.createElement("script");
+        moduleScript.type = "module";
+        moduleScript.src = src;
+        moduleScript.dataset.gocoiinWidget = selector;
+        document.head.appendChild(moduleScript);
+      }
+      return customElements.whenDefined(name);
+    };
+    await Promise.all([
+      loadElement("tv-tickers", "https://widgets.tradingview-widget.com/w/en/tv-tickers.js"),
+      loadElement("tv-market-data", "https://widgets.tradingview-widget.com/w/en/tv-market-data.js")
+    ]);
+  } catch (error) {
+    console.error("GO COIIN market sections failed to load:", error);
+  }
+});
+
 
 (() => {
   const heroTicker = document.querySelector(".hero-ticker");
@@ -82,25 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }).catch(error => console.warn("Hero TradingView ticker unavailable; using animated fallback.", error));
 })();
 
-(() => {
-  const installFinalMarketPatch = () => {
-    const section = document.querySelector(".fx-market-section");
-    const heroTicker = document.querySelector(".hero-ticker"); const track = heroTicker?.querySelector(".hero-ticker-track");
-    if (!section) return false;
-    if (track) track.style.animation = "none";
-    section.querySelectorAll(".fx-market-table tbody tr").forEach(row => {
-      const trendCell = row.children[5]; if (!trendCell || trendCell.querySelector(".fx-trade-action")) return;
-      const button = document.createElement("button"); button.type="button"; button.className="fx-trade-action"; button.textContent="Trade";
-      button.setAttribute("aria-label", `Trade ${row.querySelector("td strong")?.textContent || "market"}`);
-      button.addEventListener("click", () => { const accountLink=document.querySelector('a[href="#open-account"].btn-primary'); if(accountLink) accountLink.click(); }); trendCell.appendChild(button);
-    });
-    if (!document.getElementById("fx-final-market-patch-style")) {
-      const style=document.createElement("style"); style.id="fx-final-market-patch-style"; style.textContent=`html body .fx-market-table td:nth-child(6)::after{display:none!important}html body .fx-market-table td:nth-child(6){padding-right:76px!important}html body .fx-trade-action{position:absolute;top:50%;right:9px;transform:translateY(-50%);min-width:55px;height:25px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(12,169,247,.62);border-radius:5px;color:#dff5ff;background:rgba(3,28,47,.76);box-shadow:inset 0 0 12px rgba(11,174,255,.05);font:700 8px/1 Inter,Arial,sans-serif;cursor:pointer}html body .fx-trade-action:hover{border-color:#16a9ff;background:rgba(8,53,79,.9);color:#fff}`; document.head.appendChild(style);
-    }
-    return true;
-  };
-  if (!installFinalMarketPatch()) { const observer=new MutationObserver(()=>{if(installFinalMarketPatch()) observer.disconnect();}); observer.observe(document.body,{childList:true,subtree:true}); }
-})();
+
 
 (() => {
   const loadMarketCategories = async () => {
