@@ -621,3 +621,377 @@ html body .site-header .main-nav .dropdown a:focus-visible small{
   color:#55758d!important;
   -webkit-text-fill-color:#55758d!important;
 }
+
+
+/* =========================================================
+   UNIVERSAL INNER-PAGE LIGHT GLOSSY POLISH
+   Applies to Forex, Trading, Platforms, Accounts, Tools,
+   Partnership, Forms and other content pages.
+   ========================================================= */
+
+/* Page heroes */
+html body .forex-hero,
+html body .page-hero{
+  color:#10263d!important;
+  background:
+    radial-gradient(circle at 80% 18%,rgba(11,159,240,.14),transparent 34%),
+    linear-gradient(135deg,#f8fcff 0%,#eaf6fd 54%,#f9fcff 100%)!important;
+  border-bottom:1px solid #d8e7f1!important;
+}
+html body .forex-hero h1,
+html body .forex-hero h2,
+html body .page-hero h1,
+html body .page-hero h2{
+  color:#10263d!important;
+}
+html body .forex-hero h1 span,
+html body .page-hero h1 span{
+  color:#0b9ff0!important;
+}
+html body .forex-hero .hero-copy,
+html body .page-hero .hero-copy,
+html body .page-hero .hero-stat span,
+html body .forex-hero .hero-chip{
+  color:#657b8e!important;
+}
+html body .hero-image-wrap{
+  border:1px solid #c9ddea!important;
+  border-radius:22px!important;
+  background:rgba(255,255,255,.62)!important;
+  box-shadow:0 22px 52px rgba(29,79,110,.14)!important;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease,border-color .35s ease!important;
+}
+html body .hero-image-wrap:hover{
+  transform:translateY(-5px)!important;
+  border-color:#8fc8e6!important;
+  box-shadow:0 30px 70px rgba(29,79,110,.19)!important;
+}
+html body .hero-image-wrap img{
+  transition:transform .65s cubic-bezier(.2,.7,.2,1),filter .35s ease!important;
+}
+html body .hero-image-wrap:hover img{
+  transform:scale(1.035)!important;
+  filter:saturate(1.08) contrast(1.02)!important;
+}
+html body .hero-chip{
+  background:rgba(255,255,255,.84)!important;
+  border-color:#c6ddea!important;
+  color:#35536b!important;
+  box-shadow:0 8px 20px rgba(27,74,103,.08)!important;
+}
+
+/* Inner-page sections */
+html body .content-section,
+html body .content-section.alt,
+html body .pricing,
+html body .tools-section,
+html body .info-band,
+html body .cta,
+html body .risk-section,
+html body .risk{
+  background:linear-gradient(180deg,#f8fbfe 0%,#eef5fa 100%)!important;
+  color:#10263d!important;
+  border-color:#dbe8f1!important;
+}
+html body .content-section.alt{
+  background:
+    radial-gradient(circle at 90% 20%,rgba(11,159,240,.055),transparent 28%),
+    linear-gradient(180deg,#f1f8fc 0%,#eaf3f8 100%)!important;
+}
+html body .section-intro h2,
+html body .section-intro h3,
+html body .content-section h2,
+html body .content-section h3,
+html body .pricing h2,
+html body .tools-section h2,
+html body .info-band h2{
+  color:#10263d!important;
+}
+html body .section-intro p:last-child,
+html body .content-section p,
+html body .pricing .section-intro p:last-child,
+html body .tools-section .section-intro p{
+  color:#667d90!important;
+}
+
+/* Universal card language */
+html body .feature-card,
+html body .card,
+html body .article-card,
+html body .detail-card,
+html body .info-card,
+html body .mini,
+html body .step,
+html body .feature-strip .mini,
+html body .access-box,
+html body .table-shell,
+html body .widget-shell,
+html body .price-card,
+html body .price-grid .price-card{
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.98) 0%,rgba(244,250,254,.96) 100%)!important;
+  color:#17344c!important;
+  border:1px solid #d3e3ed!important;
+  box-shadow:0 14px 36px rgba(27,74,103,.09)!important;
+  border-radius:18px!important;
+  transition:
+    transform .32s cubic-bezier(.2,.7,.2,1),
+    box-shadow .32s ease,
+    border-color .32s ease,
+    background .32s ease,
+    filter .32s ease!important;
+}
+html body .feature-card:hover,
+html body .card:hover,
+html body .article-card:hover,
+html body .detail-card:hover,
+html body .info-card:hover,
+html body .mini:hover,
+html body .step:hover,
+html body .access-box:hover,
+html body .table-shell:hover,
+html body .widget-shell:hover,
+html body .price-card:hover{
+  transform:translateY(-6px)!important;
+  border-color:#a9d2e7!important;
+  box-shadow:0 24px 55px rgba(27,74,103,.15)!important;
+  filter:saturate(1.02)!important;
+}
+
+/* Card typography — fix low contrast everywhere */
+html body .feature-card h3,
+html body .card h3,
+html body .article-card h3,
+html body .detail-card h3,
+html body .info-card h3,
+html body .step h3,
+html body .access-box h3,
+html body .mini strong,
+html body .price-card h3{
+  color:#17344c!important;
+}
+html body .feature-card p,
+html body .card p,
+html body .article-card p,
+html body .detail-card p,
+html body .info-card p,
+html body .step p,
+html body .access-box p,
+html body .mini span,
+html body .price-card p,
+html body .price-card .feature{
+  color:#63798b!important;
+}
+html body .feature-card .feature-icon,
+html body .card .icon,
+html body .card-icon,
+html body .step-no{
+  background:linear-gradient(145deg,#edf8fe,#e3f3fb)!important;
+  border-color:#c1dfef!important;
+  color:#078fda!important;
+}
+
+/* Pricing cards: keep a single premium featured hierarchy */
+html body .price-card .price-head,
+html body .price-card .price-amount{
+  border-color:#dbe7ef!important;
+  background:transparent!important;
+}
+html body .price-card .price-head h3,
+html body .price-card .price-amount strong{
+  color:#17344c!important;
+}
+html body .price-card .feature{
+  border-color:#e3ecf2!important;
+  color:#5f778a!important;
+}
+html body .price-card .family-chip{
+  background:#eef8fd!important;
+  border-color:#c6dfea!important;
+  color:#087fca!important;
+}
+html body .price-card .family-dot{
+  box-shadow:0 0 12px rgba(11,159,240,.30)!important;
+}
+
+/* Data / pair tables */
+html body .table-shell,
+html body .pair-table,
+html body .data-table{
+  background:#fff!important;
+}
+html body .pair-table th,
+html body .data-table th{
+  background:#eef7fb!important;
+  color:#168ccf!important;
+  border-color:#dfeaf1!important;
+}
+html body .pair-table td,
+html body .data-table td{
+  color:#294961!important;
+  border-color:#e5edf2!important;
+}
+html body .pair-table tbody tr,
+html body .data-table tbody tr{
+  transition:background .2s ease,transform .2s ease!important;
+}
+html body .pair-table tbody tr:hover,
+html body .data-table tbody tr:hover{
+  background:#f3faff!important;
+}
+
+/* Conditions rows / utility information */
+html body .condition-row{
+  background:rgba(255,255,255,.82)!important;
+  border-color:#d6e5ee!important;
+  box-shadow:0 7px 20px rgba(28,76,104,.06)!important;
+}
+html body .condition-row span:first-child{
+  color:#587187!important;
+}
+html body .condition-row strong{
+  color:#17344c!important;
+}
+
+/* Widget surfaces */
+html body .widget-shell{
+  background:linear-gradient(145deg,#ffffff,#eff7fb)!important;
+}
+html body .widget-frame{
+  border:1px solid #d7e5ee!important;
+  box-shadow:0 10px 28px rgba(28,76,104,.08)!important;
+}
+html body .widget-note{
+  background:#edf7fc!important;
+  border-color:#d2e6f0!important;
+  color:#60788b!important;
+}
+html body .widget-note strong{
+  color:#087fca!important;
+}
+
+/* CTA: premium deep-blue glass accent on otherwise light pages */
+html body .cta-box{
+  color:#fff!important;
+  background:
+    radial-gradient(circle at 88% 10%,rgba(42,184,255,.24),transparent 35%),
+    linear-gradient(135deg,#0a416a 0%,#082b49 52%,#061d33 100%)!important;
+  border-color:#2d87b7!important;
+  box-shadow:0 24px 58px rgba(20,63,91,.20)!important;
+}
+html body .cta-box h2{color:#fff!important}
+html body .cta-box p{color:#d2e3ee!important}
+
+/* Risk notice becomes readable light glass */
+html body .risk-section,
+html body .risk{
+  background:#eaf3f8!important;
+  color:#506a7d!important;
+}
+html body .risk-text,
+html body .risk p{color:#60788b!important}
+html body .risk-text strong,
+html body .risk strong{color:#28475f!important}
+
+/* Real platform images */
+html body .platform-real-wrap,
+html body .platform-real-visual{
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease,border-color .35s ease!important;
+}
+html body .platform-real-visual{
+  border-color:#bfd9e8!important;
+  background:#fff!important;
+  box-shadow:0 22px 55px rgba(27,74,103,.13)!important;
+}
+html body .platform-real-visual:hover{
+  transform:translateY(-6px) scale(1.005)!important;
+  border-color:#88c4e3!important;
+  box-shadow:0 30px 70px rgba(27,74,103,.18)!important;
+}
+html body .platform-real-visual img{
+  transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .35s ease!important;
+}
+html body .platform-real-visual:hover img{
+  transform:scale(1.035)!important;
+  filter:saturate(1.08) brightness(1.03)!important;
+}
+
+/* Glossy button shine */
+html body .btn-primary{
+  position:relative;
+  overflow:hidden;
+}
+html body .btn-primary::after{
+  content:"";
+  position:absolute;
+  top:-130%;
+  left:-45%;
+  width:28%;
+  height:360%;
+  transform:rotate(24deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.36),transparent);
+  opacity:0;
+  pointer-events:none;
+  transition:left .65s ease,opacity .2s ease;
+}
+html body .btn-primary:hover::after{
+  left:125%;
+  opacity:1;
+}
+
+/* Mobile navigation: same light theme */
+@media(max-width:850px){
+  html body .main-nav,
+  html body .main-nav.is-open,
+  html body .main-nav.open{
+    background:rgba(255,255,255,.98)!important;
+    color:#17344c!important;
+    box-shadow:0 20px 42px rgba(20,67,96,.14)!important;
+    backdrop-filter:blur(18px)!important;
+  }
+  html body .main-nav .nav-trigger,
+  html body .main-nav .nav-link{
+    color:#24445d!important;
+    border-color:#dce8ef!important;
+  }
+  html body .main-nav .nav-trigger:hover,
+  html body .main-nav .nav-link:hover{
+    color:#078fda!important;
+    background:#f1f9fd!important;
+  }
+  html body .main-nav .dropdown{
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+  html body .main-nav .dropdown a,
+  html body .main-nav .dropdown a span{
+    color:#2a4a61!important;
+  }
+  html body .main-nav .dropdown a small{
+    color:#74899a!important;
+  }
+  html body .main-nav .dropdown a:hover{
+    background:#eef8fd!important;
+  }
+  html body .gocoiin-withdrawal-nav-link{
+    color:#24445d!important;
+    background:transparent!important;
+    border-radius:8px!important;
+  }
+}
+
+/* Card/image motion is disabled when requested by the OS */
+@media(prefers-reduced-motion:reduce){
+  html body .feature-card,
+  html body .card,
+  html body .article-card,
+  html body .detail-card,
+  html body .info-card,
+  html body .mini,
+  html body .step,
+  html body .price-card,
+  html body .platform-real-visual,
+  html body .hero-image-wrap{
+    transition:none!important;
+  }
+}
