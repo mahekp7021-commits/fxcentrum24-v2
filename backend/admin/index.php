@@ -24,7 +24,7 @@ requireAdmin();
 </style>
 </head>
 <body>
-<header class="topbar"><div class="topbar-in"><div class="brand"><strong>GO</strong> COIIN <span style="font-size:10px;color:#71869d;font-weight:600">ADMIN</span></div><div class="top-actions"><a class="btn" href="export.php">Export CSV</a><button class="btn" id="refreshBtn" type="button">Refresh</button><a class="btn" href="change-password.php">Change Password</a><a class="btn" href="logout.php">Logout</a></div></div></header>
+<header class="topbar"><div class="topbar-in"><div class="brand"><strong>GO</strong> COIIN <span style="font-size:10px;color:#71869d;font-weight:600">ADMIN</span></div><div class="top-actions"><a class="btn primary" href="index.php">Account Openings</a><a class="btn" href="withdrawals.php">Withdrawal Forms</a><a class="btn" href="export.php">Export CSV</a><button class="btn" id="refreshBtn" type="button">Refresh</button><a class="btn" href="change-password.php">Change Password</a><a class="btn" href="logout.php">Logout</a></div></div></header>
 <main class="wrap">
 <div class="heading"><div><h1>Account Applications</h1><p>Customer enquiries submitted through the GO COIIN website.</p></div></div>
 <section class="cards" id="stats"><div class="card"><span>Total</span><strong>—</strong></div><div class="card"><span>New</span><strong>—</strong></div><div class="card"><span>Contacted</span><strong>—</strong></div><div class="card"><span>Verified</span><strong>—</strong></div><div class="card"><span>Approved</span><strong>—</strong></div><div class="card"><span>Rejected</span><strong>—</strong></div></section>
