@@ -160,7 +160,7 @@ function initFxMarketOverview() {
   const renderRows = gold => {
     const all = [...marketData];
     const goldRow = gold ? [{symbol:"XAUUSD",code:"XAU",name:"Gold",price:gold.price,change:gold.change,high:null,low:null,volume:null,isGold:true}] : [];
-    let filtered=[...all,...goldRow];
+    let filtered=gold ? (all.length ? [all[0],...goldRow,...all.slice(1)] : goldRow) : all;
     if(activeFilter==="gainers") filtered=filtered.filter(x=>Number(x.change)>0);
     if(activeFilter==="losers") filtered=filtered.filter(x=>Number(x.change)<0);
     if(search) {
@@ -199,7 +199,7 @@ function initFxMarketOverview() {
     const map=new Map(data.map(x=>[x.symbol,x]));
     marketData=cryptoMarkets.filter(x=>map.has(x[0])).map((x,idx)=>{
       const d=map.get(x[0]);
-      return {symbol:x[0],code:x[1],name:x[2],price:Number(d.lastPrice),change:Number(d.priceChangePercent),high:Number(d.highPrice),low:Number(d.lowPrice),volume:Number(d.quoteVolume)};
+      return {symbol:x[0],code:x[1],name:x[2],price:Number(d.lastPrice),change:Number(d.priceChangePercent),high:Number(d.highPrice),low:Number(d.lowPrice),volume:Number(d.quoteVolume),isGold:false};
     });
   };
 
