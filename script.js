@@ -84,15 +84,16 @@ function normalizeHomepageMarketOrder() {
   const tape = document.querySelector(".fx-site-running-tape");
   const marketData = document.querySelector(".fx-market-data-section");
 
-  // Canonical order: Market Tickers -> Finlogix Running Tape -> Market Data.
-  if (tape && tape !== tickerSection.nextElementSibling) {
-    tickerSection.parentNode.insertBefore(tape, tickerSection.nextElementSibling);
+  // Canonical order: Finlogix Running Tape -> Market Tickers -> Market Data.
+  // Running Tape must always sit directly ABOVE Market Tickers.
+  if (tape && tape !== tickerSection.previousElementSibling) {
+    tickerSection.parentNode.insertBefore(tape, tickerSection);
   }
 
   if (marketData) {
-    const anchor = tape && tape.parentNode === tickerSection.parentNode ? tape : tickerSection;
-    if (marketData !== anchor.nextElementSibling) {
-      anchor.parentNode.insertBefore(marketData, anchor.nextElementSibling);
+    // Market Data must remain directly BELOW Market Tickers.
+    if (marketData !== tickerSection.nextElementSibling) {
+      tickerSection.parentNode.insertBefore(marketData, tickerSection.nextElementSibling);
     }
   }
 }
