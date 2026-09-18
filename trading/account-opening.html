@@ -24,8 +24,14 @@
 @media(max-width:480px){.container{width:calc(100% - 28px)}.hero h1{font-size:42px}.hero-panel{padding:22px}.form-actions{display:grid;grid-template-columns:1fr}.form-actions .btn{width:100%}.footer-grid{grid-template-columns:1fr}}
 </style>
 <style id="gocoiin-custom-amount-style">
-.custom-amount-field.is-visible{display:block!important}
-.custom-amount-field input{width:100%;box-sizing:border-box}
+.custom-amount-field.is-visible{display:block!important;grid-column:auto!important}
+.custom-amount-field input{width:100%;max-width:100%;box-sizing:border-box}
+@media (min-width:701px){
+  .custom-amount-field{max-width:calc(50% - 8px)}
+}
+@media (max-width:700px){
+  .custom-amount-field{width:100%;max-width:none}
+}
 </style>
 </head>
 <body>
