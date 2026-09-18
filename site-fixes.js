@@ -332,19 +332,80 @@
     }
   }
   function installFinlogixStripOverlay() {
-    const strip = document.querySelector('.fx-market-strip');
-    if (!strip || strip.querySelector('.gocoiin-market-strip-overlay')) return;
+    const install = () => {
+      const strips = document.querySelectorAll('.fx-market-strip');
+      let installed = false;
 
-    if (getComputedStyle(strip).position === 'static') strip.style.position = 'relative';
+      strips.forEach(strip => {
+        if (strip.querySelector('.gocoiin-market-strip-overlay')) {
+          installed = true;
+          return;
+        }
 
-    const overlay = document.createElement('button');
-    overlay.type = 'button';
-    overlay.className = 'gocoiin-market-strip-overlay';
-    overlay.setAttribute('aria-label', 'Open trading options');
-    overlay.title = 'Open trading options';
-    overlay.style.cssText = 'position:absolute;inset:0;z-index:2147483000;display:block;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent;cursor:pointer;touch-action:manipulation;';
-    overlay.addEventListener('click', openMarketActionModal);
-    strip.appendChild(overlay);
+        if (getComputedStyle(strip).position === 'static') {
+          strip.style.position = 'relative';
+        }
+
+        const iframe = strip.querySelector('iframe');
+        if (iframe) {
+          iframe.style.pointerEvents = 'none';
+        }
+
+        const overlay = document.createElement('button');
+        overlay.type = 'button';
+        overlay.className = 'gocoiin-market-strip-overlay';
+        overlay.setAttribute('aria-label', 'Open trading options');
+        overlay.title = 'Open trading options';
+        overlay.style.cssText = [
+          'position:absolute',
+          'inset:0',
+          'z-index:2147483647',
+          'display:block',
+          'width:100%',
+          'height:100%',
+          'min-height:52px',
+          'padding:0',
+          'margin:0',
+          'border:0',
+          'outline:0',
+          'background:transparent',
+          'cursor:pointer',
+          'touch-action:manipulation',
+          'pointer-events:auto'
+        ].join(';');
+
+        const open = event => {
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+          openMarketActionModal();
+        };
+
+        overlay.addEventListener('click', open, true);
+        overlay.addEventListener('pointerup', open, true);
+        overlay.addEventListener('touchend', open, {passive:false, capture:true});
+
+        strip.appendChild(overlay);
+        installed = true;
+      });
+
+      return installed;
+    };
+
+    if (install()) return;
+
+    if (window.__gocoiinFinlogixStripObserver) return;
+    window.__gocoiinFinlogixStripObserver = new MutationObserver(() => {
+      if (install()) {
+        window.__gocoiinFinlogixStripObserver.disconnect();
+        window.__gocoiinFinlogixStripObserver = null;
+      }
+    });
+
+    window.__gocoiinFinlogixStripObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
   }
 
   function init() {
