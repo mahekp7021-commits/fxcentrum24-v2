@@ -995,3 +995,159 @@ html body .btn-primary:hover::after{
     transition:none!important;
   }
 }
+
+
+/* =========================================================
+   FINAL UNIVERSAL CARD OVERRIDES
+   Covers page-specific card classes that are not shared by
+   the homepage/card system.
+   ========================================================= */
+
+html body .benefit-card,
+html body .stat-card,
+html body .referral-card,
+html body .process-card,
+html body .referral-highlight,
+html body .hero-panel,
+html body .form-shell{
+  position:relative!important;
+  overflow:hidden!important;
+  background:
+    linear-gradient(145deg,#ffffff 0%,#f1f8fc 100%)!important;
+  color:#17344c!important;
+  border:1px solid #d1e3ed!important;
+  box-shadow:0 16px 38px rgba(26,75,105,.10)!important;
+  border-radius:18px!important;
+  transition:
+    transform .32s cubic-bezier(.2,.7,.2,1),
+    box-shadow .32s ease,
+    border-color .32s ease,
+    background .32s ease,
+    filter .32s ease!important;
+}
+
+html body .benefit-card:hover,
+html body .stat-card:hover,
+html body .referral-card:hover,
+html body .process-card:hover,
+html body .referral-highlight:hover,
+html body .hero-panel:hover,
+html body .form-shell:hover{
+  transform:translateY(-6px)!important;
+  background:
+    linear-gradient(145deg,#ffffff 0%,#eaf6fc 100%)!important;
+  border-color:#a9d4e9!important;
+  box-shadow:0 26px 58px rgba(26,75,105,.15)!important;
+}
+
+html body .benefit-card h3,
+html body .stat-card h3,
+html body .referral-card h3,
+html body .process-card h3,
+html body .referral-highlight h3,
+html body .hero-panel h2,
+html body .hero-panel h3,
+html body .form-shell h2,
+html body .form-shell h3{
+  color:#17344c!important;
+  -webkit-text-fill-color:#17344c!important;
+  text-shadow:none!important;
+}
+
+html body .benefit-card p,
+html body .stat-card p,
+html body .referral-card p,
+html body .process-card p,
+html body .referral-highlight p,
+html body .hero-panel p,
+html body .form-shell p,
+html body .stat-card span,
+html body .process-card span{
+  color:#637b8f!important;
+  -webkit-text-fill-color:#637b8f!important;
+}
+
+html body .benefit-card .icon,
+html body .process-no,
+html body .card-icon,
+html body .feature-icon{
+  background:linear-gradient(145deg,#edf8fe,#e1f2fa)!important;
+  border-color:#c0ddea!important;
+  color:#078fda!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9)!important;
+}
+
+/* Partnership statistic accents remain visible without dark cards */
+html body .stat-card strong{
+  color:#00a881!important;
+  -webkit-text-fill-color:#00a881!important;
+}
+html body .stat-card:nth-child(3) strong,
+html body .stat-card:nth-child(4) strong{
+  color:#078fda!important;
+  -webkit-text-fill-color:#078fda!important;
+}
+
+/* Partnership referral highlight and CTA remain visually distinct */
+html body .referral-highlight{
+  background:
+    radial-gradient(circle at 86% 12%,rgba(11,159,240,.12),transparent 34%),
+    linear-gradient(145deg,#f8fcff 0%,#e9f6fc 100%)!important;
+}
+html body .referral-highlight strong{
+  color:#00a881!important;
+  -webkit-text-fill-color:#00a881!important;
+}
+
+/* Form shells: light glossy, while inputs remain white */
+html body .form-shell{
+  background:
+    linear-gradient(145deg,#ffffff 0%,#f2f8fc 100%)!important;
+}
+html body .form-shell label{
+  color:#294a61!important;
+}
+html body .form-shell .form-status,
+html body .form-shell .form-note,
+html body .form-shell small{
+  color:#6b8294!important;
+}
+
+/* Do not let page-specific dark rules recolor these universal cards */
+html body .benefit-card *,
+html body .stat-card *,
+html body .referral-card *,
+html body .process-card *,
+html body .referral-highlight *,
+html body .form-shell *{
+  text-shadow:none!important;
+}
+
+/* Glossy moving border highlight */
+html body .benefit-card::before,
+html body .stat-card::before,
+html body .referral-card::before,
+html body .process-card::before,
+html body .referral-highlight::before,
+html body .form-shell::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1px;
+  background:linear-gradient(120deg,rgba(11,159,240,.35),transparent 32%,transparent 68%,rgba(255,255,255,.72));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s ease;
+}
+html body .benefit-card:hover::before,
+html body .stat-card:hover::before,
+html body .referral-card:hover::before,
+html body .process-card:hover::before,
+html body .referral-highlight:hover::before,
+html body .form-shell:hover::before{
+  opacity:1;
+}
