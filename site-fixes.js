@@ -212,81 +212,8 @@
   }
 
   function installFinlogixWidgetShields() {
-    ensureMarketActionModal();
-
-    const candidates = new Set();
-    document.querySelectorAll(
-      '.market-strip,.fx-market-strip,.fx-live-ticker-wrap,.finlogix-live-strip,' +
-      '.finlogix-container,[class*="finlogix"],' +
-      'iframe[src*="finlogix"],iframe[src*="finlogix.com"],iframe[src*="widget.finlogix"]'
-    ).forEach(el => {
-      if (el.closest('#gocoiin-market-action-modal')) return;
-      if (isLiveMarketChartSection(el)) {
-        const removeFrom = el.tagName === 'IFRAME' ? (el.parentElement || el) : el;
-        removeFrom.querySelectorAll('.gocoiin-finlogix-shield').forEach(shield => shield.remove());
-        removeFrom.querySelectorAll('.gocoiin-chart-login-overlay').forEach(overlay => overlay.remove());
-        return;
-      }
-
-      let target = el;
-      const frame = el.tagName === 'IFRAME';
-      if (frame) target = el.parentElement || el;
-      const wrapper = target.closest('.market-strip,.fx-market-strip,.widget-frame');
-      if (wrapper) target = wrapper;
-
-      if (target && target !== document.body && target !== document.documentElement) {
-        candidates.add(target);
-      }
-    });
-
-    candidates.forEach(target => {
-      if (target.querySelector(':scope > .gocoiin-finlogix-shield')) return;
-
-      const position = getComputedStyle(target).position;
-      if (position === 'static') target.style.position = 'relative';
-
-      target.querySelectorAll('iframe').forEach(frame => {
-        const src = frame.getAttribute('src') || '';
-        if (/finlogix/i.test(src)) frame.style.pointerEvents = 'none';
-      });
-
-      const shield = document.createElement('button');
-      shield.type = 'button';
-      shield.className = 'gocoiin-finlogix-shield';
-      shield.setAttribute('aria-label', 'Open trading options');
-      shield.title = 'Open trading options';
-      shield.style.cssText = [
-        'position:absolute',
-        'inset:0',
-        'z-index:2147483000',
-        'display:block',
-        'width:100%',
-        'height:100%',
-        'min-height:1px',
-        'padding:0',
-        'margin:0',
-        'border:0',
-        'outline:0',
-        'background:transparent',
-        'cursor:pointer',
-        'touch-action:manipulation',
-        'pointer-events:auto'
-      ].join(';');
-      shield.addEventListener('click', event => {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        openMarketActionModal();
-      }, true);
-      shield.addEventListener('pointerup', event => {
-        if (event.pointerType === 'mouse') return;
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        openMarketActionModal();
-      }, true);
-      target.appendChild(shield);
-    });
+    // Intentionally disabled: running market tapes and Finlogix widgets remain directly interactive.
+    document.querySelectorAll('.gocoiin-market-strip-overlay,.gocoiin-finlogix-shield').forEach(el => el.remove());
   }
 
   function setHeaderHeight() {
@@ -440,113 +367,17 @@
   }
 
   function installChartLoginOverlay() {
-    // Intentionally disabled: the live market chart must remain directly interactive.
     document.querySelectorAll('.gocoiin-chart-login-overlay').forEach(el => el.remove());
   }
 
-
   function installTickerActionHandlers() {
-    if (window.__gocoiinTickerActionsInstalled) return;
-    window.__gocoiinTickerActionsInstalled = true;
-
-    const selector = 'tv-ticker-tape,.fx-live-ticker-wrap,.hero-ticker,.hero-ticker-fallback-track';
-    const openFromEvent = event => {
-      const node = event.target && event.target.closest ? event.target.closest(selector) : null;
-      if (!node) return;
-      if (event.target.closest && event.target.closest('a,button,input,select,textarea')) return;
-      event.preventDefault();
-      event.stopPropagation();
-      openMarketActionModal();
-    };
-
-    document.addEventListener('click', openFromEvent, true);
-    document.addEventListener('pointerup', event => {
-      if (event.pointerType === 'mouse') return;
-      openFromEvent(event);
-    }, true);
-
-    if (!document.getElementById('gocoiin-ticker-click-style')) {
-      const style = document.createElement('style');
-      style.id = 'gocoiin-ticker-click-style';
-      style.textContent = 'tv-ticker-tape,.fx-live-ticker-wrap,.hero-ticker,.hero-ticker-fallback-track{cursor:pointer!important;touch-action:manipulation}';
-      document.head.appendChild(style);
-    }
+    // Intentionally disabled: running market tapes and Finlogix widgets remain directly interactive.
+    document.querySelectorAll('.gocoiin-market-strip-overlay,.gocoiin-finlogix-shield').forEach(el => el.remove());
   }
+
   function installFinlogixStripOverlay() {
-    const install = () => {
-      const strips = document.querySelectorAll('.fx-market-strip');
-      let installed = false;
-
-      strips.forEach(strip => {
-        if (strip.querySelector('.gocoiin-market-strip-overlay')) {
-          installed = true;
-          return;
-        }
-
-        if (getComputedStyle(strip).position === 'static') {
-          strip.style.position = 'relative';
-        }
-
-        const iframe = strip.querySelector('iframe');
-        if (iframe) {
-          iframe.style.pointerEvents = 'none';
-        }
-
-        const overlay = document.createElement('button');
-        overlay.type = 'button';
-        overlay.className = 'gocoiin-market-strip-overlay';
-        overlay.setAttribute('aria-label', 'Open trading options');
-        overlay.title = 'Open trading options';
-        overlay.style.cssText = [
-          'position:absolute',
-          'inset:0',
-          'z-index:2147483647',
-          'display:block',
-          'width:100%',
-          'height:100%',
-          'min-height:52px',
-          'padding:0',
-          'margin:0',
-          'border:0',
-          'outline:0',
-          'background:transparent',
-          'cursor:pointer',
-          'touch-action:manipulation',
-          'pointer-events:auto'
-        ].join(';');
-
-        const open = event => {
-          event.preventDefault();
-          event.stopPropagation();
-          event.stopImmediatePropagation();
-          openMarketActionModal();
-        };
-
-        overlay.addEventListener('click', open, true);
-        overlay.addEventListener('pointerup', open, true);
-        overlay.addEventListener('touchend', open, {passive:false, capture:true});
-
-        strip.appendChild(overlay);
-        installed = true;
-      });
-
-      return installed;
-    };
-
-    if (install()) return;
-
-    if (window.__gocoiinFinlogixStripObserver) return;
-    window.__gocoiinFinlogixStripObserver = new MutationObserver(() => {
-      if (install()) {
-        window.__gocoiinFinlogixStripObserver.disconnect();
-        window.__gocoiinFinlogixStripObserver = null;
-      }
-    });
-
-    window.__gocoiinFinlogixStripObserver.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
+    // Intentionally disabled: running market tapes and Finlogix widgets remain directly interactive.
+    document.querySelectorAll('.gocoiin-market-strip-overlay,.gocoiin-finlogix-shield').forEach(el => el.remove());
   }
 
   function init() {
