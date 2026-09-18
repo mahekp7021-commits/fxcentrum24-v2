@@ -212,6 +212,60 @@
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
   }
 
+  function ensureMarketActionModal() {
+    if (document.getElementById('gocoiin-market-action-modal')) return;
+
+    const modal = document.createElement('div');
+    modal.id = 'gocoiin-market-action-modal';
+    modal.innerHTML = [
+      '<div class="gocoiin-market-action-backdrop" data-close-market-modal></div>',
+      '<div class="gocoiin-market-action-card" role="dialog" aria-modal="true" aria-labelledby="gocoiin-market-action-title">',
+      '<button class="gocoiin-market-action-close" type="button" aria-label="Close" data-close-market-modal>×</button>',
+      '<div class="gocoiin-market-action-kicker">GO COIIN</div>',
+      '<h3 id="gocoiin-market-action-title">What would you like to do?</h3>',
+      '<p>Choose an option to continue.</p>',
+      '<div class="gocoiin-market-action-buttons">',
+      '<a class="gocoiin-market-action-primary" href="https://gocoiin.com/trading/account-opening.html">Open New Account</a>',
+      '<a class="gocoiin-market-action-secondary" href="' + LOGIN_URL + '">Login</a>',
+      '</div></div>'
+    ].join('');
+
+    const style = document.createElement('style');
+    style.id = 'gocoiin-market-action-modal-style';
+    style.textContent = [
+      '#gocoiin-market-action-modal{position:fixed;inset:0;z-index:2147483646;display:none;align-items:center;justify-content:center;padding:22px}',
+      '#gocoiin-market-action-modal.is-open{display:flex}',
+      '.gocoiin-market-action-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.68);backdrop-filter:blur(5px)}',
+      '.gocoiin-market-action-card{position:relative;width:min(430px,100%);padding:30px;border:1px solid rgba(0,168,255,.24);border-radius:20px;background:linear-gradient(145deg,#0b2034,#071725);box-shadow:0 30px 90px rgba(0,0,0,.5);text-align:center;color:#fff}',
+      '.gocoiin-market-action-close{position:absolute;top:10px;right:10px;width:36px;height:36px;border:1px solid rgba(120,180,220,.18);border-radius:9px;background:#061421;color:#fff;font-size:22px;line-height:1;cursor:pointer}',
+      '.gocoiin-market-action-kicker{margin-bottom:8px;color:#00a8ff;font-size:11px;font-weight:800;letter-spacing:2px}',
+      '.gocoiin-market-action-card h3{margin:0;font-size:26px;letter-spacing:-.8px}',
+      '.gocoiin-market-action-card p{margin:10px 0 22px;color:#8fa5ba;font-size:13px}',
+      '.gocoiin-market-action-buttons{display:grid;gap:10px}',
+      '.gocoiin-market-action-buttons a{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:9px;padding:0 18px;text-decoration:none;font-size:13px;font-weight:800}',
+      '.gocoiin-market-action-primary{background:linear-gradient(135deg,#ff3154,#ff4766);color:#fff}',
+      '.gocoiin-market-action-secondary{border:1px solid rgba(120,180,220,.42);background:#061421;color:#fff}',
+      '.gocoiin-market-action-buttons a:focus-visible,.gocoiin-market-action-close:focus-visible{outline:2px solid #00a8ff;outline-offset:2px}'
+    ].join('');
+    document.head.appendChild(style);
+    document.body.appendChild(modal);
+
+    const close = () => modal.classList.remove('is-open');
+    modal.querySelectorAll('[data-close-market-modal]').forEach(el => el.addEventListener('click', close));
+    modal.querySelectorAll('a').forEach(link => link.addEventListener('click', close));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
+  }
+
+  function openMarketActionModal() {
+    ensureMarketActionModal();
+    const modal = document.getElementById('gocoiin-market-action-modal');
+    if (modal) {
+      modal.classList.add('is-open');
+      const close = modal.querySelector('.gocoiin-market-action-close');
+      if (close) close.focus();
+    }
+  }
+
   function installChartLoginOverlay() {
     if (document.querySelector('.gocoiin-chart-login-overlay')) return;
 
@@ -239,17 +293,44 @@
     const host=chart.parentElement;
     if(!host)return;
     if(getComputedStyle(host).position==='static')host.style.position='relative';
-    const overlay=document.createElement('a');
+
+    const overlay=document.createElement('button');
+    overlay.type='button';
     overlay.className='gocoiin-chart-login-overlay';
-    overlay.href=LOGIN_URL;
-    overlay.target='_blank';
-    overlay.rel='noopener noreferrer';
-    overlay.setAttribute('aria-label','Open Login');
-    overlay.title='Open Login';
-    overlay.style.cssText='position:absolute;inset:0;z-index:2147483000;display:block;background:transparent;cursor:pointer;touch-action:manipulation;';
+    overlay.setAttribute('aria-label','Open trading options');
+    overlay.title='Open trading options';
+    overlay.style.cssText='position:absolute;inset:0;z-index:2147483000;display:block;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent;cursor:pointer;touch-action:manipulation;';
+    overlay.addEventListener('click', openMarketActionModal);
     host.appendChild(overlay);
   }
 
+  function installTickerActionHandlers() {
+    if (window.__gocoiinTickerActionsInstalled) return;
+    window.__gocoiinTickerActionsInstalled = true;
+
+    const selector = 'tv-ticker-tape,.fx-live-ticker-wrap,.hero-ticker,.hero-ticker-fallback-track';
+    const openFromEvent = event => {
+      const node = event.target && event.target.closest ? event.target.closest(selector) : null;
+      if (!node) return;
+      if (event.target.closest && event.target.closest('a,button,input,select,textarea')) return;
+      event.preventDefault();
+      event.stopPropagation();
+      openMarketActionModal();
+    };
+
+    document.addEventListener('click', openFromEvent, true);
+    document.addEventListener('pointerup', event => {
+      if (event.pointerType === 'mouse') return;
+      openFromEvent(event);
+    }, true);
+
+    if (!document.getElementById('gocoiin-ticker-click-style')) {
+      const style = document.createElement('style');
+      style.id = 'gocoiin-ticker-click-style';
+      style.textContent = 'tv-ticker-tape,.fx-live-ticker-wrap,.hero-ticker,.hero-ticker-fallback-track{cursor:pointer!important;touch-action:manipulation}';
+      document.head.appendChild(style);
+    }
+  }
   function init() {
     applyGoCoiinBrand();
     fixLinks();
@@ -257,8 +338,10 @@
     installHomepageFooterGuard();
     installMobileNavigation();
     neutralizePlaceholderSocials();
+    ensureMarketActionModal();
     installChartLoginOverlay();
-    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); removeLegacyHomepageFooter(); installHomepageFooterGuard(); neutralizePlaceholderSocials(); installChartLoginOverlay(); }, 250);
+    installTickerActionHandlers();
+    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); removeLegacyHomepageFooter(); installHomepageFooterGuard(); neutralizePlaceholderSocials(); ensureMarketActionModal(); installChartLoginOverlay(); installTickerActionHandlers(); }, 250);
     setTimeout(installChartLoginOverlay, 1000);
     setTimeout(installChartLoginOverlay, 2500);
   }
