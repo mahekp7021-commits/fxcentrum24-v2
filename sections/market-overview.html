@@ -17,7 +17,7 @@
   </div>
 </section>
 
-<!-- GO COIIN — MARKET DATA / TRADINGVIEW MARKET DATA -->
+<!-- GO COIIN — GLOBAL MARKET DATA / TRADINGVIEW FOREX SCREENER -->
 <section class="fx-market-data-section" id="market-data" aria-labelledby="fxMarketDataTitle">
   <div class="fx-market-data-shell">
     <div class="fx-market-data-heading">
@@ -28,9 +28,26 @@
       </div>
     </div>
 
-    <div class="fx-market-data-card" aria-label="TradingView Market Data">
-      <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-market-data.js"></script>
-      <tv-market-data symbol-sectors='[{"sectionName":"Indices","symbols":["FOREXCOM:SPXUSD","FOREXCOM:NSXUSD","FOREXCOM:DJI","INDEX:NKY","INDEX:DEU40","FOREXCOM:UKXGBP"]},{"sectionName":"Futures","symbols":["BMFBOVESPA:ISP1!","BMFBOVESPA:EUR1!","CMCMARKETS:GOLD","TVC:USOIL","BMFBOVESPA:CCM1!"]},{"sectionName":"Bonds","symbols":["EUREX:FGBL1!","EUREX:FBTP1!","EUREX:FGBM1!"]},{"sectionName":"Forex","symbols":["FX:EURUSD","FX:GBPUSD","FX:USDJPY","FX:USDCHF","FX:AUDUSD","FX:USDCAD"]}]'></tv-market-data>
+    <div class="fx-market-data-card" aria-label="TradingView Forex Screener">
+      <!-- TradingView Widget BEGIN -->
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/currencies/" rel="noopener nofollow" target="_blank"><span class="blue-text">Forex Screener</span></a><span class="trademark"> by TradingView</span></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+        {
+          "market": "forex",
+          "showToolbar": true,
+          "defaultColumn": "performance",
+          "defaultScreen": "general",
+          "isTransparent": false,
+          "locale": "en",
+          "colorTheme": "light",
+          "width": "100%",
+          "height": 550
+        }
+        </script>
+      </div>
+      <!-- TradingView Widget END -->
     </div>
   </div>
 </section>
