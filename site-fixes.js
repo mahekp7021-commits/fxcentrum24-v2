@@ -331,6 +331,22 @@
       document.head.appendChild(style);
     }
   }
+  function installFinlogixStripOverlay() {
+    const strip = document.querySelector('.fx-market-strip');
+    if (!strip || strip.querySelector('.gocoiin-market-strip-overlay')) return;
+
+    if (getComputedStyle(strip).position === 'static') strip.style.position = 'relative';
+
+    const overlay = document.createElement('button');
+    overlay.type = 'button';
+    overlay.className = 'gocoiin-market-strip-overlay';
+    overlay.setAttribute('aria-label', 'Open trading options');
+    overlay.title = 'Open trading options';
+    overlay.style.cssText = 'position:absolute;inset:0;z-index:2147483000;display:block;width:100%;height:100%;padding:0;margin:0;border:0;background:transparent;cursor:pointer;touch-action:manipulation;';
+    overlay.addEventListener('click', openMarketActionModal);
+    strip.appendChild(overlay);
+  }
+
   function init() {
     applyGoCoiinBrand();
     fixLinks();
@@ -341,7 +357,8 @@
     ensureMarketActionModal();
     installChartLoginOverlay();
     installTickerActionHandlers();
-    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); removeLegacyHomepageFooter(); installHomepageFooterGuard(); neutralizePlaceholderSocials(); ensureMarketActionModal(); installChartLoginOverlay(); installTickerActionHandlers(); }, 250);
+    installFinlogixStripOverlay();
+    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); removeLegacyHomepageFooter(); installHomepageFooterGuard(); neutralizePlaceholderSocials(); ensureMarketActionModal(); installChartLoginOverlay(); installTickerActionHandlers(); installFinlogixStripOverlay(); }, 250);
     setTimeout(installChartLoginOverlay, 1000);
     setTimeout(installChartLoginOverlay, 2500);
   }
