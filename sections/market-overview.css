@@ -278,3 +278,18 @@ main#top>.fx-accounts-section{order:7}
   padding:0;
   border:0;
 }
+
+
+/* FINAL CANONICAL HOMEPAGE FLOW */
+main#top{display:flex!important;flex-direction:column!important}
+main#top>*{order:0!important}
+main#top>.hero{order:1!important}
+main#top>.fx-site-running-tape{order:2!important}
+main#top>.fx-market-section{order:3!important}
+main#top>.fx-market-data-section{order:4!important}
+main#top>.market-categories{order:5!important}
+main#top>.platforms-section{order:6!important}
+main#top>.fx-accounts-section{order:7!important}
+
+.fx-site-running-tape{width:100%;height:48px;min-height:48px;display:block;overflow:hidden;background:#061a2b;border-top:1px solid rgba(38,128,173,.35);border-bottom:1px solid rgba(16,90,126,.45);position:relative;z-index:2}
+.fx-site-running-tape iframe{display:block;width:100%;height:48px;min-height:48px;border:0;margin:0;padding:0}
