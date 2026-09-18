@@ -150,7 +150,7 @@
         'letter-spacing:0!important;',
         '}',
         '.main-nav .gocoiin-withdrawal-nav-link:hover{color:#fff!important;}',
-        '@media(max-width:850px){.main-nav .gocoiin-withdrawal-nav-link{font-size:10px!important;}}'
+        '@media(max-width:850px){.main-nav .gocoiin-withdrawal-nav-link{display:block!important;width:100%!important;box-sizing:border-box!important;padding:11px 10px!important;margin:0!important;text-align:left!important;font-size:14px!important;line-height:1.25!important;font-weight:700!important;white-space:nowrap!important;color:#d9e6f2!important;}}'
       ].join('');
       document.head.appendChild(style);
     }
