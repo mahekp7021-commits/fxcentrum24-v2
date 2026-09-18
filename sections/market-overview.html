@@ -1,5 +1,8 @@
 <!-- GO COIIN — MARKET OVERVIEW / TRADINGVIEW TICKERS -->
 <section class="fx-market-section" id="markets" aria-labelledby="marketSectionTitle">
+  <div class="fx-site-running-tape" aria-label="Live market ticker">
+    <tv-ticker-tape symbols="FX:EURUSD,FX:GBPUSD,FX:USDJPY,OANDA:XAUUSD,TVC:DJI,BITSTAMP:BTCUSD" theme="dark" transparent locale="en" item-size="compact" show-hover="false"></tv-ticker-tape>
+  </div>
   <div class="fx-market-shell">
     <div class="fx-market-heading">
       <div>
@@ -13,6 +16,24 @@
     <div class="fx-market-summary-card" aria-label="TradingView Market Tickers">
       <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-tickers.js"></script>
       <tv-tickers symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FX:EURUSD,BITSTAMP:ETHUSD,OANDA:XAUUSD,NASDAQ:AAPL" hide-chart theme="light" transparent></tv-tickers>
+    </div>
+  </div>
+</section>
+
+<!-- GO COIIN — MARKET DATA / TRADINGVIEW MARKET DATA -->
+<section class="fx-market-data-section" id="market-data" aria-labelledby="fxMarketDataTitle">
+  <div class="fx-market-data-shell">
+    <div class="fx-market-data-heading">
+      <div>
+        <p class="fx-market-data-eyebrow">GLOBAL MARKET DATA</p>
+        <h2 id="fxMarketDataTitle">Market Data</h2>
+        <p>Explore live indices, futures, bonds and forex markets in one view.</p>
+      </div>
+    </div>
+
+    <div class="fx-market-data-card" aria-label="TradingView Market Data">
+      <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-market-data.js"></script>
+      <tv-market-data symbol-sectors='[{"sectionName":"Indices","symbols":["FOREXCOM:SPXUSD","FOREXCOM:NSXUSD","FOREXCOM:DJI","INDEX:NKY","INDEX:DEU40","FOREXCOM:UKXGBP"]},{"sectionName":"Futures","symbols":["BMFBOVESPA:ISP1!","BMFBOVESPA:EUR1!","CMCMARKETS:GOLD","TVC:USOIL","BMFBOVESPA:CCM1!"]},{"sectionName":"Bonds","symbols":["EUREX:FGBL1!","EUREX:FBTP1!","EUREX:FGBM1!"]},{"sectionName":"Forex","symbols":["FX:EURUSD","FX:GBPUSD","FX:USDJPY","FX:USDCHF","FX:AUDUSD","FX:USDCAD"]}]'></tv-market-data>
     </div>
   </div>
 </section>
