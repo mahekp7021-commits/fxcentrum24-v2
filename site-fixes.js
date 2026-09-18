@@ -116,6 +116,127 @@
     });
   }
 
+  function normalizeHeaderActions() {
+    document.querySelectorAll('.header-actions').forEach(actions => {
+      const loginLinks = Array.from(actions.querySelectorAll('a')).filter(anchor => {
+        const text = clean(anchor.textContent).toLowerCase();
+        return text === 'login' || anchor.classList.contains('btn-login');
+      });
+
+      if (loginLinks.length) {
+        const primaryLogin = loginLinks[0];
+        primaryLogin.setAttribute('href', LOGIN_URL);
+        primaryLogin.setAttribute('target', '_blank');
+        primaryLogin.setAttribute('rel', 'noopener noreferrer');
+        primaryLogin.classList.add('btn-login');
+        primaryLogin.textContent = 'Login';
+
+        loginLinks.slice(1).forEach(link => link.remove());
+      }
+
+      const openLinks = Array.from(actions.querySelectorAll('a')).filter(anchor => {
+        return /^open account(?:\\s*→)?$/i.test(clean(anchor.textContent));
+      });
+
+      if (openLinks.length) {
+        const open = openLinks[0];
+        open.setAttribute('href', prefix + 'trading/account-opening.html');
+        open.target = '';
+        open.removeAttribute('rel');
+        open.textContent = 'Open Account';
+        openLinks.slice(1).forEach(link => link.remove());
+      }
+
+      if (!document.getElementById('gocoiin-mobile-header-action-style')) {
+        const style = document.createElement('style');
+        style.id = 'gocoiin-mobile-header-action-style';
+        style.textContent = [
+          '@media(max-width:850px){',
+          'html body .header-actions{display:flex!important;align-items:center!important;gap:8px!important;margin-left:auto!important;flex-wrap:nowrap!important}',
+          'html body .header-actions .btn-login{display:inline-flex!important}',
+          'html body .header-actions .btn-primary{display:inline-flex!important}',
+          'html body .header-actions .btn{white-space:nowrap!important}',
+          'html body .header-actions .btn-login{padding-left:10px!important;padding-right:10px!important}',
+          'html body .header-actions .btn-primary{padding-left:11px!important;padding-right:11px!important}',
+          '}'
+        ].join('');
+        document.head.appendChild(style);
+      }
+    });
+  }
+
+  function installFinlogixWidgetShields() {
+    ensureMarketActionModal();
+
+    const candidates = new Set();
+    document.querySelectorAll(
+      '.market-strip,.fx-market-strip,.fx-live-ticker-wrap,.finlogix-live-strip,' +
+      '.finlogix-container,[class*="finlogix"],' +
+      'iframe[src*="finlogix"],iframe[src*="finlogix.com"],iframe[src*="widget.finlogix"]'
+    ).forEach(el => {
+      if (el.closest('#gocoiin-market-action-modal')) return;
+
+      let target = el;
+      const frame = el.tagName === 'IFRAME';
+      if (frame) target = el.parentElement || el;
+      const wrapper = target.closest('.market-strip,.fx-market-strip,.widget-frame');
+      if (wrapper) target = wrapper;
+
+      if (target && target !== document.body && target !== document.documentElement) {
+        candidates.add(target);
+      }
+    });
+
+    candidates.forEach(target => {
+      if (target.querySelector(':scope > .gocoiin-finlogix-shield')) return;
+
+      const position = getComputedStyle(target).position;
+      if (position === 'static') target.style.position = 'relative';
+
+      target.querySelectorAll('iframe').forEach(frame => {
+        const src = frame.getAttribute('src') || '';
+        if (/finlogix/i.test(src)) frame.style.pointerEvents = 'none';
+      });
+
+      const shield = document.createElement('button');
+      shield.type = 'button';
+      shield.className = 'gocoiin-finlogix-shield';
+      shield.setAttribute('aria-label', 'Open trading options');
+      shield.title = 'Open trading options';
+      shield.style.cssText = [
+        'position:absolute',
+        'inset:0',
+        'z-index:2147483000',
+        'display:block',
+        'width:100%',
+        'height:100%',
+        'min-height:1px',
+        'padding:0',
+        'margin:0',
+        'border:0',
+        'outline:0',
+        'background:transparent',
+        'cursor:pointer',
+        'touch-action:manipulation',
+        'pointer-events:auto'
+      ].join(';');
+      shield.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        openMarketActionModal();
+      }, true);
+      shield.addEventListener('pointerup', event => {
+        if (event.pointerType === 'mouse') return;
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        openMarketActionModal();
+      }, true);
+      target.appendChild(shield);
+    });
+  }
+
   function setHeaderHeight() {
     const header = document.querySelector('.site-header');
     if (header) document.documentElement.style.setProperty('--fxc-header-height', `${header.getBoundingClientRect().height}px`);
@@ -411,6 +532,8 @@
   function init() {
     applyGoCoiinBrand();
     fixLinks();
+    normalizeHeaderActions();
+    installFinlogixWidgetShields();
     removeLegacyHomepageFooter();
     installHomepageFooterGuard();
     installMobileNavigation();
@@ -419,7 +542,7 @@
     installChartLoginOverlay();
     installTickerActionHandlers();
     installFinlogixStripOverlay();
-    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); removeLegacyHomepageFooter(); installHomepageFooterGuard(); neutralizePlaceholderSocials(); ensureMarketActionModal(); installChartLoginOverlay(); installTickerActionHandlers(); installFinlogixStripOverlay(); }, 250);
+    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); normalizeHeaderActions(); removeLegacyHomepageFooter(); installHomepageFooterGuard(); neutralizePlaceholderSocials(); ensureMarketActionModal(); installChartLoginOverlay(); installTickerActionHandlers(); installFinlogixStripOverlay(); installFinlogixWidgetShields(); }, 250);
     setTimeout(installChartLoginOverlay, 1000);
     setTimeout(installChartLoginOverlay, 2500);
   }
