@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const cssId = "fx-market-overview-css";
     if (!document.getElementById(cssId)) {
       const link = document.createElement("link");
-      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css?v=20260918-original-final?v=20260918-original-final";
+      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css?v=20260918-original-final";
       document.head.appendChild(link);
     }
     const response = await fetch("./sections/market-overview.html", { cache: "no-cache" });
@@ -223,15 +223,36 @@ function initFxMarketOverview() {
 (() => {
   const loadMarketCategories = async () => {
     if (document.querySelector(".market-categories")) return true;
-    const marketSection=document.querySelector(".fx-market-section"); if(!marketSection) return false;
+
+    const marketSection = document.querySelector(".fx-market-section");
+    const marketDataSection = document.querySelector(".fx-market-data-section");
+    if (!marketSection) return false;
+
     try {
       const cssId="fx-market-categories-css";
-      if(!document.getElementById(cssId)){const link=document.createElement("link");link.id=cssId;link.rel="stylesheet";link.href="./sections/market-categories.css";document.head.appendChild(link);}
-      const response=await fetch("./sections/market-categories.html",{cache:"no-cache"}); if(!response.ok) throw new Error(`Market categories HTTP ${response.status}`);
-      const markup=await response.text(); marketSection.insertAdjacentHTML("afterend",markup); return true;
-    } catch(error){console.error("FXCentrum24 market categories failed to load:",error);return false;}
+      if(!document.getElementById(cssId)){
+        const link=document.createElement("link");
+        link.id=cssId;
+        link.rel="stylesheet";
+        link.href="./sections/market-categories.css";
+        document.head.appendChild(link);
+      }
+
+      const response=await fetch("./sections/market-categories.html",{cache:"no-cache"});
+      if(!response.ok) throw new Error(`Market categories HTTP ${response.status}`);
+
+      const markup=await response.text();
+
+      // Keep Global Markets AFTER both Market Tickers and Market Data.
+      (marketDataSection || marketSection).insertAdjacentHTML("afterend",markup);
+
+      return true;
+    } catch(error){
+      console.error("FXCentrum24 market categories failed to load:",error);
+      return false;
+    }
   };
-  const start=async()=>{if(await loadMarketCategories())return;const observer=new MutationObserver(async()=>{if(await loadMarketCategories())observer.disconnect();});observer.observe(document.body,{childList:true,subtree:true});};
+  const start=async()=>{if(await loadMarketCategories()){normalizeHomepageMarketOrder();return;}const observer=new MutationObserver(async()=>{if(await loadMarketCategories()){normalizeHomepageMarketOrder();observer.disconnect();}});observer.observe(document.body,{childList:true,subtree:true});};
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
 })();
 
