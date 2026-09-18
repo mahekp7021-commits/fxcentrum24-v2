@@ -1,17 +1,17 @@
-<!-- GO COIIN — TRADINGVIEW MARKET OVERVIEW -->
+<!-- GO COIIN — LIVE MARKET OVERVIEW / MARKET TICKERS -->
 <section class="fx-market-section" id="markets" aria-labelledby="marketSectionTitle">
   <div class="fx-market-shell">
     <div class="fx-market-heading">
       <div>
         <p class="fx-market-eyebrow">LIVE MARKET OVERVIEW</p>
-        <h2 id="marketSectionTitle">Market Overview</h2>
-        <p class="fx-market-subtitle">Track global market movers and key instruments in one live view.</p>
+        <h2 id="marketSectionTitle">Market Tickers</h2>
+        <p class="fx-market-subtitle">Track multiple global markets in one live view.</p>
       </div>
       <a class="fx-market-all" href="./markets/forex.html"><span>View All Markets</span><b aria-hidden="true">→</b></a>
     </div>
 
-    <div class="fx-market-overview-card" aria-label="TradingView Market Overview">
-      <tv-market-overview mode="market-movers" chart-size="compact"></tv-market-overview>
+    <div class="fx-market-tickers-card" aria-label="TradingView Market Tickers">
+      <tv-tickers symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FX:EURUSD,BITSTAMP:ETHUSD,OANDA:XAUUSD,NASDAQ:AAPL" hide-chart theme="light" transparent></tv-tickers>
     </div>
   </div>
 </section>
