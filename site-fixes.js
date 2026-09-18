@@ -44,7 +44,7 @@
     'MetaTrader 4':'platforms/metatrader-4.html','MT4':'platforms/metatrader-4.html','MetaTrader 5':'platforms/metatrader-5.html','MT5':'platforms/metatrader-5.html','WebTrader':'platforms/webtrader.html',
     'Standard':'accounts/standard.html','Premium':'accounts/premium.html','Professional':'accounts/professional.html',
     'Live Markets':'tools/live-markets.html','Economic Calendar':'tools/economic-calendar.html',
-    'About Us':'company/about.html','Contact Us':'company/contact.html','Benefits':'company/benefits.html','GO COIIN Benefits':'company/benefits.html','Why GO COIIN':'company/benefits.html','Partnership':'partnership/index.html'
+    'About Us':'company/about.html','Contact Us':'company/contact.html','Benefits':'company/benefits.html','GO COIIN Benefits':'company/benefits.html','Why GO COIIN':'company/benefits.html','Partnership':'partnership/index.html','Withdrawal':'trading/withdrawal.html'
   };
   const legal = {'Terms & Conditions':'legal/terms-and-conditions.html','Terms and Conditions':'legal/terms-and-conditions.html','Privacy Policy':'legal/privacy-policy.html','Risk Disclosure':'legal/risk-disclosure.html','AML Policy':'legal/aml-policy.html','Client Agreement':'legal/client-agreement.html'};
   const fragments = {accounts:'trading/account-types.html',conditions:'trading/trading-conditions.html',platforms:'trading/platforms.html',steps:'trading/how-to-start.html',markets:'tools/live-markets.html',calendar:'tools/economic-calendar.html',about:'company/about.html',contact:'company/contact.html',benefits:'company/benefits.html',partner:'partnership/index.html','open-account':'trading/account-opening.html'};
@@ -114,6 +114,29 @@
       link.addEventListener('click', e => e.preventDefault(), {passive:false});
       link.setAttribute('aria-disabled','true');
     });
+  }
+
+  function installGlobalUtilityNav() {
+    const nav = document.querySelector('.main-nav');
+    if (!nav) return;
+
+    if (!nav.querySelector('[data-gocoiin-withdrawal-link]')) {
+      const withdrawal = document.createElement('a');
+      withdrawal.href = prefix + 'trading/withdrawal.html';
+      withdrawal.textContent = 'Withdrawal';
+      withdrawal.setAttribute('data-gocoiin-withdrawal-link','true');
+      nav.appendChild(withdrawal);
+    }
+
+    if (!nav.querySelector('[data-gocoiin-admin-link]')) {
+      const admin = document.createElement('a');
+      admin.href = 'https://coral-ibis-126573.hostingersite.com/backend/admin/login.php';
+      admin.textContent = 'Admin Panel';
+      admin.target = '_blank';
+      admin.rel = 'noopener noreferrer';
+      admin.setAttribute('data-gocoiin-admin-link','true');
+      nav.appendChild(admin);
+    }
   }
 
   function normalizeHeaderActions() {
@@ -533,6 +556,7 @@
     applyGoCoiinBrand();
     fixLinks();
     normalizeHeaderActions();
+    installGlobalUtilityNav();
     installFinlogixWidgetShields();
     removeLegacyHomepageFooter();
     installHomepageFooterGuard();
@@ -542,7 +566,7 @@
     installChartLoginOverlay();
     installTickerActionHandlers();
     installFinlogixStripOverlay();
-    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); normalizeHeaderActions(); removeLegacyHomepageFooter(); installHomepageFooterGuard(); neutralizePlaceholderSocials(); ensureMarketActionModal(); installChartLoginOverlay(); installTickerActionHandlers(); installFinlogixStripOverlay(); installFinlogixWidgetShields(); }, 250);
+    setTimeout(() => { applyGoCoiinBrand(); fixLinks(); normalizeHeaderActions(); installGlobalUtilityNav(); removeLegacyHomepageFooter(); installHomepageFooterGuard(); neutralizePlaceholderSocials(); ensureMarketActionModal(); installChartLoginOverlay(); installTickerActionHandlers(); installFinlogixStripOverlay(); installFinlogixWidgetShields(); }, 250);
     setTimeout(installChartLoginOverlay, 1000);
     setTimeout(installChartLoginOverlay, 2500);
   }
