@@ -128,15 +128,7 @@
       nav.appendChild(withdrawal);
     }
 
-    if (!nav.querySelector('[data-gocoiin-admin-link]')) {
-      const admin = document.createElement('a');
-      admin.href = 'https://coral-ibis-126573.hostingersite.com/backend/admin/login.php';
-      admin.textContent = 'Admin Panel';
-      admin.target = '_blank';
-      admin.rel = 'noopener noreferrer';
-      admin.setAttribute('data-gocoiin-admin-link','true');
-      nav.appendChild(admin);
-    }
+    nav.querySelectorAll('[data-gocoiin-admin-link]').forEach(link => link.remove());
   }
 
   function normalizeHeaderActions() {
