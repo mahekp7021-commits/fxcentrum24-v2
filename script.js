@@ -70,18 +70,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     placeholder.insertAdjacentHTML("beforebegin", await response.text());
     placeholder.remove();
 
-    const tag = document.querySelector("tv-market-summary");
+    const tag = document.querySelector("tv-tickers");
     if (!tag) return;
 
-    if (!customElements.get("tv-market-summary")) {
+    if (!customElements.get("tv-tickers")) {
       const moduleScript = document.createElement("script");
       moduleScript.type = "module";
-      moduleScript.src = "https://widgets.tradingview-widget.com/w/en/tv-market-summary.js";
-      moduleScript.dataset.gocoiinTradingviewSummary = "true";
+      moduleScript.src = "https://widgets.tradingview-widget.com/w/en/tv-tickers.js";
+      moduleScript.dataset.gocoiinTradingviewTickers = "true";
       document.head.appendChild(moduleScript);
     }
 
-    await customElements.whenDefined("tv-market-summary");
+    await customElements.whenDefined("tv-tickers");
   } catch (error) {
     console.error("GO COIIN Market Summary failed to load:", error);
   }
