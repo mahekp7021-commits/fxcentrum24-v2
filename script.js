@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const link = document.createElement("link");
       link.id = cssId;
       link.rel = "stylesheet";
-      link.href = "./sections/market-overview.css?v=20260918-tv-summary-final";
+      link.href = "./sections/market-overview.css?v=20260918-tv-summary-white-final";
       document.head.appendChild(link);
     }
 
