@@ -1,29 +1,4 @@
-<!-- MARKET OVERVIEW — SECTION 02 -->
-<style>
-.hero-ticker{display:none!important}
-.fx-market-section{position:relative;z-index:1;padding:0 0 60px;background:#06111f}
-.fx-market-strip{width:100%;height:52px;overflow:hidden;background:#061a2b;border-top:1px solid rgba(0,168,255,.12);border-bottom:1px solid rgba(0,168,255,.15)}
-.fx-market-strip iframe{display:block;width:100%;height:52px;border:0}
-.fx-market-shell{width:min(1260px,calc(100% - 80px));margin:0 auto;padding-top:44px}
-.fx-market-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}
-.fx-market-eyebrow{margin:0 0 8px;color:#0baeff;font-size:11px;font-weight:800;letter-spacing:1.55px;text-transform:uppercase}
-.fx-market-heading h2{margin:0;color:#f5f8ff;font-size:clamp(34px,3.05vw,44px);line-height:1.05;letter-spacing:-1.9px;font-weight:800}
-.fx-market-subtitle{margin:9px 0 0;color:#9fb4c7;font-size:13px;line-height:1.55}
-.fx-market-all{display:inline-flex;align-items:center;gap:9px;padding:10px 0;color:#12a8ff;font-size:12px;font-weight:750;border-bottom:1px solid rgba(18,168,255,.28)}
-.fx-market-all b{font-size:17px;font-weight:500}
-.fx-market-bigchart{width:100%;min-width:0}
-.fx-market-bigchart iframe{display:block;width:100%;height:420px;border:0;background:transparent}
-@media(max-width:900px){
-  .fx-market-shell{width:92%;padding-top:34px}
-  .fx-market-heading{align-items:flex-start;flex-direction:column}
-  .fx-market-bigchart iframe{height:390px}
-}
-@media(max-width:480px){
-  .fx-market-section{padding-bottom:50px}
-  .fx-market-bigchart iframe{height:360px}
-}
-</style>
-
+<!-- GO COIIN — MARKET OVERVIEW / TRADINGVIEW MARKET SUMMARY -->
 <section class="fx-market-section" id="markets" aria-labelledby="marketSectionTitle">
   <div class="fx-market-strip" aria-label="Live market prices">
     <iframe src="./widgets/finlogix-strip.html" title="Finlogix live market prices" scrolling="no"></iframe>
@@ -33,14 +8,14 @@
     <div class="fx-market-heading">
       <div>
         <p class="fx-market-eyebrow">LIVE MARKET OVERVIEW</p>
-        <h2 id="marketSectionTitle">Real-Time Market Prices</h2>
-        <p class="fx-market-subtitle">Track live market information with Finlogix widgets.</p>
+        <h2 id="marketSectionTitle">Market Summary</h2>
+        <p class="fx-market-subtitle">Track multiple global markets in one live view.</p>
       </div>
       <a class="fx-market-all" href="./markets/forex.html"><span>View All Markets</span><b aria-hidden="true">→</b></a>
     </div>
 
-    <div class="fx-market-bigchart" aria-label="Finlogix Apple Real-Time Chart">
-      <iframe src="./widgets/finlogix-bigchart.html" title="Finlogix Apple Real-Time Chart" scrolling="no"></iframe>
+    <div class="fx-market-summary-card" aria-label="TradingView Market Summary">
+      <tv-market-summary direction="horizontal"></tv-market-summary>
     </div>
   </div>
 </section>
