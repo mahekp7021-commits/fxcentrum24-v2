@@ -88,3 +88,64 @@
   .fx-market-shell{width:calc(100% - 24px)}
   .fx-market-overview-card tv-market-overview{min-height:270px}
 }
+
+
+/* FINAL: Market Tickers -> Market Overview -> Global Markets */
+.fx-market-movers-section{
+  position:relative;
+  padding:52px 0 58px;
+  background:#06111f;
+  color:#fff;
+  border-top:1px solid rgba(120,180,220,.10);
+  border-bottom:1px solid rgba(120,180,220,.10);
+}
+.fx-market-movers-shell{
+  width:min(1260px,calc(100% - 80px));
+  margin:0 auto;
+}
+.fx-market-movers-heading{margin:0 0 22px}
+.fx-market-movers-eyebrow{
+  margin:0 0 8px;
+  color:#09aaf7;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.55px;
+  text-transform:uppercase;
+}
+.fx-market-movers-heading h2{
+  margin:0;
+  color:#f5f8ff;
+  font-size:clamp(32px,3.1vw,46px);
+  line-height:1.05;
+  letter-spacing:-1.8px;
+  font-weight:800;
+}
+.fx-market-movers-heading p:last-child{
+  margin:9px 0 0;
+  color:#9fb4c7;
+  font-size:13px;
+  line-height:1.6;
+}
+.fx-market-movers-card{
+  width:100%;
+  overflow:hidden;
+  border:1px solid rgba(120,180,220,.14);
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 24px 70px rgba(0,0,0,.24);
+}
+.fx-market-movers-card tv-market-overview{
+  display:block;
+  width:100%;
+  min-height:360px;
+}
+@media(max-width:900px){
+  .fx-market-movers-shell{width:92%}
+  .fx-market-movers-section{padding:42px 0 48px}
+  .fx-market-movers-card tv-market-overview{min-height:310px}
+}
+@media(max-width:480px){
+  .fx-market-movers-shell{width:calc(100% - 24px)}
+  .fx-market-movers-section{padding:36px 0 42px}
+  .fx-market-movers-card tv-market-overview{min-height:280px}
+}
