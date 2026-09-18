@@ -142,3 +142,74 @@ html body .fx-market-section .fx-market-tickers-card{
   background:transparent!important;
   border-color:#e4e8ec!important;
 }
+
+
+/* GO COIIN — standalone Market Data section */
+.fx-market-data-section{
+  position:relative;
+  padding:58px 0 66px;
+  background:#06111f;
+  color:#fff;
+  border-top:1px solid rgba(120,180,220,.10);
+  border-bottom:1px solid rgba(120,180,220,.10);
+}
+.fx-market-data-shell{
+  width:min(1260px,calc(100% - 80px));
+  margin:0 auto;
+}
+.fx-market-data-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+  margin-bottom:22px;
+}
+.fx-market-data-eyebrow{
+  margin:0 0 8px;
+  color:#0baeff;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.55px;
+  text-transform:uppercase;
+}
+.fx-market-data-heading h2{
+  margin:0;
+  color:#f5f8ff;
+  font-size:clamp(32px,3.05vw,44px);
+  line-height:1.05;
+  letter-spacing:-1.9px;
+  font-weight:800;
+}
+.fx-market-data-heading p:last-child{
+  margin:9px 0 0;
+  max-width:720px;
+  color:#9fb4c7;
+  font-size:13px;
+  line-height:1.6;
+}
+.fx-market-data-card{
+  width:100%;
+  min-height:320px;
+  overflow:hidden;
+  border:1px solid rgba(120,180,220,.14);
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 24px 70px rgba(0,0,0,.24);
+}
+.fx-market-data-card tv-market-data{
+  display:block;
+  width:100%;
+  min-height:320px;
+}
+@media(max-width:900px){
+  .fx-market-data-shell{width:92%}
+  .fx-market-data-section{padding:44px 0 50px}
+  .fx-market-data-card,
+  .fx-market-data-card tv-market-data{min-height:280px}
+}
+@media(max-width:480px){
+  .fx-market-data-shell{width:calc(100% - 24px)}
+  .fx-market-data-heading h2{font-size:32px}
+  .fx-market-data-card,
+  .fx-market-data-card tv-market-data{min-height:240px}
+}
