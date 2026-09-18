@@ -1,38 +1,22 @@
 .fx-market-section{
-  position:relative;
-  z-index:1;
-  padding:0 0 60px;
-  background:#ffffff;
-}
-.fx-market-strip{
-  width:100%;
-  height:52px;
-  overflow:hidden;
-  background:#ffffff;
-  border-top:1px solid #e8edf2;
-  border-bottom:1px solid #e8edf2;
-}
-.fx-market-strip iframe{
-  display:block;
-  width:100%;
-  height:52px;
-  border:0;
+  padding:48px 0 58px;
+  background:#fff;
+  color:#111827;
 }
 .fx-market-shell{
   width:min(1260px,calc(100% - 80px));
   margin:0 auto;
-  padding-top:44px;
 }
 .fx-market-heading{
   display:flex;
   align-items:flex-end;
   justify-content:space-between;
   gap:24px;
-  margin-bottom:24px;
+  margin-bottom:22px;
 }
 .fx-market-eyebrow{
   margin:0 0 8px;
-  color:#0baeff;
+  color:#08aaf5;
   font-size:11px;
   font-weight:800;
   letter-spacing:1.55px;
@@ -41,255 +25,66 @@
 .fx-market-heading h2{
   margin:0;
   color:#111827;
-  font-size:clamp(32px,3.05vw,44px);
+  font-size:clamp(32px,3.1vw,46px);
   line-height:1.05;
-  letter-spacing:-1.9px;
+  letter-spacing:-1.8px;
   font-weight:800;
 }
 .fx-market-subtitle{
   margin:9px 0 0;
-  color:#617080;
+  color:#657382;
   font-size:13px;
   line-height:1.55;
 }
 .fx-market-all{
-  flex:0 0 auto;
   display:inline-flex;
   align-items:center;
-  gap:9px;
-  padding:10px 0;
-  color:#12a8ff;
+  gap:8px;
+  color:#079eea;
+  text-decoration:none;
   font-size:12px;
   font-weight:750;
-  text-decoration:none;
-  border-bottom:1px solid rgba(18,168,255,.28);
+  padding-bottom:9px;
+  border-bottom:1px solid rgba(7,158,234,.24);
 }
-.fx-market-all b{
-  font-size:17px;
-  font-weight:500;
-}
-.fx-market-tickers-card{
+.fx-market-all b{font-size:17px;font-weight:500}
+.fx-market-overview-card{
   width:100%;
-  min-height:300px;
   overflow:hidden;
+  border:1px solid #e2e6ea;
   border-radius:12px;
   background:#fff;
-  border:1px solid rgba(226,229,232,.9);
-  box-shadow:0 22px 65px rgba(0,0,0,.20);
+  box-shadow:0 12px 35px rgba(20,30,40,.08);
 }
-.fx-market-tickers-card tv-tickers{
+.fx-market-overview-card tv-market-overview{
   display:block;
   width:100%;
-  min-height:300px;
+  min-height:340px;
 }
-@media(max-width:900px){
-  .fx-market-shell{
-    width:92%;
-    padding-top:34px;
-  }
-  .fx-market-heading{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-  .fx-market-tickers-card,
-  .fx-market-tickers-card tv-tickers{
-    min-height:280px;
-  }
-}
-@media(max-width:480px){
-  .fx-market-section{
-    padding-bottom:50px;
-  }
-  .fx-market-shell{
-    width:calc(100% - 24px);
-  }
-  .fx-market-tickers-card,
-  .fx-market-tickers-card tv-tickers{
-    min-height:250px;
-  }
-}
-
-
-/* TradingView Tickers: blend directly into GO COIIN market section */
-.fx-market-tickers-card{
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none!important;
-  border-radius:0!important;
-}
-.fx-market-tickers-card tv-tickers{
-  --tv-widget-background-color:transparent;
-  display:block;
-  width:100%;
-  min-height:110px;
-  background:transparent!important;
-}
-/* FINAL: force the complete Market Tickers section to white */
-html body .fx-market-section{
-  background:#fff!important;
-  color:#111827!important;
-}
-html body .fx-market-section .fx-market-heading h2{
-  color:#111827!important;
-}
-html body .fx-market-section .fx-market-subtitle{
-  color:#617080!important;
-}
-html body .fx-market-section .fx-market-strip{
-  background:#fff!important;
-}
-html body .fx-market-section .fx-market-tickers-card{
-  background:transparent!important;
-  border-color:#e4e8ec!important;
-}
-
-
-/* GO COIIN — standalone Market Data section */
-.fx-market-data-section{
-  position:relative;
-  padding:58px 0 66px;
-  background:#06111f;
-  color:#fff;
-  border-top:1px solid rgba(120,180,220,.10);
-  border-bottom:1px solid rgba(120,180,220,.10);
-}
-.fx-market-data-shell{
-  width:min(1260px,calc(100% - 80px));
-  margin:0 auto;
-}
-.fx-market-data-heading{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:24px;
-  margin-bottom:22px;
-}
-.fx-market-data-eyebrow{
-  margin:0 0 8px;
-  color:#0baeff;
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:1.55px;
-  text-transform:uppercase;
-}
-.fx-market-data-heading h2{
-  margin:0;
-  color:#f5f8ff;
-  font-size:clamp(32px,3.05vw,44px);
-  line-height:1.05;
-  letter-spacing:-1.9px;
-  font-weight:800;
-}
-.fx-market-data-heading p:last-child{
-  margin:9px 0 0;
-  max-width:720px;
-  color:#9fb4c7;
-  font-size:13px;
-  line-height:1.6;
-}
-.fx-market-data-card{
-  width:100%;
-  min-height:320px;
-  overflow:hidden;
-  border:1px solid rgba(120,180,220,.14);
-  border-radius:12px;
-  background:#fff;
-  box-shadow:0 24px 70px rgba(0,0,0,.24);
-}
-.fx-market-data-card tv-market-data{
-  display:block;
-  width:100%;
-  min-height:320px;
-}
-@media(max-width:900px){
-  .fx-market-data-shell{width:92%}
-  .fx-market-data-section{padding:44px 0 50px}
-  .fx-market-data-card,
-  .fx-market-data-card tv-market-data{min-height:280px}
-}
-@media(max-width:480px){
-  .fx-market-data-shell{width:calc(100% - 24px)}
-  .fx-market-data-heading h2{font-size:32px}
-  .fx-market-data-card,
-  .fx-market-data-card tv-market-data{min-height:240px}
-}
-
-
-/* Canonical homepage order: Hero → Running Tape → Market Tickers → Market Data → Global Markets → Platforms → Accounts → Footer */
-main#top{
-  display:flex;
-  flex-direction:column;
-}
-main#top>*{order:10}
-main#top>.hero{order:1}
-main#top>.fx-site-running-tape{order:2}
-main#top>.fx-market-section{order:3}
-main#top>.fx-market-data-section{order:4}
-main#top>.market-categories{order:5}
-main#top>.platforms-section{order:6}
-main#top>.fx-accounts-section{order:7}
-
-.fx-site-running-tape{
-  width:100%;
-  min-height:46px;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
-  background:#06111f;
-  border-top:1px solid rgba(38,128,173,.35);
-  border-bottom:1px solid rgba(16,90,126,.45);
-}
-.fx-site-running-tape tv-ticker-tape{
-  display:block;
-  width:100%;
-  min-height:46px;
-}
-
-
-/* FINAL STATIC HOMEPAGE FLOW — do not let flex ordering move the market blocks */
-main#top{display:flex!important;flex-direction:column!important}
-main#top>*{order:10}
-main#top>.hero{order:1}
-main#top>.fx-site-running-tape{order:2}
-main#top>.fx-market-section{order:3}
-main#top>.fx-market-data-section{order:4}
-main#top>.market-categories{order:5}
-main#top>.platforms-section{order:6}
-main#top>.fx-accounts-section{order:7}
-
 .fx-site-running-tape{
   width:100%;
   height:48px;
   min-height:48px;
-  display:block;
   overflow:hidden;
   background:#061a2b;
   border-top:1px solid rgba(38,128,173,.35);
   border-bottom:1px solid rgba(16,90,126,.45);
-  position:relative;
-  z-index:2;
 }
 .fx-site-running-tape iframe{
   display:block;
   width:100%;
   height:48px;
-  min-height:48px;
+  border:0;
   margin:0;
   padding:0;
-  border:0;
 }
-
-
-/* FINAL CANONICAL HOMEPAGE FLOW */
-main#top{display:flex!important;flex-direction:column!important}
-main#top>*{order:0!important}
-main#top>.hero{order:1!important}
-main#top>.fx-site-running-tape{order:2!important}
-main#top>.fx-market-section{order:3!important}
-main#top>.fx-market-data-section{order:4!important}
-main#top>.market-categories{order:5!important}
-main#top>.platforms-section{order:6!important}
-main#top>.fx-accounts-section{order:7!important}
-
-.fx-site-running-tape{width:100%;height:48px;min-height:48px;display:block;overflow:hidden;background:#061a2b;border-top:1px solid rgba(38,128,173,.35);border-bottom:1px solid rgba(16,90,126,.45);position:relative;z-index:2}
-.fx-site-running-tape iframe{display:block;width:100%;height:48px;min-height:48px;border:0;margin:0;padding:0}
+@media(max-width:900px){
+  .fx-market-shell{width:92%}
+  .fx-market-heading{align-items:flex-start;flex-direction:column}
+  .fx-market-overview-card tv-market-overview{min-height:300px}
+}
+@media(max-width:480px){
+  .fx-market-section{padding:36px 0 46px}
+  .fx-market-shell{width:calc(100% - 24px)}
+  .fx-market-overview-card tv-market-overview{min-height:270px}
+}
