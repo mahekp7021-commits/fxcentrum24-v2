@@ -108,3 +108,19 @@
     min-height:250px;
   }
 }
+
+
+/* TradingView Tickers: blend directly into GO COIIN market section */
+.fx-market-tickers-card{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+}
+.fx-market-tickers-card tv-tickers{
+  --tv-widget-background-color:transparent;
+  display:block;
+  width:100%;
+  min-height:110px;
+  background:transparent!important;
+}
