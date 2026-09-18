@@ -16,11 +16,63 @@
     const link = document.createElement('link');
     link.id = 'gocoiin-global-premium-theme';
     link.rel = 'stylesheet';
-    link.href = prefix + 'premium-light.css?v=20260918-global-glossy3';
+    link.href = '/premium-light.css?v=20260918-global-glossy4';
     document.head.appendChild(link);
   }
 
   loadGlobalPremiumTheme();
+
+  function injectCriticalTheme() {
+    if (document.getElementById('gocoiin-critical-theme')) return;
+    const style = document.createElement('style');
+    style.id = 'gocoiin-critical-theme';
+    style.textContent = `
+      html body .site-header{position:sticky!important;top:0!important;z-index:5000!important;background:rgba(255,255,255,.96)!important;color:#17344c!important;box-shadow:0 8px 28px rgba(24,67,96,.10)!important;backdrop-filter:blur(18px) saturate(140%)!important;-webkit-backdrop-filter:blur(18px) saturate(140%)!important}
+      html body .site-header .nav-trigger,html body .site-header .nav-link{color:#294761!important}
+      html body .site-header .nav-trigger:hover,html body .site-header .nav-link:hover{color:#078fda!important}
+      html body .site-header .dropdown{background:rgba(255,255,255,.985)!important;color:#24445d!important;border-color:#d6e5ee!important;box-shadow:0 20px 48px rgba(27,68,98,.16)!important}
+      html body .site-header .dropdown a,html body .site-header .dropdown a span{color:#24445d!important;-webkit-text-fill-color:#24445d!important;opacity:1!important}
+      html body .site-header .dropdown a small{color:#6d8598!important;-webkit-text-fill-color:#6d8598!important;opacity:1!important}
+      html body .gocoiin-withdrawal-nav-link{color:#294761!important;-webkit-text-fill-color:#294761!important}
+      html body .btn-login,html body .btn-outline{background:#fff!important;color:#17344c!important;border-color:#bdd3e1!important}
+      @media(max-width:850px){
+        html body .site-header .main-nav,
+        html body .site-header .main-nav.is-open,
+        html body .site-header .main-nav.open{
+          position:absolute!important;top:100%!important;left:0!important;right:0!important;z-index:4999!important;
+          display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;
+          max-height:calc(100vh - 74px)!important;overflow:auto!important;
+          padding:10px 16px 20px!important;
+          background:rgba(255,255,255,.985)!important;color:#17344c!important;
+          border-top:1px solid #dce8ef!important;border-bottom:1px solid #dce8ef!important;
+          box-shadow:0 22px 45px rgba(20,67,96,.15)!important;
+          backdrop-filter:blur(18px) saturate(150%)!important;-webkit-backdrop-filter:blur(18px) saturate(150%)!important;
+        }
+        html body .site-header .main-nav:not(.is-open):not(.open){display:none!important}
+        html body .site-header .main-nav .nav-item{border-bottom:1px solid #e3edf3!important}
+        html body .site-header .main-nav .nav-trigger,
+        html body .site-header .main-nav .nav-link{
+          width:100%!important;height:auto!important;min-height:58px!important;padding:0 8px!important;
+          display:flex!important;align-items:center!important;justify-content:space-between!important;
+          color:#294761!important;background:transparent!important;
+        }
+        html body .site-header .main-nav .dropdown{
+          position:static!important;width:auto!important;padding:0 0 8px!important;
+          opacity:1!important;visibility:visible!important;transform:none!important;
+          background:transparent!important;border:0!important;box-shadow:none!important;
+        }
+        html body .site-header .main-nav .dropdown a{
+          color:#2a4a61!important;background:#f4faff!important;border-radius:9px!important;
+          margin:4px 0!important;padding:11px 12px!important;
+        }
+        html body .site-header .main-nav .dropdown a span{color:#2a4a61!important}
+        html body .site-header .main-nav .dropdown a small{color:#72889a!important}
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  injectCriticalTheme();
 
   function applyGoCoiinBrand() {
     const oldBrand = /FXCentrum24/gi;
