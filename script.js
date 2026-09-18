@@ -65,8 +65,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     const markup = await response.text();
     placeholder.insertAdjacentHTML("beforebegin", markup);
     placeholder.remove();
+
+    const marketOverview = document.querySelector(".fx-market-section");
+    if (marketOverview && !document.querySelector(".fx-market-data-section")) {
+      const marketDataResponse = await fetch("./sections/market-data.html", { cache: "no-cache" });
+      if (!marketDataResponse.ok) throw new Error(`Market Data section HTTP ${marketDataResponse.status}`);
+      marketOverview.insertAdjacentHTML("afterend", await marketDataResponse.text());
+    }
+
     initFxMarketOverview();
-  } catch (error) { console.error("FXCentrum24 market section failed to load:", error); }
+  } catch (error) { console.error("FXCentrum24 market sections failed to load:", error); }
 });
 
 function initFxMarketOverview() {
@@ -75,7 +83,7 @@ function initFxMarketOverview() {
   section.dataset.initialized = "true";
 
   const ensureElement = (name, src, dataAttr) => {
-    const tag = section.querySelector(name);
+    const tag = document.querySelector(name);
     if (!tag) return Promise.resolve();
 
     if (customElements.get(name)) return Promise.resolve();
