@@ -57,7 +57,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const cssId = "fx-market-overview-css";
     if (!document.getElementById(cssId)) {
       const link = document.createElement("link");
-      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css";
+      link.id = cssId;
+      link.rel = "stylesheet";
+      link.href = "./sections/market-overview.css?v=20260918-live-table";
       document.head.appendChild(link);
     }
     const response = await fetch("./sections/market-overview.html", { cache: "no-cache" });
@@ -66,166 +68,182 @@ document.addEventListener("DOMContentLoaded", async () => {
     placeholder.insertAdjacentHTML("beforebegin", markup);
     placeholder.remove();
     initFxMarketOverview();
-  } catch (error) { console.error("FXCentrum24 market section failed to load:", error); }
+  } catch (error) {
+    console.error("GO COIIN market section failed to load:", error);
+  }
 });
 
 function initFxMarketOverview() {
   const section = document.querySelector(".fx-market-section");
-  if (!section || section.dataset.initialized === "true") return;
+  const rowsHost = document.getElementById("fxMarketRows");
+  if (!section || !rowsHost || section.dataset.initialized === "true") return;
   section.dataset.initialized = "true";
-  const table = section.querySelector(".fx-market-table");
-  const tabs = [...section.querySelectorAll(".fx-market-tab")];
-  const chartHost = section.querySelector("#fxMarketChart");
-  const chartSymbol = section.querySelector("#fxChartSymbol");
-  const chartPair = section.querySelector("#fxChartPair");
-  const marketMeta = {
-    forex: { symbol: "FX:EURUSD", label: "EURUSD", name: "Euro / US Dollar" },
-    commodities: { symbol: "OANDA:XAUUSD", label: "XAUUSD", name: "Gold / US Dollar" },
-    indices: { symbol: "TVC:DJI", label: "US30", name: "Dow Jones Index" },
-    shares: { symbol: "NASDAQ:AAPL", label: "AAPL", name: "Apple Inc." },
-    crypto: { symbol: "COINBASE:BTCUSD", label: "BTCUSD", name: "Bitcoin / US Dollar" }
-  };
-  let activeCategory = "forex";
-  let tvReady = false;
-  const setActiveTab = category => {
-    activeCategory = category;
-    tabs.forEach(tab => {
-      const active = tab.dataset.marketTab === category;
-      tab.classList.toggle("is-active", active);
-      tab.setAttribute("aria-selected", active ? "true" : "false");
-    });
-    table.className = "fx-market-table";
-    if (category !== "forex") table.classList.add(`show-${category}`);
-    const meta = marketMeta[category];
-    if (meta) {
-      if (chartSymbol) chartSymbol.textContent = meta.label;
-      if (chartPair) chartPair.textContent = meta.label;
-      if (chartHost && tvReady) renderFxTradingView(meta.symbol);
-    }
-  };
-  tabs.forEach(tab => tab.addEventListener("click", () => setActiveTab(tab.dataset.marketTab)));
-  const loadTradingView = () => new Promise((resolve, reject) => {
-    if (window.TradingView) return resolve();
-    const existing = document.querySelector('script[data-fx-tradingview="true"]');
-    if (existing) {
-      existing.addEventListener("load", resolve, { once: true });
-      existing.addEventListener("error", reject, { once: true });
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = "https://s3.tradingview.com/tv.js"; script.async = true; script.dataset.fxTradingview = "true";
-    script.onload = resolve; script.onerror = reject; document.head.appendChild(script);
-  });
-  const renderFxTradingView = symbol => {
-    if (!chartHost || !window.TradingView) return;
-    chartHost.classList.remove("fx-chart-loaded");
-    chartHost.innerHTML = "<div class=\"fx-chart-loading\"><span></span><b>Loading market chart…</b></div>";
-    const widgetMount = document.createElement("div");
-    widgetMount.id = `fx-tv-${Date.now()}`; widgetMount.style.width = "100%"; widgetMount.style.height = "100%";
-    chartHost.appendChild(widgetMount);
-    new window.TradingView.widget({ autosize:true, symbol, interval:"15", timezone:"Asia/Kolkata", theme:"dark", style:"1", locale:"en", enable_publishing:false, hide_top_toolbar:false, hide_legend:false, save_image:false, hide_volume:false, allow_symbol_change:true, support_host:"https://www.tradingview.com", container_id:widgetMount.id });
-    window.setTimeout(() => chartHost.classList.add("fx-chart-loaded"), 850);
-  };
-  loadTradingView().then(() => { tvReady = true; renderFxTradingView(marketMeta[activeCategory].symbol); }).catch(error => {
-    console.error("TradingView failed to load:", error);
-    const loading = chartHost?.querySelector(".fx-chart-loading b");
-    if (loading) loading.textContent = "Market chart unavailable";
-  });
-}
 
-(() => {
-  const mountLiveTicker = async () => {
-    const section = document.querySelector(".fx-market-section");
-    if (!section || section.dataset.liveTickerMounted === "true") return;
-    section.dataset.liveTickerMounted = "true";
-    const wrap = document.createElement("div");
-    wrap.className = "fx-live-ticker-wrap"; wrap.setAttribute("aria-label", "Live market ticker");
-    wrap.innerHTML = `<div class="fx-live-ticker-fallback"><strong>LIVE MARKETS</strong><span>Loading current market prices…</span></div>`;
-    const shell = section.querySelector(".fx-market-shell");
-    if (!shell) return;
-    shell.insertBefore(wrap, shell.firstElementChild);
-    try {
-      await import("https://www.tradingview-widget.com/w/en/tv-ticker-tape.js");
-      const ticker = document.createElement("tv-ticker-tape");
-      ticker.setAttribute("symbols", "FX:EURUSD,FX:GBPUSD,FX:USDJPY,OANDA:XAUUSD,TVC:DJI,BITSTAMP:BTCUSD");
-      ticker.setAttribute("theme", "dark"); ticker.setAttribute("transparent", ""); ticker.setAttribute("locale", "en"); ticker.setAttribute("item-size", "compact"); ticker.setAttribute("show-hover", "false");
-      wrap.replaceChildren(ticker);
-    } catch (error) { console.error("FXCentrum24 live ticker failed to load:", error); }
-  };
-  const observeForMarketSection = () => {
-    mountLiveTicker();
-    if (document.querySelector(".fx-market-section")) return;
-    const observer = new MutationObserver(() => { if (document.querySelector(".fx-market-section")) { observer.disconnect(); mountLiveTicker(); } });
-    observer.observe(document.body, { childList:true, subtree:true });
-  };
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", observeForMarketSection, { once:true }); else observeForMarketSection();
-})();
-
-(() => {
-  const heroTicker = document.querySelector(".hero-ticker");
-  const track = heroTicker?.querySelector(".hero-ticker-track");
-  if (!heroTicker || !track) return;
-  const markets = [
-    { flag:"🇪🇺", symbol:"EURUSD", value:"1.0987", change:"+0.24%", tone:"positive" },
-    { flag:"🇬🇧", symbol:"GBPUSD", value:"1.2794", change:"-0.12%", tone:"negative" },
-    { flag:"🇺🇸", symbol:"USDJPY", value:"149.32", change:"+0.31%", tone:"positive" },
-    { flag:"🟡", symbol:"XAUUSD", value:"2,447.32", change:"+0.18%", tone:"positive" },
-    { flag:"🇺🇸", symbol:"US30", value:"40,823.6", change:"+0.36%", tone:"positive" },
-    { flag:"₿", symbol:"BTCUSD", value:"112,840", change:"+1.12%", tone:"positive" }
+  const cryptoMarkets = [
+    ["BTCUSDT","BTC","Bitcoin"],
+    ["SOLUSDT","SOL","Solana"],
+    ["ETHUSDT","ETH","Ethereum"],
+    ["BNBUSDT","BNB","BNB"],
+    ["DOGEUSDT","DOG","Dogecoin"],
+    ["NEARUSDT","NEA","NEAR Protocol"],
+    ["UNIUSDT","UNI","Uniswap"],
+    ["XRPUSDT","XRP","XRP"],
+    ["ARBUSDT","ARB","Arbitrum"],
+    ["SUIUSDT","SUI","Sui"],
+    ["ADAUSDT","ADA","Cardano"],
+    ["LINKUSDT","LIN","Chainlink"],
+    ["PEPEUSDT","PEP","Pepe"],
+    ["AVAXUSDT","AVA","Avalanche"],
+    ["AAVEUSDT","AAV","Aave"],
+    ["TRXUSDT","TRX","TRON"],
+    ["BCHUSDT","BCH","Bitcoin Cash"],
+    ["LTCUSDT","LTC","Litecoin"],
+    ["APTUSDT","APT","Aptos"],
+    ["FETUSDT","FET","Fetch.ai"],
+    ["DOTUSDT","DOT","Polkadot"],
+    ["FILUSDT","FIL","Filecoin"],
+    ["INJUSDT","INJ","Injective"],
+    ["OPUSDT","OP","Optimism"],
+    ["SANDUSDT","SAN","The Sandbox"],
+    ["POLUSDT","POL","Polygon"],
+    ["GRTUSDT","GRT","The Graph"],
+    ["IMXUSDT","IMX","Immutable X"],
+    ["MKRUSDT","MKR","Maker"],
+    ["TONUSDT","TON","Toncoin"],
+    ["ATOMUSDT","ATO","Cosmos"],
+    ["ALGOUSDT","ALG","Algorand"],
+    ["XLMUSDT","XLM","Stellar"],
+    ["HBARUSDT","HBA","Hedera"],
+    ["ETCUSDT","ETC","Ethereum Classic"],
+    ["ICPUSDT","ICP","Internet Computer"],
+    ["SEIUSDT","SEI","Sei"],
+    ["TIAUSDT","TIA","Celestia"],
+    ["SHIBUSDT","SHI","Shiba Inu"]
   ];
-  const createItems = () => markets.map(market => {
-    const item = document.createElement("span"); item.className = "hero-ticker-item";
-    item.innerHTML = `<span class="hero-ticker-icon" aria-hidden="true">${market.flag}</span><strong>${market.symbol}</strong><b>${market.value}</b><i class="${market.tone}">${market.change}</i>`;
-    return item;
-  });
-  const fallback = document.createElement("div"); fallback.className = "hero-ticker-fallback-track"; fallback.append(...createItems(), ...createItems()); track.replaceChildren(fallback);
-  const setFallbackSpeed = () => {
-    const firstSet = [...fallback.children].slice(0, markets.length); const gap = parseFloat(getComputedStyle(fallback).gap) || 0;
-    const width = firstSet.reduce((total,item)=>total+item.getBoundingClientRect().width,0)+gap*(markets.length-1);
-    fallback.style.setProperty("--hero-ticker-distance", `${width}px`);
-  };
-  requestAnimationFrame(setFallbackSpeed); window.addEventListener("resize", setFallbackSpeed, { passive:true });
-  import("https://www.tradingview-widget.com/w/en/tv-ticker-tape.js").then(() => {
-    const ticker = document.createElement("tv-ticker-tape");
-    ticker.setAttribute("symbols","FX:EURUSD,FX:GBPUSD,FX:USDJPY,OANDA:XAUUSD,TVC:DJI,BITSTAMP:BTCUSD"); ticker.setAttribute("theme","dark"); ticker.setAttribute("transparent",""); ticker.setAttribute("locale","en"); ticker.setAttribute("item-size","compact"); ticker.setAttribute("show-hover","false"); ticker.className="hero-tradingview-ticker";
-    track.replaceChildren(ticker); heroTicker.classList.add("is-live");
-  }).catch(error => console.warn("Hero TradingView ticker unavailable; using animated fallback.", error));
-})();
 
-(() => {
-  const installFinalMarketPatch = () => {
-    const section = document.querySelector(".fx-market-section");
-    const heroTicker = document.querySelector(".hero-ticker"); const track = heroTicker?.querySelector(".hero-ticker-track");
-    if (!section) return false;
-    if (track) track.style.animation = "none";
-    section.querySelectorAll(".fx-market-table tbody tr").forEach(row => {
-      const trendCell = row.children[5]; if (!trendCell || trendCell.querySelector(".fx-trade-action")) return;
-      const button = document.createElement("button"); button.type="button"; button.className="fx-trade-action"; button.textContent="Trade";
-      button.setAttribute("aria-label", `Trade ${row.querySelector("td strong")?.textContent || "market"}`);
-      button.addEventListener("click", () => { const accountLink=document.querySelector('a[href="#open-account"].btn-primary'); if(accountLink) accountLink.click(); }); trendCell.appendChild(button);
+  const number = value => {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return "—";
+    if (n >= 1000) return n.toLocaleString("en-US",{maximumFractionDigits:2});
+    if (n >= 1) return n.toLocaleString("en-US",{maximumFractionDigits:4});
+    return n.toLocaleString("en-US",{maximumFractionDigits:8});
+  };
+  const volume = value => {
+    const n=Number(value);
+    if(!Number.isFinite(n)) return "—";
+    if(n>=1e9) return (n/1e9).toFixed(2)+"B";
+    if(n>=1e6) return (n/1e6).toFixed(2)+"M";
+    if(n>=1e3) return (n/1e3).toFixed(2)+"K";
+    return n.toFixed(2);
+  };
+  const iconColors = ["#ff9d19","#8f43f5","#617fe9","#ebb21a","#cdb12b","#45a7ee","#7f4ee9","#3577ba","#6b61df","#58a6ed"];
+
+  let marketData = [];
+  let activeFilter = "all";
+  let search = "";
+
+  const renderFeatured = gold => {
+    const featured = section.querySelectorAll(".fx-featured-card");
+    featured.forEach(card=>{
+      const symbol=card.dataset.symbol;
+      let d = marketData.find(x=>x.symbol===symbol);
+      if(symbol==="XAUUSD") d=gold;
+      if(!d) return;
+      const price=card.querySelector(".price");
+      const change=card.querySelector(".change");
+      price.textContent=number(d.price);
+      change.textContent=(d.change==null?"—":(d.change>=0?"+":"")+Number(d.change).toFixed(2)+"%");
+      change.classList.toggle("negative",Number(d.change)<0);
     });
-    if (!document.getElementById("fx-final-market-patch-style")) {
-      const style=document.createElement("style"); style.id="fx-final-market-patch-style"; style.textContent=`html body .fx-market-table td:nth-child(6)::after{display:none!important}html body .fx-market-table td:nth-child(6){padding-right:76px!important}html body .fx-trade-action{position:absolute;top:50%;right:9px;transform:translateY(-50%);min-width:55px;height:25px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(12,169,247,.62);border-radius:5px;color:#dff5ff;background:rgba(3,28,47,.76);box-shadow:inset 0 0 12px rgba(11,174,255,.05);font:700 8px/1 Inter,Arial,sans-serif;cursor:pointer}html body .fx-trade-action:hover{border-color:#16a9ff;background:rgba(8,53,79,.9);color:#fff}`; document.head.appendChild(style);
-    }
-    return true;
   };
-  if (!installFinalMarketPatch()) { const observer=new MutationObserver(()=>{if(installFinalMarketPatch()) observer.disconnect();}); observer.observe(document.body,{childList:true,subtree:true}); }
-})();
 
-(() => {
-  const loadMarketCategories = async () => {
-    if (document.querySelector(".market-categories")) return true;
-    const marketSection=document.querySelector(".fx-market-section"); if(!marketSection) return false;
-    try {
-      const cssId="fx-market-categories-css";
-      if(!document.getElementById(cssId)){const link=document.createElement("link");link.id=cssId;link.rel="stylesheet";link.href="./sections/market-categories.css";document.head.appendChild(link);}
-      const response=await fetch("./sections/market-categories.html",{cache:"no-cache"}); if(!response.ok) throw new Error(`Market categories HTTP ${response.status}`);
-      const markup=await response.text(); marketSection.insertAdjacentHTML("afterend",markup); return true;
-    } catch(error){console.error("FXCentrum24 market categories failed to load:",error);return false;}
+  const renderRows = gold => {
+    const all = [...marketData];
+    const goldRow = gold ? [{symbol:"XAUUSD",code:"XAU",name:"Gold",price:gold.price,change:gold.change,high:null,low:null,volume:null,isGold:true}] : [];
+    let filtered=[...all,...goldRow];
+    if(activeFilter==="gainers") filtered=filtered.filter(x=>Number(x.change)>0);
+    if(activeFilter==="losers") filtered=filtered.filter(x=>Number(x.change)<0);
+    if(search) {
+      const q=search.toLowerCase();
+      filtered=filtered.filter(x=>String(x.code+" "+x.symbol+" "+x.name).toLowerCase().includes(q));
+    }
+
+    rowsHost.innerHTML=filtered.map((d,i)=>{
+      const change=Number(d.change);
+      const cls=Number.isFinite(change)?(change>=0?"fx-positive":"fx-negative"):"";
+      return `<tr data-change="${Number.isFinite(change)?change:0}">
+        <td>${i+1}</td>
+        <td><div class="fx-pair"><span class="fx-row-icon" style="background:${iconColors[i%iconColors.length]}">${d.code}</span><span><strong>${d.code}/USDT</strong><small>${d.name}</small></span></div></td>
+        <td class="fx-price">${number(d.price)}</td>
+        <td class="${cls}">${Number.isFinite(change)?((change>=0?"+":"")+change.toFixed(2)+"%"):"—"}</td>
+        <td>${number(d.high)}</td>
+        <td>${number(d.low)}</td>
+        <td>${volume(d.volume)}</td>
+        <td><button class="fx-trade-btn" type="button" data-trade-symbol="${d.symbol}">Trade</button></td>
+      </tr>`;
+    }).join("") || '<tr><td colspan="8" class="fx-loading-row">No markets matched your search.</td></tr>';
+
+    rowsHost.querySelectorAll("[data-trade-symbol]").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        window.location.href="https://fxcetrumrealmt5.tgsm.io/";
+      });
+    });
   };
-  const start=async()=>{if(await loadMarketCategories())return;const observer=new MutationObserver(async()=>{if(await loadMarketCategories())observer.disconnect();});observer.observe(document.body,{childList:true,subtree:true});};
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
-})();
+
+  const fetchCrypto = async () => {
+    const symbols=cryptoMarkets.map(x=>x[0]);
+    const url="https://api.binance.com/api/v3/ticker/24hr?symbols="+encodeURIComponent(JSON.stringify(symbols));
+    const response=await fetch(url,{cache:"no-store"});
+    if(!response.ok) throw new Error("Binance HTTP "+response.status);
+    const data=await response.json();
+    const map=new Map(data.map(x=>[x.symbol,x]));
+    marketData=cryptoMarkets.filter(x=>map.has(x[0])).map((x,idx)=>{
+      const d=map.get(x[0]);
+      return {symbol:x[0],code:x[1],name:x[2],price:Number(d.lastPrice),change:Number(d.priceChangePercent),high:Number(d.highPrice),low:Number(d.lowPrice),volume:Number(d.quoteVolume)};
+    });
+  };
+
+  const fetchGold = async () => {
+    try {
+      const response=await fetch("https://xaus.com/api/v1/spot",{cache:"no-store"});
+      if(!response.ok) throw new Error("XAUS HTTP "+response.status);
+      const d=await response.json();
+      return {symbol:"XAUUSD",code:"XAU",name:"Gold",price:Number(d.spot_usd_oz ?? d.xau?.price),change:null,high:null,low:null,volume:null,isGold:true};
+    } catch(error) {
+      console.warn("XAU feed unavailable",error);
+      return null;
+    }
+  };
+
+  const update = async () => {
+    try {
+      await Promise.all([fetchCrypto(), fetchGold().then(g=>{ update.gold=g; })]);
+      renderFeatured(update.gold);
+      renderRows(update.gold);
+      const count=marketData.length+(update.gold?1:0);
+      const countNode=document.getElementById("fxPairCount");
+      if(countNode) countNode.textContent=count+" pairs";
+      const updated=document.getElementById("fxUpdatedAt");
+      if(updated) updated.textContent="Updated "+new Date().toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+    } catch(error) {
+      console.error("Live market feed failed",error);
+      if(!marketData.length) rowsHost.innerHTML='<tr><td colspan="8" class="fx-loading-row">Live market data is temporarily unavailable. Please try again shortly.</td></tr>';
+    }
+  };
+  update.gold=null;
+
+  section.querySelectorAll(".fx-market-tab").forEach(tab=>{
+    tab.addEventListener("click",()=>{
+      activeFilter=tab.dataset.filter||"all";
+      section.querySelectorAll(".fx-market-tab").forEach(t=>t.classList.toggle("is-active",t===tab));
+      renderRows(update.gold);
+    });
+  });
+  const searchInput=document.getElementById("fxMarketSearch");
+  searchInput?.addEventListener("input",()=>{search=searchInput.value.trim();renderRows(update.gold);});
+  update();
+  window.setInterval(update,30000);
+}
 
 /* =========================================================
    FXCENTRUM24 — SECTION 04: ACCOUNT TYPES + PARTNERSHIP
