@@ -1,4 +1,4 @@
-<!-- GO COIIN — MARKET OVERVIEW / TRADINGVIEW MARKET SUMMARY -->
+<!-- GO COIIN — MARKET OVERVIEW / TRADINGVIEW TICKERS -->
 <section class="fx-market-section" id="markets" aria-labelledby="marketSectionTitle">
   <div class="fx-market-strip" aria-label="Live market prices">
     <iframe src="./widgets/finlogix-strip.html" title="Finlogix live market prices" scrolling="no"></iframe>
@@ -8,14 +8,15 @@
     <div class="fx-market-heading">
       <div>
         <p class="fx-market-eyebrow">LIVE MARKET OVERVIEW</p>
-        <h2 id="marketSectionTitle">Market Summary</h2>
+        <h2 id="marketSectionTitle">Market Tickers</h2>
         <p class="fx-market-subtitle">Track multiple global markets in one live view.</p>
       </div>
       <a class="fx-market-all" href="./markets/forex.html"><span>View All Markets</span><b aria-hidden="true">→</b></a>
     </div>
 
-    <div class="fx-market-summary-card" aria-label="TradingView Market Summary">
-      <tv-market-summary direction="horizontal"></tv-market-summary>
+    <div class="fx-market-summary-card" aria-label="TradingView Market Tickers">
+      <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-tickers.js"></script>
+      <tv-tickers symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FX:EURUSD,BITSTAMP:ETHUSD,OANDA:XAUUSD,NASDAQ:AAPL" hide-chart theme="light" transparent></tv-tickers>
     </div>
   </div>
 </section>
