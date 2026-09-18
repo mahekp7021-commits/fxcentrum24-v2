@@ -91,41 +91,56 @@ function initFxMarketOverview() {
     return customElements.whenDefined(name);
   };
 
-  const loadForexScreener = () => {
-    // Market Data is a sibling of the Market Tickers section, so query the page,
-    // not the ticker section itself.
+  const loadAdvancedChart = () => {
     const container = document.querySelector(".fx-market-data-section .tradingview-widget-container");
-    if (!container || container.dataset.gocoiinScreenerLoaded === "true") return Promise.resolve();
+    if (!container || container.dataset.gocoiinAdvancedChartLoaded === "true") return Promise.resolve();
 
     const widgetHost = container.querySelector(".tradingview-widget-container__widget");
     if (!widgetHost) return Promise.resolve();
 
-    container.dataset.gocoiinScreenerLoaded = "true";
+    container.dataset.gocoiinAdvancedChartLoaded = "true";
 
     const widgetScript = document.createElement("script");
     widgetScript.type = "text/javascript";
     widgetScript.async = true;
-    widgetScript.src = "https://s3.tradingview.com/external-embedding/embed-widget-screener.js";
+    widgetScript.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
     widgetScript.text = JSON.stringify({
-      market: "forex",
-      showToolbar: true,
-      defaultColumn: "performance",
-      defaultScreen: "general",
-      isTransparent: false,
+      allow_symbol_change: true,
+      calendar: false,
+      details: true,
+      hide_side_toolbar: false,
+      hide_top_toolbar: false,
+      hide_legend: false,
+      hide_volume: false,
+      hotlist: true,
+      interval: "D",
       locale: "en",
-      colorTheme: "light",
-      width: "100%",
-      height: 550
+      save_image: true,
+      style: "1",
+      symbol: "OANDA:XAUUSD",
+      theme: "light",
+      timezone: "Etc/UTC",
+      backgroundColor: "#ffffff",
+      gridColor: "rgba(46, 46, 46, 0.2)",
+      watchlist: [],
+      withdateranges: true,
+      range: "YTD",
+      compareSymbols: [],
+      support_host: "https://www.tradingview.com",
+      show_popup_button: true,
+      popup_height: "650",
+      popup_width: "1000",
+      studies: [],
+      autosize: true
     });
 
-    // Keep the TradingView widget exactly in the section's widget host.
     widgetHost.appendChild(widgetScript);
     return Promise.resolve();
   };
 
   Promise.all([
     ensureElement("tv-tickers", "https://widgets.tradingview-widget.com/w/en/tv-tickers.js", "gocoiinTradingviewTickers"),
-    loadForexScreener()
+    loadAdvancedChart()
   ]).catch(error => {
     console.error("GO COIIN TradingView widgets failed to load:", error);
   });
