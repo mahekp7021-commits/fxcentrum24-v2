@@ -257,3 +257,33 @@ html body .fx-market-section .fx-market-tickers-card{
     min-height:550px;
   }
 }
+
+/* Advanced chart host */
+.fx-market-data-section .tradingview-widget-container{
+  width:100%!important;
+  height:650px!important;
+  min-height:650px!important;
+  background:#fff!important;
+  overflow:hidden;
+}
+.fx-market-data-section .tradingview-widget-container__widget{
+  width:100%!important;
+  height:calc(100% - 32px)!important;
+  min-height:618px!important;
+}
+.fx-market-data-section .tradingview-widget-copyright{
+  height:32px!important;
+  box-sizing:border-box;
+  padding:5px 10px!important;
+  background:#fff!important;
+  font-size:10px!important;
+}
+@media(max-width:900px){
+  .fx-market-data-section .tradingview-widget-container{
+    height:620px!important;
+    min-height:620px!important;
+  }
+  .fx-market-data-section .tradingview-widget-container__widget{
+    min-height:588px!important;
+  }
+}
