@@ -10,22 +10,173 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#06111f;--card:#0a1b2d;--text:#fff;--muted:#9eb1c4;--blue:#00a8ff;--red:#ff3154;--border:rgba(120,180,220,.16)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}
-.site-header{position:sticky;top:0;z-index:1000;height:70px;background:rgba(3,13,24,.96);border-bottom:1px solid rgba(120,180,220,.12);backdrop-filter:blur(12px)}.header-inner{width:92%;max-width:1320px;height:100%;margin:auto;display:flex;align-items:center;gap:22px}.brand{display:flex;align-items:center;gap:10px;min-width:150px}.brand-mark{width:28px;height:27px;display:flex;align-items:flex-end;gap:2px}.brand-mark i{width:5px;display:block;border-radius:2px 2px 0 0;background:#16a9ff}.brand-mark i:nth-child(1){height:9px;background:#ff3850}.brand-mark i:nth-child(2){height:14px}.brand-mark i:nth-child(3){height:21px}.brand-mark i:nth-child(4){height:27px;background:#22a8ff}.brand-name{font-size:18px;font-weight:800;letter-spacing:-.7px}.brand-name strong{color:var(--red)}.brand-tagline{display:block;margin-top:2px;color:#71879b;font-size:7px;letter-spacing:.45px}
-.main-nav{display:flex;align-items:center;gap:2px;flex:1}.main-nav a{padding:10px 9px;color:#d9e6f2;font-size:11px;font-weight:700}.main-nav a:hover{color:#fff}.header-actions{display:flex;gap:8px;margin-left:auto}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 16px;border-radius:8px;border:1px solid rgba(120,180,220,.25);background:#081827;color:#fff;font-size:11px;font-weight:800}.btn-primary{border-color:transparent;background:linear-gradient(135deg,var(--red),#ff4766)}.menu-toggle{display:none;width:45px;height:45px;border:1px solid rgba(120,180,220,.24);border-radius:10px;background:#071725}.menu-toggle span{display:block;width:23px;height:3px;margin:4px auto;background:#fff;border-radius:3px}
-.page{width:min(1120px,92%);margin:0 auto;padding:58px 0 90px}.hero-title{font-size:clamp(38px,5vw,58px);margin:0;letter-spacing:-2px}.hero-title span{color:var(--blue)}.hero-copy{max-width:760px;margin:13px 0 30px;color:var(--muted);font-size:13px;line-height:1.75}
-.form-card{padding:30px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,#0b2034,#071725);box-shadow:0 24px 70px rgba(0,0,0,.22)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field label{display:block;margin:0 0 8px;color:#dceeff;font-size:11px;font-weight:700}.field input,.field select{width:100%;height:48px;padding:0 13px;border:1px solid rgba(120,180,220,.17);border-radius:8px;background:#061421;color:#fff;outline:none}.form-actions{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}.status{margin:16px 0 0;color:#8fa5ba;font-size:11px;line-height:1.6}.notice{margin-top:18px;padding:12px 14px;border:1px solid rgba(120,180,220,.15);border-radius:9px;background:#081827;color:#8fa5ba;font-size:10px}
-@media(max-width:850px){.site-header{height:70px}.header-inner{gap:10px}.main-nav{display:none}.header-actions{order:2}.menu-toggle{display:block;order:3}.brand{min-width:120px}.brand-name{font-size:15px}.brand-tagline{font-size:6px}.header-actions .btn{min-height:40px;padding:0 11px;font-size:9px}.form-grid{grid-template-columns:1fr}.page{padding-top:38px}.form-card{padding:20px}}
+:root{
+  --bg:#f4f8fc;--card:#ffffff;--text:#17344c;--muted:#667d90;
+  --blue:#0b9ff0;--red:#ff3154;--border:#d8e6ef;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 8% 0%,rgba(11,159,240,.07),transparent 28%),
+    linear-gradient(180deg,#f8fbfe 0%,#eef5fa 100%);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow-x:hidden;
+}
+a{text-decoration:none}
+button,input,select,textarea{font:inherit}
+.site-header{
+  position:sticky;top:0;z-index:5000;height:76px;
+  background:rgba(255,255,255,.94);
+  border-bottom:1px solid #d8e6ef;
+  box-shadow:0 8px 28px rgba(27,73,103,.08);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+}
+.header-inner{
+  width:min(1320px,92%);height:100%;margin:auto;
+  display:flex;align-items:center;gap:18px;
+}
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0;color:#17344c}
+.brand-mark{width:31px;height:29px;display:flex;align-items:flex-end;gap:3px}
+.brand-mark i{display:block;width:5px;border-radius:2px 2px 0 0;background:#16a9ff}
+.brand-mark i:nth-child(1){height:9px;background:#ff3850}.brand-mark i:nth-child(2){height:15px}.brand-mark i:nth-child(3){height:22px}.brand-mark i:nth-child(4){height:29px;background:#22a8ff}
+.brand-name{font-size:19px;line-height:1;font-weight:800;letter-spacing:-.7px}.brand-name strong{color:var(--red)}
+.brand-tagline{display:block;margin-top:3px;color:#7b8f9f;font-size:7px;letter-spacing:.45px}
+.main-nav{display:flex;align-items:center;gap:2px;margin-left:auto}
+.nav-item{position:relative}
+.nav-trigger,.nav-link{
+  height:76px;padding:0 10px;border:0;background:transparent;
+  color:#294761;display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:750;cursor:pointer;white-space:nowrap;
+  transition:color .2s ease,transform .2s ease;
+}
+.nav-trigger:hover,.nav-link:hover,.nav-item:hover>.nav-trigger{
+  color:#078fda;transform:translateY(-1px);
+}
+.nav-trigger em{font-style:normal;font-size:9px;color:#7a90a2}
+.dropdown{
+  position:absolute;left:0;top:calc(100% - 1px);width:255px;padding:9px;
+  background:rgba(255,255,255,.985);
+  border:1px solid #d5e4ee;border-radius:12px;
+  box-shadow:0 20px 48px rgba(27,68,98,.16);
+  opacity:0;visibility:hidden;transform:translateY(7px);
+  transition:opacity .22s ease,visibility .22s ease,transform .22s ease;
+}
+.nav-item:hover>.dropdown,.nav-item.is-open>.dropdown{
+  opacity:1;visibility:visible;transform:none;
+}
+.dropdown a{
+  display:flex;flex-direction:column;gap:3px;padding:12px 13px;border-radius:8px;
+  color:#24445d;transition:background .2s ease,color .2s ease,transform .2s ease;
+}
+.dropdown a:hover{
+  background:linear-gradient(135deg,#edf8ff,#f7fcff);
+  color:#078fda;transform:translateX(2px);
+  box-shadow:inset 3px 0 0 #0b9ff0;
+}
+.dropdown span{font-size:12px;font-weight:750;color:#24445d}
+.dropdown small{font-size:10px;line-height:1.35;color:#71879a}
+.header-actions{display:flex;gap:8px;margin-left:10px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;min-height:44px;
+  padding:0 16px;border-radius:9px;font-size:11px;font-weight:800;
+  border:1px solid #c6d8e4;background:#fff;color:#17344c;
+  box-shadow:0 7px 18px rgba(27,73,103,.05);
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease,background .22s ease,color .22s ease;
+}
+.btn:hover{transform:translateY(-2px);border-color:#8fc7e3;box-shadow:0 12px 24px rgba(11,159,240,.10);color:#078fda}
+.btn-primary{
+  border-color:transparent!important;
+  color:#fff!important;
+  background:linear-gradient(180deg,#ff4962,#ff3152)!important;
+  box-shadow:0 10px 26px rgba(255,59,89,.22)!important;
+}
+.btn-primary:hover{color:#fff!important;box-shadow:0 16px 34px rgba(255,59,89,.30)!important}
+.menu-toggle{
+  display:none;width:46px;height:46px;margin-left:auto;
+  border:1px solid #c5d9e5;border-radius:10px;background:#fff;
+}
+.menu-toggle span{display:block;width:23px;height:3px;margin:4px auto;background:#17344c;border-radius:3px}
+.page{width:min(1120px,92%);margin:0 auto;padding:60px 0 90px}
+.hero-title{margin:0;font-size:clamp(38px,5vw,58px);letter-spacing:-2px;color:#10263d}.hero-title span{color:#0b9ff0}
+.hero-copy{max-width:780px;margin:14px 0 32px;color:#667d90;font-size:13px;line-height:1.8}
+.form-card{
+  position:relative;overflow:hidden;padding:30px;
+  border:1px solid #d1e3ed;border-radius:20px;
+  background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(241,248,252,.98));
+  box-shadow:0 22px 52px rgba(28,77,108,.11);
+}
+.form-card:before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(120deg,rgba(11,159,240,.08),transparent 28%,transparent 72%,rgba(255,255,255,.55));
+}
+.form-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field label{display:block;margin:0 0 8px;color:#294a61;font-size:11px;font-weight:750}
+.field label span{color:#7890a2!important}
+.field input,.field select{
+  width:100%;height:48px;padding:0 13px;border:1px solid #cbdde8;border-radius:9px;
+  background:#fff;color:#19364e;outline:none;
+  box-shadow:0 4px 12px rgba(27,76,106,.04);
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.field input:focus,.field select:focus{
+  border-color:#69b9de;box-shadow:0 0 0 4px rgba(11,159,240,.10),0 10px 24px rgba(27,76,106,.07);
+}
+.form-actions{position:relative;z-index:1;display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.status,.notice{position:relative;z-index:1}.status{margin:16px 0 0;color:#6a8192;font-size:11px;line-height:1.6}.notice{margin-top:18px;padding:12px 14px;border:1px solid #d4e4ed;border-radius:10px;background:#edf7fc;color:#60788b;font-size:10px}
+@media(max-width:1050px){
+  .main-nav{gap:0}
+  .nav-trigger,.nav-link{padding:0 8px;font-size:10px}
+}
+@media(max-width:850px){
+  .site-header{height:74px}
+  .header-inner{width:calc(100% - 28px)}
+  .header-actions{display:none}
+  .menu-toggle{display:block}
+  .main-nav{
+    position:fixed;top:74px;left:0;right:0;bottom:0;
+    display:none;padding:10px 16px 24px;overflow:auto;
+    background:rgba(255,255,255,.985);
+    border-top:1px solid #dce8ef;border-bottom:1px solid #dce8ef;
+    box-shadow:0 22px 45px rgba(20,67,96,.15);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  }
+  .main-nav.is-open{display:block}
+  .nav-item{border-bottom:1px solid #e3edf3}
+  .nav-trigger,.nav-link{width:100%;height:58px;padding:0 8px;justify-content:space-between;font-size:15px}
+  .nav-link{justify-content:flex-start}
+  .dropdown{
+    position:static;width:auto;padding:0 0 8px;
+    opacity:1;visibility:visible;transform:none;
+    background:transparent;border:0;box-shadow:none;display:none;
+  }
+  .nav-item.is-open>.dropdown{display:block}
+  .dropdown a{margin:4px 0;padding:11px 12px;background:#f4faff}
+  .dropdown span{font-size:13px}.dropdown small{font-size:10px}
+  .page{padding-top:38px}.form-card{padding:20px}.form-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 <header class="site-header" id="siteHeader">
 <div class="header-inner">
-<a href="../index.html" class="brand" aria-label="GO COIIN Home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-text"><span class="brand-name"><strong>GO</strong> COIIN</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span></a>
+<a href="../index.html" class="brand" aria-label="GO COIIN Home">
+  <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  <span class="brand-text"><span class="brand-name"><strong>GO</strong> COIIN</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span>
+</a>
 <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNavigation"><span></span><span></span><span></span></button>
 <nav class="main-nav" id="mainNavigation" aria-label="Main Navigation">
-<a href="../markets/forex.html">Markets</a><a href="../trading/how-to-start.html">Trading</a><a href="../platforms/metatrader-5.html">Platforms</a><a href="../trading/account-types.html">Accounts</a><a href="../tools/live-markets.html">Tools</a><a href="../company/about.html">Company</a><a href="../partnership/index.html">Partnership</a>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Markets</span><em>⌄</em></button><div class="dropdown"><a href="../markets/forex.html"><span>Forex</span><small>Major & minor currency pairs</small></a><a href="../markets/commodities.html"><span>Commodities</span><small>Gold, oil, silver & more</small></a><a href="../markets/indices.html"><span>Indices</span><small>Global stock indices</small></a><a href="../markets/shares-cfds.html"><span>Shares CFDs</span><small>Global company shares</small></a><a href="../markets/cryptocurrency.html"><span>Cryptocurrency</span><small>Popular digital assets</small></a></div></div>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Trading</span><em>⌄</em></button><div class="dropdown"><a href="../trading/account-types.html"><span>Account Types</span><small>Choose your trading account</small></a><a href="../trading/trading-conditions.html"><span>Trading Conditions</span><small>Spreads, execution & more</small></a><a href="../trading/platforms.html"><span>Platforms</span><small>Trade across every device</small></a><a href="../trading/how-to-start.html"><span>How to Start</span><small>Start trading in 3 steps</small></a></div></div>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Platforms</span><em>⌄</em></button><div class="dropdown"><a href="../platforms/metatrader-4.html"><span>MetaTrader 4</span><small>Classic professional trading</small></a><a href="../platforms/metatrader-5.html"><span>MetaTrader 5</span><small>Advanced multi-asset platform</small></a><a href="../platforms/webtrader.html"><span>WebTrader</span><small>Trade directly from your browser</small></a></div></div>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Accounts</span><em>⌄</em></button><div class="dropdown"><a href="../accounts/standard.html"><span>Standard</span><small>Simple & flexible trading</small></a><a href="../accounts/premium.html"><span>Premium</span><small>Enhanced trading conditions</small></a><a href="../accounts/professional.html"><span>Professional</span><small>Designed for active traders</small></a></div></div>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Tools</span><em>⌄</em></button><div class="dropdown"><a href="../tools/economic-calendar.html"><span>Economic Calendar</span><small>Track important market events</small></a></div></div>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Company</span><em>⌄</em></button><div class="dropdown"><a href="../company/about.html"><span>About Us</span><small>Discover GO COIIN</small></a><a href="../company/contact.html"><span>Contact Us</span><small>We're here to help</small></a><a href="../company/benefits.html"><span>Benefits</span><small>Why trade with us</small></a></div></div>
+<a href="../partnership/index.html" class="nav-link">Partnership</a>
+<a href="./withdrawal.html" class="nav-link" aria-current="page">Withdrawal</a>
 </nav>
 <div class="header-actions"><a href="https://fxcetrumrealmt5.tgsm.io/" class="btn btn-login">Login</a><a href="./account-opening.html" class="btn btn-primary">Open Account</a></div>
 </div>
@@ -79,5 +230,5 @@ withdrawalForm?.addEventListener('submit',async e=>{
   }
 });
 </script>
-<script src="../site-fixes.js?v=20260918-withdrawal" defer></script>
+<script src="../site-fixes.js?v=20260918-withdrawal2" defer></script>
 </body></html>
