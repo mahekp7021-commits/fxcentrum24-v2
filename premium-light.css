@@ -1151,3 +1151,22 @@ html body .referral-highlight:hover::before,
 html body .form-shell:hover::before{
   opacity:1;
 }
+
+
+/* FINAL GLOBAL NAV CLEANUP — Live Markets has been retired */
+html body .main-nav a[href*="tools/live-markets.html"],
+html body .main-nav a[href$="live-markets.html"]{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  width:0!important;
+  min-width:0!important;
+  max-width:0!important;
+  height:0!important;
+  min-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  overflow:hidden!important;
+}
+html body .main-nav .nav-item .dropdown a:has(+ *){}
