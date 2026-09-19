@@ -1170,3 +1170,164 @@ html body .main-nav a[href$="live-markets.html"]{
   overflow:hidden!important;
 }
 html body .main-nav .nav-item .dropdown a:has(+ *){}
+
+
+/* =========================================================
+   PARTNERSHIP ACCOUNT REGISTRATION — LIGHT GLOSSY OVERRIDES
+   ========================================================= */
+html body .trust-item,
+html body .steps-card,
+html body .partner-note,
+html body .form-card,
+html body .choice label,
+html body .password-meter{
+  color:#17344c!important;
+}
+html body .trust-item,
+html body .steps-card{
+  background:linear-gradient(145deg,#ffffff 0%,#f1f8fc 100%)!important;
+  border:1px solid #d2e3ed!important;
+  box-shadow:0 14px 34px rgba(27,74,103,.09)!important;
+}
+html body .trust-item strong,
+html body .steps-card h3{
+  color:#17344c!important;
+}
+html body .trust-item span,
+html body .step-mini,
+html body .step-mini .n,
+html body .partner-note{
+  color:#657c8f!important;
+}
+html body .step-mini{
+  border-bottom-color:#e1ecf2!important;
+}
+html body .step-mini.active{
+  color:#173f5b!important;
+}
+html body .step-mini .n{
+  background:#edf8fd!important;
+  border-color:#c5deec!important;
+}
+html body .step-mini.active .n{
+  color:#078fda!important;
+  border-color:#78bfdf!important;
+  background:#e8f7fd!important;
+}
+html body .step-mini.complete .n{
+  color:#009b78!important;
+  border-color:#8ad8c3!important;
+  background:#e9faf5!important;
+}
+html body .partner-note{
+  background:#eefaf7!important;
+  border-color:#c8ebe0!important;
+  border-left-color:#00b589!important;
+}
+html body .form-card{
+  position:relative!important;
+  overflow:hidden!important;
+  background:linear-gradient(145deg,#ffffff 0%,#eef6fb 100%)!important;
+  border:1px solid #cfE1eb!important;
+  box-shadow:0 24px 58px rgba(27,74,103,.12)!important;
+}
+html body .form-card:before{
+  background:linear-gradient(120deg,rgba(11,159,240,.07),transparent 30%,transparent 72%,rgba(255,255,255,.65))!important;
+}
+html body .form-top{
+  background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(245,250,253,.78))!important;
+  border-bottom-color:#dde9f0!important;
+}
+html body .form-top h2,
+html body .step-title{
+  color:#17344c!important;
+}
+html body .form-top p,
+html body .step-help{
+  color:#637b8e!important;
+}
+html body .progress{
+  background:#dfeef5!important;
+}
+html body .form-body{
+  background:transparent!important;
+}
+html body .field label{
+  color:#2b4b62!important;
+}
+html body .field input,
+html body .field select,
+html body .field textarea{
+  background:#ffffff!important;
+  color:#18364e!important;
+  border-color:#cbdde8!important;
+  box-shadow:0 4px 12px rgba(27,76,106,.04)!important;
+}
+html body .field input::placeholder,
+html body .field textarea::placeholder{
+  color:#8296a5!important;
+}
+html body .field input:focus,
+html body .field select:focus,
+html body .field textarea:focus{
+  border-color:#70bfdf!important;
+  box-shadow:0 0 0 4px rgba(11,159,240,.10),0 10px 22px rgba(27,76,106,.07)!important;
+}
+html body .choice label{
+  background:linear-gradient(145deg,#ffffff,#f1f8fc)!important;
+  border-color:#d2e3ed!important;
+  box-shadow:0 8px 20px rgba(27,74,103,.06)!important;
+}
+html body .choice label strong{
+  color:#17344c!important;
+}
+html body .choice label span{
+  color:#6b8294!important;
+}
+html body .choice input:checked+label{
+  border-color:#72bfe0!important;
+  background:#eef9fd!important;
+  box-shadow:0 0 0 2px rgba(11,159,240,.08) inset!important;
+}
+html body .form-card .btn-outline{
+  background:#ffffff!important;
+  color:#17344c!important;
+  border-color:#bfd4e1!important;
+}
+html body .form-card .btn-outline:hover{
+  color:#078fda!important;
+  border-color:#79bfdf!important;
+  background:#eef9fd!important;
+}
+
+/* Partnership hero/art and CTA remain visually distinctive but light-led */
+html body .hero{
+  background:
+    radial-gradient(circle at 78% 18%,rgba(11,159,240,.13),transparent 32%),
+    linear-gradient(180deg,#f8fcff 0%,#eaf6fc 100%)!important;
+  color:#17344c!important;
+  border-bottom-color:#d7e6ef!important;
+}
+html body .hero h1,
+html body .hero h2{
+  color:#17344c!important;
+}
+html body .hero h1 span{
+  color:#0b9ff0!important;
+}
+html body .hero-copy{
+  color:#667d90!important;
+}
+html body .hero-art{
+  background:#ffffff!important;
+  border-color:#cadfea!important;
+  box-shadow:0 26px 62px rgba(27,74,103,.14)!important;
+}
+html body .art-badge{
+  background:rgba(255,255,255,.92)!important;
+  color:#087fca!important;
+  border-color:#c2deeb!important;
+}
+html body .trust-strip .trust-item{
+  background:linear-gradient(145deg,#ffffff,#f0f8fc)!important;
+}
