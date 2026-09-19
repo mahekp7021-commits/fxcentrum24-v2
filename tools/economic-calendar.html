@@ -127,43 +127,40 @@ button{font:inherit}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.feature-card,.btn,.social-link{transition:none!important}}
 
-/* ===== ECONOMIC CALENDAR — COMPACT PROVIDER VIEW ===== */
+/* ===== ECONOMIC CALENDAR — NATURAL HEIGHT + MAX SCROLL ===== */
 .widget-frame.calendar{
   position:relative;
-  width:100%;
-  height:330px !important;
-  min-height:330px !important;
-  max-height:330px !important;
-  overflow:hidden !important;
-  background:#fff;
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:360px !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  overscroll-behavior:contain !important;
+  -webkit-overflow-scrolling:touch !important;
+  background:#fff !important;
 }
 .widget-frame.calendar .finlogix-container,
 .widget-frame.calendar #economic-calendar-93698{
   width:100% !important;
+  height:auto !important;
   min-height:0 !important;
-  height:330px !important;
+  max-height:none !important;
+  overflow:visible !important;
+  background:#fff !important;
 }
 .widget-frame.calendar iframe{
   display:block !important;
   width:100% !important;
-  height:330px !important;
-  min-height:330px !important;
-  max-height:330px !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
   border:0 !important;
   background:#fff !important;
 }
 @media(max-width:700px){
   .widget-frame.calendar{
-    height:350px !important;
-    min-height:350px !important;
-    max-height:350px !important;
-  }
-  .widget-frame.calendar .finlogix-container,
-  .widget-frame.calendar #economic-calendar-93698,
-  .widget-frame.calendar iframe{
-    height:350px !important;
-    min-height:350px !important;
-    max-height:350px !important;
+    max-height:390px !important;
   }
 }
 
