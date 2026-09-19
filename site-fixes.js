@@ -181,6 +181,29 @@
     });
   }
 
+  function removeLiveMarketsFromNavigation() {
+    document.querySelectorAll('.main-nav a').forEach(link => {
+      const label = clean(link.textContent).toLowerCase();
+      if (label === 'live markets') {
+        const item = link.closest('.nav-item');
+        // Remove only the Live Markets menu entry; keep the Tools dropdown and Economic Calendar.
+        link.remove();
+        if (item) {
+          const dropdown = item.querySelector('.dropdown');
+          if (dropdown && !clean(dropdown.textContent)) item.remove();
+        }
+      }
+    });
+  }
+
+  removeLiveMarketsFromNavigation();
+
+  if (!window.__gocoiinLiveMarketsGuardInstalled) {
+    window.__gocoiinLiveMarketsGuardInstalled = true;
+    const navObserver = new MutationObserver(() => removeLiveMarketsFromNavigation());
+    navObserver.observe(document.body, {childList:true, subtree:true});
+  }
+
   function installGlobalUtilityNav() {
     const nav = document.querySelector('.main-nav');
     if (!nav) return;
