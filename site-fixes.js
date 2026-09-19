@@ -27,6 +27,9 @@
     const style = document.createElement('style');
     style.id = 'gocoiin-critical-theme';
     style.textContent = `
+
+      html body .main-nav a[href$="tools/live-markets.html"],
+      html body .main-nav a[href*="/tools/live-markets.html"]{display:none!important;visibility:hidden!important;width:0!important;min-width:0!important;padding:0!important;margin:0!important;overflow:hidden!important;}
       html body .site-header{position:sticky!important;top:0!important;z-index:5000!important;background:rgba(255,255,255,.96)!important;color:#17344c!important;box-shadow:0 8px 28px rgba(24,67,96,.10)!important;backdrop-filter:blur(18px) saturate(140%)!important;-webkit-backdrop-filter:blur(18px) saturate(140%)!important}
       html body .site-header .nav-trigger,html body .site-header .nav-link{color:#294761!important}
       html body .site-header .nav-trigger:hover,html body .site-header .nav-link:hover{color:#078fda!important}
@@ -182,19 +185,13 @@
 
   function removeLiveMarketsFromNavigation() {
     document.querySelectorAll('.main-nav a').forEach(link => {
+      const href = (link.getAttribute('href') || '').toLowerCase();
       const label = clean(link.textContent).toLowerCase();
-      if (label === 'live markets') {
-        const item = link.closest('.nav-item');
-        // Remove only the Live Markets menu entry; keep the Tools dropdown and Economic Calendar.
+      if (label === 'live markets' || /(^|\/)tools\/live-markets\.html(?:$|[?#])/i.test(href)) {
         link.remove();
-        if (item) {
-          const dropdown = item.querySelector('.dropdown');
-          if (dropdown && !clean(dropdown.textContent)) item.remove();
-        }
       }
     });
   }
-
   removeLiveMarketsFromNavigation();
 
   if (!window.__gocoiinLiveMarketsGuardInstalled) {
