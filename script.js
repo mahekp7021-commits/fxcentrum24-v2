@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const cssId = "fx-market-overview-css";
     if (!document.getElementById(cssId)) {
       const link = document.createElement("link");
-      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css?v=20260918-original-final";
+      link.id = cssId; link.rel = "stylesheet"; link.href = "./sections/market-overview.css?v=20260921-crypto1";
       document.head.appendChild(link);
     }
     const response = await fetch("./sections/market-overview.html", { cache: "no-cache" });
