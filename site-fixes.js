@@ -585,10 +585,20 @@
       trigger.setAttribute('aria-expanded', String(!wasOpen));
     }
 
-    // IMPORTANT: use pointerdown so mobile navigation opens on a normal tap,
-    // not only after the finger is held/released.
+    // Android Chrome can delay/suppress click delivery on touch targets when
+    // another page-level handler is also attached. Handle the gesture at the
+    // earliest touch phase and consume the synthetic click that follows.
+    document.addEventListener('touchstart', event => {
+      if (window.innerWidth > 850) return;
+      const target = event.target.closest('.menu-toggle,.main-nav .nav-trigger');
+      if (!target) return;
+      handle(event);
+    }, {capture:true, passive:false});
+
+    // Pointer fallback for browsers that do not expose touchstart. Never run
+    // this for touch pointers because touchstart already owns that gesture.
     document.addEventListener('pointerdown', event => {
-      if (event.pointerType === 'mouse') return;
+      if (event.pointerType === 'mouse' || event.pointerType === 'touch') return;
       handle(event);
     }, true);
 
