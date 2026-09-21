@@ -324,12 +324,35 @@
 
     nav.querySelectorAll('[data-gocoiin-admin-link]').forEach(link => link.remove());
 
+    // Direct mobile listener for Payment. This intentionally bypasses any
+    // page-specific navigation handlers so the submenu opens reliably.
+    if (!window.__gocoiinPaymentMobileToggle) {
+      window.__gocoiinPaymentMobileToggle = true;
+      document.addEventListener('click', function(event) {
+        if (window.innerWidth > 850) return;
+        const trigger = event.target.closest('.main-nav [data-gocoiin-payment-nav] > .nav-trigger');
+        if (!trigger) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        const item = trigger.closest('[data-gocoiin-payment-nav]');
+        const navRoot = trigger.closest('.main-nav');
+        const wasOpen = item.classList.contains('is-open') || item.classList.contains('open');
+        navRoot.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(other => {
+          if (other !== item) other.classList.remove('is-open','open');
+        });
+        navRoot.querySelectorAll('.nav-trigger').forEach(btn => btn.setAttribute('aria-expanded','false'));
+        item.classList.toggle('is-open', !wasOpen);
+        item.classList.toggle('open', !wasOpen);
+        trigger.setAttribute('aria-expanded', String(!wasOpen));
+      }, true);
+    }
+
     if (!document.getElementById('gocoiin-payment-nav-style')) {
       const style = document.createElement('style');
       style.id = 'gocoiin-payment-nav-style';
       style.textContent = [
         '.main-nav [data-gocoiin-payment-nav]{position:relative!important;}',
-        '.main-nav [data-gocoiin-payment-nav]>.nav-trigger{color:#294761!important;}',
+        '.main-nav [data-gocoiin-payment-nav]>.nav-trigger{color:#294761!important;}', 
         '.main-nav [data-gocoiin-payment-nav]>.nav-trigger:hover{color:#078fda!important;}',
         '@media(min-width:851px){',
         '.main-nav [data-gocoiin-payment-nav]>.dropdown{display:none!important;position:absolute!important;top:calc(100% + 8px)!important;right:0!important;left:auto!important;min-width:230px!important;z-index:10000!important;}',
@@ -447,7 +470,7 @@
       .site-header{position:sticky!important;top:0!important;z-index:100000!important;overflow:visible!important}
       .header-inner{position:relative!important;z-index:100001!important}
       .menu-toggle{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;width:48px!important;height:48px!important;padding:0!important;position:relative!important;z-index:100002!important;overflow:visible!important}
-      .menu-toggle span{display:block!important;visibility:visible!important;opacity:1!important;width:24px!important;height:3px!important;min-height:3px!important;max-height:3px!important;margin:0!important;padding:0!important;background:#fff!important;border-radius:3px!important;flex:none!important}
+      .menu-toggle span{display:block!important;visibility:visible!important;opacity:1!important;width:24px!important;height:3px!important;min-height:3px!important;max-height:3px!important;margin:0!important;padding:0!important;background:#17324a!important;border-radius:3px!important;flex:none!important}
       .main-nav{position:fixed!important;top:var(--fxc-header-height,70px)!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:calc(100dvh - var(--fxc-header-height,70px))!important;display:none!important;flex-direction:column!important;align-items:stretch!important;padding:12px 16px 28px!important;margin:0!important;background:#04101d!important;border:0!important;box-shadow:0 20px 50px rgba(0,0,0,.55)!important;overflow-x:hidden!important;overflow-y:auto!important;z-index:100001!important;pointer-events:none!important;transform:none!important}
       .main-nav.is-open,.main-nav.open{display:flex!important;pointer-events:auto!important}
       .main-nav .nav-item{width:100%!important;position:static!important;border-bottom:1px solid rgba(120,180,220,.10)!important}
