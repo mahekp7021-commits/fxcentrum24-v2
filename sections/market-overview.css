@@ -328,10 +328,10 @@ html body .fx-market-section .fx-market-tickers-card{
 .fx-crypto-widget-head strong{color:#10263d;font-size:17px;font-weight:800}
 .fx-crypto-widget-head span{display:flex;align-items:center;gap:7px;color:#61778c;font-size:12px}
 .fx-crypto-widget-head span i{width:7px;height:7px;border-radius:50%;background:#16bd68;display:inline-block}
-.finlogix-crypto-chart-host{
+.fx-crypto-chart-host{
   width:100%;min-height:520px;background:#fff;overflow:hidden;
 }
-.finlogix-crypto-chart{
+.fx-crypto-chart{
   width:100%;min-height:520px;background:#fff;
 }
 .fx-crypto-info{min-width:0}
@@ -379,6 +379,6 @@ html body .fx-market-section .fx-market-tickers-card{
   .fx-crypto-heading h2,.fx-crypto-info h3{font-size:34px}
   .fx-crypto-widget-head{padding:0 14px}
   .fx-crypto-widget-head strong{font-size:15px}
-  .finlogix-crypto-chart-host,.finlogix-crypto-chart{height:500px;min-height:500px}
+  .fx-crypto-chart-host,.fx-crypto-chart{height:500px;min-height:500px}
   .fx-crypto-features{grid-template-columns:1fr;gap:17px}
 }
