@@ -685,3 +685,50 @@ main > section:not(.hero) { min-height: 360px; }
     font-size: 10px;
   }
 }
+
+
+/* FINAL GLOBAL MOBILE NAV GUARANTEE */
+@media (max-width:850px){
+  .site-header .menu-toggle{
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    width:48px!important;
+    height:48px!important;
+    flex:0 0 48px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    z-index:100002!important;
+    position:relative!important;
+  }
+  .site-header .menu-toggle span{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
+    width:24px!important;
+    height:3px!important;
+    margin:0 0 5px!important;
+    background:#17324a!important;
+    border-radius:3px!important;
+  }
+  .site-header .menu-toggle span:last-child{margin-bottom:0!important}
+  .site-header .main-nav{
+    z-index:100001!important;
+    max-height:calc(100dvh - 74px)!important;
+  }
+  .site-header .main-nav.is-open,
+  .site-header .main-nav.open{
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+  }
+  .site-header .main-nav .dropdown{
+    display:none!important;
+  }
+  .site-header .main-nav .nav-item.is-open>.dropdown,
+  .site-header .main-nav .nav-item.open>.dropdown{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
+  }
+}
