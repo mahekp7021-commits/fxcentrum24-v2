@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GO COIIN deposit and payment details.">
+<meta name="theme-color" content="#f4f8fc">
+<title>Deposit | GO COIIN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f8fc;--text:#17344c;--muted:#667d90;--blue:#0b9ff0;--red:#ff3154;--border:#d7e6ef}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 10% 0%,rgba(11,159,240,.07),transparent 28%),linear-gradient(180deg,#f8fbfe 0%,#eef5fa 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}button{font:inherit}
+.site-header{position:sticky;top:0;z-index:5000;background:rgba(255,255,255,.95);border-bottom:1px solid #d8e6ef;box-shadow:0 8px 28px rgba(27,73,103,.08);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%)}
+.header-inner{width:min(1320px,92%);min-height:76px;margin:auto;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.brand-mark{width:31px;height:29px;display:flex;align-items:flex-end;gap:3px}.brand-mark i{display:block;width:5px;border-radius:2px 2px 0 0;background:#16a9ff}.brand-mark i:nth-child(1){height:9px;background:#ff3850}.brand-mark i:nth-child(2){height:15px}.brand-mark i:nth-child(3){height:22px}.brand-mark i:nth-child(4){height:29px;background:#22a8ff}
+.brand-name{font-size:19px;line-height:1;font-weight:800;letter-spacing:-.7px}.brand-name strong{color:var(--red)}.brand-tagline{display:block;margin-top:3px;color:#7b8f9f;font-size:7px;letter-spacing:.45px}
+.main-nav{display:flex;align-items:center;gap:2px;margin-left:auto}.nav-item{position:relative}.nav-trigger,.nav-link{height:76px;padding:0 10px;border:0;background:transparent;color:#294761;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:750;cursor:pointer;white-space:nowrap}.nav-trigger:hover,.nav-link:hover{color:#078fda}.nav-trigger em{font-style:normal;font-size:9px;color:#7a90a2}
+.dropdown{position:absolute;left:0;top:calc(100% - 1px);width:255px;padding:9px;background:rgba(255,255,255,.985);border:1px solid #d5e4ee;border-radius:12px;box-shadow:0 20px 48px rgba(27,68,98,.16);opacity:0;visibility:hidden;transform:translateY(7px);transition:.22s}.nav-item:hover>.dropdown,.nav-item.is-open>.dropdown{opacity:1;visibility:visible;transform:none}.dropdown a{display:flex;flex-direction:column;gap:3px;padding:12px 13px;border-radius:8px}.dropdown a:hover{background:linear-gradient(135deg,#edf8ff,#f7fcff);color:#078fda;transform:translateX(2px);box-shadow:inset 3px 0 0 #0b9ff0}.dropdown span{font-size:12px;font-weight:750;color:#24445d}.dropdown small{font-size:10px;line-height:1.35;color:#71879a}
+.header-actions{display:flex;gap:8px;margin-left:10px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:9px;font-size:11px;font-weight:800;border:1px solid #c6d8e4;background:#fff;color:#17344c;box-shadow:0 7px 18px rgba(27,73,103,.05);transition:.22s}.btn:hover{transform:translateY(-2px);border-color:#8fc7e3;box-shadow:0 12px 24px rgba(11,159,240,.10);color:#078fda}.btn-primary{border-color:transparent!important;color:#fff!important;background:linear-gradient(180deg,#ff4962,#ff3152)!important;box-shadow:0 10px 26px rgba(255,59,89,.22)!important}.menu-toggle{display:none;width:46px;height:46px;border:1px solid #c5d9e5;border-radius:10px;background:#fff}.menu-toggle span{display:block;width:23px;height:3px;margin:4px auto;background:#17344c;border-radius:3px}
+.page{width:min(1120px,92%);margin:auto;padding:64px 0 90px}.hero{max-width:850px;margin-bottom:30px}.eyebrow{margin:0 0 10px;color:#0b9ff0;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{margin:0;color:#10263d;font-size:clamp(42px,6vw,66px);line-height:.98;letter-spacing:-2.7px}.hero h1 span{color:#0b9ff0}.hero p{max-width:800px;margin:18px 0 0;color:#667d90;font-size:14px;line-height:1.8}
+.pay-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}
+.card{position:relative;overflow:hidden;border:1px solid #d1e3ed;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(241,248,252,.98));box-shadow:0 20px 48px rgba(28,77,108,.10);transition:transform .32s ease,box-shadow .32s ease,border-color .32s ease}
+.card:hover{transform:translateY(-6px);border-color:#a9d4e9;box-shadow:0 28px 60px rgba(28,77,108,.15)}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,rgba(11,159,240,.07),transparent 32%,transparent 70%,rgba(255,255,255,.58))}
+.bank-card{padding:28px}.card-title{margin:0 0 8px;color:#17344c;font-size:23px}.card-sub{margin:0 0 22px;color:#6b8192;font-size:11px;line-height:1.6}.bank-row{display:grid;grid-template-columns:170px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid #e1ebf1}.bank-row:last-of-type{border-bottom:0}.bank-label{color:#6b8192;font-size:11px;font-weight:700}.bank-value{color:#17344c;font-size:14px;font-weight:750;word-break:break-word}.copy-btn{margin-top:5px;display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 10px;border:1px solid #c4dbe8;border-radius:8px;background:#eef8fd;color:#078fda;font-size:10px;font-weight:800;cursor:pointer}.copy-btn:hover{background:#e5f5fc;border-color:#83c5e3}.security-note{margin-top:20px;padding:13px 14px;border:1px solid #d5e6ef;border-radius:11px;background:#eef7fb;color:#60788b;font-size:10px;line-height:1.6}
+.qr-card{padding:28px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}.qr-card h2{margin:0;color:#17344c;font-size:23px}.qr-card p{margin:9px 0 18px;color:#6b8192;font-size:11px}.qr-wrap{width:min(320px,100%);padding:14px;border:1px solid #cfe2ec;border-radius:18px;background:#fff;box-shadow:0 14px 30px rgba(28,77,108,.08)}.qr-wrap img{display:block;width:100%;height:auto;border-radius:10px}.upi-label{margin-top:18px;color:#718697;font-size:10px;font-weight:700}.upi-value{margin-top:6px;color:#17344c;font-size:14px;font-weight:800;word-break:break-all}.qr-card .copy-btn{margin-top:10px}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}.info-card{padding:22px}.info-number{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#edf8fd;border:1px solid #c8e1ee;color:#078fda;font-size:10px;font-weight:800}.info-card h3{margin:15px 0 7px;font-size:15px;color:#17344c}.info-card p{margin:0;color:#667d90;font-size:10px;line-height:1.65}
+.cta{margin-top:26px;padding:28px;border-radius:20px;color:#fff;background:radial-gradient(circle at 88% 10%,rgba(45,190,255,.22),transparent 34%),linear-gradient(135deg,#0b4a76,#082b49 55%,#061d33);border:1px solid #2d87b7;box-shadow:0 22px 55px rgba(20,63,91,.18)}.cta h2{margin:0;font-size:28px}.cta p{margin:8px 0 18px;color:#d3e4ef;font-size:11px}.cta .btn{background:#fff;color:#17344c}.cta .btn-primary{color:#fff!important}
+@media(max-width:900px){.pay-grid{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}.bank-row{grid-template-columns:1fr;gap:5px}}
+@media(max-width:850px){.header-inner{width:calc(100% - 28px);min-height:74px}.header-actions{display:flex}.header-actions .btn{min-height:40px;padding:0 10px;font-size:9px}.menu-toggle{display:block;margin-left:0}.main-nav{position:fixed;top:74px;left:0;right:0;bottom:0;display:none;padding:10px 16px 24px;overflow:auto;background:rgba(255,255,255,.985);border-top:1px solid #dce8ef;box-shadow:0 22px 45px rgba(20,67,96,.15)}.main-nav.is-open{display:block}.nav-item{border-bottom:1px solid #e3edf3}.nav-trigger,.nav-link{width:100%;height:58px;justify-content:space-between;font-size:15px;padding:0 8px}.nav-link{justify-content:flex-start}.dropdown{position:static;width:auto;padding:0 0 8px;background:transparent;border:0;box-shadow:none;display:none;opacity:1;visibility:visible;transform:none}.nav-item.is-open>.dropdown{display:block}.dropdown a{margin:4px 0;padding:11px 12px;background:#f4faff}.dropdown span{font-size:13px}.dropdown small{font-size:10px}.page{padding-top:40px}.hero h1{font-size:44px}.header-actions{margin-left:auto}}
+@media(max-width:520px){.header-actions .btn-login{display:inline-flex}.brand-name{font-size:17px}.brand-tagline{font-size:6px}.pay-grid{gap:16px}.bank-card,.qr-card{padding:20px}}
+</style>
+</head>
+<body>
+<header class="site-header" id="siteHeader">
+<div class="header-inner">
+<a href="../index.html" class="brand" aria-label="GO COIIN Home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span><span class="brand-name"><strong>GO</strong> COIIN</span><span class="brand-tagline">Trade Today · A Brighter Tomorrow</span></span></a>
+<button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNavigation"><span></span><span></span><span></span></button>
+<nav class="main-nav" id="mainNavigation" aria-label="Main Navigation">
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Markets</span><em>⌄</em></button><div class="dropdown"><a href="../markets/forex.html"><span>Forex</span><small>Major &amp; minor currency pairs</small></a><a href="../markets/commodities.html"><span>Commodities</span><small>Gold, oil, silver &amp; more</small></a><a href="../markets/indices.html"><span>Indices</span><small>Global stock indices</small></a><a href="../markets/shares-cfds.html"><span>Shares CFDs</span><small>Global company shares</small></a><a href="../markets/cryptocurrency.html"><span>Cryptocurrency</span><small>Popular digital assets</small></a></div></div>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Trading</span><em>⌄</em></button><div class="dropdown"><a href="../trading/account-types.html"><span>Account Types</span><small>Choose your trading account</small></a><a href="../trading/trading-conditions.html"><span>Trading Conditions</span><small>Spreads, execution &amp; more</small></a><a href="../trading/platforms.html"><span>Platforms</span><small>Trade across every device</small></a><a href="../trading/how-to-start.html"><span>How to Start</span><small>Start trading in 3 steps</small></a></div></div>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Platforms</span><em>⌄</em></button><div class="dropdown"><a href="../platforms/metatrader-4.html"><span>MetaTrader 4</span><small>Classic professional trading</small></a><a href="../platforms/metatrader-5.html"><span>MetaTrader 5</span><small>Advanced multi-asset platform</small></a><a href="../platforms/webtrader.html"><span>WebTrader</span><small>Trade directly from your browser</small></a></div></div>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Accounts</span><em>⌄</em></button><div class="dropdown"><a href="../accounts/standard.html"><span>Standard</span><small>Simple &amp; flexible trading</small></a><a href="../accounts/premium.html"><span>Premium</span><small>Enhanced trading conditions</small></a><a href="../accounts/professional.html"><span>Professional</span><small>Designed for active traders</small></a></div></div>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Tools</span><em>⌄</em></button><div class="dropdown"><a href="../tools/economic-calendar.html"><span>Economic Calendar</span><small>Track important market events</small></a></div></div>
+<div class="nav-item"><button type="button" class="nav-trigger" aria-expanded="false"><span>Company</span><em>⌄</em></button><div class="dropdown"><a href="../company/about.html"><span>About Us</span><small>Discover GO COIIN</small></a><a href="../company/contact.html"><span>Contact Us</span><small>We're here to help</small></a><a href="../company/benefits.html"><span>Benefits</span><small>Why trade with us</small></a></div></div>
+<a href="../partnership/index.html" class="nav-link">Partnership</a>
+</nav>
+<div class="header-actions"><a href="https://fxcetrumrealmt5.tgsm.io/" class="btn btn-login">Login</a><a href="./account-opening.html" class="btn btn-primary">Open Account</a></div>
+</div>
+</header>
+
+<main class="page">
+<section class="hero">
+<p class="eyebrow">PAYMENT</p>
+<h1>Fund your <span>account.</span></h1>
+<p>Use the official GO COIIN payment details below for account funding. Please verify the beneficiary information carefully before making a transfer.</p>
+</section>
+
+<section class="pay-grid" aria-label="Deposit payment options">
+<article class="card bank-card">
+<h2 class="card-title">Bank Transfer</h2>
+<p class="card-sub">Use these beneficiary details for bank transfer deposits.</p>
+<div class="bank-row"><div class="bank-label">Account Name</div><div><div class="bank-value">Parshwanath Enterprises</div></div></div>
+<div class="bank-row"><div class="bank-label">Account Number</div><div><div class="bank-value" id="accountNumber">300004000021364</div><button type="button" class="copy-btn" data-copy="300004000021364">Copy Account Number</button></div></div>
+<div class="bank-row"><div class="bank-label">IFSC Code</div><div><div class="bank-value" id="ifscCode">SVCB0000115</div><button type="button" class="copy-btn" data-copy="SVCB0000115">Copy IFSC Code</button></div></div>
+<div class="bank-row"><div class="bank-label">Bank</div><div><div class="bank-value">SVC Co-operative Bank Ltd.</div></div></div>
+<div class="security-note"><strong>Security check:</strong> Verify the account name, account number and IFSC with your payment source before completing the transfer.</div>
+</article>
+
+<article class="card qr-card">
+<h2>Scan &amp; Pay</h2>
+<p>Use the official QR code for UPI payment.</p>
+<div class="qr-wrap"><img src="../assets/payments/gocoiin-payment-qr.png" alt="GO COIIN payment QR code"></div>
+<div class="upi-label">UPI ID</div>
+<div class="upi-value">SVCMERC00312874@svcbank</div>
+<button type="button" class="copy-btn" data-copy="SVCMERC00312874@svcbank">Copy UPI ID</button>
+</article>
+</section>
+
+<section class="info-grid" aria-label="Payment information">
+<article class="card info-card"><div class="info-number">01</div><h3>Verify details</h3><p>Check the beneficiary information carefully before sending any funds.</p></article>
+<article class="card info-card"><div class="info-number">02</div><h3>Keep your receipt</h3><p>Retain your transaction reference or payment confirmation for your records.</p></article>
+<article class="card info-card"><div class="info-number">03</div><h3>Need help?</h3><p>Use the GO COIIN support channels for account-funding questions.</p></article>
+</section>
+
+<section class="cta">
+<h2>Ready to continue?</h2>
+<p>After completing your payment, keep the transaction reference available for your account-funding process.</p>
+<a class="btn btn-primary" href="./account-opening.html">Open Account →</a>
+</section>
+</main>
+
+<footer class="home-footer" style="padding:38px 4%;background:linear-gradient(180deg,#071724,#040c15);color:#eef6fd">
+<div style="max-width:1320px;margin:auto;font-size:10px;color:#9db2c4">© 2026 GO COIIN. All rights reserved.</div>
+</footer>
+
+<script>
+document.querySelectorAll('[data-copy]').forEach(button=>{
+  button.addEventListener('click',async()=>{
+    const value=button.getAttribute('data-copy')||'';
+    try{
+      await navigator.clipboard.writeText(value);
+      const old=button.textContent;
+      button.textContent='Copied ✓';
+      setTimeout(()=>button.textContent=old,1400);
+    }catch{
+      const area=document.createElement('textarea');
+      area.value=value;document.body.appendChild(area);area.select();document.execCommand('copy');area.remove();
+      const old=button.textContent;button.textContent='Copied ✓';setTimeout(()=>button.textContent=old,1400);
+    }
+  });
+});
+</script>
+<script src="../site-fixes.js?v=20260921-payment" defer></script>
+</body>
+</html>
