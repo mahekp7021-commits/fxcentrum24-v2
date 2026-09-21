@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+html,body{width:100%;margin:0;padding:0;background:#fff;overflow:hidden}
+.finlogix-container{width:100%;min-height:520px}
+</style>
+</head>
+<body>
+<div class="finlogix-container"></div>
+<script src="https://widget.finlogix.com/Widget.js"></script>
+<script>
+Widget.init({
+  widgetId:"87c63d8a-2d03-409f-ba57-599ea3a57013",
+  type:"SymbolChartList",
+  language:"en",
+  symbolIds:[66,145,69,119,120,121,144,146],
+  isAdaptive:true,
+  withBorderBox:true
+});
+(function(){
+  function fit(){
+    var h=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);
+    if(window.frameElement && h>0) window.frameElement.style.height=Math.ceil(h)+'px';
+  }
+  [300,800,1500,2500].forEach(function(ms){setTimeout(fit,ms);});
+  window.addEventListener('load',fit);
+})();
+</script>
+</body>
+</html>
