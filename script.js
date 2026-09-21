@@ -1,39 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const menu = document.querySelector(".menu-toggle");
-  const nav = document.querySelector(".main-nav");
-  if (menu && nav) {
-    menu.addEventListener("click", () => {
-      const isOpen = nav.classList.toggle("open");
-      menu.setAttribute("aria-expanded", isOpen ? "true" : "false");
-    });
-  }
-  document.querySelectorAll(".nav-item > button").forEach(button => {
-    button.addEventListener("click", event => {
-      if (window.innerWidth <= 820) {
-        event.preventDefault();
-        const item = button.parentElement;
-        document.querySelectorAll(".nav-item.open").forEach(openItem => {
-          if (openItem !== item) openItem.classList.remove("open");
-        });
-        item.classList.toggle("open");
-      }
-    });
-  });
-  document.querySelectorAll(".main-nav a").forEach(link => {
-    link.addEventListener("click", () => {
-      if (window.innerWidth <= 820) {
-        nav?.classList.remove("open");
-        menu?.setAttribute("aria-expanded", "false");
-      }
-    });
-  });
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 820) {
-      nav?.classList.remove("open");
-      menu?.setAttribute("aria-expanded", "false");
-      document.querySelectorAll(".nav-item.open").forEach(item => item.classList.remove("open"));
-    }
-  });
+  // Mobile navigation is owned exclusively by site-fixes.js.
+  // Do not attach a second menu/touch/click controller here.
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("visible"); });
   }, { threshold: 0.12 });
