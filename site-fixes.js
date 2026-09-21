@@ -322,6 +322,28 @@
       }, true);
     }
 
+    // Bind the Payment trigger directly on mobile. Page-specific click
+    // handlers may differ, so this makes Payment independent of their scripts.
+    const paymentTrigger = paymentItem.querySelector('.nav-trigger');
+    if (paymentTrigger && !paymentTrigger.dataset.gocoiinMobileBound) {
+      paymentTrigger.dataset.gocoiinMobileBound = 'true';
+      paymentTrigger.addEventListener('click', function(event) {
+        if (window.innerWidth > 850) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const item = paymentTrigger.closest('[data-gocoiin-payment-nav]');
+        const root = paymentTrigger.closest('.main-nav');
+        const opening = !(item.classList.contains('is-open') || item.classList.contains('open'));
+        root.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(other => {
+          if (other !== item) other.classList.remove('is-open','open');
+        });
+        root.querySelectorAll('.nav-trigger').forEach(btn => btn.setAttribute('aria-expanded','false'));
+        item.classList.toggle('is-open', opening);
+        item.classList.toggle('open', opening);
+        paymentTrigger.setAttribute('aria-expanded', String(opening));
+      });
+    }
+
     nav.querySelectorAll('[data-gocoiin-admin-link]').forEach(link => link.remove());
 
     // Direct mobile listener for Payment. This intentionally bypasses any
@@ -462,6 +484,29 @@
     else document.body.style.removeProperty('overflow');
   }
 
+  function ensureMobileMenuToggle() {
+    const nav = document.querySelector('.main-nav');
+    const headerInner = document.querySelector('.site-header .header-inner');
+    if (!nav || !headerInner) return null;
+
+    let toggle = headerInner.querySelector('.menu-toggle');
+    if (!toggle) {
+      toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'menu-toggle';
+      toggle.setAttribute('aria-label','Open navigation');
+      toggle.setAttribute('aria-expanded','false');
+      toggle.setAttribute('aria-controls', nav.id || 'mainNavigation');
+      toggle.innerHTML = '<span></span><span></span><span></span>';
+      const actions = headerInner.querySelector('.header-actions');
+      if (actions) headerInner.insertBefore(toggle, actions);
+      else headerInner.appendChild(toggle);
+    } else if (!toggle.querySelector('span')) {
+      toggle.innerHTML = '<span></span><span></span><span></span>';
+    }
+    return toggle;
+  }
+
   function installMobileStyles() {
     if (document.getElementById('fxc-mobile-nav-final')) return;
     const style = document.createElement('style');
@@ -487,6 +532,7 @@
   function installMobileNavigation() {
     if (window.__fxcMobileNavigationInstalled) return;
     window.__fxcMobileNavigationInstalled = true;
+    ensureMobileMenuToggle();
     installMobileStyles();
     setHeaderHeight();
     window.addEventListener('resize',setHeaderHeight,{passive:true});
@@ -496,6 +542,7 @@
       if (innerWidth>850) return;
       const toggle=event.target.closest('.menu-toggle');
       const trigger=event.target.closest('.main-nav .nav-trigger');
+      if (trigger && trigger.closest('[data-gocoiin-payment-nav]')) return;
       if(!toggle&&!trigger) return;
       event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
       suppressClickUntil=Date.now()+700;
@@ -519,6 +566,7 @@
       if(Date.now()<suppressClickUntil&&(e.target.closest('.menu-toggle')||e.target.closest('.main-nav .nav-trigger'))){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();return;}
       if(innerWidth>850)return;
       const toggle=e.target.closest('.menu-toggle'),trigger=e.target.closest('.main-nav .nav-trigger');
+      if (trigger && trigger.closest('[data-gocoiin-payment-nav]')) return;
       if(toggle||trigger){handle(e);return;}
       if(e.target.closest('.main-nav a'))closeMenu();
     },true);
