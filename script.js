@@ -53,8 +53,7 @@ function initFxCryptoChartList() {
         language: "en",
         symbolIds: [66,145,69,119,120,121,144,146],
         isAdaptive: true,
-        withBorderBox: true,
-        container: host
+        withBorderBox: true
       });
     } catch (error) {
       console.error("GO COIIN Finlogix crypto widget failed:", error);
