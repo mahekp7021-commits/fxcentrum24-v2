@@ -16,6 +16,7 @@ try {
     $applicationId = (int)($payload['applicationId'] ?? 0);
     $subject = trim((string)($payload['subject'] ?? ''));
     $message = trim((string)($payload['message'] ?? ''));
+    $recipient = trim((string)($payload['recipient'] ?? ''));
 
     if ($applicationId < 1) {
         jsonResponse(['ok' => false, 'message' => 'Invalid application.'], 422);
@@ -25,6 +26,9 @@ try {
     }
     if ($message === '' || mb_strlen($message) > 12000) {
         jsonResponse(['ok' => false, 'message' => 'Message is required and must be 12,000 characters or fewer.'], 422);
+    }
+    if ($recipient === '' || !filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+        jsonResponse(['ok' => false, 'message' => 'A valid recipient email is required.'], 422);
     }
     if (!defined('ADMIN_EMAIL') || !filter_var(ADMIN_EMAIL, FILTER_VALIDATE_EMAIL)) {
         jsonResponse(['ok' => false, 'message' => 'Admin email is not configured.'], 500);
@@ -47,7 +51,7 @@ try {
     ];
 
     $sent = mail(
-        $application['email'],
+        $recipient,
         $safeSubject,
         $message,
         implode("\r\n", $headers)
@@ -70,7 +74,7 @@ try {
     $log = db()->prepare('INSERT INTO email_logs (application_id, recipient_email, subject, message, sent_ok) VALUES (:application_id, :recipient, :subject, :message, :sent_ok)');
     $log->execute([
         ':application_id' => $applicationId,
-        ':recipient' => $application['email'],
+        ':recipient' => $recipient,
         ':subject' => $safeSubject,
         ':message' => $message,
         ':sent_ok' => $sent ? 1 : 0,
@@ -82,7 +86,7 @@ try {
 
     jsonResponse([
         'ok' => true,
-        'message' => 'Email sent to ' . $application['email'] . '.',
+        'message' => 'Email sent to ' . $recipient . '.',
         'recipient' => $application['email'],
         'applicationRef' => $application['application_ref']
     ], 200);
