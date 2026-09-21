@@ -36,14 +36,66 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) { console.error("FXCentrum24 market section failed to load:", error); }
 });
 
+function initFxCryptoTradingViewFallback(host) {
+  if (!host || host.dataset.fallbackLoaded === "true") return;
+  host.dataset.fallbackLoaded = "true";
+  host.innerHTML = "";
+
+  const widget = document.createElement("div");
+  widget.className = "tradingview-widget-container";
+  widget.style.width = "100%";
+  widget.style.height = "100%";
+
+  const widgetBody = document.createElement("div");
+  widgetBody.className = "tradingview-widget-container__widget";
+  widgetBody.style.width = "100%";
+  widgetBody.style.height = "100%";
+  widget.appendChild(widgetBody);
+
+  const script = document.createElement("script");
+  script.type = "text/javascript";
+  script.async = true;
+  script.src = "https://s3.tradingview.com/external-embedding/embed-widget-screener.js";
+  script.text = JSON.stringify({
+    width: "100%",
+    height: "100%",
+    defaultColumn: "overview",
+    defaultScreen: "general",
+    market: "crypto",
+    showToolbar: true,
+    colorTheme: "light",
+    locale: "en",
+    isTransparent: false,
+    largeChartUrl: ""
+  });
+
+  widgetBody.appendChild(script);
+  host.appendChild(widget);
+  host.closest(".fx-crypto-widget-card")?.setAttribute("data-widget-source", "tradingview-fallback");
+}
+
 function initFxCryptoChartList() {
   const host = document.querySelector(".finlogix-crypto-chart");
   if (!host || host.dataset.initialized === "true") return;
   host.dataset.initialized = "true";
 
+  const fallbackIfFinlogixFails = () => {
+    const text = (host.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+    const hasServerError = text.includes("server error") || text.includes("try again");
+    const hasRenderedWidget = !!host.querySelector("iframe, canvas, svg, table");
+    if (hasServerError || !hasRenderedWidget) {
+      console.warn("GO COIIN: Finlogix Chart List unavailable; using TradingView crypto market fallback.");
+      initFxCryptoTradingViewFallback(host);
+    }
+  };
+
+  const scheduleFallbackCheck = () => {
+    window.setTimeout(fallbackIfFinlogixFails, 6500);
+  };
+
   const init = () => {
     if (!window.Widget || typeof window.Widget.init !== "function") {
-      host.dataset.initialized = "false";
+      initFxCryptoTradingViewFallback(host);
       return;
     }
     try {
@@ -55,9 +107,10 @@ function initFxCryptoChartList() {
         isAdaptive: true,
         withBorderBox: true
       });
+      scheduleFallbackCheck();
     } catch (error) {
       console.error("GO COIIN Finlogix crypto widget failed:", error);
-      host.dataset.initialized = "false";
+      initFxCryptoTradingViewFallback(host);
     }
   };
 
@@ -69,6 +122,7 @@ function initFxCryptoChartList() {
   const existing = document.querySelector('script[data-gocoiin-finlogix="true"]');
   if (existing) {
     existing.addEventListener("load", init, { once: true });
+    scheduleFallbackCheck();
     return;
   }
 
@@ -77,6 +131,7 @@ function initFxCryptoChartList() {
   script.async = true;
   script.dataset.gocoiinFinlogix = "true";
   script.addEventListener("load", init, { once: true });
+  script.addEventListener("error", () => initFxCryptoTradingViewFallback(host), { once: true });
   document.head.appendChild(script);
 }
 
