@@ -69,7 +69,7 @@ function initFxCryptoTradingViewFallback(host) {
     largeChartUrl: ""
   });
 
-  widgetBody.appendChild(script);
+  widget.appendChild(script);
   host.appendChild(widget);
   host.closest(".fx-crypto-widget-card")?.setAttribute("data-widget-source", "tradingview-fallback");
 }
