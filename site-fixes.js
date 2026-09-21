@@ -301,6 +301,27 @@
       )));
     }
 
+    // The Payment item is created dynamically, so give it a reliable desktop click handler too.
+    if (!window.__gocoiinPaymentDesktopToggle) {
+      window.__gocoiinPaymentDesktopToggle = true;
+      document.addEventListener('click', function(event) {
+        if (window.innerWidth <= 850) return; // mobile navigation has its own handler
+        const trigger = event.target.closest('.main-nav [data-gocoiin-payment-nav] > .nav-trigger');
+        if (!trigger) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const item = trigger.closest('[data-gocoiin-payment-nav]');
+        const navRoot = trigger.closest('.main-nav');
+        const wasOpen = item.classList.contains('is-open') || item.classList.contains('open');
+        navRoot.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(other => {
+          if (other !== item) other.classList.remove('is-open','open');
+        });
+        item.classList.toggle('is-open', !wasOpen);
+        item.classList.toggle('open', !wasOpen);
+        trigger.setAttribute('aria-expanded', String(!wasOpen));
+      }, true);
+    }
+
     nav.querySelectorAll('[data-gocoiin-admin-link]').forEach(link => link.remove());
 
     if (!document.getElementById('gocoiin-payment-nav-style')) {
@@ -310,6 +331,10 @@
         '.main-nav [data-gocoiin-payment-nav]{position:relative!important;}',
         '.main-nav [data-gocoiin-payment-nav]>.nav-trigger{color:#294761!important;}',
         '.main-nav [data-gocoiin-payment-nav]>.nav-trigger:hover{color:#078fda!important;}',
+        '@media(min-width:851px){',
+        '.main-nav [data-gocoiin-payment-nav]>.dropdown{display:none!important;position:absolute!important;top:calc(100% + 8px)!important;right:0!important;left:auto!important;min-width:230px!important;z-index:10000!important;}',
+        '.main-nav [data-gocoiin-payment-nav]:hover>.dropdown,.main-nav [data-gocoiin-payment-nav].is-open>.dropdown,.main-nav [data-gocoiin-payment-nav].open>.dropdown{display:block!important;}',
+        '}'
         '@media(max-width:850px){',
         '.main-nav [data-gocoiin-payment-nav]>.nav-trigger{width:100%!important;min-height:58px!important;padding:0 8px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;color:#294761!important;}',
         '.main-nav [data-gocoiin-payment-nav]>.dropdown{display:none;}',
