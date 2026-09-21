@@ -33,17 +33,24 @@
     const style = document.createElement('style');
     style.id = 'gocoiin-mobile-nav-hotfix-style';
     style.textContent = `
-      @media (max-width:850px){
-        html body .site-header{position:sticky!important;top:0!important;z-index:100000!important;overflow:visible!important}
-        html body .site-header .header-inner{position:relative!important;z-index:100001!important}
-        html body .site-header .menu-toggle{display:flex!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:100002!important;flex:0 0 48px!important;width:48px!important;height:48px!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;gap:5px!important;margin-left:auto!important;cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important}
-        html body .site-header .menu-toggle span{display:block!important;visibility:visible!important;opacity:1!important;width:24px!important;height:3px!important;min-height:3px!important;max-height:3px!important;margin:0!important;padding:0!important;background:#17324a!important;border-radius:3px!important}
-        html body .site-header .main-nav{position:fixed!important;top:var(--fxc-header-height,74px)!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:calc(100dvh - var(--fxc-header-height,74px))!important;max-height:calc(100dvh - var(--fxc-header-height,74px))!important;overflow-x:hidden!important;overflow-y:auto!important;z-index:100001!important}
-        html body .site-header .main-nav:not(.is-open):not(.open){display:none!important}
-        html body .site-header .main-nav.is-open,html body .site-header .main-nav.open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
-        html body .site-header .main-nav .dropdown{display:none!important;position:static!important;width:100%!important;max-width:none!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important}
-        html body .site-header .main-nav .nav-item.is-open>.dropdown,html body .site-header .main-nav .nav-item.open>.dropdown{display:block!important}
-      }
+      html.gocoiin-mobile-mode body .site-header{position:sticky!important;top:0!important;z-index:100000!important;overflow:visible!important}
+      html.gocoiin-mobile-mode body .site-header .header-inner{position:relative!important;z-index:100001!important}
+      html.gocoiin-mobile-mode body .site-header .menu-toggle{display:flex!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:100002!important;flex:0 0 48px!important;width:48px!important;height:48px!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;gap:5px!important;margin-left:auto!important;cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important}
+      html.gocoiin-mobile-mode body .site-header .menu-toggle span{display:block!important;visibility:visible!important;opacity:1!important;width:24px!important;height:3px!important;min-height:3px!important;max-height:3px!important;margin:0!important;padding:0!important;background:#17324a!important;border-radius:3px!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav{position:fixed!important;top:var(--fxc-header-height,74px)!important;left:0!important;right:0!important;bottom:0!important;width:100vw!important;height:calc(100dvh - var(--fxc-header-height,74px))!important;max-height:calc(100dvh - var(--fxc-header-height,74px))!important;overflow-x:hidden!important;overflow-y:auto!important;z-index:100001!important;background:#04101d!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav:not(.is-open):not(.open){display:none!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav.is-open,
+      html.gocoiin-mobile-mode body .site-header .main-nav.open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;flex-direction:column!important;align-items:stretch!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav .nav-item{width:100%!important;position:static!important;border-bottom:1px solid rgba(120,180,220,.10)!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav .nav-trigger,
+      html.gocoiin-mobile-mode body .site-header .main-nav .nav-link{width:100%!important;min-height:56px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 4px!important;border:0!important;background:transparent!important;color:#dce8f4!important;font-size:15px!important;line-height:1.2!important;text-align:left!important;white-space:normal!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav .nav-link{justify-content:flex-start!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav .dropdown{position:static!important;display:none!important;width:100%!important;max-width:none!important;margin:0!important;padding:0 0 10px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav .nav-item.is-open>.dropdown,
+      html.gocoiin-mobile-mode body .site-header .main-nav .nav-item.open>.dropdown{display:block!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav .dropdown a{display:block!important;width:100%!important;padding:12px 10px!important;color:#b8cbdb!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav .dropdown a span{font-size:14px!important}
+      html.gocoiin-mobile-mode body .site-header .main-nav .dropdown a small{display:block!important;margin-top:3px!important;color:#71879d!important;font-size:10px!important;line-height:1.4!important}
     `;
     document.head.appendChild(style);
   }
