@@ -204,13 +204,23 @@
     const nav = document.querySelector('.main-nav');
     if (!nav) return;
 
-    if (!nav.querySelector('[data-gocoiin-withdrawal-link]')) {
+    // Do not create a second Withdrawal entry when this page already has one.
+    const existingWithdrawal = Array.from(nav.querySelectorAll('a')).find(link =>
+      clean(link.textContent).toLowerCase() === 'withdrawal' ||
+      /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(link.getAttribute('href') || '')
+    );
+
+    if (!existingWithdrawal && !nav.querySelector('[data-gocoiin-withdrawal-link]')) {
       const withdrawal = document.createElement('a');
       withdrawal.href = prefix + 'trading/withdrawal.html';
       withdrawal.textContent = 'Withdrawal';
       withdrawal.className = 'gocoiin-withdrawal-nav-link';
       withdrawal.setAttribute('data-gocoiin-withdrawal-link','true');
       nav.appendChild(withdrawal);
+    } else if (existingWithdrawal) {
+      existingWithdrawal.classList.add('gocoiin-withdrawal-nav-link');
+      existingWithdrawal.setAttribute('data-gocoiin-withdrawal-link','true');
+      existingWithdrawal.setAttribute('href', prefix + 'trading/withdrawal.html');
     }
 
     nav.querySelectorAll('[data-gocoiin-admin-link]').forEach(link => link.remove());
