@@ -139,8 +139,16 @@
       trigger.setAttribute('aria-expanded', String(opening));
     };
 
+    // Handle Android touch at touchstart so the hamburger responds to a
+    // normal tap instead of waiting for the browser's delayed click.
+    document.addEventListener('touchstart', e => {
+      handle(e);
+    }, {capture:true, passive:false});
+
+    // Pointer fallback for non-touch pointer devices.
     document.addEventListener('pointerdown', e => {
-      if (e.pointerType !== 'mouse') handle(e);
+      if (e.pointerType === 'mouse' || e.pointerType === 'touch') return;
+      handle(e);
     }, true);
 
     document.addEventListener('click', e => handle(e), true);
