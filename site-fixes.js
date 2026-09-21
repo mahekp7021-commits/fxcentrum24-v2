@@ -204,47 +204,55 @@
     const nav = document.querySelector('.main-nav');
     if (!nav) return;
 
-    // Do not create a second Withdrawal entry when this page already has one.
-    const existingWithdrawal = Array.from(nav.querySelectorAll('a')).find(link =>
-      clean(link.textContent).toLowerCase() === 'withdrawal' ||
-      /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(link.getAttribute('href') || '')
-    );
+    // Retire any standalone Withdrawal links. Payment will own Deposit + Withdrawal.
+    nav.querySelectorAll('a[data-gocoiin-withdrawal-link]').forEach(link => link.remove());
+    Array.from(nav.querySelectorAll('a')).forEach(link => {
+      const text = clean(link.textContent).toLowerCase();
+      const href = (link.getAttribute('href') || '').toLowerCase();
+      if (
+        text === 'withdrawal' ||
+        /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(href)
+      ) {
+        const parent = link.closest('.nav-item');
+        if (parent && !parent.querySelector('.dropdown')) parent.remove();
+        else link.remove();
+      }
+    });
 
-    if (!existingWithdrawal && !nav.querySelector('[data-gocoiin-withdrawal-link]')) {
-      const withdrawal = document.createElement('a');
-      withdrawal.href = prefix + 'trading/withdrawal.html';
-      withdrawal.textContent = 'Withdrawal';
-      withdrawal.className = 'gocoiin-withdrawal-nav-link';
-      withdrawal.setAttribute('data-gocoiin-withdrawal-link','true');
-      nav.appendChild(withdrawal);
-    } else if (existingWithdrawal) {
-      existingWithdrawal.classList.add('gocoiin-withdrawal-nav-link');
-      existingWithdrawal.setAttribute('data-gocoiin-withdrawal-link','true');
-      existingWithdrawal.setAttribute('href', prefix + 'trading/withdrawal.html');
+    // Create one Payment dropdown on every page.
+    let paymentItem = nav.querySelector('[data-gocoiin-payment-nav]');
+    if (!paymentItem) {
+      paymentItem = document.createElement('div');
+      paymentItem.className = 'nav-item';
+      paymentItem.setAttribute('data-gocoiin-payment-nav','true');
+      paymentItem.innerHTML = [
+        '<button type="button" class="nav-trigger" aria-expanded="false"><span>Payment</span><em>⌄</em></button>',
+        '<div class="dropdown">',
+        '<a href="' + prefix + 'trading/deposit.html"><span>Deposit</span><small>Bank transfer, QR &amp; UPI details</small></a>',
+        '<a href="' + prefix + 'trading/withdrawal.html"><span>Withdrawal</span><small>Submit a withdrawal request</small></a>',
+        '</div>'
+      ].join('');
+      const partnership = Array.from(nav.children).find(el =>
+        clean(el.textContent).toLowerCase() === 'partnership'
+      );
+      if (partnership) nav.insertBefore(paymentItem, partnership);
+      else nav.appendChild(paymentItem);
     }
 
     nav.querySelectorAll('[data-gocoiin-admin-link]').forEach(link => link.remove());
 
-    if (!document.getElementById('gocoiin-withdrawal-nav-style')) {
+    if (!document.getElementById('gocoiin-payment-nav-style')) {
       const style = document.createElement('style');
-      style.id = 'gocoiin-withdrawal-nav-style';
+      style.id = 'gocoiin-payment-nav-style';
       style.textContent = [
-        '.main-nav .gocoiin-withdrawal-nav-link{',
-        'display:inline-flex!important;',
-        'align-items:center!important;',
-        'white-space:nowrap!important;',
-        'padding:10px 9px!important;',
-        'margin:0!important;',
-        'font-size:11px!important;',
-        'line-height:1.2!important;',
-        'font-weight:700!important;',
-        'color:#294761!important;',
-        'text-decoration:none!important;',
-        'flex:0 0 auto!important;',
-        'letter-spacing:0!important;',
-        '}',
-        '.main-nav .gocoiin-withdrawal-nav-link:hover{color:#087fcb!important;background:rgba(11,159,240,.08)!important;}',
-        '@media(max-width:850px){.main-nav .gocoiin-withdrawal-nav-link{display:block!important;width:100%!important;box-sizing:border-box!important;padding:11px 10px!important;margin:0!important;text-align:left!important;font-size:14px!important;line-height:1.25!important;font-weight:700!important;white-space:nowrap!important;color:#d9e6f2!important;}}'
+        '.main-nav [data-gocoiin-payment-nav]{position:relative!important;}',
+        '.main-nav [data-gocoiin-payment-nav]>.nav-trigger{color:#294761!important;}',
+        '.main-nav [data-gocoiin-payment-nav]>.nav-trigger:hover{color:#078fda!important;}',
+        '@media(max-width:850px){',
+        '.main-nav [data-gocoiin-payment-nav]>.nav-trigger{width:100%!important;min-height:58px!important;padding:0 8px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;color:#294761!important;}',
+        '.main-nav [data-gocoiin-payment-nav]>.dropdown{display:none;}',
+        '.main-nav [data-gocoiin-payment-nav].is-open>.dropdown{display:block;}',
+        '}'
       ].join('');
       document.head.appendChild(style);
     }
