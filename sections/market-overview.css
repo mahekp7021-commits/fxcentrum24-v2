@@ -289,6 +289,26 @@ html body .fx-market-section .fx-market-tickers-card{
 }
 
 
+/* GO COIIN — TradingView Cryptocurrency Market Overview */
+.fx-crypto-chart-host{
+  width:100%;
+  min-height:520px;
+  background:#fff;
+  overflow:hidden;
+}
+.fx-crypto-chart-host tv-market-overview{
+  display:block;
+  width:100%;
+  min-height:520px;
+}
+@media(max-width:560px){
+  .fx-crypto-chart-host,
+  .fx-crypto-chart-host tv-market-overview{
+    min-height:500px;
+    height:500px;
+  }
+}
+
 /* GO COIIN — Cryptocurrency Chart List */
 .fx-crypto-section{
   position:relative;
