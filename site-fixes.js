@@ -334,7 +334,7 @@
         '@media(min-width:851px){',
         '.main-nav [data-gocoiin-payment-nav]>.dropdown{display:none!important;position:absolute!important;top:calc(100% + 8px)!important;right:0!important;left:auto!important;min-width:230px!important;z-index:10000!important;}',
         '.main-nav [data-gocoiin-payment-nav]:hover>.dropdown,.main-nav [data-gocoiin-payment-nav].is-open>.dropdown,.main-nav [data-gocoiin-payment-nav].open>.dropdown{display:block!important;}',
-        '}'
+        '}', 
         '@media(max-width:850px){',
         '.main-nav [data-gocoiin-payment-nav]>.nav-trigger{width:100%!important;min-height:58px!important;padding:0 8px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;color:#294761!important;}',
         '.main-nav [data-gocoiin-payment-nav]>.dropdown{display:none;}',
