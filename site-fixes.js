@@ -204,36 +204,25 @@
     const nav = document.querySelector('.main-nav');
     if (!nav) return;
 
-    // Remove only standalone top-level Withdrawal links. Never remove the
-    // Withdrawal item inside the Payment dropdown.
+    // Remove only standalone top-level Withdrawal links. Never touch the
+    // Deposit/Withdrawal links inside Payment.
     Array.from(nav.children).forEach(child => {
       if (child.hasAttribute('data-gocoiin-payment-nav')) return;
 
       if (child.matches('a')) {
         const text = clean(child.textContent).toLowerCase();
         const href = (child.getAttribute('href') || '').toLowerCase();
-        if (
-          text === 'withdrawal' ||
-          /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(href)
-        ) {
-          child.remove();
-        }
+        if (text === 'withdrawal' || /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(href)) child.remove();
         return;
       }
 
       if (child.matches('.nav-item') && !child.querySelector('.dropdown')) {
         const text = clean(child.textContent).toLowerCase();
         const href = (child.querySelector('a')?.getAttribute('href') || '').toLowerCase();
-        if (
-          text === 'withdrawal' ||
-          /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(href)
-        ) {
-          child.remove();
-        }
+        if (text === 'withdrawal' || /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(href)) child.remove();
       }
     });
 
-    // Create one Payment dropdown on every page.
     let paymentItem = nav.querySelector('[data-gocoiin-payment-nav]');
     if (!paymentItem) {
       paymentItem = document.createElement('div');
@@ -241,42 +230,75 @@
       paymentItem.setAttribute('data-gocoiin-payment-nav','true');
       paymentItem.innerHTML = [
         '<button type="button" class="nav-trigger" aria-expanded="false"><span>Payment</span><em>⌄</em></button>',
-        '<div class="dropdown">',
-        '<a href="' + prefix + 'trading/deposit.html"><span>Deposit</span><small>Bank transfer, QR &amp; UPI details</small></a>',
-        '<a href="' + prefix + 'trading/withdrawal.html"><span>Withdrawal</span><small>Submit a withdrawal request</small></a>',
-        '</div>'
+        '<div class="dropdown"></div>'
       ].join('');
       const partnership = Array.from(nav.children).find(el =>
         clean(el.textContent).toLowerCase() === 'partnership'
       );
       if (partnership) nav.insertBefore(paymentItem, partnership);
       else nav.appendChild(paymentItem);
-    } else {
-      // Repair an incomplete Payment dropdown without disturbing its order.
-      const dropdown = paymentItem.querySelector('.dropdown');
-      if (dropdown) {
-        const hasDeposit = Array.from(dropdown.querySelectorAll('a')).some(a =>
-          clean(a.textContent).toLowerCase() === 'deposit'
-        );
-        const hasWithdrawal = Array.from(dropdown.querySelectorAll('a')).some(a =>
-          clean(a.textContent).toLowerCase() === 'withdrawal' ||
-          /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(a.getAttribute('href') || '')
-        );
+    }
 
-        if (!hasDeposit) {
-          const deposit = document.createElement('a');
-          deposit.href = prefix + 'trading/deposit.html';
-          deposit.innerHTML = '<span>Deposit</span><small>Bank transfer, QR &amp; UPI details</small>';
-          dropdown.insertBefore(deposit, dropdown.firstChild);
+    const dropdown = paymentItem.querySelector('.dropdown');
+    if (dropdown) {
+      // Normalize the Payment menu to EXACTLY two entries.
+      // This prevents duplicate Deposit items when the page HTML already
+      // contains a Payment/Deposit entry and this global script runs again.
+      const desired = [
+        {
+          key: 'deposit',
+          href: prefix + 'trading/deposit.html',
+          title: 'Deposit',
+          desc: 'Bank transfer, QR &amp; UPI details'
+        },
+        {
+          key: 'withdrawal',
+          href: prefix + 'trading/withdrawal.html',
+          title: 'Withdrawal',
+          desc: 'Submit a withdrawal request'
+        }
+      ];
+
+      const existing = Array.from(dropdown.querySelectorAll('a'));
+      const byKey = new Map();
+
+      existing.forEach(link => {
+        const label = clean(link.textContent).toLowerCase();
+        const href = (link.getAttribute('href') || '').toLowerCase();
+        const key =
+          label === 'deposit' || /(?:^|\/)trading\/deposit\.html(?:$|[?#])/i.test(href)
+            ? 'deposit'
+            : label === 'withdrawal' || /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(href)
+              ? 'withdrawal'
+              : null;
+
+        if (!key) {
+          link.remove();
+          return;
         }
 
-        if (!hasWithdrawal) {
-          const withdrawal = document.createElement('a');
-          withdrawal.href = prefix + 'trading/withdrawal.html';
-          withdrawal.innerHTML = '<span>Withdrawal</span><small>Submit a withdrawal request</small>';
-          dropdown.appendChild(withdrawal);
+        if (byKey.has(key)) {
+          link.remove(); // remove duplicate
+          return;
         }
-      }
+
+        byKey.set(key, link);
+      });
+
+      desired.forEach(item => {
+        let link = byKey.get(item.key);
+        if (!link) {
+          link = document.createElement('a');
+          dropdown.appendChild(link);
+        }
+        link.href = item.href;
+        link.innerHTML = '<span>' + item.title + '</span><small>' + item.desc + '</small>';
+      });
+
+      // Put them in the correct order: Deposit, then Withdrawal.
+      desired.forEach(item => dropdown.appendChild(byKey.get(item.key) || Array.from(dropdown.querySelectorAll('a')).find(a =>
+        clean(a.textContent).toLowerCase() === item.key
+      )));
     }
 
     nav.querySelectorAll('[data-gocoiin-admin-link]').forEach(link => link.remove());
