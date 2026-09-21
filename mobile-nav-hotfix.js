@@ -116,7 +116,7 @@
     window.__gocoiinMobileFallbackInstalled = true;
 
     const handle = event => {
-      if (window.innerWidth > 850) return;
+      if (!mobileMode()) return;
 
       const menuButton = event.target.closest('.menu-toggle');
       const trigger = event.target.closest('.main-nav .nav-trigger');
@@ -139,7 +139,7 @@
       trigger.setAttribute('aria-expanded', String(opening));
     };
 
-    document.addEventListener('pointerup', e => {
+    document.addEventListener('pointerdown', e => {
       if (e.pointerType !== 'mouse') handle(e);
     }, true);
 
