@@ -595,6 +595,15 @@
       handle(event);
     }, {capture:true, passive:false});
 
+    // Release-phase fallback for Android WebView/Chrome variants where
+    // touchstart can be consumed by another gesture recognizer.
+    document.addEventListener('touchend', event => {
+      if (window.innerWidth > 850) return;
+      const target = event.target.closest('.menu-toggle,.main-nav .nav-trigger');
+      if (!target) return;
+      handle(event);
+    }, {capture:true, passive:false});
+
     // Pointer fallback for browsers that do not expose touchstart. Never run
     // this for touch pointers because touchstart already owns that gesture.
     document.addEventListener('pointerdown', event => {
