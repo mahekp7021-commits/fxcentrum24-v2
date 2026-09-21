@@ -79,25 +79,15 @@ function initFxCryptoChartList() {
   if (!host || host.dataset.initialized === "true") return;
   host.dataset.initialized = "true";
 
-  const fallbackIfFinlogixFails = () => {
-    const text = (host.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-    const hasServerError = text.includes("server error") || text.includes("try again");
-    const hasRenderedWidget = !!host.querySelector("iframe, canvas, svg, table");
-    if (hasServerError || !hasRenderedWidget) {
-      console.warn("GO COIIN: Finlogix Chart List unavailable; using TradingView crypto market fallback.");
-      initFxCryptoTradingViewFallback(host);
-    }
-  };
+  // Match the exact Finlogix generator structure:
+  // <div class="finlogix-container"></div>
+  // <script src="https://widget.finlogix.com/Widget.js"></script>
+  // <script>Widget.init({...})</script>
+  const container = host.querySelector(".finlogix-container");
+  if (!container) return;
 
-  const scheduleFallbackCheck = () => {
-    window.setTimeout(fallbackIfFinlogixFails, 6500);
-  };
-
-  const init = () => {
-    if (!window.Widget || typeof window.Widget.init !== "function") {
-      initFxCryptoTradingViewFallback(host);
-      return;
-    }
+  const runFinlogix = () => {
+    if (!window.Widget || typeof window.Widget.init !== "function") return false;
     try {
       window.Widget.init({
         widgetId: "87c63d8a-2d03-409f-ba57-599ea3a57013",
@@ -107,34 +97,40 @@ function initFxCryptoChartList() {
         isAdaptive: true,
         withBorderBox: true
       });
-      scheduleFallbackCheck();
+      return true;
     } catch (error) {
       console.error("GO COIIN Finlogix crypto widget failed:", error);
-      initFxCryptoTradingViewFallback(host);
+      return false;
     }
   };
 
-  if (window.Widget && typeof window.Widget.init === "function") {
-    init();
-    return;
-  }
-
-  const existing = document.querySelector('script[data-gocoiin-finlogix="true"]');
-  if (existing) {
-    existing.addEventListener("load", init, { once: true });
-    scheduleFallbackCheck();
-    return;
-  }
-
   const script = document.createElement("script");
+  script.type = "text/javascript";
   script.src = "https://widget.finlogix.com/Widget.js";
-  script.async = true;
-  script.dataset.gocoiinFinlogix = "true";
-  script.addEventListener("load", init, { once: true });
-  script.addEventListener("error", () => initFxCryptoTradingViewFallback(host), { once: true });
-  document.head.appendChild(script);
-}
+  script.addEventListener("load", () => {
+    if (!runFinlogix()) initFxCryptoTradingViewFallback(host);
+  }, { once: true });
+  script.addEventListener("error", () => {
+    console.warn("GO COIIN: Finlogix Widget.js failed to load; using TradingView crypto fallback.");
+    initFxCryptoTradingViewFallback(host);
+  }, { once: true });
 
+  // Put Widget.js immediately after .finlogix-container, exactly like the generated snippet.
+  container.insertAdjacentElement("afterend", script);
+
+  // Finlogix can return a server error after initialization. Give it time to render,
+  // then switch only if the actual widget reports an error or produced no widget UI.
+  window.setTimeout(() => {
+    if (host.dataset.fallbackLoaded === "true") return;
+    const text = (host.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+    const hasServerError = text.includes("server error") || text.includes("try again");
+    const hasWidgetUi = !!host.querySelector("iframe, canvas, svg, table");
+    if (hasServerError || !hasWidgetUi) {
+      console.warn("GO COIIN: Finlogix Chart List unavailable; using TradingView crypto fallback.");
+      initFxCryptoTradingViewFallback(host);
+    }
+  }, 7000);
+}
 function initFxMarketOverview() {
   const section = document.querySelector(".fx-market-section");
   if (!section || section.dataset.initialized === "true") return;
