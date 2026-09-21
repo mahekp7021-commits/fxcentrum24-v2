@@ -204,18 +204,32 @@
     const nav = document.querySelector('.main-nav');
     if (!nav) return;
 
-    // Retire any standalone Withdrawal links. Payment will own Deposit + Withdrawal.
-    nav.querySelectorAll('a[data-gocoiin-withdrawal-link]').forEach(link => link.remove());
-    Array.from(nav.querySelectorAll('a')).forEach(link => {
-      const text = clean(link.textContent).toLowerCase();
-      const href = (link.getAttribute('href') || '').toLowerCase();
-      if (
-        text === 'withdrawal' ||
-        /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(href)
-      ) {
-        const parent = link.closest('.nav-item');
-        if (parent && !parent.querySelector('.dropdown')) parent.remove();
-        else link.remove();
+    // Remove only standalone top-level Withdrawal links. Never remove the
+    // Withdrawal item inside the Payment dropdown.
+    Array.from(nav.children).forEach(child => {
+      if (child.hasAttribute('data-gocoiin-payment-nav')) return;
+
+      if (child.matches('a')) {
+        const text = clean(child.textContent).toLowerCase();
+        const href = (child.getAttribute('href') || '').toLowerCase();
+        if (
+          text === 'withdrawal' ||
+          /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(href)
+        ) {
+          child.remove();
+        }
+        return;
+      }
+
+      if (child.matches('.nav-item') && !child.querySelector('.dropdown')) {
+        const text = clean(child.textContent).toLowerCase();
+        const href = (child.querySelector('a')?.getAttribute('href') || '').toLowerCase();
+        if (
+          text === 'withdrawal' ||
+          /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(href)
+        ) {
+          child.remove();
+        }
       }
     });
 
@@ -237,6 +251,32 @@
       );
       if (partnership) nav.insertBefore(paymentItem, partnership);
       else nav.appendChild(paymentItem);
+    } else {
+      // Repair an incomplete Payment dropdown without disturbing its order.
+      const dropdown = paymentItem.querySelector('.dropdown');
+      if (dropdown) {
+        const hasDeposit = Array.from(dropdown.querySelectorAll('a')).some(a =>
+          clean(a.textContent).toLowerCase() === 'deposit'
+        );
+        const hasWithdrawal = Array.from(dropdown.querySelectorAll('a')).some(a =>
+          clean(a.textContent).toLowerCase() === 'withdrawal' ||
+          /(?:^|\/)trading\/withdrawal\.html(?:$|[?#])/i.test(a.getAttribute('href') || '')
+        );
+
+        if (!hasDeposit) {
+          const deposit = document.createElement('a');
+          deposit.href = prefix + 'trading/deposit.html';
+          deposit.innerHTML = '<span>Deposit</span><small>Bank transfer, QR &amp; UPI details</small>';
+          dropdown.insertBefore(deposit, dropdown.firstChild);
+        }
+
+        if (!hasWithdrawal) {
+          const withdrawal = document.createElement('a');
+          withdrawal.href = prefix + 'trading/withdrawal.html';
+          withdrawal.innerHTML = '<span>Withdrawal</span><small>Submit a withdrawal request</small>';
+          dropdown.appendChild(withdrawal);
+        }
+      }
     }
 
     nav.querySelectorAll('[data-gocoiin-admin-link]').forEach(link => link.remove());
@@ -257,6 +297,7 @@
       document.head.appendChild(style);
     }
   }
+
 
   function normalizeHeaderActions() {
     document.querySelectorAll('.header-actions').forEach(actions => {
