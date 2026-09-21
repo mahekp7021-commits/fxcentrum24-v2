@@ -22,6 +22,12 @@
     return '../'.repeat(Math.max(0, depth)) + target;
   }
 
+  function mobileMode() {
+    return window.innerWidth <= 850 ||
+      (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) ||
+      'ontouchstart' in window;
+  }
+
   function ensureStyles() {
     if (document.getElementById('gocoiin-mobile-nav-hotfix-style')) return;
     const style = document.createElement('style');
@@ -84,6 +90,12 @@
 
   function setupFallback() {
     ensureStyles();
+
+    // Some Android Chrome configurations report a wide CSS viewport even
+    // though the device is touch/mobile. Force one consistent mobile mode.
+    if (mobileMode()) {
+      document.documentElement.classList.add('gocoiin-mobile-mode');
+    }
     const header = document.querySelector('.site-header');
     const nav = header && header.querySelector('.main-nav');
     const toggle = header && header.querySelector('.menu-toggle');
