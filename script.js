@@ -36,10 +36,56 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) { console.error("FXCentrum24 market section failed to load:", error); }
 });
 
+function initFxCryptoChartList() {
+  const host = document.querySelector(".finlogix-crypto-chart");
+  if (!host || host.dataset.initialized === "true") return;
+  host.dataset.initialized = "true";
+
+  const init = () => {
+    if (!window.Widget || typeof window.Widget.init !== "function") {
+      host.dataset.initialized = "false";
+      return;
+    }
+    try {
+      window.Widget.init({
+        widgetId: "87c63d8a-2d03-409f-ba57-599ea3a57013",
+        type: "SymbolChartList",
+        language: "en",
+        symbolIds: [66,145,69,119,120,121,144,146],
+        isAdaptive: true,
+        withBorderBox: true,
+        container: host
+      });
+    } catch (error) {
+      console.error("GO COIIN Finlogix crypto widget failed:", error);
+      host.dataset.initialized = "false";
+    }
+  };
+
+  if (window.Widget && typeof window.Widget.init === "function") {
+    init();
+    return;
+  }
+
+  const existing = document.querySelector('script[data-gocoiin-finlogix="true"]');
+  if (existing) {
+    existing.addEventListener("load", init, { once: true });
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = "https://widget.finlogix.com/Widget.js";
+  script.async = true;
+  script.dataset.gocoiinFinlogix = "true";
+  script.addEventListener("load", init, { once: true });
+  document.head.appendChild(script);
+}
+
 function initFxMarketOverview() {
   const section = document.querySelector(".fx-market-section");
   if (!section || section.dataset.initialized === "true") return;
   section.dataset.initialized = "true";
+  initFxCryptoChartList();
 
   const ensureElement = (name, src, dataAttr) => {
     const tag = section.querySelector(name);
