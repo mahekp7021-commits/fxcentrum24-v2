@@ -44,7 +44,7 @@ function initFxCryptoTradingViewFallback(host) {
   const widget = document.createElement("div");
   widget.className = "tradingview-widget-container";
   widget.style.width = "100%";
-  widget.style.height = "100%";
+  widget.style.height = window.innerWidth <= 560 ? "500px" : "520px";
 
   const widgetBody = document.createElement("div");
   widgetBody.className = "tradingview-widget-container__widget";
