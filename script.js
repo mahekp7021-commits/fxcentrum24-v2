@@ -36,107 +36,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) { console.error("FXCentrum24 market section failed to load:", error); }
 });
 
-function initFxCryptoTradingViewFallback(host) {
-  if (!host || host.dataset.fallbackLoaded === "true") return;
-  host.dataset.fallbackLoaded = "true";
-  host.innerHTML = "";
-
-  const widget = document.createElement("div");
-  widget.className = "tradingview-widget-container";
-  widget.style.width = "100%";
-  widget.style.height = window.innerWidth <= 560 ? "500px" : "520px";
-
-  const widgetBody = document.createElement("div");
-  widgetBody.className = "tradingview-widget-container__widget";
-  widgetBody.style.width = "100%";
-  widgetBody.style.height = "100%";
-  widget.appendChild(widgetBody);
-
-  const script = document.createElement("script");
-  script.type = "text/javascript";
-  script.async = true;
-  script.src = "https://s3.tradingview.com/external-embedding/embed-widget-screener.js";
-  script.text = JSON.stringify({
-    width: "100%",
-    height: "100%",
-    defaultColumn: "overview",
-    defaultScreen: "general",
-    market: "crypto",
-    showToolbar: true,
-    colorTheme: "light",
-    locale: "en",
-    isTransparent: false,
-    largeChartUrl: ""
-  });
-
-  widget.appendChild(script);
-  host.appendChild(widget);
-  host.closest(".fx-crypto-widget-card")?.setAttribute("data-widget-source", "tradingview-fallback");
-}
-
-function initFxCryptoChartList() {
-  const host = document.querySelector(".finlogix-crypto-chart");
-  if (!host || host.dataset.initialized === "true") return;
-  host.dataset.initialized = "true";
-
-  // Match the exact Finlogix generator structure:
-  // <div class="finlogix-container"></div>
-  // <script src="https://widget.finlogix.com/Widget.js"></script>
-  // <script>Widget.init({...})</script>
-  const container = host.querySelector(".finlogix-container");
-  if (!container) return;
-
-  const runFinlogix = () => {
-    if (!window.Widget || typeof window.Widget.init !== "function") return false;
-    try {
-      window.Widget.init({
-        widgetId: "87c63d8a-2d03-409f-ba57-599ea3a57013",
-        type: "SymbolChartList",
-        language: "en",
-        symbolIds: [66,145,69,119,120,121,144,146],
-        isAdaptive: true,
-        withBorderBox: true
-      });
-      return true;
-    } catch (error) {
-      console.error("GO COIIN Finlogix crypto widget failed:", error);
-      return false;
-    }
-  };
-
-  const script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = "https://widget.finlogix.com/Widget.js";
-  script.addEventListener("load", () => {
-    if (!runFinlogix()) initFxCryptoTradingViewFallback(host);
-  }, { once: true });
-  script.addEventListener("error", () => {
-    console.warn("GO COIIN: Finlogix Widget.js failed to load; using TradingView crypto fallback.");
-    initFxCryptoTradingViewFallback(host);
-  }, { once: true });
-
-  // Put Widget.js immediately after .finlogix-container, exactly like the generated snippet.
-  container.insertAdjacentElement("afterend", script);
-
-  // Finlogix can return a server error after initialization. Give it time to render,
-  // then switch only if the actual widget reports an error or produced no widget UI.
-  window.setTimeout(() => {
-    if (host.dataset.fallbackLoaded === "true") return;
-    const text = (host.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-    const hasServerError = text.includes("server error") || text.includes("try again");
-    const hasWidgetUi = !!host.querySelector("iframe, canvas, svg, table");
-    if (hasServerError || !hasWidgetUi) {
-      console.warn("GO COIIN: Finlogix Chart List unavailable; using TradingView crypto fallback.");
-      initFxCryptoTradingViewFallback(host);
-    }
-  }, 7000);
-}
 function initFxMarketOverview() {
   const section = document.querySelector(".fx-market-section");
   if (!section || section.dataset.initialized === "true") return;
   section.dataset.initialized = "true";
-  initFxCryptoChartList();
-
   const ensureElement = (name, src, dataAttr) => {
     const tag = section.querySelector(name);
     if (!tag) return Promise.resolve();
@@ -203,6 +106,7 @@ function initFxMarketOverview() {
 
   Promise.all([
     ensureElement("tv-tickers", "https://widgets.tradingview-widget.com/w/en/tv-tickers.js", "gocoiinTradingviewTickers"),
+    ensureElement("tv-market-overview", "https://widgets.tradingview-widget.com/w/en/tv-market-overview.js", "gocoiinTradingviewMarketOverview"),
     loadAdvancedChart()
   ]).catch(error => {
     console.error("GO COIIN TradingView widgets failed to load:", error);
