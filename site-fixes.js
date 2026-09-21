@@ -532,45 +532,94 @@
   function installMobileNavigation() {
     if (window.__fxcMobileNavigationInstalled) return;
     window.__fxcMobileNavigationInstalled = true;
+
     ensureMobileMenuToggle();
     installMobileStyles();
     setHeaderHeight();
-    window.addEventListener('resize',setHeaderHeight,{passive:true});
-    let suppressClickUntil=0;
+    window.addEventListener('resize', setHeaderHeight, { passive:true });
+
+    let suppressClickUntil = 0;
 
     function handle(event) {
-      if (innerWidth>850) return;
-      const toggle=event.target.closest('.menu-toggle');
-      const trigger=event.target.closest('.main-nav .nav-trigger');
+      if (window.innerWidth > 850) return;
+
+      const toggle = event.target.closest('.menu-toggle');
+      const trigger = event.target.closest('.main-nav .nav-trigger');
+
+      if (!toggle && !trigger) return;
+
+      // Payment has its own dedicated handler below in installGlobalUtilityNav().
       if (trigger && trigger.closest('[data-gocoiin-payment-nav]')) return;
-      if(!toggle&&!trigger) return;
-      event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
-      suppressClickUntil=Date.now()+700;
-      if(toggle){
-        const nav=document.querySelector('.main-nav');
-        const open=!(nav&&(nav.classList.contains('is-open')||nav.classList.contains('open')));
-        if(open)setMenuOpen(true);else closeMenu();
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+
+      // Prevent the later synthetic click from toggling the menu a second time.
+      suppressClickUntil = Date.now() + 900;
+
+      if (toggle) {
+        const nav = document.querySelector('.main-nav');
+        const open = !(nav && (nav.classList.contains('is-open') || nav.classList.contains('open')));
+        if (open) setMenuOpen(true);
+        else closeMenu();
         return;
       }
-      const item=trigger.closest('.nav-item'),nav=trigger.closest('.main-nav');
-      if(!item||!nav)return;
-      const wasOpen=item.classList.contains('is-open')||item.classList.contains('open');
-      nav.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(other=>{if(other!==item)other.classList.remove('is-open','open')});
-      nav.querySelectorAll('.nav-trigger').forEach(b=>b.setAttribute('aria-expanded','false'));
-      item.classList.toggle('is-open',!wasOpen);item.classList.toggle('open',!wasOpen);
-      trigger.setAttribute('aria-expanded',String(!wasOpen));
+
+      const item = trigger.closest('.nav-item');
+      const nav = trigger.closest('.main-nav');
+      if (!item || !nav) return;
+
+      const wasOpen = item.classList.contains('is-open') || item.classList.contains('open');
+
+      nav.querySelectorAll('.nav-item.is-open,.nav-item.open').forEach(other => {
+        if (other !== item) other.classList.remove('is-open','open');
+      });
+
+      nav.querySelectorAll('.nav-trigger').forEach(btn => {
+        btn.setAttribute('aria-expanded','false');
+      });
+
+      item.classList.toggle('is-open', !wasOpen);
+      item.classList.toggle('open', !wasOpen);
+      trigger.setAttribute('aria-expanded', String(!wasOpen));
     }
 
-    document.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')handle(e)},true);
-    document.addEventListener('click',e=>{
-      if(Date.now()<suppressClickUntil&&(e.target.closest('.menu-toggle')||e.target.closest('.main-nav .nav-trigger'))){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();return;}
-      if(innerWidth>850)return;
-      const toggle=e.target.closest('.menu-toggle'),trigger=e.target.closest('.main-nav .nav-trigger');
+    // IMPORTANT: use pointerdown so mobile navigation opens on a normal tap,
+    // not only after the finger is held/released.
+    document.addEventListener('pointerdown', event => {
+      if (event.pointerType === 'mouse') return;
+      handle(event);
+    }, true);
+
+    document.addEventListener('click', event => {
+      const menuTarget = event.target.closest('.menu-toggle,.main-nav .nav-trigger');
+
+      if (Date.now() < suppressClickUntil && menuTarget) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        return;
+      }
+
+      if (window.innerWidth > 850) return;
+
+      const toggle = event.target.closest('.menu-toggle');
+      const trigger = event.target.closest('.main-nav .nav-trigger');
+
       if (trigger && trigger.closest('[data-gocoiin-payment-nav]')) return;
-      if(toggle||trigger){handle(e);return;}
-      if(e.target.closest('.main-nav a'))closeMenu();
-    },true);
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+
+      if (toggle || trigger) {
+        handle(event);
+        return;
+      }
+
+      if (event.target.closest('.main-nav a')) closeMenu();
+    }, true);
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeMenu();
+    });
   }
 
   function ensureMarketActionModal() {
