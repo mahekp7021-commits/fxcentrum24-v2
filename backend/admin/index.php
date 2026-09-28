@@ -46,7 +46,39 @@ function notice(msg){const n=$('notice');n.textContent=msg;n.classList.add('show
 async function api(url,opts){const r=await fetch(url,opts);const d=await r.json().catch(()=>({ok:false,message:'Invalid server response'}));if(r.status===401){location.href='login.php';throw new Error('Session expired');}if(!r.ok||!d.ok)throw new Error(d.message||'Request failed');return d}
 async function loadStats(){const d=await api('api.php?action=stats');const s=d.stats;const vals=[s.total,s.new_count,s.contacted_count,s.verified_count,s.approved_count,s.rejected_count];document.querySelectorAll('#stats strong').forEach((el,i)=>el.textContent=Number(vals[i]||0).toLocaleString())}
 async function load(){const search=encodeURIComponent($('search').value.trim());const status=encodeURIComponent($('status').value);const d=await api(`api.php?action=list&limit=${state.limit}&offset=${state.offset}&search=${search}&status=${status}`);const rows=$('rows');if(!d.applications.length){rows.innerHTML='<tr><td colspan="8" style="padding:40px;text-align:center;color:#8fa5ba">No applications found.</td></tr>'}else{rows.innerHTML=d.applications.map(a=>{const full=`${a.first_name} ${a.last_name}`;return `<tr><td><div class="name">${esc(a.application_ref)}</div><div class="sub">${esc(a.created_at)} UTC</div></td><td><div class="name">${esc(full)}</div><div class="sub">${esc(a.account_type)}</div></td><td><div>${esc(a.email)}</div><div class="sub">${esc(a.phone)}</div></td><td>${esc(a.country)}</td><td>${esc(a.account_type)}</td><td><span class="status ${a.status.toLowerCase()}">${esc(a.status)}</span></td><td>${esc(a.created_at)}</td><td><div class="action-row"><button class="small-btn" data-action="view" data-id="${a.id}" type="button">View</button><button class="small-btn mail" data-action="mail" data-id="${a.id}" type="button">Email</button></div></td></tr>`}).join('');document.querySelectorAll('[data-action="view"]').forEach(b=>b.addEventListener('click',()=>openDetails(d.applications.find(a=>String(a.id)===b.dataset.id))));document.querySelectorAll('[data-action="mail"]').forEach(b=>b.addEventListener('click',()=>openDetails(d.applications.find(a=>String(a.id)===b.dataset.id))))}const start=d.total?state.offset+1:0;const end=Math.min(state.offset+d.applications.length,d.total);$('count').textContent=`Showing ${start}–${end} of ${d.total}`;$('prev').disabled=state.offset===0;$('next').disabled=end>=d.total}
-function renderCredentialMessage(){const message=`Dear Mr./Ms. ${$('credName').value || '[Client Name]'},\n\nThanks you for choosing GO COIIN as your trading partner.\nBelow you can find your login credentials.\n\nName            : ${$('credName').value || '[Client Name]'}\nEmail           : ${$('mailTo').value || '[Client Email]'}\nContact         : ${$('credContact').value || '[Contact]'}\nLogin ID        : ${$('credLoginId').value || '[Login ID]'}\nMaster Password : ${$('credMasterPassword').value || '[Master Password]'}\nInvestor Password: ${$('credInvestorPassword').value || '[Investor Password]'}\n\n(server name: (stark capital markets))\n\nplease do not hesitate to contact us for any further assistance\n\nWe are sending you the MT5 setup full via whatsapp we\nalso request you to kindly download\n\n\nThanks and Regards\n    GO COIIN\nwww.gocoiin.com`;$('mailMessage').value=message}
+function renderCredentialMessage(){
+  const message = [
+    `Dear Mr./Ms. ${$('credName').value || '[Client Name]'},`,
+    '',
+    'Thank you for choosing GO COIIN as your trading partner.',
+    '',
+    'Below you can find your login credentials.',
+    '',
+    'ACCOUNT INFORMATION',
+    '',
+    `Client Name       : ${$('credName').value || '[Client Name]'}`,
+    `Email             : ${$('mailTo').value || '[Client Email]'}`,
+    `Contact           : ${$('credContact').value || '[Contact Number]'}`,
+    `Login ID          : ${$('credLoginId').value || '[Login ID]'}`,
+    `Master Password   : ${$('credMasterPassword').value || '[Master Password]'}`,
+    `Investor Password : ${$('credInvestorPassword').value || '[Investor Password]'}`,
+    '',
+    'Server            : Stark Capital Markets',
+    '',
+    '',
+    'Please do not hesitate to contact us for any further assistance.',
+    '',
+    'The MT5 setup and installation instructions will be shared with you via WhatsApp.',
+    'We also request you to kindly download and install the setup.',
+    '',
+    '',
+    'Thanks and Regards',
+    '',
+    'GO COIIN',
+    'www.gocoiin.com'
+  ].join('\n');
+  $('mailMessage').value=message;
+}
 function loadCredentialTemplate(){const a=state.current;if(!a)return;$('credName').value=`${a.first_name} ${a.last_name}`;$('mailTo').value=a.email||'';$('credContact').value=a.phone||'';$('credLoginId').value='';$('credMasterPassword').value='';$('credInvestorPassword').value='';$('mailSubject').value='Login Credentials For GO COIIN';renderCredentialMessage()}
 function openDetails(a){if(!a)return;state.current=a;$('modalTitle').textContent=`${a.first_name} ${a.last_name}`;$('modalSub').textContent=`${a.application_ref} · Submitted ${a.created_at} UTC`;$('editStatus').value=a.status;$('editNotes').value=a.admin_notes||'';const items=[['Email',a.email],['Phone',a.phone],['Country / Region',a.country],['Preferred Account',a.account_type],['Risk Acknowledgement',a.risk_acknowledged?'Yes':'No'],['Last Updated',`${a.updated_at} UTC`],['Message',a.message||'—'],['Admin Notes',a.admin_notes||'—']];$('details').innerHTML=items.map((x,i)=>`<div class="detail ${i>5?'full':''}"><label>${esc(x[0])}</label><div>${esc(x[1])}</div></div>`).join('');loadCredentialTemplate();$('modal').classList.add('open')}
 const templates={credentials:{subject:'Login Credentials For GO COIIN'}};
