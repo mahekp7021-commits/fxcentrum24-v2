@@ -7,7 +7,7 @@ const DB_NAME = 'YOUR_DATABASE_NAME';
 const DB_USER = 'YOUR_DATABASE_USER';
 const DB_PASS = 'YOUR_DATABASE_PASSWORD';
 
-const ADMIN_EMAIL = 'noreply@gocoiin.com';
+const ADMIN_EMAIL = 'admin@example.com';
 
 // Hostinger SMTP settings. Put the real mailbox password ONLY in the live config.php on Hostinger.
 const MAIL_SMTP_HOST = 'smtp.hostinger.com';
