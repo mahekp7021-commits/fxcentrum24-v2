@@ -106,6 +106,101 @@ function sendViaHostingerSmtp(
         );
         $body = implode("\r\n", $bodyLines);
 
+        /*
+         * Professional finance-style HTML email.
+         * The GO COIIN logo is rendered as text so the email does not
+         * depend on an externally hosted image being loaded by Gmail.
+         */
+        $messageEsc = htmlspecialchars($textBody, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        $htmlBody = '<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Login Credentials For GO COIIN</title>
+</head>
+<body style="margin:0;padding:0;background:#eef2f6;font-family:Arial,Helvetica,sans-serif;color:#172033;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#eef2f6;padding:30px 12px;">
+<tr>
+<td align="center">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:680px;background:#ffffff;border:1px solid #dce3ea;">
+
+<tr>
+<td style="background:#071a2d;padding:24px 32px;border-bottom:4px solid #ff3154;">
+<div style="font-size:27px;line-height:1;font-weight:800;letter-spacing:-1px;color:#ffffff;">
+<span style="color:#ff3154;">GO</span> COIIN
+</div>
+<div style="margin-top:8px;font-size:10px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase;color:#9fb2c7;">
+TRADING &amp; INVESTMENT SERVICES
+</div>
+</td>
+</tr>
+
+<tr>
+<td style="padding:34px 32px 12px;">
+<div style="font-size:21px;line-height:1.35;font-weight:700;color:#10263b;">
+MT5 Login Credentials
+</div>
+<div style="margin-top:7px;font-size:12px;line-height:1.6;color:#718096;">
+Your GO COIIN trading account details are provided below.
+</div>
+</td>
+</tr>
+
+<tr>
+<td style="padding:12px 32px 30px;">
+<div style="border:1px solid #dce5ed;border-radius:8px;background:#f8fafc;padding:22px 20px;">
+<div style="font-size:12px;line-height:1.7;color:#25364a;white-space:pre-wrap;">' . nl2br($messageEsc) . '</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td style="padding:0 32px 30px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f7f9fb;border-left:3px solid #ff3154;">
+<tr>
+<td style="padding:15px 17px;">
+<div style="font-size:10px;line-height:1.4;text-transform:uppercase;letter-spacing:1px;color:#7b8794;">
+Important
+</div>
+<div style="margin-top:5px;font-size:12px;line-height:1.6;color:#4a5568;">
+Please keep your trading credentials confidential and do not share them with any third party.
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td style="background:#071a2d;padding:24px 32px;">
+<div style="font-size:11px;line-height:1.5;color:#b8c6d4;">Thanks and Regards</div>
+<div style="margin-top:5px;font-size:16px;line-height:1.3;font-weight:800;color:#ffffff;">
+<span style="color:#ff3154;">GO</span> COIIN
+</div>
+<div style="margin-top:6px;font-size:11px;line-height:1.5;color:#9fb2c7;">
+Trading &amp; Investment Services<br>
+www.gocoiin.com
+</div>
+</td>
+</tr>
+
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>';
+
+        $htmlBody = preg_replace(
+            "/\r\n|\r|\n/",
+            "\r\n",
+            $htmlBody
+        ) ?? $htmlBody;
+
+        $boundary = '=_GOCOIIN_' . bin2hex(random_bytes(12));
+
         $headers = [
             'From: GO COIIN <' . $safeFrom . '>',
             'Reply-To: ' . $safeFrom,
@@ -114,15 +209,25 @@ function sendViaHostingerSmtp(
             'Date: ' . date(DATE_RFC2822),
             'Message-ID: <' . bin2hex(random_bytes(12)) . '@gocoiin.com>',
             'MIME-Version: 1.0',
-            'Content-Type: text/plain; charset=UTF-8',
-            'Content-Transfer-Encoding: 8bit',
+            'Content-Type: multipart/alternative; boundary="' . $boundary . '"',
             'X-Mailer: GO COIIN Admin Panel',
         ];
+
+        $mailBody =
+            '--' . $boundary . "\r\n" .
+            "Content-Type: text/plain; charset=UTF-8\r\n" .
+            "Content-Transfer-Encoding: 8bit\r\n\r\n" .
+            $body . "\r\n" .
+            '--' . $boundary . "\r\n" .
+            "Content-Type: text/html; charset=UTF-8\r\n" .
+            "Content-Transfer-Encoding: 8bit\r\n\r\n" .
+            $htmlBody . "\r\n" .
+            '--' . $boundary . "--\r\n";
 
         fwrite($socket, "DATA\r\n");
         smtpExpect($socket, [354], 'DATA');
 
-        fwrite($socket, implode("\r\n", $headers) . "\r\n\r\n" . $body . "\r\n.\r\n");
+        fwrite($socket, implode("\r\n", $headers) . "\r\n\r\n" . $mailBody . ".\r\n");
         smtpExpect($socket, [250], 'Message delivery');
 
         smtpCommand($socket, 'QUIT', [221], 'SMTP QUIT');
