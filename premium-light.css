@@ -1333,69 +1333,54 @@ html body .trust-strip .trust-item{
 }
 
 
+
 /* =========================================================
-   GO COIIN — Restore the dark premium palette on Markets and
-   Trading pages only. Homepage's glossy-light theme is kept.
+   GO COIIN — Markets & Trading pages use the site's LIGHT theme
+   and retain readable text, cards and hero artwork.
    ========================================================= */
-html.gocoiin-market-trading{
-  color-scheme:dark!important;
-  --gc-bg:#061321;
-  --gc-surface:#0a2038;
-  --gc-surface-2:#0c2944;
-  --gc-ink:#f4f8ff;
-  --gc-muted:#a7bbcf;
-  --gc-blue:#168bff;
-  --gc-blue-2:#0a7fd0;
-  --gc-red:#ff1744;
-  --gc-border:rgba(120,180,220,.18);
-}
+html.gocoiin-market-trading{color-scheme:light!important}
 html.gocoiin-market-trading body{
-  background:#061321!important;
-  color:#f4f8ff!important;
+  background:#f5f9fd!important;
+  color:#10263d!important;
 }
 html.gocoiin-market-trading body .site-header{
-  background:rgba(5,16,29,.97)!important;
-  border-bottom:1px solid rgba(120,180,220,.18)!important;
-  box-shadow:0 8px 28px rgba(0,0,0,.18)!important;
+  background:rgba(255,255,255,.96)!important;
+  border-bottom:1px solid #dce8f2!important;
+  box-shadow:0 8px 28px rgba(32,75,106,.08)!important;
 }
 html.gocoiin-market-trading body .site-header .brand-text,
 html.gocoiin-market-trading body .site-header .brand-name{
-  color:#f4f8ff!important;
-  -webkit-text-fill-color:#f4f8ff!important;
+  color:#10263d!important;-webkit-text-fill-color:#10263d!important;
 }
 html.gocoiin-market-trading body .site-header .brand-text small,
 html.gocoiin-market-trading body .site-header .brand-tagline{
-  color:#91a8bf!important;
-  -webkit-text-fill-color:#91a8bf!important;
+  color:#71869a!important;-webkit-text-fill-color:#71869a!important;
 }
 html.gocoiin-market-trading body .site-header .nav-trigger,
 html.gocoiin-market-trading body .site-header .nav-link,
 html.gocoiin-market-trading body .site-header .login-link{
-  color:#dce8f4!important;
-  -webkit-text-fill-color:#dce8f4!important;
+  color:#294761!important;-webkit-text-fill-color:#294761!important;
 }
 html.gocoiin-market-trading body .site-header .btn-login,
 html.gocoiin-market-trading body .site-header .btn-outline{
-  background:#0a2038!important;
-  border-color:#31516b!important;
-  color:#f4f8ff!important;
-  -webkit-text-fill-color:#f4f8ff!important;
+  background:#fff!important;border-color:#bcd0df!important;
+  color:#17324a!important;-webkit-text-fill-color:#17324a!important;
 }
 html.gocoiin-market-trading body .site-header .dropdown{
-  background:#081a2b!important;
-  border-color:rgba(0,168,255,.25)!important;
+  background:rgba(255,255,255,.99)!important;border-color:#d9e6ef!important;
+  box-shadow:0 18px 45px rgba(22,61,91,.16)!important;
 }
-html.gocoiin-market-trading body .site-header .dropdown a{color:#e8f1fa!important}
-html.gocoiin-market-trading body .site-header .dropdown a small{color:#91a8bf!important}
+html.gocoiin-market-trading body .site-header .dropdown a{color:#28445d!important}
+html.gocoiin-market-trading body .site-header .dropdown a small{color:#71869a!important}
 html.gocoiin-market-trading body .forex-hero,
 html.gocoiin-market-trading body .commodities-hero,
 html.gocoiin-market-trading body .page-hero,
 html.gocoiin-market-trading body .hero{
-  color:#f4f8ff!important;
+  color:#10263d!important;
   background:
-    radial-gradient(ellipse at 82% 15%,rgba(22,139,255,.16),transparent 38%),
-    linear-gradient(180deg,#081a2c 0%,#061321 100%)!important;
-  border-color:rgba(120,180,220,.18)!important;
+    radial-gradient(circle at 80% 18%,rgba(11,159,240,.14),transparent 34%),
+    linear-gradient(135deg,#f8fcff 0%,#eaf6fd 54%,#f9fcff 100%)!important;
+  border-color:#d8e7f1!important;
 }
 html.gocoiin-market-trading body .forex-hero h1,
 html.gocoiin-market-trading body .forex-hero h2,
@@ -1405,22 +1390,18 @@ html.gocoiin-market-trading body .hero-copy h1,
 html.gocoiin-market-trading body section h2,
 html.gocoiin-market-trading body .content-section h2,
 html.gocoiin-market-trading body .content-section h3{
-  color:#f4f8ff!important;
+  color:#10263d!important;
 }
 html.gocoiin-market-trading body .forex-hero h1 span,
 html.gocoiin-market-trading body .page-hero h1 span,
-html.gocoiin-market-trading body .eyebrow{
-  color:#168bff!important;
-}
+html.gocoiin-market-trading body .eyebrow{color:#0b9ff0!important}
 html.gocoiin-market-trading body .forex-hero p,
 html.gocoiin-market-trading body .page-hero p,
 html.gocoiin-market-trading body .hero-copy,
 html.gocoiin-market-trading body .hero-copy>p,
 html.gocoiin-market-trading body .section-intro p,
 html.gocoiin-market-trading body .content-section p,
-html.gocoiin-market-trading body section p{
-  color:#a7bbcf!important;
-}
+html.gocoiin-market-trading body section p{color:#657b8e!important}
 html.gocoiin-market-trading body .hero-image-wrap,
 html.gocoiin-market-trading body .hero-panel,
 html.gocoiin-market-trading body .hero-visual,
@@ -1431,14 +1412,13 @@ html.gocoiin-market-trading body .info-card,
 html.gocoiin-market-trading body .card,
 html.gocoiin-market-trading body .feature-card,
 html.gocoiin-market-trading body .benefit-card{
-  background:linear-gradient(145deg,#0b2135,#071522)!important;
-  border-color:rgba(120,180,220,.18)!important;
-  box-shadow:0 18px 50px rgba(0,0,0,.22)!important;
+  background:rgba(255,255,255,.82)!important;
+  border-color:#d9e6ef!important;
+  box-shadow:0 18px 44px rgba(29,75,106,.10)!important;
 }
 html.gocoiin-market-trading body .hero-chip{
-  background:#0d263b!important;
-  border-color:#31516b!important;
-  color:#dce8f4!important;
+  background:rgba(255,255,255,.94)!important;
+  border-color:#c6ddea!important;color:#35536b!important;
 }
 html.gocoiin-market-trading body .content-section,
 html.gocoiin-market-trading body .content-section.alt,
@@ -1449,31 +1429,20 @@ html.gocoiin-market-trading body .cta,
 html.gocoiin-market-trading body .risk-section,
 html.gocoiin-market-trading body .risk,
 html.gocoiin-market-trading body section:not(.forex-hero):not(.page-hero){
-  background:#071522!important;
-  color:#f4f8ff!important;
-  border-color:rgba(120,180,220,.18)!important;
+  background:linear-gradient(180deg,#f8fbfe 0%,#eef5fa 100%)!important;
+  color:#10263d!important;border-color:#dbe8f1!important;
 }
-html.gocoiin-market-trading body table{
-  background:#081827!important;
-  color:#dce8f4!important;
-}
-html.gocoiin-market-trading body th{
-  background:#0d263b!important;
-  color:#f6f9ff!important;
-}
-html.gocoiin-market-trading body td{color:#dce8f4!important}
+html.gocoiin-market-trading body table{background:#fff!important;color:#294761!important}
+html.gocoiin-market-trading body th{background:#edf6fc!important;color:#10263d!important}
+html.gocoiin-market-trading body td{color:#294761!important}
 html.gocoiin-market-trading body input,
 html.gocoiin-market-trading body select,
 html.gocoiin-market-trading body textarea{
-  background:#071522!important;
-  color:#edf5ff!important;
-  border-color:#294760!important;
+  background:#fff!important;color:#17344c!important;border-color:#bfd3e1!important;
 }
 html.gocoiin-market-trading body footer,
 html.gocoiin-market-trading body .site-footer{
-  background:#040d17!important;
-  color:#e8f0f8!important;
-  border-color:rgba(120,180,220,.18)!important;
+  background:linear-gradient(180deg,#06111f 0%,#030b14 100%)!important;color:#e8f0f8!important;
 }
 html.gocoiin-market-trading body footer h4{color:#eef5fc!important}
 html.gocoiin-market-trading body footer a{color:#91a5b9!important}
@@ -1481,12 +1450,11 @@ html.gocoiin-market-trading body footer a{color:#91a5b9!important}
   html.gocoiin-market-trading body .site-header .main-nav,
   html.gocoiin-market-trading body .site-header .main-nav.is-open,
   html.gocoiin-market-trading body .site-header .main-nav.open{
-    background:rgba(5,16,29,.99)!important;
-    border-color:#24445d!important;
+    background:rgba(255,255,255,.99)!important;border-color:#dce8ef!important;
   }
   html.gocoiin-market-trading body .site-header .main-nav .nav-trigger,
-  html.gocoiin-market-trading body .site-header .main-nav .nav-link{color:#dce8f4!important}
+  html.gocoiin-market-trading body .site-header .main-nav .nav-link{color:#294761!important}
   html.gocoiin-market-trading body .site-header .main-nav .dropdown a{
-    background:#0a2038!important;color:#dce8f4!important;
+    background:#f4faff!important;color:#2a4a61!important;
   }
 }
