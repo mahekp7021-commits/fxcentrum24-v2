@@ -1,0 +1,73 @@
+/* GO COIIN shared stylesheet for market and trading pages.
+   Restores the missing shared CSS dependency without replacing page content. */
+:root{color-scheme:dark;--bg:#06111f;--bg-soft:#081727;--card:#0a1b2d;--text:#f5f9ff;--muted:#9eb2c7;--blue:#00a8ff;--red:#ff3154;--border:rgba(120,180,220,.18);--max:1240px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto}
+button,input,select,textarea{font:inherit}
+.container,.page-container{width:min(calc(100% - 48px),var(--max));margin-inline:auto}
+.site-header{position:sticky;top:0;z-index:1000;background:rgba(5,16,29,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(14px)}
+.nav-wrap,.header-inner{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.brand-logo{display:none!important}
+.brand:before{content:"";display:block;width:29px;height:28px;flex:0 0 29px;background:linear-gradient(to top,#ff3154 0 32%,transparent 32%),linear-gradient(to top,#00a8ff 0 55%,transparent 55%),linear-gradient(to top,#00a8ff 0 78%,transparent 78%),linear-gradient(to top,#00a8ff 0 100%,transparent 100%);background-size:5px 100%;background-position:0 0,8px 0,16px 0,24px 0;background-repeat:no-repeat;align-self:center}
+.brand-text{display:flex;flex-direction:column;color:#f6f9ff;font-size:20px;font-weight:800;letter-spacing:-.6px;line-height:1.15}
+.brand-text small{margin-top:3px;color:#8ca2b8;font-size:8px;font-weight:500;letter-spacing:.35px}
+.main-nav{display:flex;align-items:center;justify-content:center;gap:5px;flex:1}
+.main-nav:empty{display:flex;flex:1}
+.main-nav:empty:after{content:"Markets  ⌄     Trading  ⌄     Platforms  ⌄     Accounts  ⌄     Tools  ⌄     Company  ⌄     Payment  ⌄";color:#d8e5f2;font-size:11px;font-weight:700;white-space:pre}
+.nav-item{position:relative}
+.nav-trigger,.nav-link{display:flex;align-items:center;gap:6px;min-height:60px;padding:0 10px;border:0;background:transparent;color:#d7e4f1;font-size:12px;font-weight:700;cursor:pointer}
+.nav-trigger:hover,.nav-link:hover,.login-link:hover{color:var(--blue)}
+.dropdown{position:absolute;left:0;top:calc(100% - 1px);z-index:1002;width:260px;padding:9px;background:#081a2b;border:1px solid rgba(0,168,255,.25);border-radius:10px;box-shadow:0 20px 55px #0008;opacity:0;visibility:hidden;transform:translateY(7px);transition:.18s}
+.nav-item:hover>.dropdown,.nav-item.is-open>.dropdown{opacity:1;visibility:visible;transform:none}
+.dropdown a{display:block;padding:11px 12px;border-radius:6px;color:#e8f1fa}
+.dropdown a:hover{background:#00a8ff14}
+.dropdown small{display:block;color:#8ba2b8;font-size:10px}
+.nav-actions,.header-actions{display:flex;align-items:center;gap:10px}
+.login-link{color:#e4edf7;font-size:12px;font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:0 18px;border:1px solid transparent;border-radius:7px;font-size:12px;font-weight:800;cursor:pointer;transition:transform .18s,box-shadow .18s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary,.btn-lime{background:linear-gradient(135deg,#ff3154,#ff4967);color:white;box-shadow:0 9px 24px #ff315426}
+.btn-outline{border-color:#35536d;background:#081827;color:#eef6ff}
+.btn-small{min-height:39px;padding:0 15px}
+.menu-toggle{display:none;width:44px;height:44px;align-items:center;justify-content:center;flex-direction:column;gap:5px;background:#091a2b;border:1px solid #31516b;border-radius:8px}
+.menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px}
+.forex-hero,.commodities-hero,.page-hero,.hero{position:relative;overflow:hidden;padding:82px 0 66px;background:radial-gradient(ellipse at 82% 15%,#00a8ff20,transparent 38%),linear-gradient(180deg,#081a2c,#06111f);border-bottom:1px solid var(--border)}
+.forex-hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(#2c6b9210 1px,transparent 1px),linear-gradient(90deg,#2c6b9210 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(90deg,transparent,#000)}
+.forex-hero-inner,.page-hero-inner{position:relative;z-index:1;width:min(calc(100% - 48px),var(--max));margin-inline:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:44px;align-items:center}
+.eyebrow{margin:0 0 12px;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+.hero-copy h1,.forex-hero h1,.page-hero h1{margin:0;color:#f5f9ff;font-size:clamp(42px,5.5vw,72px);font-weight:800;line-height:1.02;letter-spacing:-2.6px}
+.hero-copy h1 span,.forex-hero h1 span,.page-hero h1 span{color:var(--blue)}
+.hero-copy>p:not(.eyebrow),.forex-hero p,.page-hero p{max-width:720px;color:#a9bbcd;font-size:16px;line-height:1.8}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.hero-panel,.hero-visual,.market-card,.instrument-card,.content-card,.info-card{padding:24px;border:1px solid var(--border);border-radius:15px;background:linear-gradient(145deg,#0b2135,#071522);box-shadow:0 18px 50px #0002}
+main{min-height:360px}
+section{position:relative}
+section:not(.forex-hero):not(.page-hero){padding-block:56px}
+section h2{margin:0 0 18px;color:#f2f7fd;font-size:clamp(26px,3vw,40px);line-height:1.15;letter-spacing:-.8px}
+section p{color:var(--muted)}
+.grid,.cards-grid,.instrument-grid,.feature-grid,.benefits-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card,.instrument-card,.market-card,.feature-card,.benefit-card{min-width:0;padding:22px;border:1px solid var(--border);border-radius:13px;background:linear-gradient(145deg,#0b2033,#081624)}
+.card h3,.instrument-card h3,.market-card h3{margin:0 0 8px;color:#f4f8fd;font-size:18px}
+.card p,.instrument-card p,.market-card p{margin:0;color:#9fb2c5;font-size:13px;line-height:1.75}
+.table-wrap,.table-shell{width:100%;overflow-x:auto;border:1px solid var(--border);border-radius:12px}
+table{width:100%;border-collapse:collapse;background:#081827;color:#dce8f4}
+th,td{padding:14px 16px;border-bottom:1px solid var(--border);text-align:left;font-size:13px}
+th{background:#0d263b;color:#f6f9ff;font-size:11px;text-transform:uppercase;letter-spacing:.7px}
+footer,.site-footer{display:block!important;height:auto!important;min-height:0!important;overflow:visible!important;margin:0!important;padding:0!important;background:#040d17;color:#e8f0f8;border-top:1px solid var(--border)}
+.footer-grid,.footer-main-grid{display:grid;grid-template-columns:1.3fr repeat(5,minmax(0,1fr));gap:22px;padding:38px 0 28px}
+footer h4{margin:0 0 12px;color:#eef5fc;font-size:13px}
+footer a{display:block;margin:0 0 8px;color:#91a5b9;font-size:11px;line-height:1.5}
+footer a:hover{color:var(--blue)}
+.footer-bottom,.footer-bottom-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px 0;border-top:1px solid #ffffff0c;color:#8296aa;font-size:10px}
+.risk-warning,.risk-disclosure{padding:18px 24px;background:#091c2d;border-top:1px solid var(--border);color:#9eb2c7;font-size:11px}
+.reveal{opacity:1;transform:none}
+input,select,textarea{max-width:100%;background:#071522;color:#edf5ff;border:1px solid #294760;border-radius:7px;padding:12px}
+input:focus,select:focus,textarea:focus{outline:2px solid #00a8ff55;border-color:var(--blue)}
+@media(max-width:980px){.nav-wrap,.header-inner{gap:12px}.main-nav{gap:0}.nav-trigger,.nav-link{padding:0 6px;font-size:10px}.nav-actions{gap:6px}.forex-hero-inner,.page-hero-inner{gap:25px}.footer-grid,.footer-main-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.container,.page-container,.forex-hero-inner,.page-hero-inner{width:calc(100% - 30px)}.nav-wrap,.header-inner{min-height:68px;flex-wrap:wrap}.menu-toggle{display:flex;order:3;margin-left:auto}.nav-actions{margin-left:auto}.main-nav{display:none;order:4;flex:0 0 100%;width:100%;align-items:stretch;flex-direction:column;padding:8px 0 16px}.main-nav.is-open{display:flex}.main-nav:empty{display:none}.main-nav:empty:after{content:"Markets  ·  Trading  ·  Platforms  ·  Accounts  ·  Tools  ·  Company  ·  Payment";white-space:normal;line-height:2.3;padding:8px;color:#dce8f4}.nav-item{width:100%}.nav-trigger,.nav-link{min-height:42px;width:100%;justify-content:space-between;font-size:13px}.dropdown{position:static;display:none;width:100%;opacity:1;visibility:visible;transform:none;box-shadow:none;margin:0 0 8px}.nav-item.is-open>.dropdown{display:block}.forex-hero,.page-hero,.hero{padding:55px 0 42px}.forex-hero-inner,.page-hero-inner{grid-template-columns:1fr;gap:24px}.hero-copy h1,.forex-hero h1,.page-hero h1{font-size:clamp(40px,11vw,56px);letter-spacing:-1.8px}.grid,.cards-grid,.instrument-grid,.feature-grid,.benefits-grid{grid-template-columns:1fr}.footer-grid,.footer-main-grid{grid-template-columns:1fr 1fr;gap:22px;padding:30px 0 20px}.footer-grid>div:first-child,.footer-main-grid>div:first-child{grid-column:1/-1}.footer-bottom,.footer-bottom-inner{align-items:flex-start;flex-direction:column}.header-actions .btn,.nav-actions .btn{min-height:36px;padding:0 10px;font-size:10px}section:not(.forex-hero):not(.page-hero){padding-block:38px}}
+@media(max-width:420px){.brand-text{font-size:17px}.brand-text small{font-size:7px}.login-link{font-size:11px}.footer-grid,.footer-main-grid{gap:18px 12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
