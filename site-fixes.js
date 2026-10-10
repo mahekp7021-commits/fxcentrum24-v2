@@ -2,6 +2,7 @@
   'use strict';
 
   const path = window.location.pathname.toLowerCase();
+  if (/^\/(markets|trading)\//i.test(window.location.pathname)) document.documentElement.classList.add('gocoiin-market-trading');
   const nested = /\/(markets|trading|platforms|accounts|tools|company|legal|partnership)\//i.test(path);
   const isPartnership = /\/partnership(?:\/|$)/i.test(path);
   const prefix = nested ? '../' : './';
