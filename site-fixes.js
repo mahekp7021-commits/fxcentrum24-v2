@@ -17,7 +17,7 @@
     const link = document.createElement('link');
     link.id = 'gocoiin-global-premium-theme';
     link.rel = 'stylesheet';
-    link.href = '/premium-light.css?v=20260918-global-glossy4';
+    link.href = '/premium-light.css?v=20261011-market-light-fix1';
     document.head.appendChild(link);
   }
 
@@ -204,6 +204,67 @@
   function installGlobalUtilityNav() {
     const nav = document.querySelector('.main-nav');
     if (!nav) return;
+
+    // Some newer Markets/Trading pages shipped with an empty nav placeholder.
+    // Populate the same primary navigation used by the platform pages first.
+    if (!nav.children.length) {
+      const groups = [
+        ['Markets', [
+          ['Forex','markets/forex.html','Major & minor currency pairs'],
+          ['Commodities','markets/commodities.html','Gold, oil, silver & more'],
+          ['Indices','markets/indices.html','Global stock indices'],
+          ['Shares CFDs','markets/shares-cfds.html','Global company shares'],
+          ['Cryptocurrency','markets/cryptocurrency.html','Popular digital assets']
+        ]],
+        ['Trading', [
+          ['Account Types','trading/account-types.html','Choose your trading account'],
+          ['Trading Conditions','trading/trading-conditions.html','Spreads, execution & more'],
+          ['How to Start','trading/how-to-start.html','Start trading in 3 steps']
+        ]],
+        ['Platforms', [
+          ['MetaTrader 4','platforms/metatrader-4.html','Classic professional trading'],
+          ['MetaTrader 5','platforms/metatrader-5.html','Advanced multi-asset platform'],
+          ['WebTrader','platforms/webtrader.html','Trade from your browser']
+        ]],
+        ['Accounts', [
+          ['Standard','accounts/standard.html','Simple & flexible trading'],
+          ['Premium','accounts/premium.html','Enhanced trading conditions'],
+          ['Professional','accounts/professional.html','For active traders']
+        ]],
+        ['Tools', [
+          ['Economic Calendar','tools/economic-calendar.html','Track important market events']
+        ]],
+        ['Company', [
+          ['About Us','company/about.html','Discover GO COIIN'],
+          ['Contact Us','company/contact.html','We are here to help'],
+          ['Benefits','company/benefits.html','Why trade with GO COIIN']
+        ]]
+      ];
+      groups.forEach(([title, links]) => {
+        const item = document.createElement('div');
+        item.className = 'nav-item';
+        const trigger = document.createElement('button');
+        trigger.type = 'button';
+        trigger.className = 'nav-trigger';
+        trigger.setAttribute('aria-expanded','false');
+        trigger.innerHTML = '<span>' + title + '</span><em>⌄</em>';
+        const dropdown = document.createElement('div');
+        dropdown.className = 'dropdown';
+        links.forEach(([label, route, desc]) => {
+          const link = document.createElement('a');
+          link.href = prefix + route;
+          link.innerHTML = '<span>' + label + '</span><small>' + desc + '</small>';
+          dropdown.appendChild(link);
+        });
+        item.append(trigger, dropdown);
+        nav.appendChild(item);
+      });
+      const partnership = document.createElement('a');
+      partnership.className = 'nav-link';
+      partnership.href = prefix + 'partnership/index.html';
+      partnership.textContent = 'Partnership';
+      nav.appendChild(partnership);
+    }
 
     // Remove only standalone top-level Withdrawal links. Never touch the
     // Deposit/Withdrawal links inside Payment.
