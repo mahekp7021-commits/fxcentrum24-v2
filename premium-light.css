@@ -1458,3 +1458,27 @@ html.gocoiin-market-trading body footer a{color:#91a5b9!important}
     background:#f4faff!important;color:#2a4a61!important;
   }
 }
+
+
+/* Contact Us — preserve readable contrast inside the intentionally dark contact cards */
+html body .contact-item{
+  background:linear-gradient(145deg,#0b2034 0%,#071725 100%)!important;
+  border-color:#203c53!important;
+}
+html body .contact-item .label{
+  color:#19baff!important;
+  -webkit-text-fill-color:#19baff!important;
+}
+html body .contact-item h3,
+html body .contact-item h3 span{
+  color:#f4f9fd!important;
+  -webkit-text-fill-color:#f4f9fd!important;
+}
+html body .contact-item p{
+  color:#a9bdcd!important;
+  -webkit-text-fill-color:#a9bdcd!important;
+}
+html body .contact-item:hover{
+  border-color:#279ed0!important;
+  box-shadow:0 16px 34px rgba(11,65,99,.18)!important;
+}
