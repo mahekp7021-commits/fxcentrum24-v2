@@ -17,7 +17,7 @@
     const link = document.createElement('link');
     link.id = 'gocoiin-global-premium-theme';
     link.rel = 'stylesheet';
-    link.href = '/premium-light.css?v=20261011-market-light-fix1';
+    link.href = '/premium-light.css?v=20261015-contact-contrast-fix1';
     document.head.appendChild(link);
   }
 
